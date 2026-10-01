@@ -1,0 +1,14 @@
+# Local runtime data and X11 credentials
+/home/
+/gui/
+/logs/
+/data/
+/workspace/core*
+/workspace/build/
+/workspace/install/
+/workspace/log/
+__pycache__/
+*.py[cod]
+*.log
+.env
+.env.*
