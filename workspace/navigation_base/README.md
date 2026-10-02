@@ -25,11 +25,21 @@
 
 ## 坐标与显示
 
-`vehicle/odom → vehicle/chassis → {vehicle/left_wheel, vehicle/right_wheel, vehicle/caster}`。
+`vehicle/odom → vehicle/chassis → {vehicle/left_wheel, vehicle/right_wheel, vehicle/caster, vehicle/lidar}`。
 
 第一段由 DiffDrive 提供，其余由 robot_state_publisher 提供；不再桥接 Gazebo 全部 link pose，避免对同一 TF 重复发布。DiffDrive 的平面里程计以起始车体为参考，z=0；它不代表底盘距离地面的真实高度，也不是地图坐标。
 
-RViz 配置：固定坐标 `vehicle/odom`，机器人描述话题 `/robot_description`（Transient Local），TF 前缀 `vehicle`；包含 RobotModel、TF、Grid 和 Odometry。当前尚未添加 `map`、激光雷达、SLAM 或 Nav2。
+RViz 配置：固定坐标 `vehicle/odom`，机器人描述话题 `/robot_description`（Transient Local），TF 前缀 `vehicle`；包含 RobotModel、TF、Grid、Odometry 和 LaserScan。LaserScan 订阅 `/scan`，采用 Best Effort / Volatile，Points 样式、3 像素、Decay Time=0。当前尚未添加 `map`、SLAM 或 Nav2。
+
+## 2D 雷达
+
+`lidar_2d` 是挂载在 chassis 上的 `gpu_lidar`，局部位置 `0 0 0.4`、旋转为零。`bringup.launch.py` 中的固定 TF 与该位置一致，消息 frame_id 为 `vehicle/lidar`。它由独立的 static_transform_publisher 发布；ROS 描述中没有添加新的物理 link。
+
+配置为 360°、360 个水平采样点、10 Hz 仿真时间更新率、0.1–12 m 量程。world 显式启用物理、用户命令、场景广播和传感器系统；Sensors 使用 Ogre2，Gazebo GUI 继续使用 OGRE。静态测试墙中心位于世界坐标 `4 0 1`，尺寸为 `0.3 6 2` m。
+
+2026-10-02 用户本机验证收到 `/scan` 消息，固定 TF 查询成功，RViz 显示墙面的扫描点；实际接收频率约 3.8–4.5 Hz，有效回波约 3.70–4.93 m。实时因子未测量。
+
+RViz 的 File → Save Config 会更新容器内 `/work/robot_ws/navigation_base/vehicle.rviz`，对应宿主机本项目的 `workspace/navigation_base/vehicle.rviz`。
 
 ## 复验运动和反馈
 
@@ -46,3 +56,5 @@ docker exec robot-sim-gui bash -lc 'source /opt/ros/lyrical/setup.bash; python3 
 2026-10-02 硬件渲染回归再次通过：前进 0.3922 m，转向 0.6369 rad，最终线速度/角速度均为 0，`passed: true`。这次结果来自用户本机终端输出；完整阶段记录见 [验证记录](../../docs/validation.md)。
 
 解析限制参考：https://github.com/ros/sdformat_urdf/tree/rolling/sdformat_urdf
+
+加入雷达后运动回归通过：前进 0.23539999983581378 m，转向 0.38699999999650114 rad，停止速度 `[0.0, 0.0]`，`passed: true`。

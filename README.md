@@ -1,6 +1,6 @@
 # ros2-gazebo-robot-lab
 
-基于 Docker 的 ROS 2 Lyrical 与 Gazebo 小车仿真实验：速度控制、里程计反馈、TF 和 RViz 可视化，后续逐步接入激光雷达、SLAM 和导航。
+基于 Docker 的 ROS 2 Lyrical 与 Gazebo 小车仿真实验：速度控制、里程计反馈、TF 和 RViz 可视化，已接入 2D 激光雷达，后续逐步接入 SLAM 和导航。
 
 ## 当前进度
 
@@ -10,7 +10,7 @@
 - [x] 修复 `robot_state_publisher` 模型解析错误
 - [x] TF 与 RViz 机器人、里程计显示
 - [x] GTX 1650 上 Docker 内 NVIDIA OpenGL 硬件渲染与运动回归
-- [ ] 激光雷达与 `/scan`
+- [x] 2D 激光雷达、`/scan` 桥接、固定 TF 与 RViz 扫描显示
 - [ ] SLAM 建图
 - [ ] Nav2 自动导航
 
@@ -74,6 +74,23 @@ docker exec -it robot-sim-gui bash -lc \
 
 速度话题是 `/model/vehicle/cmd_vel`，消息类型 `geometry_msgs/msg/Twist`；停止命令为全部分量置零。
 
+## 2D 激光雷达
+
+小车的 `gpu_lidar` 配置为 360°、360 个水平采样点、10 Hz 仿真时间更新率、量程 0.1–12 m。world 显式加载 Physics、UserCommands、SceneBroadcaster 和 Sensors；传感器使用 Ogre2，GUI 保留 OGRE。前方静态测试墙带有 visual 和 collision，用于检查测距。
+
+`/scan` 以 `sensor_msgs/msg/LaserScan` 单向桥接 Gazebo→ROS，消息坐标为 `vehicle/lidar`。已保存的 RViz 配置启用 LaserScan，采用 Best Effort、Volatile、Points（3 像素），Fixed Frame 为 `vehicle/odom`。
+
+仿真运行时可检查：
+
+```bash
+docker exec robot-sim-gui bash -lc \
+  'source /opt/ros/lyrical/setup.bash; ros2 topic hz /scan'
+docker exec robot-sim-gui bash -lc \
+  'source /opt/ros/lyrical/setup.bash; ros2 topic echo /scan --once --field ranges --qos-reliability best_effort'
+```
+
+频率命令持续运行，用 Ctrl+C 结束。本机已观察到连续扫描、约 3.70–4.93 m 的墙面有效回波和 RViz 扫描点；实际接收频率约 3.8–4.5 Hz。该接收频率不等于已验证的 10 Hz 仿真时间频率，实时因子与实时性能尚未测量。加入雷达后运动回归继续通过。
+
 ## 坐标关系与修复
 
 ```text
@@ -81,8 +98,11 @@ vehicle/odom
 └── vehicle/chassis
     ├── vehicle/left_wheel
     ├── vehicle/right_wheel
-    └── vehicle/caster
+    ├── vehicle/caster
+    └── vehicle/lidar
 ```
+
+雷达安装位置为车体坐标下 `[0, 0, 0.4]`，`static_transform_publisher` 发布 `vehicle/chassis → vehicle/lidar` 固定 TF。
 
 DiffDrive 提供唯一里程计与第一段 TF；`robot_state_publisher` 使用关节状态发布车体内部 TF。速度桥接仅 ROS→Gazebo，其余反馈仅 Gazebo→ROS，避免重复发布。
 
