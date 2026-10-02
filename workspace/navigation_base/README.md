@@ -1,6 +1,6 @@
 # 小车运动、TF 与 RViz 基础
 
-项目目录：`/mnt/robot_disk/ros_sim`。暂停 NVIDIA 排查，使用明确的软件渲染设置：`LIBGL_ALWAYS_SOFTWARE=1`、Qt `threaded`、OpenGL、Gazebo OGRE。
+本机项目目录：`/mnt/robot_disk/ros_sim`。2026-10-02 已在 GTX 1650 / NVIDIA 595.91.07 上验证硬件渲染：启动脚本同时使用 `--gpus all` 和 `--device /dev/dri:/dev/dri`，不再设置 `LIBGL_ALWAYS_SOFTWARE=1`。保留 Qt `threaded`、`xcb_glx`、OpenGL 和 Gazebo OGRE 设置。Gazebo 与 RViz 正常显示，运动与 TF 回归通过。
 
 ## 启动与停止
 
@@ -42,5 +42,7 @@ docker exec robot-sim-gui bash -lc 'source /opt/ros/lyrical/setup.bash; python3 
 检查 `/robot_description`、关节状态、里程计位移与转角、停止速度，以及从里程计到所有可视链接的 TF。测试在正常异常退出路径中都会发送停止命令。
 
 2026-10-01 实测通过：前进约 0.275 m，转向约 0.416 rad，最终线速度/角速度均为 0。验证记录位于项目的 `logs/motion-verification.json`，启动记录为 `logs/navigation-base.log`。用户已确认 RViz 的机器人、TF 坐标轴和里程计箭头全部显示正常。
+
+2026-10-02 硬件渲染回归再次通过：前进 0.3922 m，转向 0.6369 rad，最终线速度/角速度均为 0，`passed: true`。这次结果来自用户本机终端输出；完整阶段记录见 [验证记录](../../docs/validation.md)。
 
 解析限制参考：https://github.com/ros/sdformat_urdf/tree/rolling/sdformat_urdf

@@ -9,17 +9,18 @@
 - [x] `/model/vehicle/odometry` 运动反馈
 - [x] 修复 `robot_state_publisher` 模型解析错误
 - [x] TF 与 RViz 机器人、里程计显示
+- [x] GTX 1650 上 Docker 内 NVIDIA OpenGL 硬件渲染与运动回归
 - [ ] 激光雷达与 `/scan`
 - [ ] SLAM 建图
 - [ ] Nav2 自动导航
 
-本项目是已验证的基础仿真实验，不是已完成的自主导航系统。当前优先使用 **CPU 软件渲染**；NVIDIA 硬件加速尚未解决。
+本项目是已验证的基础仿真实验，不是已完成的自主导航系统。2026-10-02 已在 **NVIDIA GeForce GTX 1650** 上验证 Docker 内硬件 OpenGL 渲染，Gazebo 与 RViz 正常显示，运动、里程计、关节状态和 TF 回归通过。
 
 ## 验证环境与前提
 
 已在 Ubuntu 26.04、x86_64、ROS 2 Lyrical、Gazebo Sim 10.5.0 的本地桌面环境验证。需要 Docker、可用的 X11/XWayland 桌面和宿主机 `xauth`。
 
-**当前启动脚本保留已验证的 `--gpus all` 参数，因此还需要 NVIDIA GPU 与 NVIDIA Container Toolkit，尽管实际绘图强制使用 llvmpipe。** 尚未验证无 NVIDIA 主机、Windows/macOS 或纯无头环境。镜像基础标签和 apt 包未锁定版本，未来重新构建的依赖可能变化。
+**当前启动脚本使用 `--gpus all` 与 `--device /dev/dri:/dev/dri`，需要 NVIDIA GPU、NVIDIA Container Toolkit 和宿主机可用的 `/dev/dri`。** 已验证 GPU 为 GTX 1650，驱动为 595.91.07，容器内 `glxinfo -B` 报告 NVIDIA OpenGL 4.6；脚本不再设置 `LIBGL_ALWAYS_SOFTWARE=1`。 尚未验证无 NVIDIA 主机、Windows/macOS 或纯无头环境。镜像基础标签和 apt 包未锁定版本，未来重新构建的依赖可能变化。
 
 ## 首次使用
 
@@ -53,7 +54,16 @@ docker exec robot-sim-gui bash -lc \
   'source /opt/ros/lyrical/setup.bash; python3 /work/robot_ws/navigation_base/verify_motion.py'
 ```
 
-输出包括位移、转角、停止速度、关节名、TF 查询结果和 `passed`。软件渲染速度可能影响固定墙钟时长内的仿真位移。
+输出包括位移、转角、停止速度、关节名、TF 查询结果和 `passed`。2026-10-02 硬件渲染回归得到 `passed: true`，前进 0.3922 m、转向 0.6369 rad、停止速度为 `[0.0, 0.0]`。测试使用固定墙钟时长，仿真运行速度会影响位移，结果不应解释为实时性能测试。
+
+检查容器内渲染器：
+
+```bash
+docker exec robot-sim-gui glxinfo -B
+nvidia-smi
+```
+
+本机验证中 vendor 为 `NVIDIA Corporation`，renderer 为 `NVIDIA GeForce GTX 1650/PCIe/SSE2`，宿主机 GPU 进程列表出现 `gz-sim-gui-client`。RViz 启动日志报告 OpenGL 4.5；该版本号本身不用于判断渲染器厂商。
 
 持续读取里程计：
 
