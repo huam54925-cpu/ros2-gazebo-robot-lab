@@ -54,7 +54,7 @@ try:
     for frame in ['chassis','left_wheel','right_wheel','caster']:
         t = buf.lookup_transform('vehicle/odom','vehicle/'+frame,rclpy.time.Time())
         result['tf'][frame] = {'stamp_sec':t.header.stamp.sec,'xyz':[t.transform.translation.x,t.transform.translation.y,t.transform.translation.z]}
-    assert result['odom_frames'] == ['vehicle/odom','vehicle/chassis']
+    assert result['odom_frames'] == ['vehicle/odom','vehicle/base_link']
     assert result['forward_distance_m'] > 0.05, 'No forward feedback'
     assert result['turn_radians'] > 0.05, 'No turn feedback'
     assert all(abs(v)<0.02 for v in result['stopped_velocity']), 'Vehicle did not stop'

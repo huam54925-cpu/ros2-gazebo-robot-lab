@@ -1,0 +1,12 @@
+# Keep the verified simulation image intact; add mapping tools in a separate tag.
+FROM robot-sim:lyrical-v1
+USER root
+RUN apt-get update \
+    # Align the older base image with the repository's ROS ABI before adding SLAM.
+    && apt-get -o Dpkg::Options::=--force-unsafe-io install -y --no-install-recommends --only-upgrade \
+        $(dpkg-query -W -f='${binary:Package} ${db:Status-Status}\n' 'ros-lyrical-*' \
+          | awk '$2 == "installed" {print $1}') \
+    && apt-get -o Dpkg::Options::=--force-unsafe-io install -y --no-install-recommends \
+        ros-lyrical-slam-toolbox \
+        ros-lyrical-nav2-map-server \
+    && rm -rf /var/lib/apt/lists/*

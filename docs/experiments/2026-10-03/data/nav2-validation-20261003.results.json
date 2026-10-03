@@ -1,0 +1,77 @@
+{
+  "scope": "Online SLAM + Nav2, static indoor scene. No dynamic obstacle or stuck-recovery validation.",
+  "cases": [
+    {
+      "name": "corridor",
+      "passed": true,
+      "goal": [
+        10.0,
+        5.0,
+        0.0
+      ],
+      "action_status": 4,
+      "error_code": 0,
+      "planned_length_m": 14.429399665948663,
+      "goal_position_error_m": 0.14514751030000034,
+      "goal_heading_error_deg": 1.6786286624584197,
+      "minimum_lidar_distance_m": 2.3390884399414062,
+      "stopped": true,
+      "elapsed_wall_seconds": 163.4892525840005,
+      "recoveries": 0
+    },
+    {
+      "name": "detour",
+      "passed": true,
+      "goal": [
+        10.0,
+        0.0,
+        3.141592653589793
+      ],
+      "action_status": 4,
+      "error_code": 0,
+      "planned_length_m": 13.137189379188365,
+      "goal_position_error_m": 0.14681267773259846,
+      "goal_heading_error_deg": 4.069096922065564,
+      "minimum_lidar_distance_m": 2.3379266262054443,
+      "stopped": true,
+      "elapsed_wall_seconds": 150.49275894900165,
+      "recoveries": 0
+    },
+    {
+      "name": "after-rejection",
+      "passed": true,
+      "goal": [
+        9.0,
+        0.0,
+        3.141592653589793
+      ],
+      "action_status": 4,
+      "error_code": 0,
+      "planned_length_m": 1.1436807054193718,
+      "goal_position_error_m": 0.14251383096205447,
+      "goal_heading_error_deg": 4.435556509095372,
+      "minimum_lidar_distance_m": 2.487856388092041,
+      "stopped": true,
+      "elapsed_wall_seconds": 21.121783550001055,
+      "recoveries": 0
+    },
+    {
+      "name": "unreachable",
+      "passed": true,
+      "goal": [
+        7.5,
+        2.5,
+        0.0
+      ],
+      "action_status": 6,
+      "error_code": 206,
+      "planned_length_m": 0,
+      "goal_position_error_m": null,
+      "goal_heading_error_deg": null,
+      "minimum_lidar_distance_m": 2.5428919792175293,
+      "stopped": true,
+      "elapsed_wall_seconds": 6.547175220999634,
+      "recoveries": 0
+    }
+  ]
+}

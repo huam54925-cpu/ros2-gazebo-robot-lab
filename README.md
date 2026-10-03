@@ -1,6 +1,14 @@
 # ros2-gazebo-robot-lab
 
-基于 Docker 的 ROS 2 Lyrical 与 Gazebo 小车仿真实验：速度控制、里程计反馈、TF 和 RViz 可视化，已接入 2D 激光雷达，后续逐步接入 SLAM 和导航。
+基于 Docker 的 ROS 2 Lyrical 与 Gazebo 小车仿真实验：速度控制、里程计反馈、TF 和 RViz 可视化，已接入 2D 激光雷达、SLAM Toolbox 建图和 Nav2，并完成静态室内单目标导航实测。
+
+## 实验结果
+
+[2026-10-03 实验记录、图片与原始数据](docs/experiments/2026-10-03/README.md) · [后续路线与技能接口设计](docs/robot-skills-roadmap.md)
+
+![Nav2 规划与实际轨迹](docs/experiments/2026-10-03/figures/nav2-validation-20261003.png)
+
+蓝色为穿通道，橙色为绕隔墙，绿色为拒绝非法目标后的继续导航；叉号为被拒绝的墙内目标。虚线是初始规划，实线是 SLAM 坐标中的执行轨迹。
 
 ## 当前进度
 
@@ -11,10 +19,13 @@
 - [x] TF 与 RViz 机器人、里程计显示
 - [x] GTX 1650 上 Docker 内 NVIDIA OpenGL 硬件渲染与运动回归
 - [x] 2D 激光雷达、`/scan` 桥接、固定 TF 与 RViz 扫描显示
-- [ ] SLAM 建图
-- [ ] Nav2 自动导航
+- [x] SLAM Toolbox 接入、`/map`、完整 TF 与短程建图验证
+- [ ] 整屋覆盖与回环质量验收
+- [x] Nav2 静态场景单目标导航：穿通道、绕墙、墙内目标拒绝及失败后继续导航
+- [ ] 动态障碍与卡住恢复专项验收
+- [ ] Frontier 自主探索
 
-本项目是已验证的基础仿真实验，不是已完成的自主导航系统。2026-10-02 已在 **NVIDIA GeForce GTX 1650** 上验证 Docker 内硬件 OpenGL 渲染，Gazebo 与 RViz 正常显示，运动、里程计、关节状态和 TF 回归通过。
+本项目已验证静态场景中的建图与单目标导航，尚未完成自主探索和动态场景鲁棒性验收。2026-10-02 已在 **NVIDIA GeForce GTX 1650** 上验证 Docker 内硬件 OpenGL 渲染，Gazebo 与 RViz 正常显示，运动、里程计、关节状态和 TF 回归通过。
 
 ## 验证环境与前提
 
@@ -95,18 +106,19 @@ docker exec robot-sim-gui bash -lc \
 
 ```text
 vehicle/odom
-└── vehicle/chassis
-    ├── vehicle/left_wheel
-    ├── vehicle/right_wheel
-    ├── vehicle/caster
-    └── vehicle/lidar
+└── vehicle/base_link
+    └── vehicle/chassis
+        ├── vehicle/left_wheel
+        ├── vehicle/right_wheel
+        ├── vehicle/caster
+        └── vehicle/lidar
 ```
 
 雷达安装位置为车体坐标下 `[0, 0, 0.4]`，`static_transform_publisher` 发布 `vehicle/chassis → vehicle/lidar` 固定 TF。
 
-DiffDrive 提供唯一里程计与第一段 TF；`robot_state_publisher` 使用关节状态发布车体内部 TF。速度桥接仅 ROS→Gazebo，其余反馈仅 Gazebo→ROS，避免重复发布。
+DiffDrive 提供唯一里程计与第一段 TF；`robot_state_publisher` 使用关节状态发布车体内部 TF。速度命令先经过 `velocity_guard`，其安全输出桥接到 Gazebo；其余反馈仅 Gazebo→ROS，避免重复发布。超过 0.5 秒无新速度指令、雷达过期或障碍进入 1.9 m 范围时自动停车。
 
-ROS 描述副本去除解析插件不支持的模型级 `<pose>`；Gazebo 物理模型保留自己的位置。球形后轮在 ROS 描述里用固定关节显示，在物理仿真中仍为球关节。平面里程计的 z=0 表示起始车体参考，不表示地面高度。KDL 根链接惯量警告目前仍存在，但模型初始化和 TF 验证已通过。
+ROS 描述副本去除解析插件不支持的模型级 `<pose>`；Gazebo 物理模型保留自己的位置。球形后轮在 ROS 描述里用固定关节显示，在物理仿真中仍为球关节。DiffDrive 的参考点为驱动轮轴中心；`base_link` 取该点的地面投影，`base_link → chassis` 固定平移为 `[-0.7057095, 0, 0.5]` m。已与 Gazebo 真实运动对照验证，见 `docs/indoor-mapping.md`。KDL 根链接惯量警告目前仍存在，但模型初始化和 TF 验证已通过。
 
 详见 [配置说明](workspace/navigation_base/README.md) 和 [验证记录](docs/validation.md)。
 
@@ -121,3 +133,14 @@ ROS 描述副本去除解析插件不支持的模型级 `<pose>`；Gazebo 物理
 ## 上游来源
 
 模型、场景和 RViz 配置源自 [ros_gz_sim_demos](https://github.com/gazebosim/ros_gz/tree/ros2/ros_gz_sim_demos)，遵循 Apache-2.0；原始副本、修改说明与许可文本随仓库保留。详见 [上游说明](third_party/README.md)。
+
+## 独立室内建图场景
+
+新增 24×20 m 围墙、宽通道与三个不对称障碍物，原单墙雷达测试场景保留。参见 [室内场景与建图组件准备](docs/indoor-mapping.md)。已接通 SLAM，支持 RViz 地图显示与地图保存；短程闭合路线测试通过，整屋覆盖及回环质量仍待验收。
+
+当前显示兼容设置：Gazebo GUI 和 RViz 使用 Mesa 软件渲染以避免 NVIDIA/Xwayland 黑屏，服务端及 GPU LiDAR 保留 NVIDIA 加速。详见室内建图文档的显示与停车修复记录。
+
+
+## Nav2 定点导航
+
+已加入独立导航镜像与 `docker/start-nav2.sh`，在当前 SLAM 地图上运行 Smac 2D + Regulated Pure Pursuit。导航速度仍经原停车保护处理。配置、单目标命令和实际测试结果见 [Nav2 说明](docs/nav2-navigation.md)。软件与数据继续保存在数据盘，不安装宿主机 ROS 软件包。

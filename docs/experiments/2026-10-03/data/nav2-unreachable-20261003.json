@@ -1,0 +1,67 @@
+{
+  "passed": true,
+  "goal": [
+    7.5,
+    2.5,
+    0.0
+  ],
+  "start": {
+    "wall_elapsed": 3.378418716998567,
+    "map_pose": [
+      10.116328323950107,
+      -0.08956385091081548,
+      3.070573514716982
+    ],
+    "truth": [
+      2.6752131149564327,
+      -5.122849331426535,
+      3.0779109604945853
+    ],
+    "nearest": 2.5428919792175293,
+    "velocity": [
+      0.0,
+      0.0
+    ]
+  },
+  "preflight": {
+    "status": 6,
+    "error_code": 206,
+    "error_msg": "GridBasedplugin failed to plan from (10.12, -0.09) [q: 0.00, 0.00, 1.00, 0.04] (yaw: 3.07) to (7.50, 2.50) [q: 0.00, 0.00, 0.00, 1.00] (yaw: 0.00): \"Goal was in lethal cost\"",
+    "path": []
+  },
+  "action_status": 6,
+  "error_code": 206,
+  "error_msg": "GridBasedplugin failed to plan from (10.12, -0.09) [q: 0.00, 0.00, 1.00, 0.04] (yaw: 3.07) to (7.50, 2.50) [q: 0.00, 0.00, 0.00, 1.00] (yaw: 0.00): \"Goal was in lethal cost\"",
+  "minimum_scan_m": 2.5428919792175293,
+  "max_abs_velocity": [
+    0.0,
+    0.0
+  ],
+  "feedback": {
+    "distance_remaining": 0.0,
+    "recoveries": 0
+  },
+  "end": {
+    "wall_elapsed": 6.547003740999571,
+    "map_pose": [
+      10.116328323950107,
+      -0.08956385091081548,
+      3.070573514716982
+    ],
+    "truth": [
+      2.6752131149564327,
+      -5.122849331426535,
+      3.0779109604945853
+    ],
+    "nearest": 2.5428919792175293,
+    "velocity": [
+      0.0,
+      0.0
+    ]
+  },
+  "goal_position_error_m": 3.6811703080199414,
+  "goal_heading_error_rad": 3.070573514716982,
+  "stopped": true,
+  "rejection_displacement_m": 0.0,
+  "elapsed_wall_seconds": 6.547175220999634
+}

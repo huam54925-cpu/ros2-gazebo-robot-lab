@@ -1,0 +1,7 @@
+# Add navigation without changing the verified mapping image.
+FROM robot-sim:lyrical-mapping-v2
+USER root
+RUN apt-get update \
+    && apt-get -o Dpkg::Options::=--force-unsafe-io install -y --no-install-recommends \
+        ros-lyrical-navigation2 ros-lyrical-nav2-bringup \
+    && rm -rf /var/lib/apt/lists/*

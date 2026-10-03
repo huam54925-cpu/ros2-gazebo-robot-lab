@@ -25,11 +25,11 @@
 
 ## 坐标与显示
 
-`vehicle/odom → vehicle/chassis → {vehicle/left_wheel, vehicle/right_wheel, vehicle/caster, vehicle/lidar}`。
+`vehicle/odom → vehicle/base_link → vehicle/chassis → {vehicle/left_wheel, vehicle/right_wheel, vehicle/caster, vehicle/lidar}`。
 
-第一段由 DiffDrive 提供，其余由 robot_state_publisher 提供；不再桥接 Gazebo 全部 link pose，避免对同一 TF 重复发布。DiffDrive 的平面里程计以起始车体为参考，z=0；它不代表底盘距离地面的真实高度，也不是地图坐标。
+第一段由 DiffDrive 提供；base_link → chassis 由静态 TF 发布，平移为 [-0.7057095, 0, 0.5] m；车体关节由 robot_state_publisher 发布，雷达使用独立静态 TF。base_link 位于轮轴中心的地面投影，里程计以它的起始位姿为参考；不能直接作为 Gazebo 世界坐标。
 
-RViz 配置：固定坐标 `vehicle/odom`，机器人描述话题 `/robot_description`（Transient Local），TF 前缀 `vehicle`；包含 RobotModel、TF、Grid、Odometry 和 LaserScan。LaserScan 订阅 `/scan`，采用 Best Effort / Volatile，Points 样式、3 像素、Decay Time=0。当前尚未添加 `map`、SLAM 或 Nav2。
+RViz 配置：固定坐标 `vehicle/odom`，机器人描述话题 `/robot_description`（Transient Local），TF 前缀 `vehicle`；包含 RobotModel、TF、Grid、Odometry 和 LaserScan。LaserScan 订阅 `/scan`，采用 Best Effort / Volatile，Points 样式、3 像素、Decay Time=0。mapping 场景另用 slam/mapping.rviz，已接入 map 和 SLAM；Nav2 使用独立 navigation/navigation.rviz 配置和导航容器，见根目录 docs/nav2-navigation.md。
 
 ## 2D 雷达
 

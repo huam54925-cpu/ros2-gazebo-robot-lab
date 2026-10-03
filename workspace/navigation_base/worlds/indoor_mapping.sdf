@@ -1,4 +1,5 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0"?>
+<!-- Vehicle and ground derived from ros_gz_sim_demos (Apache-2.0). Modified: independent indoor room, corridor and three obstacles; spawn at (-8,-5). See third_party/README.md. -->
 <sdf version="1.8">
   <world name="demo">
     <light name="sun" type="directional">
@@ -41,7 +42,7 @@
       </link>
     </model>
     <model name="vehicle">
-      <pose>0 0 0.325 0 0 0</pose>
+      <pose>-8 -5 0.325 0 0 0</pose>
       <link name="chassis">
         <pose>-0.151427 -0 0.175 0 -0 0</pose>
         <inertial>
@@ -247,28 +248,240 @@
     <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
       <render_engine>ogre2</render_engine>
     </plugin>
-    <model name="lidar_test_wall">
+    <model name="room_perimeter">
       <static>true</static>
-      <pose>4 0 1 0 0 0</pose>
-      <link name="wall">
-        <visual name="visual">
+      <pose>0 0 0 0 0 0</pose>
+      <link name="structure">
+        <collision name="north_collision">
+          <pose>0 10.125 1.25 0 0 0</pose>
           <geometry>
             <box>
-              <size>0.3 6 2</size>
-            </box>
-          </geometry>
-          <material>
-            <ambient>0.8 0.3 0.1 1</ambient>
-            <diffuse>0.8 0.3 0.1 1</diffuse>
-          </material>
-        </visual>
-        <collision name="collision">
-          <geometry>
-            <box>
-              <size>0.3 6 2</size>
+              <size>24.5 0.25 2.5</size>
             </box>
           </geometry>
         </collision>
+        <visual name="north_visual">
+          <pose>0 10.125 1.25 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>24.5 0.25 2.5</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.7 0.75 0.8 1</ambient>
+            <diffuse>0.7 0.75 0.8 1</diffuse>
+          </material>
+        </visual>
+        <collision name="south_collision">
+          <pose>0 -10.125 1.25 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>24.5 0.25 2.5</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="south_visual">
+          <pose>0 -10.125 1.25 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>24.5 0.25 2.5</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.7 0.75 0.8 1</ambient>
+            <diffuse>0.7 0.75 0.8 1</diffuse>
+          </material>
+        </visual>
+        <collision name="east_collision">
+          <pose>12.125 0 1.25 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.25 20 2.5</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="east_visual">
+          <pose>12.125 0 1.25 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.25 20 2.5</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.7 0.75 0.8 1</ambient>
+            <diffuse>0.7 0.75 0.8 1</diffuse>
+          </material>
+        </visual>
+        <collision name="west_collision">
+          <pose>-12.125 0 1.25 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.25 20 2.5</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="west_visual">
+          <pose>-12.125 0 1.25 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.25 20 2.5</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.7 0.75 0.8 1</ambient>
+            <diffuse>0.7 0.75 0.8 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="corridor_north">
+      <static>true</static>
+      <pose>0 2.5 0 0 0 0</pose>
+      <link name="structure">
+        <collision name="wall_collision">
+          <pose>0 0 1.25 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>8 0.25 2.5</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="wall_visual">
+          <pose>0 0 1.25 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>8 0.25 2.5</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.65 0.75 1</ambient>
+            <diffuse>0.5 0.65 0.75 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="corridor_south">
+      <static>true</static>
+      <pose>0 -2.5 0 0 0 0</pose>
+      <link name="structure">
+        <collision name="wall_collision">
+          <pose>0 0 1.25 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>8 0.25 2.5</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="wall_visual">
+          <pose>0 0 1.25 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>8 0.25 2.5</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.65 0.75 1</ambient>
+            <diffuse>0.5 0.65 0.75 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="obstacle_west_block">
+      <static>true</static>
+      <pose>-8 5 0 0 0 0</pose>
+      <link name="structure">
+        <collision name="box_collision">
+          <pose>0 0 0.9 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>2 1.5 1.8</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="box_visual">
+          <pose>0 0 0.9 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>2 1.5 1.8</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.8 0.4 0.15 1</ambient>
+            <diffuse>0.8 0.4 0.15 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="obstacle_southeast_cabinet">
+      <static>true</static>
+      <pose>8 -8 0 0 0 0</pose>
+      <link name="structure">
+        <collision name="box_collision">
+          <pose>0 0 0.9 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>1.5 2 1.8</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="box_visual">
+          <pose>0 0 0.9 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>1.5 2 1.8</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.2 0.6 0.35 1</ambient>
+            <diffuse>0.2 0.6 0.35 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="obstacle_northeast_l_shape">
+      <static>true</static>
+      <pose>7 6 0 0 0 0</pose>
+      <link name="structure">
+        <collision name="long_collision">
+          <pose>0 0 0.9 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>3 1 1.8</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="long_visual">
+          <pose>0 0 0.9 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>3 1 1.8</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.7 0.25 0.35 1</ambient>
+            <diffuse>0.7 0.25 0.35 1</diffuse>
+          </material>
+        </visual>
+        <collision name="short_collision">
+          <pose>-1 -1.25 0.9 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>1 1.5 1.8</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="short_visual">
+          <pose>-1 -1.25 0.9 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>1 1.5 1.8</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.7 0.25 0.35 1</ambient>
+            <diffuse>0.7 0.25 0.35 1</diffuse>
+          </material>
+        </visual>
       </link>
     </model>
   </world>

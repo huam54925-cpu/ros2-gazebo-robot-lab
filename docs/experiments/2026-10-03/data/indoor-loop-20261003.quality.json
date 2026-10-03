@@ -1,0 +1,14 @@
+{
+  "occupied_cells": 3293,
+  "known_cells": 150885,
+  "nominal_surface_error_p95_m": 0.11799999999999855,
+  "rigid_map_to_world": {
+    "x": -7.4657175,
+    "y": -4.999999999999999,
+    "yaw_deg": -0.34377467707849396
+  },
+  "registered_surface_error_median_m": 0.020027249894914334,
+  "registered_surface_error_p95_m": 0.04729254540557401,
+  "occupied_cells_within_15cm_fraction": 1.0,
+  "scope": "Observed occupied-cell alignment after one rigid registration; not full coverage or free-space validation."
+}

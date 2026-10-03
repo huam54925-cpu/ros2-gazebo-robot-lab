@@ -18,3 +18,5 @@ on the same launch architecture (Gazebo, bridge, state publisher, RViz).
 
 No blanket license is assigned here to the project's new scripts and documentation;
 the upstream assets retain their Apache-2.0 license.
+
+`workspace/navigation_base/worlds/indoor_mapping.sdf` also derives its vehicle, ground and light from the same upstream assets, and adds an independently authored indoor layout.

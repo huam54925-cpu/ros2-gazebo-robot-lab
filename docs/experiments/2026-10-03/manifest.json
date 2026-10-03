@@ -1,0 +1,96 @@
+{
+  "run_date": "2026-10-03",
+  "description": "Selected unchanged experiment artifacts; full runtime traces and serialized SLAM graph remain on the data disk.",
+  "files": [
+    {
+      "path": "figures/indoor-loop-20261003.png",
+      "source": "workspace/maps/indoor-loop-20261003.png",
+      "bytes": 9247,
+      "sha256": "f82b9cd0f0ac13628f7627cfeeb2e972aa0fcaa3596205b55b7c7831486db0c2"
+    },
+    {
+      "path": "figures/indoor-loop-20261003.quality.png",
+      "source": "workspace/maps/indoor-loop-20261003.quality.png",
+      "bytes": 140372,
+      "sha256": "a4e6930a5c023e6a1f987300486263ff28d65bc53aad64706316a61026911a07"
+    },
+    {
+      "path": "figures/nav2-validation-20261003.png",
+      "source": "workspace/maps/nav2-validation-20261003.png",
+      "bytes": 471524,
+      "sha256": "2d89bc27cae7d9edff47165fecd5d7f0a8a6025def49b192344e2510d3308887"
+    },
+    {
+      "path": "data/indoor-loop-20261003.json",
+      "source": "workspace/maps/indoor-loop-20261003.json",
+      "bytes": 4029,
+      "sha256": "7a9dc1bec104ba5fdb0c8d6e4f4e628ad62f5bbbd1433073c60ceb310eb36b38"
+    },
+    {
+      "path": "data/indoor-loop-20261003.quality.json",
+      "source": "workspace/maps/indoor-loop-20261003.quality.json",
+      "bytes": 510,
+      "sha256": "90b81fa6944ada9a91956b655d0b882256d199042788ca3b77ce65eb2c02ab52"
+    },
+    {
+      "path": "data/indoor-loop-20261003.yaml",
+      "source": "workspace/maps/indoor-loop-20261003.yaml",
+      "bytes": 142,
+      "sha256": "1bc290517aed4cfb1b4e63b4aacc5f20e16a882ce145c310d368c51faffeb6e0"
+    },
+    {
+      "path": "data/indoor-loop-20261003.pgm",
+      "source": "workspace/maps/indoor-loop-20261003.pgm",
+      "bytes": 196035,
+      "sha256": "48b4800a7d5b6be710e7d2c9cb6db1ad84d91d0ea3654d110fffa2e624d3d6c0"
+    },
+    {
+      "path": "data/motion-before.json",
+      "source": "workspace/maps/motion-before.json",
+      "bytes": 9871,
+      "sha256": "f37942635c7ca42fa0c8f455d5933f30ee9dce1b4cf7ae34d78324b855e61b53"
+    },
+    {
+      "path": "data/motion-after.json",
+      "source": "workspace/maps/motion-after.json",
+      "bytes": 11544,
+      "sha256": "cc301baa0a7b83d1c92e05b160bfd53c54ccbb275a64ffc1660f38d7e569763e"
+    },
+    {
+      "path": "data/nav2-validation-20261003.results.json",
+      "source": "workspace/maps/nav2-validation-20261003.results.json",
+      "bytes": 2002,
+      "sha256": "e82db31538c4aec4fab7bad683493d580947d22810a052d9d14754b636c1075b"
+    },
+    {
+      "path": "data/nav2-corridor-20261003.json",
+      "source": "workspace/maps/nav2-corridor-20261003.json",
+      "bytes": 21416,
+      "sha256": "2ef1af2975b3506f947b5ce020255e14d811471670ec8088b17978c734542c68"
+    },
+    {
+      "path": "data/nav2-detour-20261003.json",
+      "source": "workspace/maps/nav2-detour-20261003.json",
+      "bytes": 18755,
+      "sha256": "c6e1f3cee69a5ccf0efeb71336bdad3ffe258b5287c549546bab39ee4dcb8c0c"
+    },
+    {
+      "path": "data/nav2-unreachable-20261003.json",
+      "source": "workspace/maps/nav2-unreachable-20261003.json",
+      "bytes": 1601,
+      "sha256": "c710d7128f02e461a2c9a3e614ce83109744a1878414dbdbb9e1aa49ccfeab5b"
+    },
+    {
+      "path": "data/nav2-after-rejection-20261003.json",
+      "source": "workspace/maps/nav2-after-rejection-20261003.json",
+      "bytes": 3046,
+      "sha256": "b2c0d06141bdcf2af69daac0175b1c9a7499fd74574b24e1b9726d51971802ca"
+    },
+    {
+      "path": "figures/nav2-rviz.png",
+      "source": "logs/nav2-rviz.png",
+      "bytes": 131731,
+      "sha256": "e51717c6e7f7792d0088a308ba5dc8f98cc768cc689687598842c16cf3f9acf9"
+    }
+  ]
+}
