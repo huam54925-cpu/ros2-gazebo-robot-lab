@@ -4,11 +4,15 @@
 
 ## 实验结果
 
+[2026-10-03 日结与明天计划](docs/experiments/2026-10-03/daily-summary.md)
+
 [2026-10-03 实验记录、图片与原始数据](docs/experiments/2026-10-03/README.md) · [后续路线与技能接口设计](docs/robot-skills-roadmap.md)
 
 ![Nav2 规划与实际轨迹](docs/experiments/2026-10-03/figures/nav2-validation-20261003.png)
 
 蓝色为穿通道，橙色为绕隔墙，绿色为拒绝非法目标后的继续导航；叉号为被拒绝的墙内目标。虚线是初始规划，实线是 SLAM 坐标中的执行轨迹。
+
+[激进/保守策略实测对照](docs/experiments/2026-10-03/frontier-comparison/README.md) · [Frontier 首轮结果与图片](docs/experiments/2026-10-03/frontier/README.md) · [运行说明](docs/frontier-exploration.md)
 
 ## 当前进度
 
@@ -23,9 +27,11 @@
 - [ ] 整屋覆盖与回环质量验收
 - [x] Nav2 静态场景单目标导航：穿通道、绕墙、墙内目标拒绝及失败后继续导航
 - [ ] 动态障碍与卡住恢复专项验收
-- [ ] Frontier 自主探索
+- [x] Frontier 第一版：实时地图自主选点，4 个目标实测成功并自动停车
+- [x] 激进/保守选点单次对照：共同时间已知面积增加约 31%，激进版 7/8 目标成功
+- [ ] Frontier 整屋探索与覆盖率验收
 
-本项目已验证静态场景中的建图与单目标导航，尚未完成自主探索和动态场景鲁棒性验收。2026-10-02 已在 **NVIDIA GeForce GTX 1650** 上验证 Docker 内硬件 OpenGL 渲染，Gazebo 与 RViz 正常显示，运动、里程计、关节状态和 TF 回归通过。
+本项目已验证静态场景中的建图与单目标导航，已跑通自主选点执行循环，尚未完成整屋自主探索和动态场景鲁棒性验收。2026-10-02 已在 **NVIDIA GeForce GTX 1650** 上验证 Docker 内硬件 OpenGL 渲染，Gazebo 与 RViz 正常显示，运动、里程计、关节状态和 TF 回归通过。
 
 ## 验证环境与前提
 

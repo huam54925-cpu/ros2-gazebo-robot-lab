@@ -1,0 +1,78 @@
+{
+  "status": "error",
+  "stop_reason": "initial_scan_failed",
+  "policy": "nearest_reachable_candidate",
+  "configuration": {
+    "coarse_resolution": 0.2,
+    "minimum_frontier_length": 0.8,
+    "minimum_unknown_area": 2.0,
+    "obstacle_clearance": 2.65,
+    "unknown_clearance": 1.9,
+    "maximum_frontier_distance": 4.0,
+    "minimum_goal_distance": 1.0,
+    "visited_radius": 1.5,
+    "maximum_candidates": 12
+  },
+  "limits": {
+    "wall_seconds": 1200.0,
+    "maximum_goals": 8,
+    "goal_wall_timeout": 300.0
+  },
+  "ground_truth_used": false,
+  "coverage": null,
+  "coverage_note": "No fixed explorable-area denominator; only known-cell area is reported.",
+  "initial": {
+    "wall_elapsed": 10.089402725001491,
+    "simulation_seconds": 7.503,
+    "pose": [
+      1.822922697532543e-18,
+      -1.230208499660442e-38,
+      -1.1716264944845117e-19
+    ],
+    "known_cells": 1096,
+    "known_area_m2": 2.740000081658364,
+    "map_version": "622e5c75a1847d0e",
+    "map_width": 304,
+    "map_height": 311,
+    "path_length_odom_m": 3.180022530970304e-19,
+    "nearest_scan_m": 3.8488073348999023,
+    "velocity": [
+      2.351139412379019e-19,
+      -1.0384043521400356e-19
+    ]
+  },
+  "initial_scan": {
+    "status": 0,
+    "error_code": 1,
+    "error_msg": "action_rejected"
+  },
+  "stopped": true,
+  "final": {
+    "wall_elapsed": 10.819407372000569,
+    "simulation_seconds": 7.849,
+    "pose": [
+      1.9088183555956267e-18,
+      -2.2268566962751573e-38,
+      -1.1767390957031243e-19
+    ],
+    "known_cells": 1096,
+    "known_area_m2": 2.740000081658364,
+    "map_version": "622e5c75a1847d0e",
+    "map_width": 304,
+    "map_height": 311,
+    "path_length_odom_m": 4.0389791116011423e-19,
+    "nearest_scan_m": 3.8488073348999023,
+    "velocity": [
+      5.236067293903288e-19,
+      -2.4127850047092927e-20
+    ]
+  },
+  "goals": [],
+  "goal_count": 0,
+  "successful_goals": 0,
+  "failed_goals": 0,
+  "excluded_observation_positions": [],
+  "path_length_odom_m": 4.0389791116011423e-19,
+  "elapsed_wall_seconds": 10.829455652999968,
+  "minimum_scan_m": 3.8488073348999023
+}

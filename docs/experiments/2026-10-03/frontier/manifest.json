@@ -1,0 +1,18 @@
+{
+  "base_commit": "c84a252a201f9400a7938aff35e5c43c958440ec",
+  "uncommitted_implementation": true,
+  "source_sha256": {
+    "workspace/navigation_base/exploration/frontier.py": "9c42f61874aaf382643cf47d74d6b1516c53856ea9f739b768b88796ec2183cc",
+    "workspace/navigation_base/exploration/explore.py": "035c3cf2b580dc187843bf75b8e6762d0c17c75f5fe6504f5ba69ccfa21f4c9d",
+    "workspace/navigation_base/slam/mapper_params_online_async.yaml": "2b3dd7fee0d32373d92c0859fc57f7e5c6d36c49ed97b2c0035b97208d935d35",
+    "workspace/navigation_base/navigation/nav2.yaml": "9b09017dea9e15b09fd7a536c3b2bb9a2c9c623c49fb8c517e0cd8d427e1b104",
+    "workspace/navigation_base/worlds/indoor_mapping.sdf": "7a50aaf82f6ad04560716dc72c4d48db8743ce3e89ffb1c6f8e32f0eb8b85424"
+  },
+  "final_map_diagnostic": {
+    "safe_coarse_cells": 214,
+    "frontier_clusters": 4,
+    "candidates_with_visited_exclusion": 0,
+    "candidates_without_visited_exclusion": 6
+  },
+  "note": "Simulator geometry is used only for offline map quality evaluation, never exploration goal selection."
+}

@@ -1,6 +1,8 @@
-# 2026-10-03：二维 SLAM 与 Nav2 实验记录
+# 2026-10-03：SLAM、Nav2 与自主探索实验记录
 
 本次完成闭合路线建图、已观测障碍几何校验，以及静态室内 Nav2 单目标导航。这里归档筛选后的原始 JSON、地图和图片；不是重新运行产生的数据。制品来源与 SHA-256 见 [manifest.json](manifest.json)。
+
+[今日日结与明天计划](daily-summary.md) · [Frontier 基线](frontier/README.md) · [激进/保守对照](frontier-comparison/README.md)
 
 ## 验收范围
 
@@ -9,7 +11,8 @@
 | M1：二维 SLAM 闭合路线建图与几何校验 | 通过 | 未单独确认回环约束触发；未验收整屋覆盖和自由空间正确性 |
 | M2：Nav2 静态室内单目标导航 | 通过 | 穿通道、绕隔墙、墙内目标拒绝、拒绝后继续导航 |
 | 动态障碍与卡住恢复 | 未验收 | 成功导航 recovery 次数为零，不证明恢复动作有效 |
-| Frontier / 信息增益 / LLM 技能层 | 尚未实现 | 见[后续设计](../../robot-skills-roadmap.md) |
+| Frontier 与信息收益代理策略 | 已实现并单次实测 | 保守版 4/4、激进版 7/8；整屋探索未完成 |
+| 主动观测决策 / LLM 技能层 | 尚未实现 | 见[明天计划](daily-summary.md)和[后续设计](../../robot-skills-roadmap.md) |
 
 ## SLAM：约 38 m 闭合路线
 

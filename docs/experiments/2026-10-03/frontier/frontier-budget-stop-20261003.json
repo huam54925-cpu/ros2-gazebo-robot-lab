@@ -1,0 +1,77 @@
+{
+  "status": "finished",
+  "stop_reason": "budget_exhausted",
+  "policy": "nearest_reachable_candidate",
+  "configuration": {
+    "coarse_resolution": 0.2,
+    "minimum_frontier_length": 0.8,
+    "minimum_unknown_area": 2.0,
+    "obstacle_clearance": 2.65,
+    "unknown_clearance": 1.9,
+    "maximum_frontier_distance": 4.0,
+    "minimum_goal_distance": 1.0,
+    "visited_radius": 1.5,
+    "maximum_candidates": 12
+  },
+  "limits": {
+    "wall_seconds": 15.0,
+    "maximum_goals": 8,
+    "goal_wall_timeout": 300
+  },
+  "ground_truth_used": false,
+  "coverage": null,
+  "coverage_note": "No fixed explorable-area denominator; only known-cell area is reported.",
+  "initial": {
+    "wall_elapsed": 3.6724879890007287,
+    "simulation_seconds": 16.27,
+    "pose": [
+      3.6535192856705715e-18,
+      -4.3838182186912945e-37,
+      -3.392124629524838e-19
+    ],
+    "known_cells": 1096,
+    "known_area_m2": 2.740000081658364,
+    "map_version": "27ea13f9928e5ff8",
+    "map_width": 304,
+    "map_height": 311,
+    "path_length_odom_m": 2.307680288593197e-19,
+    "nearest_scan_m": 3.8488073348999023,
+    "velocity": [
+      3.1861300552867907e-19,
+      9.316962372436262e-20
+    ]
+  },
+  "initial_scan": {
+    "status": 5,
+    "error_msg": "budget_exhausted"
+  },
+  "stopped": true,
+  "final": {
+    "wall_elapsed": 16.800419871000486,
+    "simulation_seconds": 19.85,
+    "pose": [
+      -3.895198625543967e-13,
+      -1.612249397087235e-13,
+      0.7739999999999783
+    ],
+    "known_cells": 1096,
+    "known_area_m2": 2.740000081658364,
+    "map_version": "27ea13f9928e5ff8",
+    "map_width": 304,
+    "map_height": 311,
+    "path_length_odom_m": 4.477951008571948e-13,
+    "nearest_scan_m": 4.050510406494141,
+    "velocity": [
+      0.0,
+      0.0
+    ]
+  },
+  "goals": [],
+  "goal_count": 0,
+  "successful_goals": 0,
+  "failed_goals": 0,
+  "excluded_observation_positions": [],
+  "path_length_odom_m": 4.477951008571948e-13,
+  "elapsed_wall_seconds": 16.811004757000774,
+  "minimum_scan_m": 3.8487985134124756
+}

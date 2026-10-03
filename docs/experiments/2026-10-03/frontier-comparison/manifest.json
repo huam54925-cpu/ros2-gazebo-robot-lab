@@ -1,0 +1,21 @@
+{
+  "source_sha256": {
+    "workspace/navigation_base/exploration/aggressive.py": "6da9c628ad1bd63c08b6d336b148e78bca0a447c4066562d5f19b184af79b78a",
+    "workspace/navigation_base/exploration/explore.py": "232a2b72c79489d8911af3859d78ab192d999fb0e3d9fd3341bb65c829de1972",
+    "workspace/navigation_base/exploration/frontier.py": "9c42f61874aaf382643cf47d74d6b1516c53856ea9f739b768b88796ec2183cc",
+    "workspace/navigation_base/slam/mapper_params_online_async.yaml": "2b3dd7fee0d32373d92c0859fc57f7e5c6d36c49ed97b2c0035b97208d935d35",
+    "workspace/navigation_base/navigation/nav2.yaml": "9b09017dea9e15b09fd7a536c3b2bb9a2c9c623c49fb8c517e0cd8d427e1b104",
+    "workspace/navigation_base/worlds/indoor_mapping.sdf": "7a50aaf82f6ad04560716dc72c4d48db8743ce3e89ffb1c6f8e32f0eb8b85424"
+  },
+  "runs": [
+    "frontier-baseline-v3-20261003",
+    "frontier-aggressive-20261003"
+  ],
+  "shared_limits": {
+    "max_goals": 8,
+    "wall_budget_s": 1200,
+    "goal_timeout_s": 300
+  },
+  "guard_unchanged": true,
+  "ground_truth_used_by_explorer": false
+}

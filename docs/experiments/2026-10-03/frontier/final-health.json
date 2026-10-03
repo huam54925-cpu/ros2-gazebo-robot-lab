@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "map_frame": "map",
+  "width": 323,
+  "height": 355,
+  "resolution": 0.05000000074505806,
+  "free_cells": 55345,
+  "occupied_cells": 2145,
+  "unknown_cells": 57175,
+  "map_stamp_sec": 198,
+  "scan_time_tf_available": true,
+  "map_to_odom_translation": [
+    -0.08986050889438432,
+    -0.27459098725670905,
+    0.0
+  ]
+}

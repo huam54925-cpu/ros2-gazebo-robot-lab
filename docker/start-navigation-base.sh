@@ -7,6 +7,7 @@ case "$SCENE" in
   mapping) WORLD=/work/robot_ws/navigation_base/worlds/indoor_mapping.sdf; DEFAULT_IMAGE=robot-sim:lyrical-mapping-v2; RVIZ=slam/mapping.rviz ;;
   *) echo 'Usage: start-navigation-base.sh [lidar|mapping]' >&2; exit 2 ;;
 esac
+RVIZ=${ROBOT_RVIZ_CONFIG:-$RVIZ}
 if (( $# > 1 )); then echo 'Expected at most one scene argument.' >&2; exit 2; fi
 IMAGE=${ROBOT_IMAGE:-$DEFAULT_IMAGE}
 if ! docker image inspect "$IMAGE" >/dev/null 2>&1; then

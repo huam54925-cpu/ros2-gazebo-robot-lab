@@ -1,0 +1,78 @@
+{
+  "status": "finished",
+  "stop_reason": "no_eligible_observation_goals",
+  "policy": "nearest_reachable_candidate",
+  "configuration": {
+    "coarse_resolution": 0.2,
+    "minimum_frontier_length": 0.8,
+    "minimum_unknown_area": 2.0,
+    "obstacle_clearance": 2.65,
+    "unknown_clearance": 1.9,
+    "maximum_frontier_distance": 4.0,
+    "minimum_goal_distance": 1.0,
+    "visited_radius": 1.5,
+    "maximum_candidates": 12
+  },
+  "limits": {
+    "wall_seconds": 1200.0,
+    "maximum_goals": 8,
+    "goal_wall_timeout": 300.0
+  },
+  "ground_truth_used": false,
+  "coverage": null,
+  "coverage_note": "No fixed explorable-area denominator; only known-cell area is reported.",
+  "initial": {
+    "wall_elapsed": 3.806656937000298,
+    "simulation_seconds": 11.452,
+    "pose": [
+      2.568487133417243e-18,
+      -1.3505181261088583e-37,
+      -2.2028000305600178e-19
+    ],
+    "known_cells": 1096,
+    "known_area_m2": 2.740000081658364,
+    "map_version": "27ea13f9928e5ff8",
+    "map_width": 304,
+    "map_height": 311,
+    "path_length_odom_m": 2.046412452788084e-19,
+    "nearest_scan_m": 3.8488073348999023,
+    "velocity": [
+      2.783080809364527e-19,
+      -1.6015293253803898e-19
+    ]
+  },
+  "initial_scan": {
+    "status": 4,
+    "error_code": 0,
+    "error_msg": ""
+  },
+  "stopped": true,
+  "final": {
+    "wall_elapsed": 100.90977531899989,
+    "simulation_seconds": 40.145,
+    "pose": [
+      -3.309591724551884e-13,
+      9.3401130478671e-13,
+      0.007881127646270447
+    ],
+    "known_cells": 1096,
+    "known_area_m2": 2.740000081658364,
+    "map_version": "27ea13f9928e5ff8",
+    "map_width": 304,
+    "map_height": 311,
+    "path_length_odom_m": 4.643470843797833e-12,
+    "nearest_scan_m": 3.8487536907196045,
+    "velocity": [
+      0.0,
+      0.0
+    ]
+  },
+  "goals": [],
+  "goal_count": 0,
+  "successful_goals": 0,
+  "failed_goals": 0,
+  "excluded_observation_positions": [],
+  "path_length_odom_m": 4.643470843797833e-12,
+  "elapsed_wall_seconds": 100.92288358699989,
+  "minimum_scan_m": 3.4934136867523193
+}

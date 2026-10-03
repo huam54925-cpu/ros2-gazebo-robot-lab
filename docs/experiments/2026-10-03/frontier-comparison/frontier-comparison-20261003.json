@@ -1,0 +1,51 @@
+{
+  "common_simulation_horizon_s": 154.17900000000003,
+  "runs": [
+    {
+      "policy": "Conservative",
+      "report": "frontier-baseline-v3-20261003.json",
+      "goals": 4,
+      "successes": 4,
+      "failures": 0,
+      "stop_reason": "no_eligible_observation_goals",
+      "stopped": true,
+      "wall_seconds": 516.6724528039995,
+      "simulation_seconds": 154.17900000000003,
+      "distance_odom_m": 6.2824474585086865,
+      "known_area_initial_m2": 2.740000081658364,
+      "known_area_after_initial_scan_m2": 131.73500392600897,
+      "known_area_final_m2": 143.72500428333882,
+      "navigation_phase_gain_m2": 11.990000357329848,
+      "navigation_gain_per_meter": 1.908491943070863,
+      "minimum_scan_m": 2.6978774070739746,
+      "common_time_last_sample_s": 154.17900000000003,
+      "known_area_at_common_time_m2": 143.72500428333882
+    },
+    {
+      "policy": "Aggressive",
+      "report": "frontier-aggressive-20261003.json",
+      "goals": 8,
+      "successes": 7,
+      "failures": 1,
+      "stop_reason": "goal_budget_exhausted",
+      "stopped": true,
+      "wall_seconds": 791.7533863810022,
+      "simulation_seconds": 225.398,
+      "distance_odom_m": 13.17610022260272,
+      "known_area_initial_m2": 2.740000081658364,
+      "known_area_after_initial_scan_m2": 132.02000393450263,
+      "known_area_final_m2": 218.3750065080822,
+      "navigation_phase_gain_m2": 86.35500257357958,
+      "navigation_gain_per_meter": 6.5539120919438165,
+      "minimum_scan_m": 1.8814623355865479,
+      "common_time_last_sample_s": 154.136,
+      "known_area_at_common_time_m2": 188.5775056200475
+    }
+  ],
+  "limitations": [
+    "One run per policy; no statistical significance claim.",
+    "Aggressive changes scoring, candidate geometry and revisit rules together.",
+    "Known area is not coverage; initial scan growth is separated from navigation gain.",
+    "Goal/time caps match, actual stopping times differ."
+  ]
+}
