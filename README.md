@@ -8,9 +8,9 @@
 
 [2026-10-03 实验记录、图片与原始数据](docs/experiments/2026-10-03/README.md) · [后续路线与技能接口设计](docs/robot-skills-roadmap.md)
 
-![Nav2 规划与实际轨迹](docs/experiments/2026-10-03/figures/nav2-validation-20261003.png)
+![自主探索：保守与激进策略的地图增长对照](docs/experiments/2026-10-03/frontier-comparison/frontier-comparison-20261003.png)
 
-蓝色为穿通道，橙色为绕隔墙，绿色为拒绝非法目标后的继续导航；叉号为被拒绝的墙内目标。虚线是初始规划，实线是 SLAM 坐标中的执行轨迹。
+蓝色为保守策略，橙色为激进策略。左图按仿真时间、右图按里程计距离比较已知地图面积。共同仿真时长约 154 秒时，激进版已知面积增加约 **31%**；扣除初始旋转后，每米导航新增面积约为保守版的 **3.43 倍**。两策略各运行一次，已知面积不等于覆盖率；激进版 7/8 目标成功，最后一段触发停车保护后取消。
 
 [激进/保守策略实测对照](docs/experiments/2026-10-03/frontier-comparison/README.md) · [Frontier 首轮结果与图片](docs/experiments/2026-10-03/frontier/README.md) · [运行说明](docs/frontier-exploration.md)
 
