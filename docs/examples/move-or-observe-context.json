@@ -1,0 +1,197 @@
+{
+  "artifact_status": "DESIGN_EXAMPLE_NOT_EXECUTABLE",
+  "illustrative_only": true,
+  "context_id": "illustrative-context-17",
+  "map_version": "illustrative-map-17",
+  "map_frame_epoch": 1,
+  "snapshot_sim_seconds": 120.0,
+  "robot": {
+    "pose": {
+      "x": 5.0,
+      "y": 5.0,
+      "yaw": 0.0,
+      "frame": "map"
+    },
+    "pose_sim_seconds": 120.0,
+    "active_task": null,
+    "stopped": true
+  },
+  "safety": {
+    "nearest_scan_m": 3.0,
+    "scan_sim_seconds": 119.95,
+    "scan_age_wall_seconds": 0.2,
+    "scan_valid": true,
+    "sensor_offset_m": [
+      -0.7057095,
+      0.0
+    ],
+    "guard_threshold_m": 1.9
+  },
+  "budgets": {
+    "remaining_sim_seconds": 200.0,
+    "remaining_wall_seconds": 600.0,
+    "remaining_actions": 4,
+    "remaining_navigation_goals": 2
+  },
+  "time_models": [
+    {
+      "model_id": "serial_cost_draft_v1",
+      "v_effective_mps": 0.15,
+      "omega_effective_radps": 0.2,
+      "settle_sim_seconds": 4.0,
+      "rtf": 0.3,
+      "rtf_source": "illustrative_assumption"
+    }
+  ],
+  "policy": {
+    "policy_id": "joint_v1_draft",
+    "minimum_predicted_gain_m2": 0.25,
+    "observation_advantage_ratio": 1.2
+  },
+  "options": [
+    {
+      "option_id": "rotate-left-45",
+      "context_id": "illustrative-context-17",
+      "map_version": "illustrative-map-17",
+      "map_frame_epoch": 1,
+      "type": "ROTATE_OBSERVE",
+      "target_pose": null,
+      "signed_angle_rad": 0.7853981633974483,
+      "trajectory_signature": "illustrative-rotate-left-45",
+      "path_length_m": 0,
+      "absolute_turn_budget_rad": 0.7853981633974483,
+      "novel_unknown_area_proxy_m2": 0.3,
+      "gain_model": "visible_union_minus_recent_views_draft_v1",
+      "gain_confidence": "UNCALIBRATED",
+      "estimated_sim_seconds": 7.926990816987241,
+      "estimated_wall_seconds": 26.423302723290806,
+      "time_model": "serial_cost_draft_v1",
+      "safety": {
+        "status": "SAFE_KNOWN_MAP",
+        "guard_threshold_m": 1.9,
+        "planning_margin_m": 0.25,
+        "planning_required_m": 2.15,
+        "predicted_min_clearance_m": 2.45,
+        "body_sweep_checked": true,
+        "revalidate_on_execution": true
+      },
+      "eligible": true,
+      "reason_codes": [],
+      "score": 0.037845382557667576
+    },
+    {
+      "option_id": "rotate-left-90",
+      "context_id": "illustrative-context-17",
+      "map_version": "illustrative-map-17",
+      "map_frame_epoch": 1,
+      "type": "ROTATE_OBSERVE",
+      "target_pose": null,
+      "signed_angle_rad": 1.5707963267948966,
+      "trajectory_signature": "illustrative-rotate-left-90",
+      "path_length_m": 0,
+      "absolute_turn_budget_rad": 1.5707963267948966,
+      "novel_unknown_area_proxy_m2": 0.4,
+      "gain_model": "visible_union_minus_recent_views_draft_v1",
+      "gain_confidence": "UNCALIBRATED",
+      "estimated_sim_seconds": 11.853981633974483,
+      "estimated_wall_seconds": 39.51327211324828,
+      "time_model": "serial_cost_draft_v1",
+      "safety": {
+        "status": "SAFE_KNOWN_MAP",
+        "guard_threshold_m": 1.9,
+        "planning_margin_m": 0.25,
+        "planning_required_m": 2.15,
+        "predicted_min_clearance_m": 2.4,
+        "body_sweep_checked": true,
+        "revalidate_on_execution": true
+      },
+      "eligible": true,
+      "reason_codes": [],
+      "score": 0.033743936202294024
+    },
+    {
+      "option_id": "move-observe-1",
+      "context_id": "illustrative-context-17",
+      "map_version": "illustrative-map-17",
+      "map_frame_epoch": 1,
+      "type": "MOVE_OBSERVE",
+      "target_pose": {
+        "x": 6.2,
+        "y": 5.0,
+        "yaw": 1.5707963267948966,
+        "frame": "map"
+      },
+      "signed_angle_rad": null,
+      "trajectory_signature": "illustrative-move-observe-1",
+      "path_length_m": 1.2,
+      "absolute_turn_budget_rad": 1.5707963267948966,
+      "novel_unknown_area_proxy_m2": 6.0,
+      "gain_model": "visible_union_minus_recent_views_draft_v1",
+      "gain_confidence": "UNCALIBRATED",
+      "estimated_sim_seconds": 19.853981633974485,
+      "estimated_wall_seconds": 66.17993877991495,
+      "time_model": "serial_cost_draft_v1",
+      "safety": {
+        "status": "SAFE_KNOWN_MAP",
+        "guard_threshold_m": 1.9,
+        "planning_margin_m": 0.25,
+        "planning_required_m": 2.15,
+        "predicted_min_clearance_m": 2.31,
+        "body_sweep_checked": true,
+        "revalidate_on_execution": true
+      },
+      "eligible": true,
+      "reason_codes": [],
+      "score": 0.30220638412058837
+    },
+    {
+      "option_id": "frontier-unsafe",
+      "context_id": "illustrative-context-17",
+      "map_version": "illustrative-map-17",
+      "map_frame_epoch": 1,
+      "type": "NAVIGATE_FRONTIER",
+      "target_pose": {
+        "x": 7.5,
+        "y": 6.0,
+        "yaw": 1.5707963267948966,
+        "frame": "map"
+      },
+      "signed_angle_rad": null,
+      "trajectory_signature": "illustrative-frontier-unsafe",
+      "path_length_m": 2.9,
+      "absolute_turn_budget_rad": 1.5707963267948966,
+      "novel_unknown_area_proxy_m2": 12.0,
+      "gain_model": "visible_union_minus_recent_views_draft_v1",
+      "gain_confidence": "UNCALIBRATED",
+      "estimated_sim_seconds": null,
+      "estimated_wall_seconds": null,
+      "time_model": "serial_cost_draft_v1",
+      "safety": {
+        "status": "UNSAFE",
+        "guard_threshold_m": 1.9,
+        "planning_margin_m": 0.25,
+        "planning_required_m": 2.15,
+        "predicted_min_clearance_m": 2.01,
+        "body_sweep_checked": false,
+        "revalidate_on_execution": true
+      },
+      "eligible": false,
+      "reason_codes": [
+        "PLANNING_CLEARANCE"
+      ],
+      "score": null
+    }
+  ],
+  "recent_actions": [],
+  "expected_decision": {
+    "option_id": "move-observe-1",
+    "reason": "Highest eligible gain rate; observation does not exceed best move rate by 20 percent."
+  },
+  "counterfactual": {
+    "change": {
+      "option_id": "move-observe-1",
+      "novel_unknown_area_proxy_m2": 0.5
+    },
+    "expected_option_id": "rotate-left-45"
+  }
+}

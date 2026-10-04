@@ -1,0 +1,28 @@
+{
+  "source": "explicit_user_wider_budget",
+  "previous_mission_id": "d6401eb3-8750-401e-aa12-ce5074c0f795",
+  "previous_progress": {
+    "steps": 2,
+    "distance_m": 8.879664150275074,
+    "failures": 0,
+    "active": false
+  },
+  "total_authorized_limits": {
+    "max_steps": 20,
+    "max_distance": 80,
+    "max_sim_time": 900,
+    "max_wall_time": 3600,
+    "max_failures": 3,
+    "profile": "extended"
+  },
+  "continuation_limits": {
+    "max_steps": 18,
+    "max_distance": 71.02,
+    "max_sim_time": 641,
+    "max_wall_time": 2777,
+    "max_failures": 3
+  },
+  "accounting": "Subtract elapsed original wall/simulation clocks, including stationary investigation; reserve 30 wall / 15 sim seconds for startup. No consumed budget reset.",
+  "created_unix_s": 1791112280.2358801,
+  "pid": 78232
+}

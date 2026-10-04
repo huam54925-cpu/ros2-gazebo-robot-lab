@@ -1,0 +1,133 @@
+{
+  "mission_id": "ce973082-963d-4834-ae7c-934453a3e430",
+  "mode": "memory",
+  "model": "gpt-6.1-sol",
+  "limits": {
+    "max_steps": 3,
+    "max_distance": 12.0,
+    "max_sim_time": 180.0,
+    "max_wall_time": 900.0,
+    "max_failures": 2,
+    "profile": "trial"
+  },
+  "result": "two_goals_succeeded_and_stopped",
+  "stop_reason": "no_action_fits_remaining_budget",
+  "steps": [
+    {
+      "step": 1,
+      "task_id": "7e879dbb-75cc-4537-b832-736939afacf9",
+      "decision": {
+        "action": "MOVE",
+        "option_id": "F_1714019cf5b5_3",
+        "rationale_summary": "优先进入尚未到访的R_2_-1并接近未知边界。该候选新增边界代理与当前区最佳候选相近，路径约2.07米、预计55秒，预算充足；已知地图预测净空2.58米，通过本地检查且仍须执行器复核。相比远区候选全程11.61米的转移成本，此选择更合理，也避免重复历史取消目标；代理不代表实际收益。"
+      },
+      "strategy": {
+        "mode": "EXPAND_REGION",
+        "target_region_id": "R_2_-1",
+        "transit": false
+      },
+      "status": "succeeded",
+      "stopped": true,
+      "pose_before": [
+        6.535020483513959,
+        -1.0314431888343107,
+        0.33828741497077125
+      ],
+      "pose_after": [
+        8.273637110181678,
+        -1.7562616845664014,
+        0.7014889778044047
+      ],
+      "distance_m": 1.9365128404951748,
+      "minimum_scan_m": 2.7787439823150635,
+      "new_known_m2": 5.212500155344607,
+      "lost_known_m2": 0.0,
+      "net_known_change_m2": 5.212500155344607,
+      "usable_for_trend": true,
+      "registration": "integer_grid",
+      "causal_action_gain_valid": false
+    },
+    {
+      "step": 2,
+      "task_id": "c66ed4f5-a8ed-4b1a-a1ac-917cfbf1beda",
+      "decision": {
+        "action": "MOVE",
+        "option_id": "F_4b69ed5f263f_1",
+        "rationale_summary": "继续向外侧未知边界推进，而非退回附近旧视点。各目标分区到访次数相同；远区R_0_1全程约13.57米，超过剩余10.06米距离预算，且本候选4仅为中间点。候选1路径约2.24米、预计67秒，适合剩余98秒预算，新增可见边界代理0.12为当前候选最高。上一任务已有成功及停车证据，当前无停车锁；已知地图预测净空2.37米通过本地检查，仍须执行器复核。代理不等于实际收益，不计墙后未知。"
+      },
+      "strategy": {
+        "mode": "LOCAL_EXPLORE",
+        "target_region_id": "R_2_-1",
+        "transit": false
+      },
+      "status": "succeeded",
+      "stopped": true,
+      "pose_before": [
+        8.273637110181678,
+        -1.7562616845664014,
+        0.7014889778044047
+      ],
+      "pose_after": [
+        10.279254542662683,
+        -1.758604185942235,
+        1.493595327112702
+      ],
+      "distance_m": 2.0899457586399173,
+      "minimum_scan_m": 2.514965057373047,
+      "new_known_m2": 27.987283962987515,
+      "lost_known_m2": 1.7722831817196256,
+      "net_known_change_m2": 26.21500078126789,
+      "usable_for_trend": false,
+      "registration": "fractional_cell_area_overlap",
+      "causal_action_gain_valid": false
+    }
+  ],
+  "totals": {
+    "distance_m": 4.026458599135092,
+    "minimum_scan_m": 2.514965057373047,
+    "known_area_before_m2": 256.90250765629116,
+    "known_area_after_m2": 288.33000859290365,
+    "net_known_area_change_m2": 31.42750093661249
+  },
+  "stop_budget_evidence": {
+    "remaining_sim_s_at_last_decision": 39.998999999999796,
+    "shortest_candidate_estimated_sim_s": 53.408913828987494,
+    "safe_candidates_remaining": 6
+  },
+  "memory_events": [
+    {
+      "event_id": "terminal:7e879dbb-75cc-4537-b832-736939afacf9",
+      "status": "succeeded",
+      "stopped": true,
+      "gain_m2": 5.212500155344607,
+      "purpose": "observe_goal"
+    },
+    {
+      "event_id": "terminal:c66ed4f5-a8ed-4b1a-a1ac-917cfbf1beda",
+      "status": "succeeded",
+      "stopped": true,
+      "gain_m2": null,
+      "purpose": "observe_goal"
+    }
+  ],
+  "low_gain_filter_triggered": false,
+  "stop_verification": {
+    "task_id": "14af475b-6d09-4f96-b539-94d4d5aff696",
+    "status": "succeeded",
+    "stopped": true,
+    "stop_latched": true,
+    "active_mission": null,
+    "odometry_fresh": true,
+    "velocity": {
+      "linear_x_m_s": 0.0,
+      "angular_z_rad_s": 0.0
+    }
+  },
+  "limitations": [
+    "No reset of the initial map; not a paired baseline comparison.",
+    "Second map window used fractional-cell overlap and is excluded from gain trends.",
+    "Neither executed goal was low gain; anti-loop filtering was not exercised in this live run.",
+    "Remaining safe candidates and unknown area do not establish whole-world coverage."
+  ],
+  "simulation_windows": "Gazebo and RViz remain open; Gazebo camera adjusted for viewing only."
+}

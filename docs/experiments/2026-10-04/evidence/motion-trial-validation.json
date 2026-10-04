@@ -1,0 +1,37 @@
+{
+  "date": "2026-10-04",
+  "tests": {
+    "agent": 16,
+    "path_safety": 12,
+    "explorer_safety": 10
+  },
+  "guard_threshold_m": 1.9,
+  "planning_required_clearance_m": 2.15,
+  "trials": {
+    "local": {
+      "request_id": "bdb986b9-3b5d-4802-81d1-41381daae701",
+      "status": "succeeded",
+      "requested_distance_m": 0.4,
+      "distance_odom_m": 0.2658091462192394,
+      "minimum_scan_m": 3.8488073348999023,
+      "stopped": true
+    },
+    "canceled": {
+      "request_id": "f35065a9-650a-4230-844d-43df0a04a1c4",
+      "status": "canceled",
+      "requested_distance_m": 0.4,
+      "distance_odom_m": 0.020669352000004547,
+      "minimum_scan_m": 4.112183570861816,
+      "stopped": true
+    },
+    "model": {
+      "request_id": "68bb7fa4-f4fc-4212-b1f4-10af814f90d5",
+      "status": "succeeded",
+      "requested_distance_m": 0.4,
+      "distance_odom_m": 0.25570693975946013,
+      "minimum_scan_m": 4.1316304206848145,
+      "stopped": true
+    }
+  },
+  "duplicate_request_replayed_without_movement": true
+}

@@ -1,0 +1,4 @@
+openai==3.24.0
+mcp==2.3.0
+python-dotenv==1.2.4
+httpx2==2.13.1

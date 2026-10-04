@@ -1,0 +1,119 @@
+{
+  "request_id": "68bb7fa4-f4fc-4212-b1f4-10af814f90d5",
+  "model_invoked": true,
+  "model": "gpt-6.1-sol",
+  "motion": {
+    "request_id": "68bb7fa4-f4fc-4212-b1f4-10af814f90d5",
+    "status": "succeeded",
+    "requested_distance_m": 0.4,
+    "stopped": true,
+    "before": {
+      "wall_elapsed": 6.033141123999485,
+      "simulation_seconds": 315.064,
+      "pose": [
+        0.2764695325483728,
+        -0.009074121019632082,
+        0.023103767795566114
+      ],
+      "known_cells": 4584,
+      "known_area_m2": 11.460000341534617,
+      "map_version": "e4824d60331d7e2a",
+      "map_width": 308,
+      "map_height": 322,
+      "path_length_odom_m": 0.0,
+      "nearest_scan_m": 4.1316304206848145,
+      "velocity": [
+        0.0,
+        0.0
+      ]
+    },
+    "candidate": {
+      "x": 0.6763627804797756,
+      "y": 0.000166563958964654,
+      "yaw": 0.023103767795566114
+    },
+    "planning": {
+      "status": 4,
+      "error_code": 0,
+      "clearance": {
+        "safe": true,
+        "map_version": "e4824d60331d7e2a",
+        "guard_threshold_m": 1.9,
+        "planning_margin_m": 0.25,
+        "required_clearance_m": 2.15,
+        "sensor_offset_m": [
+          -0.7057095,
+          0.0
+        ],
+        "predicted_min_clearance_m": 3.257866792496235,
+        "guard_margin_m": 1.3578667924962349,
+        "known_obstacles_only": true,
+        "reason": "clear",
+        "worst_base_pose": [
+          0.2764695325483728,
+          -0.009074121019632082,
+          -2.3699649891292283
+        ],
+        "worst_sensor_xy": [
+          0.7823056199829245,
+          0.48301911307239914
+        ],
+        "samples": 138
+      }
+    },
+    "clearance": {
+      "safe": true,
+      "map_version": "e4824d60331d7e2a",
+      "guard_threshold_m": 1.9,
+      "planning_margin_m": 0.25,
+      "required_clearance_m": 2.15,
+      "sensor_offset_m": [
+        -0.7057095,
+        0.0
+      ],
+      "predicted_min_clearance_m": 3.257866792496235,
+      "guard_margin_m": 1.3578667924962349,
+      "known_obstacles_only": true,
+      "reason": "clear",
+      "worst_base_pose": [
+        0.2764695325483728,
+        -0.009074121019632082,
+        -2.3699649891292283
+      ],
+      "worst_sensor_xy": [
+        0.7823056199829245,
+        0.48301911307239914
+      ],
+      "samples": 138
+    },
+    "navigation_result": {
+      "status": 4,
+      "error_code": 0,
+      "error_msg": ""
+    },
+    "distance_odom_m": 0.25570693975946013,
+    "minimum_scan_m": 4.1316304206848145,
+    "after": {
+      "wall_elapsed": 21.962989685999673,
+      "simulation_seconds": 319.36,
+      "pose": [
+        0.5321305995276476,
+        0.004927996357847455,
+        -0.010989060889170243
+      ],
+      "known_cells": 12762,
+      "known_area_m2": 31.905000950843103,
+      "map_version": "2e164906be2707fa",
+      "map_width": 320,
+      "map_height": 322,
+      "path_length_odom_m": 0.25570693975946013,
+      "nearest_scan_m": 4.341713905334473,
+      "velocity": [
+        0.0,
+        0.0
+      ]
+    }
+  },
+  "summary": "已执行一次前进测试并停车。\n- 结果：工具报告成功，未取消或拒绝。\n- 实际行驶距离：约 **0.256 米**，未达到请求的 0.4 米。\n- 停车：**已确认**，最终线速度和角速度均为 0。",
+  "response_status": "completed"
+}

@@ -1,0 +1,119 @@
+{
+  "repository": "/mnt/robot_disk/ros_sim",
+  "date": "2026-10-04",
+  "guard_threshold_m": 1.9,
+  "planning_required_clearance_m": 2.15,
+  "unit_tests_passed": 30,
+  "independent_guard_ros_tests": "PASS: 1.881 m obstacle, command loss, stale scan, guard termination, motion-script interruption",
+  "historical_eighth_segment": {
+    "endpoint": {
+      "safe": true,
+      "map_version": "historical-final",
+      "guard_threshold_m": 1.9,
+      "planning_margin_m": 0.25,
+      "required_clearance_m": 2.15,
+      "sensor_offset_m": [
+        -0.7057095,
+        0.0
+      ],
+      "predicted_min_clearance_m": 2.4817591265523657,
+      "guard_margin_m": 0.5817591265523658,
+      "known_obstacles_only": true,
+      "reason": "clear",
+      "worst_base_pose": [
+        3.2286538598355383,
+        11.81681574599165,
+        -0.4636476090008061
+      ],
+      "worst_sensor_xy": [
+        2.597448094088583,
+        12.132418628865128
+      ],
+      "samples": 5
+    },
+    "whole_path": {
+      "safe": false,
+      "map_version": "historical-final",
+      "guard_threshold_m": 1.9,
+      "planning_margin_m": 0.25,
+      "required_clearance_m": 2.15,
+      "sensor_offset_m": [
+        -0.7057095,
+        0.0
+      ],
+      "predicted_min_clearance_m": 1.5930054110882395,
+      "guard_margin_m": -0.30699458891176046,
+      "known_obstacles_only": true,
+      "reason": "path_guard_clearance",
+      "worst_base_pose": [
+        2.258054731721565,
+        9.01681549102068,
+        1.0390899078608244
+      ],
+      "worst_sensor_xy": [
+        1.9002565468079191,
+        8.408534012375513
+      ],
+      "samples": 874
+    },
+    "map_sha256": "2b85f2c68ebf12878d1354f783d4ce80500362a9c50780900a077698e8cfe122",
+    "limitation": "Offline replay uses the FINAL archived map and reconstructed forward-tangent yaw, not the map available at original dispatch."
+  },
+  "online_acceptance": {
+    "report": "frontier-guard-acceptance-final-20261004.json",
+    "status": "finished",
+    "stop_reason": "goal_budget_exhausted",
+    "stopped": true,
+    "goals": 3,
+    "successes": 3,
+    "failures": 0,
+    "minimum_scan_m": 2.6032168865203857,
+    "distance_odom_m": 3.6141091672470873,
+    "wall_seconds": 192.7934758519998,
+    "unsafe_candidate_rejections": 0,
+    "execution_path_invalidations": 0,
+    "guard_stop_results": 0,
+    "note": "Bounded continuation in the current simulation; not a fresh-start comparison against the historical exploration policy."
+  },
+  "source_sha256": {
+    "workspace/navigation_base/exploration/path_safety.py": "cb1e84ade1559ea4dbb473ee84614de0e59c6a700861227f44ea6f010a342ec4",
+    "workspace/navigation_base/exploration/explore.py": "6a8e6eb738ce1cd517a6cc7234bdcc0296d8b3ed7ef378481512682cd76a4e15",
+    "workspace/navigation_base/safety_contract.py": "c23f382f2c190af027933e0762f2735193fdef9a4c0f9353313b957cde2ac706",
+    "workspace/navigation_base/velocity_guard.py": "66dcd169924af7e498838e32f405409decb705e1c9931444abdbffb03b1416ce",
+    "workspace/navigation_base/navigation/nav2.yaml": "9b09017dea9e15b09fd7a536c3b2bb9a2c9c623c49fb8c517e0cd8d427e1b104",
+    "workspace/navigation_base/bringup.launch.py": "a9f576c71d889219a6b1da0894525feec2a5171283df57653bf1d44dc27e6409",
+    "workspace/navigation_base/worlds/indoor_mapping.sdf": "7a50aaf82f6ad04560716dc72c4d48db8743ce3e89ffb1c6f8e32f0eb8b85424"
+  },
+  "limitations": [
+    "Map checks cover known obstacles only; runtime independent guard remains authoritative.",
+    "Asynchronous Nav2 replans are monitored after publication; the monitor is not a synchronous controller safety gate.",
+    "Fixed planning margin is conservative but not validated for every localization/tracking error or dynamic obstacle.",
+    "No full-building coverage, physical collision-count, or multi-run statistical claim."
+  ],
+  "online_boundary_check": {
+    "report": "frontier-guard-boundary-20261004.json",
+    "status": "finished",
+    "stop_reason": "goal_budget_exhausted",
+    "stopped": true,
+    "goals": 2,
+    "successes": 2,
+    "failures": 0,
+    "minimum_scan_m": 2.542471408843994,
+    "distance_odom_m": 3.0343213101179964,
+    "unsafe_candidate_rejections": 0,
+    "execution_path_invalidations": 0,
+    "goal_results": [
+      {
+        "status": 4,
+        "error_code": 0,
+        "error_msg": ""
+      },
+      {
+        "status": 4,
+        "error_code": 0,
+        "error_msg": ""
+      }
+    ],
+    "note": "Continuation near the original eighth-goal departure region, with the current online map and freely selected frontier goals; not an exact replay of the old route."
+  }
+}

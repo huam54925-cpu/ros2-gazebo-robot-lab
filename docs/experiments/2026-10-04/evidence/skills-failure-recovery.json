@@ -1,0 +1,107 @@
+{
+  "request_id": "09f1cea9-170b-4167-9bbc-5b61c29567a6",
+  "command": "recover",
+  "result": {
+    "request_id": "ef05c5e1-e602-4018-9f88-250a990917b6",
+    "task_id": "f24dab06-59ec-4e59-bab1-f7f7f39da360",
+    "kind": "execute_frontier",
+    "payload": {
+      "frontier_id": "F_c65f183051c0_1"
+    },
+    "accepted": true,
+    "status": "indeterminate",
+    "running": false,
+    "stopped": true,
+    "reason": "worker_failed_navigation_disabled",
+    "sensor_fresh": {
+      "odometry": true,
+      "scan": true,
+      "map": true,
+      "localization": true
+    },
+    "sensor_observed_unix_s": 1791104730.7562075,
+    "map_version": "f383a49b8b3a2927f5d7",
+    "candidate": {
+      "x": 0.22931901662518772,
+      "y": 2.8255744437927657,
+      "yaw": 0.0,
+      "dx": -0.3384045785302292,
+      "dy": 2.829202572152689,
+      "euclidean_distance_m": 2.8493692026561974,
+      "frontier_distance_m": 0.6000000089406967,
+      "estimated_gain_m2": 12.760000380277637,
+      "preplan_score": 6.886248723713702,
+      "id": "information-1",
+      "frontier_id": "F_c65f183051c0_1",
+      "map_version": "f383a49b8b3a2927f5d7",
+      "planned_length_m": 2.9559864348305265,
+      "clearance": {
+        "safe": true,
+        "map_version": "f383a49b8b3a2927f5d7",
+        "guard_threshold_m": 1.9,
+        "planning_margin_m": 0.25,
+        "required_clearance_m": 2.15,
+        "sensor_offset_m": [
+          -0.7057095,
+          0.0
+        ],
+        "predicted_min_clearance_m": 2.9908075152991622,
+        "guard_margin_m": 1.0908075152991623,
+        "known_obstacles_only": true,
+        "reason": "clear",
+        "worst_base_pose": [
+          0.5677235951554169,
+          -0.003628128359923723,
+          -2.4375092190067424
+        ],
+        "worst_sensor_xy": [
+          1.1056190437435216,
+          0.4532026770576309
+        ],
+        "samples": 476
+      },
+      "classical_score": 6.839027739712367
+    },
+    "cancel_requested": false,
+    "created_unix_s": 1791104712.5969665,
+    "updated_unix_s": 1791104853.0261953,
+    "result": null,
+    "phase": "navigating",
+    "distance_odom_m": 1.7772364830512504e-15,
+    "resolved": true,
+    "recovery_evidence": {
+      "nav2_not_running": true,
+      "fresh_stationary_observations": [
+        {
+          "stamp_sim_s": 804.724,
+          "velocity": {
+            "linear_x_m_s": 0.0,
+            "angular_z_rad_s": 0.0
+          }
+        },
+        {
+          "stamp_sim_s": 804.928,
+          "velocity": {
+            "linear_x_m_s": 0.0,
+            "angular_z_rad_s": 0.0
+          }
+        },
+        {
+          "stamp_sim_s": 804.928,
+          "velocity": {
+            "linear_x_m_s": 0.0,
+            "angular_z_rad_s": 0.0
+          }
+        },
+        {
+          "stamp_sim_s": 805.098,
+          "velocity": {
+            "linear_x_m_s": 0.0,
+            "angular_z_rad_s": 0.0
+          }
+        }
+      ]
+    },
+    "recovery_unix_s": 1791104853.0261931
+  }
+}

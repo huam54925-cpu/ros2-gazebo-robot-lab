@@ -1,20 +1,30 @@
 # ros2-gazebo-robot-lab
 
-基于 Docker 的 ROS 2 Lyrical 与 Gazebo 小车仿真实验：速度控制、里程计反馈、TF 和 RViz 可视化，已接入 2D 激光雷达、SLAM Toolbox 建图和 Nav2，并完成静态室内单目标导航实测。
+基于 Docker 的 ROS 2 Lyrical 与 Gazebo 小车仿真实验：2D 激光雷达、SLAM Toolbox、Nav2，以及 **AI → MCP → Robot Skills → 本地安全执行器**。模型从本地验证的候选 ID 中选择下一步，运动结果和停车状态由本地确定；尚未完成整屋自主探索验收。
 
 ## 实验结果
 
-[2026-10-03 日结与明天计划](docs/experiments/2026-10-03/daily-summary.md)
+[2026-10-04 日结：进展、问题、实跑与下一步](docs/experiments/2026-10-04/README.md) · [最新运行数据](docs/experiments/2026-10-04/evidence/memory-trial-summary.json)
 
-[2026-10-03 实验记录、图片与原始数据](docs/experiments/2026-10-03/README.md) · [后续路线与技能接口设计](docs/robot-skills-roadmap.md)
+![memory 模式两步向外探索后，真实 RViz 地图与机器人位置](docs/experiments/2026-10-04/images/memory-trial-rviz.png)
 
-![自主探索：保守与激进策略的地图增长对照](docs/experiments/2026-10-03/frontier-comparison/frontier-comparison-20261003.png)
+2026-10-04 最新 `memory` 模式实跑：**2/2 目标成功，行驶 4.03 m，最近雷达 2.51 m，停车确认通过**。已知地图面积从 **256.90 增至 288.33 m²**，净增加 **31.43 m²**；第二步存在非整数地图配准变化，已排除出可信收益趋势。剩余约 40 s 仿真时间不足以容纳最短候选估计的 53.4 s，故没有发出第三个目标。不是整屋覆盖率，也不是重置起点后的策略对照；本轮未触发低收益防循环过滤。
 
-蓝色为保守策略，橙色为激进策略。左图按仿真时间、右图按里程计距离比较已知地图面积。共同仿真时长约 154 秒时，激进版已知面积增加约 **31%**；扣除初始旋转后，每米导航新增面积约为保守版的 **3.43 倍**。两策略各运行一次，已知面积不等于覆盖率；激进版 7/8 目标成功，最后一段触发停车保护后取消。
+[原始地图前后对照](docs/experiments/2026-10-04/images/memory-map-progression.png) · [Gazebo 实际场景](docs/experiments/2026-10-04/images/memory-trial-gazebo.png) · [完整实验与问题清单](docs/experiments/2026-10-04/README.md)
 
-[激进/保守策略实测对照](docs/experiments/2026-10-03/frontier-comparison/README.md) · [Frontier 首轮结果与图片](docs/experiments/2026-10-03/frontier/README.md) · [运行说明](docs/frontier-exploration.md)
+历史记录：[10 月 3 日激进/保守单次对照](docs/experiments/2026-10-03/frontier-comparison/README.md) · [Frontier 首轮](docs/experiments/2026-10-03/frontier/README.md) · [后续路线](docs/robot-skills-roadmap.md) · [运行说明](docs/frontier-exploration.md)。旧图与原始记录保留；不能将不同初始地图下的结果直接比较为模型提升。
+
+2026-10-04 已补充[整条路径的雷达间距检查](docs/guard-path-clearance.md)：考虑雷达 TF 偏置、沿途朝向与地图变化，危险候选提前排除；执行失效时取消并排除目标。独立 guard 仍使用 1.9 m 阈值。
+
+最初的[移动还是观察决策设计](docs/move-or-observe-design.md)已落实为下述可选观察接口，含动作选择、增量观测收益和旋转安全门。
+
+[OpenAI API 与 MCP 本地环境](docs/openai-environment.md)已安装并通过 API 认证；[模型读取机器人实时状态](docs/robot-readonly.md)和[一次受限运动测试](docs/model-motion-trial.md)已运行验证。现已增加[六工具 Robot Skills / 安全 Frontier 选择](docs/robot-skills-mcp.md)：模型只提交本地候选 ID，统一任务仲裁、去重、路径复核和停车确认。已扩展[有界连续 Frontier 与主动观察](docs/bounded-exploration-agent.md)：默认最多 3 轮，观察动作需显式启用；任意目标导航仍未开放。
 
 ## 当前进度
+
+已增加[区域探索与逐步地图收益](docs/regional-exploration.md)：统一 MOVE/OBSERVE 地图变化账本、跨区域候选名额、安全分段转移及 AI 换区上下文。地图配准变化与动作因果收益分开报告，不以空间分区数冒充整屋覆盖率。
+
+新增 `baseline / shadow / memory` 可选模式：保留原评分，增加未知空间语义、第一未知边界增量代理、终态事件记忆和分作用范围的失败过滤。新模式限最多 3 次 Frontier 提交，模型不能改坐标、速度、保护阈值或恢复锁。相关项目回归 **166 项**、独立包测试 **65 项**通过；下一步优先标定动作时间、完善可见性诊断及稳定 Frontier 簇历史，详见日结。
 
 - [x] Docker 仿真环境与持久化目录
 - [x] 小车前进、转向、停止
@@ -29,6 +39,11 @@
 - [ ] 动态障碍与卡住恢复专项验收
 - [x] Frontier 第一版：实时地图自主选点，4 个目标实测成功并自动停车
 - [x] 激进/保守选点单次对照：共同时间已知面积增加约 31%，激进版 7/8 目标成功
+- [x] 路径与 guard 间距评估、地图/路径变化重查、受阻目标排除及回归测试
+- [x] OpenAI/MCP 六工具、受限候选选择、幂等、任务仲裁与停车确认
+- [x] 有界连续 Frontier、可选观察接口、区域地图变化账本
+- [x] 探索记忆模式及两目标在线验收，成功换视角并新增已知地图
+- [ ] 低收益循环的在线针对性验收、稳定 Frontier 簇历史与公平策略对照
 - [ ] Frontier 整屋探索与覆盖率验收
 
 本项目已验证静态场景中的建图与单目标导航，已跑通自主选点执行循环，尚未完成整屋自主探索和动态场景鲁棒性验收。2026-10-02 已在 **NVIDIA GeForce GTX 1650** 上验证 Docker 内硬件 OpenGL 渲染，Gazebo 与 RViz 正常显示，运动、里程计、关节状态和 TF 回归通过。
@@ -37,7 +52,7 @@
 
 已在 Ubuntu 26.04、x86_64、ROS 2 Lyrical、Gazebo Sim 10.5.0 的本地桌面环境验证。需要 Docker、可用的 X11/XWayland 桌面和宿主机 `xauth`。
 
-**当前启动脚本使用 `--gpus all` 与 `--device /dev/dri:/dev/dri`，需要 NVIDIA GPU、NVIDIA Container Toolkit 和宿主机可用的 `/dev/dri`。** 已验证 GPU 为 GTX 1650，驱动为 595.91.07，容器内 `glxinfo -B` 报告 NVIDIA OpenGL 4.6；脚本不再设置 `LIBGL_ALWAYS_SOFTWARE=1`。 尚未验证无 NVIDIA 主机、Windows/macOS 或纯无头环境。镜像基础标签和 apt 包未锁定版本，未来重新构建的依赖可能变化。
+**当前启动脚本使用 `--gpus all` 与 `--device /dev/dri:/dev/dri`，需要 NVIDIA GPU、NVIDIA Container Toolkit 和宿主机可用的 `/dev/dri`。** 已验证 GPU 为 GTX 1650，驱动为 595.91.07，容器内 `glxinfo -B` 报告 NVIDIA OpenGL 4.6。当前 GUI 为兼容 NVIDIA/Xwayland 使用 Mesa 软件渲染，服务端与 GPU LiDAR 保留 NVIDIA 加速。尚未验证无 NVIDIA 主机、Windows/macOS 或纯无头环境。镜像基础标签和 apt 包未锁定版本，未来重新构建的依赖可能变化。
 
 ## 首次使用
 

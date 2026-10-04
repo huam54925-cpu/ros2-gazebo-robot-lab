@@ -1,0 +1,136 @@
+{
+  "mode": "read_only",
+  "motion_tools_enabled": false,
+  "started_unix_s": 1791102443.7242332,
+  "mcp_tools": [
+    "get_robot_status"
+  ],
+  "model": "gpt-6.1-sol",
+  "robot": {
+    "schema_version": 1,
+    "generated_monotonic_s": 5257.888736522,
+    "generated_unix_s": 1791102454.6380684,
+    "mode": "read_only",
+    "sources": {
+      "clock": {
+        "sim_time_s": 72.884,
+        "received_age_wall_s": 0.505,
+        "fresh": true
+      },
+      "guard_output": {
+        "linear_x_m_s": 0.0,
+        "angular_z_rad_s": 0.0,
+        "received_age_wall_s": 0.522,
+        "fresh": true
+      },
+      "odometry": {
+        "frame": "vehicle/odom",
+        "child_frame": "vehicle/base_link",
+        "stamp_sim_s": 72.874,
+        "pose": {
+          "x": 1.4141206195530793e-17,
+          "y": -1.0815735238719536e-35,
+          "z": 0.0,
+          "yaw_rad": -1.7450111291758577e-18
+        },
+        "velocity": {
+          "linear_x_m_s": 2.239146782794067e-19,
+          "angular_z_rad_s": -6.152762749120407e-20
+        },
+        "received_age_wall_s": 0.57,
+        "fresh": true,
+        "stamp_age_sim_s": 0.01
+      },
+      "scan": {
+        "frame": "vehicle/lidar",
+        "stamp_sim_s": 72.8,
+        "nearest_m": 3.8488073348999023,
+        "valid": true,
+        "sample_count": 360,
+        "no_finite_hit": false,
+        "received_age_wall_s": 0.891,
+        "fresh": true,
+        "stamp_age_sim_s": 0.084
+      },
+      "map": {
+        "frame": "map",
+        "stamp_sim_s": 72.6,
+        "width": 304,
+        "height": 311,
+        "resolution_m": 0.05000000074505806,
+        "origin": {
+          "x": -4.606596068009811,
+          "y": -5.041046423591928,
+          "z": 0.0,
+          "yaw_rad": 0.0
+        },
+        "content_hash": "8ec02a3ca69f89e4",
+        "unknown_cells": 93448,
+        "free_cells": 1095,
+        "other_known_cells": 1,
+        "known_area_m2": 2.740000081658364,
+        "coverage": null,
+        "received_age_wall_s": 1.239,
+        "fresh": true,
+        "stamp_age_sim_s": 0.284
+      },
+      "map_pose": {
+        "frame": "map",
+        "child_frame": "vehicle/base_link",
+        "stamp_sim_s": 72.874,
+        "pose": {
+          "x": 1.4141206195530793e-17,
+          "y": -1.0815735238719536e-35,
+          "z": 0.0,
+          "yaw_rad": -1.7450111291758577e-18
+        },
+        "received_age_wall_s": 0.502,
+        "fresh": true,
+        "stamp_age_sim_s": 0.01
+      }
+    },
+    "graph": {
+      "guard_node_present": true,
+      "navigation_action_server_present": true,
+      "observed_monotonic_s": 5254.890811241
+    },
+    "guard": {
+      "stop_radius_m": 1.9,
+      "reason_inferred_from_inputs": "command timeout",
+      "authoritative_guard_status": false
+    },
+    "snapshot_age_wall_s": 0.502,
+    "status": "available",
+    "motion_tools_enabled": false,
+    "note": "Read-only observations, not permission to move. Stale/missing fields are unknown. Guard reason is inferred, not a guard acknowledgement. No navigation status message means unknown, not proof of idle. Map known area is not room coverage."
+  },
+  "status": "passed",
+  "response_status": "completed",
+  "summary": "- **在线**：状态可用，仿真时钟、位姿、雷达、地图及保护输出均为新鲜数据；快照约 0.50 秒前更新。\n- **位姿**：地图坐标系 `map` 下，x≈0、y≈0 米，航向≈0 弧度；里程计坐标系 `vehicle/odom` 下也为同样数值。当前线速度、角速度均≈0。\n- **雷达**：数据有效，360 个采样点，最近障碍距离约 **3.85 米**。\n- **地图**：304×311 栅格，分辨率 0.05 米；已知面积约 **2.74 平方米**。全屋覆盖率未知，不能以已知面积代替。\n- **导航**：检测到导航动作服务，但缺少导航状态消息，当前是否有任务、任务进度均未知，不能判定为空闲。\n- **保护**：检测到保护节点，输出线速度与角速度均为 0；停止半径为 **1.90 米**。根据输入推算原因是“指令超时”，并非保护模块自报确认。",
+  "usage": [
+    {
+      "input_tokens": 267,
+      "input_tokens_details": {
+        "cache_write_tokens": 0,
+        "cached_tokens": 0
+      },
+      "output_tokens": 15,
+      "output_tokens_details": {
+        "reasoning_tokens": 0
+      },
+      "total_tokens": 282
+    },
+    {
+      "input_tokens": 1009,
+      "input_tokens_details": {
+        "cache_write_tokens": 0,
+        "cached_tokens": 0
+      },
+      "output_tokens": 268,
+      "output_tokens_details": {
+        "reasoning_tokens": 0
+      },
+      "total_tokens": 1277
+    }
+  ]
+}

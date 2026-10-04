@@ -1,0 +1,360 @@
+{
+  "tools": [
+    "get_robot_state",
+    "get_decision_context",
+    "get_safe_frontiers",
+    "execute_frontier",
+    "get_task_status",
+    "stop_robot",
+    "get_observation_options",
+    "perform_observation"
+  ],
+  "replay": {
+    "request_id": "f7ee322e-a096-46bc-836c-0bf951d905bd",
+    "task_id": "cf5a0bec-c207-45ca-bd8c-62571d5011f5",
+    "kind": "perform_observation",
+    "mission_id": "bc5cc98a-84c6-4495-8025-c9124f2015a6",
+    "payload": {
+      "option_id": "OBS_615203f4cc26_1"
+    },
+    "accepted": true,
+    "status": "aborted",
+    "running": false,
+    "stopped": true,
+    "reason": "rotation_path_invalidated:body_sweep_nonfree",
+    "sensor_fresh": {
+      "odometry": true,
+      "scan": true,
+      "map": true,
+      "localization": true
+    },
+    "sensor_observed_unix_s": 1791109169.1128783,
+    "map_version": "9b33eeb6788440c78abe",
+    "candidate": {
+      "type": "rotate",
+      "signed_angle_rad": 0.7853981633974483,
+      "x": 0.1833242497848293,
+      "y": 3.69924992252778,
+      "yaw": 3.6103334452158875,
+      "start_pose": [
+        0.1833242497848293,
+        3.69924992252778,
+        2.8249352818184392
+      ],
+      "map_version": "bac592d12a1c945a8671",
+      "gain_map_version": "bac592d12a1c945a8671",
+      "safe": true,
+      "novel_unknown_area_proxy_m2": 3.8800001156330115,
+      "gain_model": "world_fixed_rays_offset_lidar_v1",
+      "gain_confidence": "optimistic_proxy",
+      "estimated_sim_seconds": 7.926990816987241,
+      "estimated_wall_seconds": null,
+      "planned_length_m": 0.0,
+      "clearance": {
+        "safe": true,
+        "map_version": "bac592d12a1c945a8671",
+        "guard_threshold_m": 1.9,
+        "planning_margin_m": 0.25,
+        "required_clearance_m": 2.15,
+        "sensor_offset_m": [
+          -0.7057095,
+          0.0
+        ],
+        "predicted_min_clearance_m": 2.6490955108022955,
+        "guard_margin_m": 0.7490955108022956,
+        "known_obstacles_only": true,
+        "reason": "clear",
+        "worst_base_pose": [
+          0.1833242497848293,
+          3.69924992252778,
+          2.8249352818184392
+        ],
+        "worst_sensor_xy": [
+          0.8539469970849333,
+          3.479497723007705
+        ],
+        "samples": 65,
+        "body_sweep_checked": true,
+        "body_sweep_safe": true,
+        "signed_angle_rad": 0.7853981633974483,
+        "rotation_samples": 31
+      },
+      "score": 0.48946696233308584,
+      "option_id": "OBS_615203f4cc26_1"
+    },
+    "cancel_requested": false,
+    "created_unix_s": 1791109130.7697353,
+    "updated_unix_s": 1791109169.1128848,
+    "result": {
+      "status": "aborted",
+      "reason": "rotation_path_invalidated:body_sweep_nonfree",
+      "stopped": true,
+      "before": {
+        "wall_elapsed": 3.0545728099987173,
+        "simulation_seconds": 2095.888,
+        "pose": [
+          0.1833242497848293,
+          3.69924992252778,
+          2.8249352818184392
+        ],
+        "known_cells": 69196,
+        "known_area_m2": 172.99000515550378,
+        "map_version": "bac592d12a1c945a8671",
+        "map_width": 390,
+        "map_height": 402,
+        "path_length_odom_m": 0.0,
+        "nearest_scan_m": 2.708101272583008,
+        "velocity": [
+          0.0,
+          0.0
+        ]
+      },
+      "candidate": {
+        "type": "rotate",
+        "signed_angle_rad": 0.7853981633974483,
+        "x": 0.1833242497848293,
+        "y": 3.69924992252778,
+        "yaw": 3.6103334452158875,
+        "start_pose": [
+          0.1833242497848293,
+          3.69924992252778,
+          2.8249352818184392
+        ],
+        "map_version": "bac592d12a1c945a8671",
+        "gain_map_version": "bac592d12a1c945a8671",
+        "safe": true,
+        "novel_unknown_area_proxy_m2": 3.8800001156330115,
+        "gain_model": "world_fixed_rays_offset_lidar_v1",
+        "gain_confidence": "optimistic_proxy",
+        "estimated_sim_seconds": 7.926990816987241,
+        "estimated_wall_seconds": null,
+        "planned_length_m": 0.0,
+        "clearance": {
+          "safe": true,
+          "map_version": "bac592d12a1c945a8671",
+          "guard_threshold_m": 1.9,
+          "planning_margin_m": 0.25,
+          "required_clearance_m": 2.15,
+          "sensor_offset_m": [
+            -0.7057095,
+            0.0
+          ],
+          "predicted_min_clearance_m": 2.6490955108022955,
+          "guard_margin_m": 0.7490955108022956,
+          "known_obstacles_only": true,
+          "reason": "clear",
+          "worst_base_pose": [
+            0.1833242497848293,
+            3.69924992252778,
+            2.8249352818184392
+          ],
+          "worst_sensor_xy": [
+            0.8539469970849333,
+            3.479497723007705
+          ],
+          "samples": 65,
+          "body_sweep_checked": true,
+          "body_sweep_safe": true,
+          "signed_angle_rad": 0.7853981633974483,
+          "rotation_samples": 31
+        },
+        "score": 0.48946696233308584,
+        "option_id": "OBS_615203f4cc26_1"
+      },
+      "clearance": {
+        "safe": true,
+        "map_version": "bac592d12a1c945a8671",
+        "guard_threshold_m": 1.9,
+        "planning_margin_m": 0.25,
+        "required_clearance_m": 2.15,
+        "sensor_offset_m": [
+          -0.7057095,
+          0.0
+        ],
+        "predicted_min_clearance_m": 2.6490955108022955,
+        "guard_margin_m": 0.7490955108022956,
+        "known_obstacles_only": true,
+        "reason": "clear",
+        "worst_base_pose": [
+          0.1833242497848293,
+          3.69924992252778,
+          2.8249352818184392
+        ],
+        "worst_sensor_xy": [
+          0.8539469970849333,
+          3.479497723007705
+        ],
+        "samples": 65,
+        "body_sweep_checked": true,
+        "body_sweep_safe": true,
+        "signed_angle_rad": 0.7853981633974483,
+        "rotation_samples": 31
+      },
+      "distance_odom_m": 5.895280362960156e-13,
+      "minimum_scan_m": 2.708101272583008,
+      "observation_metrics": {
+        "gain_status": "UNCOMPARABLE",
+        "reason": "unaligned_map_origin",
+        "at_stop": {
+          "gain_status": "FEEDBACK_INCOMPLETE",
+          "observed_new_known_area_m2": 4.365000130087139,
+          "observed_lost_known_area_m2": 0.0,
+          "net_known_area_change_m2": 4.365000130087139,
+          "accepted_scan_evidence": "UNAVAILABLE",
+          "note": "Registered map changes only; SLAM processed-scan evidence unavailable, no LOW_GAIN claim."
+        },
+        "settling": {
+          "gain_status": "UNCOMPARABLE",
+          "reason": "unaligned_map_origin"
+        },
+        "feedback_wait_wall_s": 14.93705391200092,
+        "sensor_feedback_fresh": true,
+        "map_message_advanced": true
+      },
+      "after": {
+        "wall_elapsed": 27.554479504999108,
+        "simulation_seconds": 2102.2690000000002,
+        "pose": [
+          0.1826045725507827,
+          3.7045135892960106,
+          -2.9505200253610444
+        ],
+        "known_cells": 72410,
+        "known_area_m2": 181.02500539496546,
+        "map_version": "9b33eeb6788440c78abe",
+        "map_width": 391,
+        "map_height": 402,
+        "path_length_odom_m": 5.895280362960156e-13,
+        "nearest_scan_m": 2.831970691680908,
+        "velocity": [
+          0.0,
+          0.0
+        ]
+      },
+      "known_area_gain_m2": 8.03500023946168
+    },
+    "phase": "finished",
+    "distance_odom_m": 4.181096012938914e-13,
+    "replayed_without_execution": true
+  },
+  "extra_angle_rejected": true,
+  "task_count_unchanged": true,
+  "final_state": {
+    "schema_version": 1,
+    "generated_monotonic_s": 12062.506308421,
+    "generated_unix_s": 1791109259.2553897,
+    "mode": "read_only",
+    "sources": {
+      "clock": {
+        "sim_time_s": 2128.304,
+        "received_age_wall_s": 0.314,
+        "fresh": true
+      },
+      "odometry": {
+        "frame": "vehicle/odom",
+        "child_frame": "vehicle/base_link",
+        "stamp_sim_s": 2128.276,
+        "pose": {
+          "x": 0.6909277428442383,
+          "y": 4.052313310281746,
+          "z": 0.0,
+          "yaw_rad": -3.081380245373286
+        },
+        "velocity": {
+          "linear_x_m_s": 0.0,
+          "angular_z_rad_s": 0.0
+        },
+        "received_age_wall_s": 0.431,
+        "fresh": true,
+        "stamp_age_sim_s": 0.028
+      },
+      "guard_output": {
+        "linear_x_m_s": 0.0,
+        "angular_z_rad_s": 0.0,
+        "received_age_wall_s": 0.346,
+        "fresh": true
+      },
+      "scan": {
+        "frame": "vehicle/lidar",
+        "stamp_sim_s": 2128.2,
+        "nearest_m": 2.831970691680908,
+        "valid": true,
+        "sample_count": 360,
+        "no_finite_hit": false,
+        "received_age_wall_s": 0.771,
+        "fresh": true,
+        "stamp_age_sim_s": 0.104
+      },
+      "map": {
+        "frame": "map",
+        "stamp_sim_s": 2128.0,
+        "width": 391,
+        "height": 402,
+        "resolution_m": 0.05000000074505806,
+        "origin": {
+          "x": -4.711107808321658,
+          "y": -5.074421026660347,
+          "z": 0.0,
+          "yaw_rad": 0.0
+        },
+        "content_hash": "0046536fcf6759e2",
+        "map_version": "9b33eeb6788440c78abe",
+        "unknown_cells": 84772,
+        "free_cells": 70165,
+        "other_known_cells": 2245,
+        "known_area_m2": 181.02500539496546,
+        "coverage": null,
+        "received_age_wall_s": 1.266,
+        "fresh": true,
+        "stamp_age_sim_s": 0.304
+      },
+      "navigation": {
+        "statuses": [
+          {
+            "goal_id": "0a7493b65a5446258905dcada3bbc5dc",
+            "status_code": 4
+          }
+        ],
+        "active_goal_count": 0,
+        "received_age_wall_s": 391.238,
+        "fresh": false
+      },
+      "map_pose": {
+        "frame": "map",
+        "child_frame": "vehicle/base_link",
+        "stamp_sim_s": 2128.276,
+        "pose": {
+          "x": 0.1826045725507827,
+          "y": 3.7045135892960106,
+          "z": 0.0,
+          "yaw_rad": -2.9505200253610444
+        },
+        "received_age_wall_s": 0.309,
+        "fresh": true,
+        "stamp_age_sim_s": 0.028
+      },
+      "requested_velocity": {
+        "linear_x_m_s": 0.0,
+        "angular_z_rad_s": 0.0,
+        "received_age_wall_s": 77.031,
+        "fresh": false
+      }
+    },
+    "graph": {
+      "guard_node_present": true,
+      "navigation_action_server_present": true,
+      "observed_monotonic_s": 12061.552561375
+    },
+    "guard": {
+      "stop_radius_m": 1.9,
+      "reason_inferred_from_inputs": "command timeout",
+      "authoritative_guard_status": false
+    },
+    "snapshot_age_wall_s": 0.309,
+    "status": "available",
+    "motion_tools_enabled": false,
+    "note": "Read-only observations, not permission to move. Stale/missing fields are unknown. Guard reason is inferred, not a guard acknowledgement. No navigation status message means unknown, not proof of idle. Map known area is not room coverage.",
+    "stop_latched": true,
+    "motion_scope": "validated_frontier_and_observation_ids"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "request_id": "90d0fa29-dc0d-43fb-ac3a-41179d79c001",
+  "command": "stop",
+  "result": {
+    "request_id": "90d0fa29-dc0d-43fb-ac3a-41179d79c001",
+    "task_id": "98ca386a-0cbf-4cff-bd38-ff35645ef042",
+    "kind": "stop_robot",
+    "mission_id": null,
+    "payload": {},
+    "accepted": true,
+    "status": "accepted",
+    "running": false,
+    "stopped": false,
+    "reason": null,
+    "sensor_fresh": {},
+    "sensor_observed_unix_s": null,
+    "map_version": null,
+    "candidate": null,
+    "cancel_requested": false,
+    "created_unix_s": 1791113465.9123123,
+    "updated_unix_s": 1791113465.912315,
+    "result": null
+  }
+}

@@ -39,7 +39,7 @@ try:
     assert latest['safe']==0, 'Command loss did not stop'
     pump(.6,scans=True,commands=True)
     assert latest['safe']>.1
-    scan.ranges=[1.]*360;pump(.6,scans=True,commands=True)
+    scan.ranges=[1.881]*360;pump(.6,scans=True,commands=True)
     assert latest['safe']==0, 'Nearby obstacle did not stop'
     scan.ranges=[5.]*360;pump(.6,scans=True,commands=True)
     assert latest['safe']>.1

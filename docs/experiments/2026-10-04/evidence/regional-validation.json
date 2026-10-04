@@ -1,0 +1,540 @@
+{
+  "completed_unix_s": 1791110929.458123,
+  "scope": "bounded_regional_functional_validation",
+  "steps": [
+    {
+      "step": 1,
+      "task_id": "f10718f1-4943-4409-8358-42248b6a72ee",
+      "mission_id": "381ec380-2d8a-4f31-84b8-3a65051378e9",
+      "status": "succeeded",
+      "stopped": true,
+      "reason": "goal_reached",
+      "strategy": {
+        "mode": "EXPAND_REGION",
+        "target_region_id": "R_-1_1",
+        "transit": false
+      },
+      "choice": {
+        "action": "MOVE",
+        "option_id": "F_f1ae87346e01_5",
+        "rationale_summary": "比较其他分区后，选择进入R_-1_1：路径约1.34米、预计22.9秒，新增未知面积代理5.48平方米；R_0_1潜力略高但耗时约42.4秒，南侧分区转移更长且潜力较低，本选项成本收益权衡更好且预算充足。当前地图安全检查通过，执行前仍须复核；代理不代表实际收益，不重试此前失败的旋转观测。"
+      },
+      "distance_m": 1.2422631743979133,
+      "minimum_scan_m": 2.719057559967041,
+      "map_gain": {
+        "gain_status": "FEEDBACK_INCOMPLETE",
+        "observed_new_known_area_m2": 14.297069483068665,
+        "observed_lost_known_area_m2": 0.6895690775335598,
+        "net_known_area_change_m2": 13.607500405535104,
+        "observed_new_free_area_m2": 13.884706589012035,
+        "observed_new_occupied_area_m2": 0.4123628940566182,
+        "observed_new_ambiguous_area_m2": 0.0,
+        "measurement_status": "REGISTERED_MAP_CHANGE",
+        "registration": "fractional_cell_area_overlap",
+        "grid_shift_cells": [
+          -0.11305971080026539,
+          0.0
+        ],
+        "accepted_scan_evidence": "UNAVAILABLE",
+        "note": "Map-window change, not causal gain. Fractional origins/SLAM corrections can create boundary changes; no LOW_GAIN claim.",
+        "at_stop": {
+          "gain_status": "FEEDBACK_INCOMPLETE",
+          "observed_new_known_area_m2": 14.297069483068665,
+          "observed_lost_known_area_m2": 0.6895690775335598,
+          "net_known_area_change_m2": 13.607500405535104,
+          "observed_new_free_area_m2": 13.884706589012035,
+          "observed_new_occupied_area_m2": 0.4123628940566182,
+          "observed_new_ambiguous_area_m2": 0.0,
+          "measurement_status": "REGISTERED_MAP_CHANGE",
+          "registration": "fractional_cell_area_overlap",
+          "grid_shift_cells": [
+            -0.11305971080026539,
+            0.0
+          ],
+          "accepted_scan_evidence": "UNAVAILABLE",
+          "note": "Map-window change, not causal gain. Fractional origins/SLAM corrections can create boundary changes; no LOW_GAIN claim."
+        },
+        "settling": {
+          "gain_status": "FEEDBACK_INCOMPLETE",
+          "observed_new_known_area_m2": 0.0,
+          "observed_lost_known_area_m2": 0.0,
+          "net_known_area_change_m2": 0.0,
+          "observed_new_free_area_m2": 0.0,
+          "observed_new_occupied_area_m2": 0.0,
+          "observed_new_ambiguous_area_m2": 0.0,
+          "measurement_status": "REGISTERED_MAP_CHANGE",
+          "registration": "integer_grid",
+          "grid_shift_cells": [
+            0.0,
+            0.0
+          ],
+          "accepted_scan_evidence": "UNAVAILABLE",
+          "note": "Map-window change, not causal gain. Fractional origins/SLAM corrections can create boundary changes; no LOW_GAIN claim."
+        },
+        "feedback_wait_wall_s": 14.95238583399987,
+        "sensor_feedback_fresh": true,
+        "map_message_advanced": true,
+        "usable_for_trend": false,
+        "causal_action_gain_valid": false,
+        "trend_scope": "registered_map_window_only_not_causal_action_gain",
+        "before_map_stamp_sim_s": 2384.7,
+        "after_map_stamp_sim_s": 2400.7,
+        "before_geometry": {
+          "resolution": 0.05000000074505806,
+          "origin": [
+            -4.711107808321658,
+            -5.074421026660347,
+            0.0
+          ],
+          "frame": "map",
+          "stamp_sim_s": 2384.7
+        },
+        "after_geometry": {
+          "resolution": 0.05000000074505806,
+          "origin": [
+            -4.716760793945907,
+            -5.074421026660347,
+            0.0
+          ],
+          "frame": "map",
+          "stamp_sim_s": 2400.7
+        },
+        "raw_known_area_delta_m2": 13.607500405535092,
+        "distance_odom_m": 1.2422631743979133,
+        "elapsed_sim_s": 15.793999999999869,
+        "elapsed_wall_s": 63.137710576000245,
+        "new_area_per_meter": 11.508889402600229,
+        "new_area_per_sim_s": 0.9052215704108385,
+        "new_area_per_wall_s": 0.22644263392887787
+      },
+      "arrived_region_id": "R_-1_1"
+    },
+    {
+      "step": 2,
+      "task_id": "5d218f25-3c56-4967-9ea1-d3b4bdab32ce",
+      "mission_id": "cf37233c-6606-4882-9652-533934e741e0",
+      "status": "succeeded",
+      "stopped": true,
+      "reason": "goal_reached",
+      "strategy": {
+        "mode": "LOCAL_EXPLORE",
+        "target_region_id": "R_-1_1",
+        "transit": false
+      },
+      "choice": {
+        "action": "MOVE",
+        "option_id": "F_422869698f37_1",
+        "rationale_summary": "选择本地候选1：路径约1.24米、预计35.1仿真秒，新增未知面积代理5.48平方米，观测潜力与成本比优于其他候选；相比跨区候选3、6及远端转移，成本更低且已知地图净空余量充足。传感器新鲜、地图版本一致、预算足够，无有效局部饱和证据。代理并非实际收益，执行前仍须复核安全。"
+      },
+      "distance_m": 1.1005975236784276,
+      "minimum_scan_m": 3.541818618774414,
+      "map_gain": {
+        "gain_status": "FEEDBACK_INCOMPLETE",
+        "observed_new_known_area_m2": 6.747500201091172,
+        "observed_lost_known_area_m2": 0.0,
+        "net_known_area_change_m2": 6.747500201091172,
+        "observed_new_free_area_m2": 6.54000019490719,
+        "observed_new_occupied_area_m2": 0.20750000618398196,
+        "observed_new_ambiguous_area_m2": 0.0,
+        "measurement_status": "REGISTERED_MAP_CHANGE",
+        "registration": "integer_grid",
+        "grid_shift_cells": [
+          0.0,
+          0.0
+        ],
+        "accepted_scan_evidence": "UNAVAILABLE",
+        "note": "Map-window change, not causal gain. Fractional origins/SLAM corrections can create boundary changes; no LOW_GAIN claim.",
+        "at_stop": {
+          "gain_status": "FEEDBACK_INCOMPLETE",
+          "observed_new_known_area_m2": 6.747500201091172,
+          "observed_lost_known_area_m2": 0.0,
+          "net_known_area_change_m2": 6.747500201091172,
+          "observed_new_free_area_m2": 6.54000019490719,
+          "observed_new_occupied_area_m2": 0.20750000618398196,
+          "observed_new_ambiguous_area_m2": 0.0,
+          "measurement_status": "REGISTERED_MAP_CHANGE",
+          "registration": "integer_grid",
+          "grid_shift_cells": [
+            0.0,
+            0.0
+          ],
+          "accepted_scan_evidence": "UNAVAILABLE",
+          "note": "Map-window change, not causal gain. Fractional origins/SLAM corrections can create boundary changes; no LOW_GAIN claim."
+        },
+        "settling": {
+          "gain_status": "FEEDBACK_INCOMPLETE",
+          "observed_new_known_area_m2": 0.0,
+          "observed_lost_known_area_m2": 0.0,
+          "net_known_area_change_m2": 0.0,
+          "observed_new_free_area_m2": 0.0,
+          "observed_new_occupied_area_m2": 0.0,
+          "observed_new_ambiguous_area_m2": 0.0,
+          "measurement_status": "REGISTERED_MAP_CHANGE",
+          "registration": "integer_grid",
+          "grid_shift_cells": [
+            0.0,
+            0.0
+          ],
+          "accepted_scan_evidence": "UNAVAILABLE",
+          "note": "Map-window change, not causal gain. Fractional origins/SLAM corrections can create boundary changes; no LOW_GAIN claim."
+        },
+        "feedback_wait_wall_s": 14.32057629100018,
+        "sensor_feedback_fresh": true,
+        "map_message_advanced": true,
+        "usable_for_trend": true,
+        "causal_action_gain_valid": false,
+        "trend_scope": "registered_map_window_only_not_causal_action_gain",
+        "before_map_stamp_sim_s": 2496.1,
+        "after_map_stamp_sim_s": 2510.5,
+        "before_geometry": {
+          "resolution": 0.05000000074505806,
+          "origin": [
+            -4.716760793945907,
+            -5.074421026660347,
+            0.0
+          ],
+          "frame": "map",
+          "stamp_sim_s": 2496.1
+        },
+        "after_geometry": {
+          "resolution": 0.05000000074505806,
+          "origin": [
+            -4.716760793945907,
+            -5.074421026660347,
+            0.0
+          ],
+          "frame": "map",
+          "stamp_sim_s": 2510.5
+        },
+        "raw_known_area_delta_m2": 6.747500201091185,
+        "distance_odom_m": 1.1005975236784276,
+        "elapsed_sim_s": 14.576000000000022,
+        "elapsed_wall_s": 56.64240052000059,
+        "new_area_per_meter": 6.130760842110213,
+        "new_area_per_sim_s": 0.4629185099541137,
+        "new_area_per_wall_s": 0.11912454520193949
+      },
+      "arrived_region_id": "R_-1_1"
+    },
+    {
+      "step": 3,
+      "task_id": "6cb46782-8f0f-47d0-abd6-8be16c745b6f",
+      "mission_id": "cf37233c-6606-4882-9652-533934e741e0",
+      "status": "succeeded",
+      "stopped": true,
+      "reason": "goal_reached",
+      "strategy": {
+        "mode": "EXPAND_REGION",
+        "target_region_id": "R_0_1",
+        "transit": false
+      },
+      "choice": {
+        "action": "MOVE",
+        "option_id": "F_150f8f98be9f_2",
+        "rationale_summary": "优先比较未到访分区R_0_1，选择候选2：完整路径约2.00米、预计45.2仿真秒，在剩余88.1秒预算内；相比同区候选3、4，新增观测代理及区域潜力更高、时间成本更低。虽候选1成本较低，但当前分区已有两次到达，跨区探索的额外成本合理。上一任务本地终态成功且停车，传感器新鲜、地图一致；预测已知障碍净空2.56米超过要求2.15米，执行仍须复核。面积代理不等于实际收益，反馈不足不表示饱和或完成。"
+      },
+      "distance_m": 1.85708274006358,
+      "minimum_scan_m": 2.7864692211151123,
+      "map_gain": {
+        "gain_status": "FEEDBACK_INCOMPLETE",
+        "observed_new_known_area_m2": 16.44731665703517,
+        "observed_lost_known_area_m2": 1.387316208212193,
+        "net_known_area_change_m2": 15.060000448822978,
+        "observed_new_free_area_m2": 15.462339348401587,
+        "observed_new_occupied_area_m2": 0.9849773086335673,
+        "observed_new_ambiguous_area_m2": 0.0,
+        "measurement_status": "REGISTERED_MAP_CHANGE",
+        "registration": "fractional_cell_area_overlap",
+        "grid_shift_cells": [
+          -0.28022583347637803,
+          0.0
+        ],
+        "accepted_scan_evidence": "UNAVAILABLE",
+        "note": "Map-window change, not causal gain. Fractional origins/SLAM corrections can create boundary changes; no LOW_GAIN claim.",
+        "at_stop": {
+          "gain_status": "FEEDBACK_INCOMPLETE",
+          "observed_new_known_area_m2": 16.44731665703517,
+          "observed_lost_known_area_m2": 1.387316208212193,
+          "net_known_area_change_m2": 15.060000448822978,
+          "observed_new_free_area_m2": 15.462339348401587,
+          "observed_new_occupied_area_m2": 0.9849773086335673,
+          "observed_new_ambiguous_area_m2": 0.0,
+          "measurement_status": "REGISTERED_MAP_CHANGE",
+          "registration": "fractional_cell_area_overlap",
+          "grid_shift_cells": [
+            -0.28022583347637803,
+            0.0
+          ],
+          "accepted_scan_evidence": "UNAVAILABLE",
+          "note": "Map-window change, not causal gain. Fractional origins/SLAM corrections can create boundary changes; no LOW_GAIN claim."
+        },
+        "settling": {
+          "gain_status": "FEEDBACK_INCOMPLETE",
+          "observed_new_known_area_m2": 0.0,
+          "observed_lost_known_area_m2": 0.0,
+          "net_known_area_change_m2": 0.0,
+          "observed_new_free_area_m2": 0.0,
+          "observed_new_occupied_area_m2": 0.0,
+          "observed_new_ambiguous_area_m2": 0.0,
+          "measurement_status": "REGISTERED_MAP_CHANGE",
+          "registration": "integer_grid",
+          "grid_shift_cells": [
+            0.0,
+            0.0
+          ],
+          "accepted_scan_evidence": "UNAVAILABLE",
+          "note": "Map-window change, not causal gain. Fractional origins/SLAM corrections can create boundary changes; no LOW_GAIN claim."
+        },
+        "feedback_wait_wall_s": 14.14474517400049,
+        "sensor_feedback_fresh": true,
+        "map_message_advanced": true,
+        "usable_for_trend": false,
+        "causal_action_gain_valid": false,
+        "trend_scope": "registered_map_window_only_not_causal_action_gain",
+        "before_map_stamp_sim_s": 2525.3,
+        "after_map_stamp_sim_s": 2551.9,
+        "before_geometry": {
+          "resolution": 0.05000000074505806,
+          "origin": [
+            -4.716760793945907,
+            -5.074421026660347,
+            0.0
+          ],
+          "frame": "map",
+          "stamp_sim_s": 2525.3
+        },
+        "after_geometry": {
+          "resolution": 0.05000000074505806,
+          "origin": [
+            -4.7307720858285105,
+            -5.074421026660347,
+            0.0
+          ],
+          "frame": "map",
+          "stamp_sim_s": 2551.9
+        },
+        "raw_known_area_delta_m2": 15.060000448822962,
+        "distance_odom_m": 1.85708274006358,
+        "elapsed_sim_s": 26.802999999999884,
+        "elapsed_wall_s": 102.47754834700027,
+        "new_area_per_meter": 8.856534123230325,
+        "new_area_per_sim_s": 0.613637154685492,
+        "new_area_per_wall_s": 0.160496781220241
+      },
+      "arrived_region_id": "R_0_1"
+    }
+  ],
+  "successful_actions": 3,
+  "distance_m": 4.199943438139921,
+  "minimum_scan_m": 2.719057559967041,
+  "initial_known_area_m2": 181.02500539496546,
+  "final_known_area_m2": 216.4400064504147,
+  "raw_net_known_area_change_m2": 35.41500105544924,
+  "mission_endings": [
+    {
+      "mission_id": "381ec380-2d8a-4f31-84b8-3a65051378e9",
+      "stop_reason": "client_interrupted_or_error",
+      "stopped": true,
+      "limits": {
+        "max_steps": 5,
+        "max_distance": 18.0,
+        "max_sim_time": 180.0,
+        "max_wall_time": 900.0,
+        "max_failures": 2
+      }
+    },
+    {
+      "mission_id": "cf37233c-6606-4882-9652-533934e741e0",
+      "stop_reason": "client_heartbeat_lost",
+      "stopped": true,
+      "limits": {
+        "max_steps": 4,
+        "max_distance": 16.7,
+        "max_sim_time": 130.0,
+        "max_wall_time": 650.0,
+        "max_failures": 2
+      }
+    }
+  ],
+  "tests": {
+    "skills_and_regional": 35,
+    "agent_and_protocol": 29,
+    "geometry_and_paths": 35,
+    "ros_safety_and_executor": 20,
+    "total_passed": 119
+  },
+  "source_sha256_after_post_run_hardening": {
+    "navigation_base/exploration/aggressive.py": "1ffcdc0c8017389285e629aef5229718031f461e76c5c01e3548c22c85ac729a",
+    "navigation_base/exploration/compare_runs.py": "3ce10898e280476dc5943aaeff6ce1448e9a23008e21cde6e13ef81875c9f0e9",
+    "navigation_base/exploration/explore.py": "de5a01ad4edc750a7a45e41097c511b24925aae4597dd01b4b0adb988c7e12fc",
+    "navigation_base/exploration/frontier.py": "9c42f61874aaf382643cf47d74d6b1516c53856ea9f739b768b88796ec2183cc",
+    "navigation_base/exploration/observation.py": "0656d99f7ba7895256f7d305bf53dc7c56d6ca7a011d4edeabebc6bfffe698e5",
+    "navigation_base/exploration/path_safety.py": "cb1e84ade1559ea4dbb473ee84614de0e59c6a700861227f44ea6f010a342ec4",
+    "navigation_base/exploration/plot_run.py": "d659ec5822420d5e6a1aea2e09cc615420612bb0a560d0044044e394da0e7fb5",
+    "navigation_base/exploration/regions.py": "019c82c983756317f0f0ca53af8465a34d4bff2c92e967962c84dd86a7467aa0",
+    "navigation_base/map_identity.py": "929f01081dacfcb2c0a5b3362896a22803ee96950a6e7c45756b3fcb4d47cf01",
+    "navigation_base/navigation/nav2.yaml": "9b09017dea9e15b09fd7a536c3b2bb9a2c9c623c49fb8c517e0cd8d427e1b104",
+    "navigation_base/safety_contract.py": "c23f382f2c190af027933e0762f2735193fdef9a4c0f9353313b957cde2ac706",
+    "robot_agent/check_environment.py": "42407b78946b028adb524d0071e6052b907ec2b67f1e7fd517d73a390462c0cc",
+    "robot_agent/mcp_motion_server.py": "e35f688bd424726c2e52b718006ea9616a2df5519d685b67d08da81c0a9fa6b5",
+    "robot_agent/mcp_server.py": "e5b871acba58ae67579dfcc489c704f074e1e9441319d98302e46c033a3dc6fa",
+    "robot_agent/mcp_skills_server.py": "7e3ad0c6f83aa388b451aadaac5ad2715b162bcb8807faee9519544a45c0f889",
+    "robot_agent/motion_trial.py": "8230294cc602f6e8dbac38ecef3dff7867f30b5efcf9d2224706aa095082c7fe",
+    "robot_agent/motion_trial.xml": "68b2b7e30aaf2a79e306f9ce29a48c89db210e0301db975c541e6fb879d906cf",
+    "robot_agent/motion_worker.py": "8f7fe8cf9a5a09e5ccd36e03cad38c2901f965eb84cc0c274e63350642fe2b12",
+    "robot_agent/robot_status.py": "51a7b59684f0b7c33ec33c5c8d34be2a29d4cb22733f8861529b8941c57fb29e",
+    "robot_agent/ros_status_bridge.py": "d289768d0f8a2fd6f4e9e0d48ef36ec930039c4ef6cffaaa3cf85eff7caf5674",
+    "robot_agent/run_frontier.py": "36bd455736b117a453e9ce893f83b36873e3e3d588adc27d85cb56c4d6287ab3",
+    "robot_agent/run_loop.py": "e747637983365c88f7286fd04689c2ee8c269a73f39fd98ebc6d12d3fa8c1e9b",
+    "robot_agent/run_motion_trial.py": "c3754ff7a1ae338b67c16834bf54c4cf361637615d30b0aa11fa36a6ec43e9fd",
+    "robot_agent/run_readonly.py": "0220761fcf11831af097478a21c3d2700d4529da6704d63ad89486579ed16130",
+    "robot_skills/__init__.py": "f526a04594b6dba6727e0b3c7e7d973d2ef12f008454d0700107082db8ab9869",
+    "robot_skills/api.py": "fdd63b208529a5f2a37b631c2fb59bc7059295f618e303d8757f17f915d2f980",
+    "robot_skills/mission.py": "282390b059b294e89440a3e9b80e3fae14883a278bdd81cefad8d9d87edc4387",
+    "robot_skills/mission_watchdog.py": "32ff9dec5cafb629cb9946d232b47826e75b52c51abacd237efb7c77f1fc1063",
+    "robot_skills/observation_rules.py": "54fbe4b36e6ea9b590f80f081f42783dbcf9ddbe70fb4c2c7413b75229ca9aa1",
+    "robot_skills/observation_worker.py": "88779f41b0f974e4457a93fc9ab50cfeb4d37039a95740e5a9e2f6ce3e2b8003",
+    "robot_skills/provenance.py": "6410f602eb9059d2474bdef8070b6570fe33da5efdb154684eb78c8bb83dd672",
+    "robot_skills/regional.py": "960033cee3ac061ab08e0784f85a010f7c097a121bb898ac9499a337f0e40b6b",
+    "robot_skills/ros_worker.py": "18173ff7c0a7fdad3586289a78441d957ec119d23d3a879d2447ea08dbe4c2df",
+    "robot_skills/store.py": "890c6d0f949f2301bf87242e150465988e41d759296376e5da5aca3fe7030287",
+    "robot_skills/supervisor.py": "36042f74c598b73e82fd7a2555252830dc387cc2d55d5c7efd714c5580afe182"
+  },
+  "post_run_hardening": [
+    "SIGTERM orderly cancellation and checkpoint",
+    "incomplete search cannot establish saturation",
+    "along-path potential included",
+    "rotation is not an arrival",
+    "transit distance metadata corrected"
+  ],
+  "final_state": {
+    "schema_version": 1,
+    "generated_monotonic_s": 13732.499077393,
+    "generated_unix_s": 1791110929.2481332,
+    "mode": "read_only",
+    "sources": {
+      "clock": {
+        "sim_time_s": 2606.117,
+        "received_age_wall_s": 0.125,
+        "fresh": true
+      },
+      "odometry": {
+        "frame": "vehicle/odom",
+        "child_frame": "vehicle/base_link",
+        "stamp_sim_s": 2606.112,
+        "pose": {
+          "x": 1.412126015100178,
+          "y": 5.787663754702473,
+          "z": 0.0,
+          "yaw_rad": 0.4579314179154907
+        },
+        "velocity": {
+          "linear_x_m_s": 0.0,
+          "angular_z_rad_s": 0.0
+        },
+        "received_age_wall_s": 0.143,
+        "fresh": true,
+        "stamp_age_sim_s": 0.005
+      },
+      "guard_output": {
+        "linear_x_m_s": 0.0,
+        "angular_z_rad_s": 0.0,
+        "received_age_wall_s": 0.161,
+        "fresh": true
+      },
+      "scan": {
+        "frame": "vehicle/lidar",
+        "stamp_sim_s": 2606.1,
+        "nearest_m": 4.100497722625732,
+        "valid": true,
+        "sample_count": 360,
+        "no_finite_hit": false,
+        "received_age_wall_s": 0.179,
+        "fresh": true,
+        "stamp_age_sim_s": 0.017
+      },
+      "map": {
+        "frame": "map",
+        "stamp_sim_s": 2605.7,
+        "width": 391,
+        "height": 403,
+        "resolution_m": 0.05000000074505806,
+        "origin": {
+          "x": -4.7307720858285105,
+          "y": -5.074421026660347,
+          "z": 0.0,
+          "yaw_rad": 0.0
+        },
+        "content_hash": "cda75dfe2c42e6cb",
+        "map_version": "584dfaae21f99fbe5855",
+        "unknown_cells": 70997,
+        "free_cells": 83839,
+        "other_known_cells": 2737,
+        "known_area_m2": 216.4400064504147,
+        "coverage": null,
+        "received_age_wall_s": 1.08,
+        "fresh": true,
+        "stamp_age_sim_s": 0.417
+      },
+      "navigation": {
+        "statuses": [
+          {
+            "goal_id": "e07ff6e6866343c6a3ec051ea91902f3",
+            "status_code": 4
+          }
+        ],
+        "active_goal_count": 0,
+        "received_age_wall_s": 190.964,
+        "fresh": false
+      },
+      "map_pose": {
+        "frame": "map",
+        "child_frame": "vehicle/base_link",
+        "stamp_sim_s": 2606.112,
+        "pose": {
+          "x": 0.6338789625409929,
+          "y": 5.442147682973513,
+          "z": 0.0,
+          "yaw_rad": 0.5922816379277324
+        },
+        "received_age_wall_s": 0.123,
+        "fresh": true,
+        "stamp_age_sim_s": 0.005
+      },
+      "requested_velocity": {
+        "linear_x_m_s": 0.0,
+        "angular_z_rad_s": 0.0,
+        "received_age_wall_s": 156.601,
+        "fresh": false
+      }
+    },
+    "graph": {
+      "guard_node_present": true,
+      "navigation_action_server_present": true,
+      "observed_monotonic_s": 13731.002150888
+    },
+    "guard": {
+      "stop_radius_m": 1.9,
+      "reason_inferred_from_inputs": "command timeout",
+      "authoritative_guard_status": false
+    },
+    "snapshot_age_wall_s": 0.123,
+    "status": "available",
+    "motion_tools_enabled": false,
+    "note": "Read-only observations, not permission to move. Stale/missing fields are unknown. Guard reason is inferred, not a guard acknowledgement. No navigation status message means unknown, not proof of idle. Map known area is not room coverage.",
+    "stop_latched": true,
+    "motion_scope": "validated_frontier_ids_only"
+  },
+  "active_mission": null,
+  "active_tasks": [],
+  "dashboard_removed": true,
+  "coverage_complete": false,
+  "ground_truth_used": false,
+  "limitations": [
+    "All three gain windows have fractional origins; measured map changes are not causal action gains and are excluded from saturation.",
+    "Reached two adjacent map sectors; sectors are not rooms or a world coverage denominator.",
+    "Long-route transit candidates were generated and rejection/replanning tested, but no real long transit was selected.",
+    "First session ended on API connection error; continuation ended on lost client heartbeat; both stops confirmed.",
+    "Not a reset-environment paired comparison between classic and AI policies."
+  ]
+}

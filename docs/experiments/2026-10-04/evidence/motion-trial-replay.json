@@ -1,0 +1,117 @@
+{
+  "request_id": "bdb986b9-3b5d-4802-81d1-41381daae701",
+  "model_invoked": false,
+  "motion": {
+    "request_id": "bdb986b9-3b5d-4802-81d1-41381daae701",
+    "status": "succeeded",
+    "requested_distance_m": 0.4,
+    "stopped": true,
+    "before": {
+      "wall_elapsed": 5.322856408000007,
+      "simulation_seconds": 272.098,
+      "pose": [
+        4.8918825933643965e-17,
+        -1.8420545094013794e-34,
+        -5.789218273989145e-18
+      ],
+      "known_cells": 1096,
+      "known_area_m2": 2.740000081658364,
+      "map_version": "27ea13f9928e5ff8",
+      "map_width": 304,
+      "map_height": 311,
+      "path_length_odom_m": 7.170802787676277e-19,
+      "nearest_scan_m": 3.8488073348999023,
+      "velocity": [
+        4.927148353902693e-19,
+        -2.7125201173875697e-20
+      ]
+    },
+    "candidate": {
+      "x": 0.4000000000000001,
+      "y": -2.3156873095956584e-18,
+      "yaw": -5.789218273989145e-18
+    },
+    "planning": {
+      "status": 4,
+      "error_code": 0,
+      "clearance": {
+        "safe": true,
+        "map_version": "27ea13f9928e5ff8",
+        "guard_threshold_m": 1.9,
+        "planning_margin_m": 0.25,
+        "required_clearance_m": 2.15,
+        "sensor_offset_m": [
+          -0.7057095,
+          0.0
+        ],
+        "predicted_min_clearance_m": 3.769620072655565,
+        "guard_margin_m": 1.869620072655565,
+        "known_obstacles_only": true,
+        "reason": "clear",
+        "worst_base_pose": [
+          -0.006595924496650696,
+          -0.041046544909477234,
+          0.0
+        ],
+        "worst_sensor_xy": [
+          -0.7123054244966507,
+          -0.041046544909477234
+        ],
+        "samples": 119
+      }
+    },
+    "clearance": {
+      "safe": true,
+      "map_version": "27ea13f9928e5ff8",
+      "guard_threshold_m": 1.9,
+      "planning_margin_m": 0.25,
+      "required_clearance_m": 2.15,
+      "sensor_offset_m": [
+        -0.7057095,
+        0.0
+      ],
+      "predicted_min_clearance_m": 3.769620072655565,
+      "guard_margin_m": 1.869620072655565,
+      "known_obstacles_only": true,
+      "reason": "clear",
+      "worst_base_pose": [
+        -0.006595924496650696,
+        -0.041046544909477234,
+        0.0
+      ],
+      "worst_sensor_xy": [
+        -0.7123054244966507,
+        -0.041046544909477234
+      ],
+      "samples": 119
+    },
+    "navigation_result": {
+      "status": 4,
+      "error_code": 0,
+      "error_msg": ""
+    },
+    "distance_odom_m": 0.2658091462192394,
+    "minimum_scan_m": 3.8488073348999023,
+    "after": {
+      "wall_elapsed": 19.65095032299996,
+      "simulation_seconds": 275.872,
+      "pose": [
+        0.2558056967885747,
+        -0.009551618445991526,
+        0.023103767795566013
+      ],
+      "known_cells": 4584,
+      "known_area_m2": 11.460000341534617,
+      "map_version": "e4824d60331d7e2a",
+      "map_width": 308,
+      "map_height": 322,
+      "path_length_odom_m": 0.2658091462192394,
+      "nearest_scan_m": 4.1121826171875,
+      "velocity": [
+        0.0,
+        0.0
+      ]
+    },
+    "replayed_without_movement": true
+  }
+}

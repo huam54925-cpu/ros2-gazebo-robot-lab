@@ -10,16 +10,7 @@ from sensor_msgs.msg import LaserScan
 from rclpy.clock import Clock, ClockType
 from rclpy.qos import qos_profile_sensor_data
 from rclpy.signals import SignalHandlerOptions
-
-
-def blocked_reason(command_age, scan_age, nearest, valid_scan):
-    if command_age > 0.5:
-        return 'command timeout'
-    if scan_age > 1.5 or not valid_scan:
-        return 'scan missing or stale'
-    if nearest < 1.9:
-        return 'obstacle inside 1.9 m stop radius'
-    return ''
+from safety_contract import blocked_reason, scan_state
 
 
 def main():
@@ -41,10 +32,7 @@ def main():
     def receive_scan(msg):
         nonlocal scan_at, nearest, valid_scan
         scan_at = time.monotonic()
-        valid_scan = msg.header.frame_id == 'vehicle/lidar' and len(msg.ranges) > 0
-        returns = [v for v in msg.ranges if math.isfinite(v) and msg.range_min <= v <= msg.range_max]
-        valid_scan = valid_scan and (bool(returns) or any(v == math.inf for v in msg.ranges))
-        nearest = min(returns, default=math.inf)
+        nearest, valid_scan = scan_state(msg)
     subscriptions = [
         node.create_subscription(Twist, '/model/vehicle/cmd_vel', receive_command, 1),
         node.create_subscription(LaserScan, '/scan', receive_scan, qos_profile_sensor_data),

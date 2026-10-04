@@ -1,0 +1,122 @@
+{
+  "request_id": "8ad6781b-320f-4cfd-be13-decd7bc90e56",
+  "command": "state",
+  "result": {
+    "schema_version": 1,
+    "generated_monotonic_s": 20446.999674685,
+    "generated_unix_s": 1791117643.7488332,
+    "mode": "read_only",
+    "sources": {
+      "clock": {
+        "sim_time_s": 5630.331,
+        "received_age_wall_s": 0.168,
+        "fresh": true
+      },
+      "odometry": {
+        "frame": "vehicle/odom",
+        "child_frame": "vehicle/base_link",
+        "stamp_sim_s": 5630.31,
+        "pose": {
+          "x": 7.471627583408307,
+          "y": -0.29658224750436624,
+          "z": 0.0,
+          "yaw_rad": 0.42651640760701476
+        },
+        "velocity": {
+          "linear_x_m_s": 0.0,
+          "angular_z_rad_s": 0.0
+        },
+        "received_age_wall_s": 0.202,
+        "fresh": true,
+        "stamp_age_sim_s": 0.021
+      },
+      "guard_output": {
+        "linear_x_m_s": 0.0,
+        "angular_z_rad_s": 0.0,
+        "received_age_wall_s": 0.207,
+        "fresh": true
+      },
+      "scan": {
+        "frame": "vehicle/lidar",
+        "stamp_sim_s": 5630.3,
+        "nearest_m": 3.6376757621765137,
+        "valid": true,
+        "sample_count": 360,
+        "no_finite_hit": false,
+        "received_age_wall_s": 0.211,
+        "fresh": true,
+        "stamp_age_sim_s": 0.031
+      },
+      "map": {
+        "frame": "map",
+        "stamp_sim_s": 5629.5,
+        "width": 483,
+        "height": 403,
+        "resolution_m": 0.05000000074505806,
+        "origin": {
+          "x": -4.686476141250175,
+          "y": -5.112610808091953,
+          "z": 0.0,
+          "yaw_rad": 0.0
+        },
+        "content_hash": "e406bfdafce0b8f6",
+        "map_version": "32bba57ca4e87bf13930",
+        "unknown_cells": 91888,
+        "free_cells": 99410,
+        "other_known_cells": 3351,
+        "known_area_m2": 256.90250765629116,
+        "coverage": null,
+        "received_age_wall_s": 1.223,
+        "fresh": true,
+        "stamp_age_sim_s": 0.831
+      },
+      "navigation": {
+        "statuses": [
+          {
+            "goal_id": "c2f4700bf1e6485ba9b803c0f9804add",
+            "status_code": 4
+          }
+        ],
+        "active_goal_count": 0,
+        "received_age_wall_s": 4228.975,
+        "fresh": false
+      },
+      "map_pose": {
+        "frame": "map",
+        "child_frame": "vehicle/base_link",
+        "stamp_sim_s": 5630.31,
+        "pose": {
+          "x": 6.535020483513958,
+          "y": -1.0314431888343107,
+          "z": 0.0,
+          "yaw_rad": 0.33828741497077125
+        },
+        "received_age_wall_s": 0.166,
+        "fresh": true,
+        "stamp_age_sim_s": 0.021
+      },
+      "requested_velocity": {
+        "linear_x_m_s": 0.0,
+        "angular_z_rad_s": 0.0,
+        "received_age_wall_s": 4163.836,
+        "fresh": false
+      }
+    },
+    "graph": {
+      "guard_node_present": true,
+      "navigation_action_server_present": true,
+      "observed_monotonic_s": 20444.501318591
+    },
+    "guard": {
+      "stop_radius_m": 1.9,
+      "reason_inferred_from_inputs": "command timeout",
+      "authoritative_guard_status": false
+    },
+    "snapshot_age_wall_s": 0.166,
+    "status": "available",
+    "motion_tools_enabled": false,
+    "note": "Read-only observations, not permission to move. Stale/missing fields are unknown. Guard reason is inferred, not a guard acknowledgement. No navigation status message means unknown, not proof of idle. Map known area is not room coverage.",
+    "stop_latched": true,
+    "motion_scope": "validated_frontier_ids_only"
+  }
+}

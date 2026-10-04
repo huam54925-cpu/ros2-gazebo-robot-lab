@@ -16,7 +16,7 @@ from rclpy.signals import SignalHandlerOptions
 from rclpy.qos import QoSProfile, DurabilityPolicy, qos_profile_sensor_data
 from action_msgs.msg import GoalStatusArray
 from geometry_msgs.msg import PoseStamped
-from nav_msgs.msg import OccupancyGrid, Odometry
+from nav_msgs.msg import OccupancyGrid, Odometry, Path as NavPath
 from sensor_msgs.msg import LaserScan
 from nav2_msgs.action import NavigateToPose, ComputePathToPose, Spin
 from nav2_msgs.srv import ManageLifecycleNodes
@@ -24,6 +24,9 @@ from lifecycle_msgs.srv import GetState
 from tf2_ros import Buffer, TransformListener
 from frontier import FrontierMap, Settings
 from aggressive import AggressiveMap, settings as aggressive_settings, utility
+from path_safety import PathSafety, remaining_path
+from safety_contract import STOP_RADIUS_M, SCAN_TIMEOUT_S, SCAN_FRAME, BASE_FRAME, scan_state
+from map_identity import map_version
 
 
 def yaw(q):return math.atan2(2*(q.w*q.z+q.x*q.y),1-2*(q.y*q.y+q.z*q.z))
@@ -38,12 +41,18 @@ class Explorer:
         self.args=args;self.output=Path(args.output)
         if self.output.exists():raise RuntimeError('Output already exists; choose a new name')
         self.output.parent.mkdir(parents=True,exist_ok=True)
+        owner_path=Path(__file__).resolve().parents[2]/'log'/'.navigation-owner.lock'
+        owner_path.parent.mkdir(parents=True,exist_ok=True)
+        self.motion_lock=owner_path.open('w')
+        fcntl.flock(self.motion_lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
         self.lock=open(self.output.parent/'.frontier.lock','w')
         fcntl.flock(self.lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
         self.node=rclpy.create_node('frontier_explorer',parameter_overrides=[rclpy.parameter.Parameter('use_sim_time',value=True)])
         self.buffer=Buffer(node=self.node);self.listener=TransformListener(self.buffer,self.node)
         self.latest={};self.traces=[];self.history=[];self.goals=[];self.events=[];self.handle=None;self.action_result=None
         self.distance=0.;self.last_odom=None;self.minimum_scan=math.inf
+        self.clearance_model=None;self.active_candidate=None;self.execution_path=None
+        self.path_revision=0
         self.config=aggressive_settings() if args.policy=="aggressive" else Settings();self.started=time.monotonic();self.last_trace=self.last_progress=0
         self.report={'status':'running','stop_reason':None,'policy':args.policy,'configuration':asdict(self.config),
             'limits':{'wall_seconds':args.wall_budget,'maximum_goals':args.max_goals,'goal_wall_timeout':args.goal_timeout},
@@ -52,6 +61,7 @@ class Explorer:
         self.subs=[self.node.create_subscription(OccupancyGrid,'/map',self.map_cb,qos),
             self.node.create_subscription(Odometry,'/model/vehicle/odometry',self.odom_cb,10),
             self.node.create_subscription(LaserScan,'/scan',self.scan_cb,qos_profile_sensor_data),
+            self.node.create_subscription(NavPath,'/plan',self.path_cb,1),
             self.node.create_subscription(GoalStatusArray,'/navigate_to_pose/_action/status',lambda m:self.latest.update(status=m),qos)]
         self.nav=ActionClient(self.node,NavigateToPose,'/navigate_to_pose')
         self.planner=ActionClient(self.node,ComputePathToPose,'/compute_path_to_pose')
@@ -62,7 +72,7 @@ class Explorer:
     def map_cb(self,m):
         if m.header.frame_id!='map':raise RuntimeError('unexpected_map_frame')
         data=np.asarray(m.data,dtype=np.int16).reshape(m.info.height,m.info.width)
-        digest=hashlib.sha256(data.tobytes()+str((m.info.resolution,m.info.origin)).encode()).hexdigest()[:16]
+        digest=map_version(m)
         self.latest.update(map=m,data=data,map_at=time.monotonic(),map_version=digest)
 
     def odom_cb(self,m):
@@ -75,10 +85,31 @@ class Explorer:
         self.latest.update(velocity=[m.twist.twist.linear.x,m.twist.twist.angular.z],odom_at=time.monotonic())
 
     def scan_cb(self,m):
-        hits=[x for x in m.ranges if math.isfinite(x) and m.range_min<=x<=m.range_max]
-        self.latest.update(nearest=min(hits,default=math.inf),scan_at=time.monotonic(),
-            scan_valid=m.header.frame_id=='vehicle/lidar' and (bool(hits) or any(x==math.inf for x in m.ranges)))
-        if hits:self.minimum_scan=min(self.minimum_scan,min(hits))
+        nearest,valid=scan_state(m)
+        self.latest.update(nearest=nearest,scan_at=time.monotonic(),scan_valid=valid,
+                           scan_range_max_m=m.range_max)
+        self.minimum_scan=min(self.minimum_scan,nearest)
+
+    def path_cb(self,m):
+        if self.active_candidate is None:return
+        # During navigation no candidate ComputePath request is issued. Only
+        # accept a current plan for this goal, never another goal's latched path.
+        if rclpy.time.Time.from_msg(m.header.stamp).nanoseconds < self.execution_started_ns:return
+        self.execution_path=([[p.pose.position.x,p.pose.position.y,yaw(p.pose.orientation)] for p in m.poses]
+                             if m.header.frame_id=='map' else [])
+        self.path_revision+=1
+
+    def evaluate_path(self,path,candidate):
+        version=self.latest['map_version']
+        if self.clearance_model is None or self.clearance_model.map_version!=version:
+            m=self.latest['map'];o=m.info.origin
+            self.clearance_model=PathSafety(self.latest['data'],m.info.resolution,
+                (o.position.x,o.position.y,yaw(o.orientation)),version)
+        try:t=self.buffer.lookup_transform(BASE_FRAME,SCAN_FRAME,rclpy.time.Time())
+        except Exception as e:raise RuntimeError('lidar_transform_unavailable') from e
+        offset=(t.transform.translation.x,t.transform.translation.y)
+        return self.clearance_model.evaluate(path,self.pose(),
+            [candidate['x'],candidate['y'],candidate['yaw']],offset)
 
     def spin_once(self):rclpy.spin_once(self.node,timeout_sec=.05)
 
@@ -103,7 +134,14 @@ class Explorer:
 
     def health(self):
         now=time.monotonic()
-        for key,timeout in [('odom_at',2.),('scan_at',2.),('map_at',20.)]:
+        deadlines=[('odom_at',2.),('scan_at',SCAN_TIMEOUT_S),('map_at',20.)]
+        if any(now-self.latest.get(key,-math.inf)>timeout for key,timeout in deadlines):
+            # Synchronous candidate/map geometry can outlast the scan period.
+            # Drain already queued feedback before judging its age; do not wait
+            # for a missing sensor or relax the independent guard's timeout.
+            for _ in range(32):rclpy.spin_once(self.node,timeout_sec=0.)
+            now=time.monotonic()
+        for key,timeout in deadlines:
             if now-self.latest.get(key,-math.inf)>timeout:raise RuntimeError(key+'_stale')
         if not self.latest.get('scan_valid'):raise RuntimeError('scan_invalid')
         self.pose()
@@ -118,7 +156,14 @@ class Explorer:
 
     def model(self):
         m=self.latest['map'];o=m.info.origin
-        return (AggressiveMap if self.args.policy=="aggressive" else FrontierMap)(self.latest['data'],m.info.resolution,(o.position.x,o.position.y,yaw(o.orientation)),self.config)
+        origin=(o.position.x,o.position.y,yaw(o.orientation))
+        if self.args.policy=="aggressive":
+            try:t=self.buffer.lookup_transform(BASE_FRAME,SCAN_FRAME,rclpy.time.Time())
+            except Exception as error:raise RuntimeError('lidar_transform_unavailable') from error
+            return AggressiveMap(self.latest['data'],m.info.resolution,origin,self.config,
+                                 (t.transform.translation.x,t.transform.translation.y),
+                                 self.latest.get('scan_range_max_m'))
+        return FrontierMap(self.latest['data'],m.info.resolution,origin,self.config)
 
     def save_map(self,label):
         m=self.latest['map'];o=m.info.origin
@@ -158,12 +203,28 @@ class Explorer:
 
     def execute(self,client,goal,timeout,kind):
         if self.handle is not None:raise RuntimeError('concurrent_action_disallowed')
+        if self.latest['nearest']<STOP_RADIUS_M:
+            if not self.stop_confirmed():raise RuntimeError('stop_unconfirmed')
+            return {'status':5,'error_msg':'guard_stop'}
         self.handle=self.wait(client.send_goal_async(goal),10)
         if not self.handle.accepted:self.handle=None;return {'status':0,'error_code':1,'error_msg':'action_rejected'}
         self.action_result=self.handle.get_result_async();deadline=time.monotonic()+timeout
         progress_anchor=self.pose();progress_at=time.monotonic()
+        checked_key=None;checked_at=-math.inf
         while not self.action_result.done():
             self.spin_once();self.health();now=time.monotonic()
+            if self.latest['nearest']<STOP_RADIUS_M:
+                if not self.cancel_active():raise RuntimeError('stop_unconfirmed')
+                return {'status':5,'error_msg':'guard_stop'}
+            if kind=='navigation':
+                key=(self.latest['map_version'],self.path_revision)
+                if key!=checked_key or now-checked_at>1.0:
+                    check=self.evaluate_path(remaining_path(self.execution_path,self.pose()),self.active_candidate)
+                    checked_key=key;checked_at=now
+                    if not check['safe']:
+                        self.event('execution_path_invalidated',candidate=self.active_candidate,clearance=check)
+                        if not self.cancel_active():raise RuntimeError('stop_unconfirmed')
+                        return {'status':5,'error_msg':check['reason'],'clearance':check}
             if now-self.started>=self.args.wall_budget:
                 if not self.cancel_active():raise RuntimeError('stop_unconfirmed')
                 return {'status':5,'error_msg':'budget_exhausted'}
@@ -192,9 +253,14 @@ class Explorer:
         try:r=self.wait(future,15)
         except Exception:
             self.wait(h.cancel_goal_async(),5);raise
-        path=[[p.pose.position.x,p.pose.position.y] for p in r.result.path.poses]
+        path=[[p.pose.position.x,p.pose.position.y,yaw(p.pose.orientation)] for p in r.result.path.poses]
         if r.status!=4:return None,{'status':r.status,'error_code':r.result.error_code,'message':r.result.error_msg}
-        return {'length':sum(math.dist(a,b) for a,b in zip(path,path[1:])),'path':path},{'status':4,'error_code':0}
+        if r.result.path.header.frame_id!='map':return None,{'status':0,'error_code':1,'message':'invalid_path_frame'}
+        clearance=self.evaluate_path(path,candidate)
+        outcome={'status':4,'error_code':0,'clearance':clearance}
+        if not clearance['safe']:return None,outcome
+        return {'length':sum(math.dist(a[:2],b[:2]) for a,b in zip(path,path[1:])),
+                'path':path,'clearance':clearance},outcome
 
     def goal_pose(self,c):
         p=PoseStamped();p.header.frame_id='map';p.header.stamp=self.node.get_clock().now().to_msg()
@@ -234,6 +300,9 @@ class Explorer:
                 self.observe(8)
             while True:
                 self.health()
+                # Guard blocks rotation as well as translation. Do not dispatch
+                # any new goal while it is still latched by the current scan.
+                if self.latest['nearest']<STOP_RADIUS_M:reason='guard_blocked_no_safe_motion';break
                 if time.monotonic()-self.started>=self.args.wall_budget:reason='budget_exhausted';break
                 if len(self.goals)>=self.args.max_goals:reason='goal_budget_exhausted';break
                 model=self.model();pose=self.pose()
@@ -259,7 +328,8 @@ class Explorer:
                     if self.args.policy=='conservative' and reachable and c['euclidean_distance_m']>min(p['plan']['length'] for p in reachable):break
                     plan,outcome=self.plan(c);self.event('planning_result',candidate=c,**outcome)
                     if plan is not None:reachable.append({'candidate':c,'plan':plan})
-                    else:self.history.append({'x':c['x'],'y':c['y'],'outcome':'unreachable'})
+                    else:self.history.append({'x':c['x'],'y':c['y'],
+                        'outcome':outcome.get('clearance',{}).get('reason','unreachable')})
                 if not reachable:
                     reason='budget_exhausted' if time.monotonic()-self.started>=self.args.wall_budget else 'no_reachable_candidates';break
                 if self.args.policy=='aggressive':
@@ -268,12 +338,27 @@ class Explorer:
                     selected=min(reachable,key=lambda p:p['plan']['length'])
                 c=selected['candidate']
                 # Recheck against the newest map after asynchronous planning.
+                # Refresh queued feedback BEFORE validation so a drained map
+                # callback cannot invalidate the check immediately before send.
+                self.health()
                 if not self.model().is_safe(c['x'],c['y'],*([c['yaw']] if self.args.policy=='aggressive' else [])):
                     self.event('goal_invalidated',candidate=c);self.history.append({**c,'outcome':'map_changed'});continue
-                before=self.sample();entry={'candidate':c,'planned_length_m':selected['plan']['length'],'plan':selected['plan']['path'],'before':before}
-                self.event('goal_selected',candidate=c,planned_length_m=entry['planned_length_m'])
+                # Full route + final rotation must still pass the latest map,
+                # even when it changed while other candidates were planned.
+                clearance=self.evaluate_path(selected['plan']['path'],c)
+                if not clearance['safe']:
+                    self.event('path_invalidated_before_dispatch',candidate=c,clearance=clearance)
+                    self.history.append({**c,'outcome':clearance['reason']});continue
+                if time.monotonic()-self.started>=self.args.wall_budget:reason='budget_exhausted';break
+                before=self.sample();entry={'candidate':c,'planned_length_m':selected['plan']['length'],
+                    'plan':[p[:2] for p in selected['plan']['path']],
+                    'plan_poses':selected['plan']['path'],'clearance':clearance,'before':before}
+                self.event('goal_selected',candidate=c,planned_length_m=entry['planned_length_m'],clearance=clearance)
                 g=NavigateToPose.Goal();g.pose=self.goal_pose(c)
+                self.active_candidate=c;self.execution_path=selected['plan']['path']
+                self.execution_started_ns=self.node.get_clock().now().nanoseconds
                 result=self.execute(self.nav,g,self.args.goal_timeout,'navigation');entry['result']=result
+                self.active_candidate=None;self.execution_path=None
                 self.observe(8);entry['after']=self.sample();entry['known_area_gain_m2']=entry['after']['known_area_m2']-before['known_area_m2']
                 self.goals.append(entry);self.history.append({**c,'outcome':'visited' if result['status']==4 else 'failed','goal_index':len(self.goals),'known_area':entry['after']['known_area_m2']})
                 self.event('goal_result',candidate=c,result=result,known_area_gain_m2=entry['known_area_gain_m2'])
@@ -289,7 +374,7 @@ class Explorer:
             try:self.report['final']=self.sample();self.save_map('final')
             except Exception as e:self.report['final_sample_error']=str(e)
             self.checkpoint();self.event('finished',status=self.report['status'],stop_reason=reason,stopped=stopped)
-            self.event_file.close();self.node.destroy_node();self.lock.close()
+            self.event_file.close();self.node.destroy_node();self.lock.close();self.motion_lock.close()
         return self.report['status']!='error' and self.report['stopped']
 
     def checkpoint(self):

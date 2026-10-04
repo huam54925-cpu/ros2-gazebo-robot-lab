@@ -70,7 +70,11 @@ class FrontierMap:
         blocks=padded.reshape(padded.shape[0]//s,s,padded.shape[1]//s,s).transpose(0,2,1,3)
         self.occupied=np.any(blocks>=65,axis=(2,3))
         self.free=np.all((blocks>=0)&(blocks<25),axis=(2,3))
-        self.unknown=~(self.free|self.occupied)
+        # Unobserved cells are not the complement of free/occupied: intermediate
+        # occupancy probabilities and mixed known blocks are uncertain, not new
+        # unexplored area. All non-free classes remain forbidden for motion.
+        self.unknown=np.any(blocks<0,axis=(2,3))&~self.occupied
+        self.uncertain=~(self.free|self.occupied|self.unknown)
         # Boundary outside the map is unknown. Padding prevents wraparound edges.
         significant_unknown=np.zeros_like(self.unknown)
         for group in components(self.unknown):

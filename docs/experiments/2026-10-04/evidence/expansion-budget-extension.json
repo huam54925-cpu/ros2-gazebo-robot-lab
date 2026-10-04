@@ -1,0 +1,51 @@
+{
+  "mission_id": "d6401eb3-8750-401e-aa12-ce5074c0f795",
+  "status": "running",
+  "stop_reason": null,
+  "limits": {
+    "max_steps": 20,
+    "max_distance": 80,
+    "max_sim_time": 900,
+    "max_wall_time": 3600,
+    "max_failures": 3,
+    "profile": "extended"
+  },
+  "observations_enabled": false,
+  "start_sim_s": 2854.562,
+  "started_monotonic_s": 14290.397044884,
+  "deadline_monotonic_s": 17890.397044883997,
+  "heartbeat_monotonic_s": 14558.642542782,
+  "stop_request_id": "fd4235df-c6ba-4480-be96-661cc67f0a2d",
+  "stopped": false,
+  "started_unix_s": 1791111487.1458673,
+  "initial_limits": {
+    "max_steps": 10,
+    "max_distance": 40.0,
+    "max_sim_time": 480.0,
+    "max_wall_time": 1800.0,
+    "max_failures": 3,
+    "profile": "extended"
+  },
+  "budget_changes": [
+    {
+      "at_unix_s": 1791111755.6810439,
+      "source": "explicit_local_operator",
+      "previous_limits": {
+        "max_steps": 10,
+        "max_distance": 40.0,
+        "max_sim_time": 480.0,
+        "max_wall_time": 1800.0,
+        "max_failures": 3,
+        "profile": "extended"
+      },
+      "new_limits": {
+        "max_steps": 20,
+        "max_distance": 80,
+        "max_sim_time": 900,
+        "max_wall_time": 3600,
+        "max_failures": 3,
+        "profile": "extended"
+      }
+    }
+  ]
+}
