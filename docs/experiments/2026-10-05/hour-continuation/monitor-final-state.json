@@ -1,0 +1,6 @@
+{
+  "automation_id": "automation",
+  "status": "PAUSED",
+  "reason": "mission_finished_and_stop_confirmed",
+  "automatic_resume": false
+}

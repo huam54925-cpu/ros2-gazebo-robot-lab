@@ -1,0 +1,27 @@
+.........F......................................
+======================================================================
+FAIL: test_hour_body_abort_reselects_only_after_confirmed_stop (test_loop.LoopTests.test_hour_body_abort_reselects_only_after_confirmed_stop)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/asyncio/runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/usr/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/mnt/robot_disk/ros_sim/workspace/robot_agent/test_loop.py", line 75, in test_hour_body_abort_reselects_only_after_confirmed_stop
+    self.assertEqual(submitted,['first'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != ['first']
+
+Second list contains 1 additional elements.
+First extra element 0:
+'first'
+
+- []
++ ['first']
+
+----------------------------------------------------------------------
+Ran 48 tests in 14.646s
+
+FAILED (failures=1)

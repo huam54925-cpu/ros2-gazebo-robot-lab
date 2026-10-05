@@ -1,0 +1,8 @@
+{
+  "request_id": "677f4ada-35b9-4538-a876-e5bcc046a2b4",
+  "command": "resume",
+  "result": {
+    "status": "resumed",
+    "stop_latched": false
+  }
+}

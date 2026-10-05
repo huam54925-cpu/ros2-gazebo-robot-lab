@@ -1,0 +1,15 @@
+{
+  "previous_mission": "e13864fa-f3d1-4a95-82f9-31a3452e120e",
+  "budget": {
+    "max_steps": 19,
+    "max_distance": 79.47380117153206,
+    "max_sim_time": 851,
+    "max_wall_time": 3486,
+    "max_failures": 1,
+    "profile": "extended"
+  },
+  "used_active_mission_sim_s": 48.137000000000626,
+  "used_active_mission_wall_s": 113.43243927600088,
+  "operator_gaps_counted_as_active_budget": false,
+  "authorization": "user explicitly requested continue after stopped trial"
+}

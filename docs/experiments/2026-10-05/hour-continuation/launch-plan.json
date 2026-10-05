@@ -1,0 +1,21 @@
+{
+  "authorization": "用户明确要求接着当前任务进行约一小时长时间实验。新会话从当前地图与停车位置开始，不自动重放失败目标。",
+  "previous_mission": "09950cad-a081-4da5-84a6-5b7293cf8afd",
+  "requested_wall_seconds": 3600,
+  "limits": {
+    "max_steps": 60,
+    "max_distance": 240,
+    "max_sim_time": 3600,
+    "max_wall_time": 3600,
+    "max_failures": 3,
+    "profile": "hour"
+  },
+  "map_reset": false,
+  "historical_full_map_loaded": false,
+  "guard_m": 1.9,
+  "path_clearance_m": 2.15,
+  "service": "robot-explore-hour-20261005.service",
+  "sleep_inhibitor": "robot-explore-hour-awake-20261005.service",
+  "automatic_restart": false,
+  "created_unix_s": 1791192824.2712793
+}

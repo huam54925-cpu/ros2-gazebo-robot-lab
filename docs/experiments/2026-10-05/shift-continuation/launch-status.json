@@ -1,0 +1,9 @@
+{
+  "mission_id": "61be983e-12c4-4855-94e4-f84c50bde9a6",
+  "status_at_capture": "running",
+  "started_local": "2026-10-05T11:38:03.462571+01:00",
+  "deadline_local": "2026-10-05T12:23:31.462571+01:00",
+  "heartbeat_age_s": 0.9352143529995374,
+  "automation_id": "automation",
+  "service": "robot-shift-continuation-20261005.service"
+}

@@ -1,0 +1,5 @@
+waiting for service to become available...
+requester: making request: slam_toolbox.srv.SerializePoseGraph_Request(filename='/work/robot_ws/maps/limited-view-continuation-final-20261005')
+
+response:
+slam_toolbox.srv.SerializePoseGraph_Response(result=0)

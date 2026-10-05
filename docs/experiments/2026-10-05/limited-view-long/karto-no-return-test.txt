@@ -1,0 +1,2 @@
+Registering sensor: [test]
+PASS: installed Karto clears normalized no-return to 11.9 m without an occupied endpoint; finite hit preserved; invalid/max ranges ignored.

@@ -1,0 +1,132 @@
+{
+  "scope": "offline synthetic grid and isolated fixture history; no live task injection; no motion",
+  "guard_threshold_m": 1.9,
+  "required_path_clearance_m": 2.15,
+  "cases": {
+    "low_gain_ABAB": {
+      "repeat": {
+        "frontier_id": "refreshed-id",
+        "retain_for_safety_recheck": false,
+        "reason": "RECENT_LOW_GAIN_OBSERVATION",
+        "evidence_event": "fixture:3"
+      },
+      "pass": true
+    },
+    "another_entry": {
+      "same_entry": {
+        "frontier_id": "refreshed-id",
+        "retain_for_safety_recheck": false,
+        "reason": "SAME_FAILED_APPROACH",
+        "evidence_event": "fixture:failed-entry"
+      },
+      "other_entry": {
+        "frontier_id": "refreshed-id",
+        "retain_for_safety_recheck": true,
+        "reason": "RETAIN_FOR_EXISTING_SAFETY_CHECKS",
+        "evidence_event": null
+      },
+      "direct_safety": {
+        "safe": false,
+        "map_version": "fixture",
+        "guard_threshold_m": 1.9,
+        "planning_margin_m": 0.25,
+        "required_clearance_m": 2.15,
+        "sensor_offset_m": [
+          0,
+          0
+        ],
+        "predicted_min_clearance_m": 1.475,
+        "guard_margin_m": -0.4249999999999998,
+        "known_obstacles_only": true,
+        "reason": "path_guard_clearance",
+        "worst_base_pose": [
+          5.0,
+          4.0,
+          0.0
+        ],
+        "worst_sensor_xy": [
+          5.0,
+          4.0
+        ],
+        "samples": 207
+      },
+      "detour_safety": {
+        "safe": true,
+        "map_version": "fixture",
+        "guard_threshold_m": 1.9,
+        "planning_margin_m": 0.25,
+        "required_clearance_m": 2.15,
+        "sensor_offset_m": [
+          0,
+          0
+        ],
+        "predicted_min_clearance_m": 2.475,
+        "guard_margin_m": 0.5750000000000002,
+        "known_obstacles_only": true,
+        "reason": "clear",
+        "worst_base_pose": [
+          3.0,
+          4.0,
+          0.0
+        ],
+        "worst_sensor_xy": [
+          3.0,
+          4.0
+        ],
+        "samples": 1095
+      },
+      "pass": true
+    },
+    "old_position_to_new_area": {
+      "new_goal_via_old_position": {
+        "frontier_id": "refreshed-id",
+        "retain_for_safety_recheck": true,
+        "reason": "RETAIN_FOR_EXISTING_SAFETY_CHECKS",
+        "evidence_event": null
+      },
+      "transit_at_old_position": {
+        "frontier_id": "refreshed-id",
+        "retain_for_safety_recheck": true,
+        "reason": "RETAIN_FOR_EXISTING_SAFETY_CHECKS",
+        "evidence_event": null
+      },
+      "path_safety": {
+        "safe": true,
+        "map_version": "fixture",
+        "guard_threshold_m": 1.9,
+        "planning_margin_m": 0.25,
+        "required_clearance_m": 2.15,
+        "sensor_offset_m": [
+          0,
+          0
+        ],
+        "predicted_min_clearance_m": null,
+        "guard_margin_m": null,
+        "known_obstacles_only": true,
+        "reason": "clear",
+        "worst_base_pose": [
+          3.0,
+          4.0,
+          0.0
+        ],
+        "worst_sensor_xy": [
+          3.0,
+          4.0
+        ],
+        "samples": 489
+      },
+      "pass": true
+    },
+    "unregistered_gain_is_null": {
+      "advice": {
+        "frontier_id": "refreshed-id",
+        "retain_for_safety_recheck": true,
+        "reason": "RETAIN_FOR_EXISTING_SAFETY_CHECKS",
+        "evidence_event": null
+      },
+      "gain_m2": null,
+      "pass": true
+    }
+  },
+  "online_low_gain_trigger_verified": false
+}

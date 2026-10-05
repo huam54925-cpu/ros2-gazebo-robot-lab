@@ -1,0 +1,104 @@
+[
+  {
+    "catalog": "8498c023acc1",
+    "candidate_id": "information-1",
+    "goal": [
+      0.1234772231700898,
+      6.056612314971391,
+      3.5598169831690223
+    ],
+    "reason": "path_guard_clearance",
+    "predicted_clearance_m": 1.4837621112461772,
+    "worst_base_pose": [
+      9.673477310687304,
+      -1.5433879271149635,
+      2.7227136331111543
+    ],
+    "samples": 25589
+  },
+  {
+    "catalog": "8498c023acc1",
+    "candidate_id": "information-2",
+    "goal": [
+      -0.6765227887508392,
+      5.856612311991158,
+      3.349088880024996
+    ],
+    "reason": "path_guard_clearance",
+    "predicted_clearance_m": 1.4837621112461772,
+    "worst_base_pose": [
+      9.673477310687304,
+      -1.5433879271149635,
+      2.7227136331111543
+    ],
+    "samples": 25405
+  },
+  {
+    "catalog": "8498c023acc1",
+    "candidate_id": "information-3",
+    "goal": [
+      0.9234772350910188,
+      5.456612306030694,
+      -0.8621700546672263
+    ],
+    "reason": "path_guard_clearance",
+    "predicted_clearance_m": 1.4837621112461772,
+    "worst_base_pose": [
+      9.673477310687304,
+      -1.5433879271149635,
+      2.7227136331111543
+    ],
+    "samples": 24959
+  },
+  {
+    "catalog": "8498c023acc1",
+    "candidate_id": "information-4",
+    "goal": [
+      -1.2765227976915359,
+      5.256612303050462,
+      3.18701593301137
+    ],
+    "reason": "path_guard_clearance",
+    "predicted_clearance_m": 1.4837621112461772,
+    "worst_base_pose": [
+      9.673477310687304,
+      -1.5433879271149635,
+      2.7227136331111543
+    ],
+    "samples": 25046
+  },
+  {
+    "catalog": "8498c023acc1",
+    "candidate_id": "information-5",
+    "goal": [
+      0.1234772231700898,
+      5.256612303050462,
+      -0.9453112865556675
+    ],
+    "reason": "path_guard_clearance",
+    "predicted_clearance_m": 1.4837621112461772,
+    "worst_base_pose": [
+      9.673477310687304,
+      -1.5433879271149635,
+      2.7227136331111543
+    ],
+    "samples": 24693
+  },
+  {
+    "catalog": "bc0f83e1c9c1",
+    "candidate_id": "information-1",
+    "goal": [
+      0.7234772321107865,
+      4.656612294109765,
+      -0.7531512809621943
+    ],
+    "reason": "path_guard_clearance",
+    "predicted_clearance_m": 1.4837621112461772,
+    "worst_base_pose": [
+      9.673477310687304,
+      -1.5433879271149635,
+      2.7227136331111543
+    ],
+    "samples": 24327
+  }
+]

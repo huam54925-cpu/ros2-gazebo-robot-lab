@@ -1,0 +1,476 @@
+{
+  "request_id": "4dc85510-8953-4672-938f-654079738b76",
+  "task_id": "82a8b16a-f72c-4ff7-9a5b-02384dfce33f",
+  "kind": "perform_observation",
+  "mission_id": null,
+  "payload": {
+    "option_id": "OBS_9248bd56b7e0_2"
+  },
+  "exploration_mode": "baseline",
+  "candidate_search": "baseline",
+  "exploration_step": 8,
+  "accepted": true,
+  "status": "succeeded",
+  "running": false,
+  "stopped": true,
+  "reason": "observation_rotation_completed",
+  "sensor_fresh": {
+    "odometry": true,
+    "scan": true,
+    "map": true,
+    "localization": true
+  },
+  "sensor_observed_unix_s": 1791191123.0748603,
+  "map_version": "360d21f5ae51b7f7b3b2",
+  "candidate": {
+    "type": "rotate",
+    "signed_angle_rad": -0.7853981633974483,
+    "x": -1.1366815403032755,
+    "y": 5.756530384328569,
+    "yaw": -1.763613864476227,
+    "region_epoch": "4d09abc4e79b",
+    "region_id": "R_-1_1",
+    "target_region_id": "R_-1_1",
+    "start_pose": [
+      -1.1366815403032755,
+      5.756530384328569,
+      -0.9782157010787785
+    ],
+    "map_version": "39833a5a2370c52f304e",
+    "gain_map_version": "39833a5a2370c52f304e",
+    "safe": true,
+    "novel_unknown_area_proxy_m2": 2.000000059604645,
+    "gain_model": "sensor_offset_occlusion_aware_rays_v2",
+    "unknown_analysis": {
+      "unknown_type": "UNKNOWN_OPEN",
+      "classification_basis": "sampled_map_rays_from_this_sensor_pose",
+      "historical_unknown_cause": "UNDETERMINED",
+      "visible_unknown_area_proxy_m2": 26.840000799894337,
+      "occluded_unknown_area_proxy_m2": 14.360000427961353,
+      "uncertain_unknown_area_proxy_m2": 40.48000120639802,
+      "occluded_fraction_proxy": 0.17580803134182174,
+      "beyond_current_sensor_range_proxy_m2": 0.0,
+      "sensor_range_m": 12.0,
+      "proxy_range_m": 8.0,
+      "unknown_depth_cap_m": 2.0,
+      "map_edge_rays": 31,
+      "gain_confidence": "optimistic_proxy_not_observed_area",
+      "unknown_is_traversable": false
+    },
+    "gain_confidence": "optimistic_proxy",
+    "estimated_sim_seconds": 7.926990816987242,
+    "estimated_wall_seconds": null,
+    "planned_length_m": 0.0,
+    "clearance": {
+      "safe": true,
+      "map_version": "39833a5a2370c52f304e",
+      "guard_threshold_m": 1.9,
+      "planning_margin_m": 0.25,
+      "required_clearance_m": 2.15,
+      "sensor_offset_m": [
+        -0.7057095,
+        0.0
+      ],
+      "predicted_min_clearance_m": 2.759772919658517,
+      "guard_margin_m": 0.8597729196585169,
+      "known_obstacles_only": true,
+      "reason": "clear",
+      "worst_base_pose": [
+        -1.1366815403032755,
+        5.756530384328569,
+        -1.5803542930168222
+      ],
+      "worst_sensor_xy": [
+        -1.1299364954394904,
+        6.462207649627683
+      ],
+      "samples": 65,
+      "body_sweep_checked": true,
+      "body_sweep_safe": true,
+      "signed_angle_rad": -0.7853981633974483,
+      "rotation_samples": 31
+    },
+    "score": 0.25230255790365247,
+    "option_id": "OBS_9248bd56b7e0_2"
+  },
+  "cancel_requested": false,
+  "created_unix_s": 1791191088.8191812,
+  "updated_unix_s": 1791191123.0748656,
+  "result": {
+    "status": "succeeded",
+    "reason": "observation_rotation_completed",
+    "stopped": true,
+    "before": {
+      "wall_elapsed": 4.060403014000258,
+      "simulation_seconds": 4182.934,
+      "pose": [
+        -1.136681540303275,
+        5.7565303843285545,
+        -0.9782157010787785
+      ],
+      "known_cells": 39771,
+      "known_area_m2": 99.42750296317043,
+      "map_version": "e49ba23886548d8ab26a",
+      "map_width": 294,
+      "map_height": 401,
+      "path_length_odom_m": 0.0,
+      "nearest_scan_m": 2.9227490425109863,
+      "velocity": [
+        0.0,
+        0.0
+      ]
+    },
+    "candidate": {
+      "type": "rotate",
+      "signed_angle_rad": -0.7853981633974483,
+      "x": -1.1366815403032755,
+      "y": 5.756530384328569,
+      "yaw": -1.763613864476227,
+      "region_epoch": "4d09abc4e79b",
+      "region_id": "R_-1_1",
+      "target_region_id": "R_-1_1",
+      "start_pose": [
+        -1.1366815403032755,
+        5.756530384328569,
+        -0.9782157010787785
+      ],
+      "map_version": "39833a5a2370c52f304e",
+      "gain_map_version": "39833a5a2370c52f304e",
+      "safe": true,
+      "novel_unknown_area_proxy_m2": 2.000000059604645,
+      "gain_model": "sensor_offset_occlusion_aware_rays_v2",
+      "unknown_analysis": {
+        "unknown_type": "UNKNOWN_OPEN",
+        "classification_basis": "sampled_map_rays_from_this_sensor_pose",
+        "historical_unknown_cause": "UNDETERMINED",
+        "visible_unknown_area_proxy_m2": 26.840000799894337,
+        "occluded_unknown_area_proxy_m2": 14.360000427961353,
+        "uncertain_unknown_area_proxy_m2": 40.48000120639802,
+        "occluded_fraction_proxy": 0.17580803134182174,
+        "beyond_current_sensor_range_proxy_m2": 0.0,
+        "sensor_range_m": 12.0,
+        "proxy_range_m": 8.0,
+        "unknown_depth_cap_m": 2.0,
+        "map_edge_rays": 31,
+        "gain_confidence": "optimistic_proxy_not_observed_area",
+        "unknown_is_traversable": false
+      },
+      "gain_confidence": "optimistic_proxy",
+      "estimated_sim_seconds": 7.926990816987242,
+      "estimated_wall_seconds": null,
+      "planned_length_m": 0.0,
+      "clearance": {
+        "safe": true,
+        "map_version": "39833a5a2370c52f304e",
+        "guard_threshold_m": 1.9,
+        "planning_margin_m": 0.25,
+        "required_clearance_m": 2.15,
+        "sensor_offset_m": [
+          -0.7057095,
+          0.0
+        ],
+        "predicted_min_clearance_m": 2.759772919658517,
+        "guard_margin_m": 0.8597729196585169,
+        "known_obstacles_only": true,
+        "reason": "clear",
+        "worst_base_pose": [
+          -1.1366815403032755,
+          5.756530384328569,
+          -1.5803542930168222
+        ],
+        "worst_sensor_xy": [
+          -1.1299364954394904,
+          6.462207649627683
+        ],
+        "samples": 65,
+        "body_sweep_checked": true,
+        "body_sweep_safe": true,
+        "signed_angle_rad": -0.7853981633974483,
+        "rotation_samples": 31
+      },
+      "score": 0.25230255790365247,
+      "option_id": "OBS_9248bd56b7e0_2"
+    },
+    "clearance": {
+      "safe": true,
+      "map_version": "e49ba23886548d8ab26a",
+      "guard_threshold_m": 1.9,
+      "planning_margin_m": 0.25,
+      "required_clearance_m": 2.15,
+      "sensor_offset_m": [
+        -0.7057095,
+        0.0
+      ],
+      "predicted_min_clearance_m": 2.7597729196585186,
+      "guard_margin_m": 0.8597729196585187,
+      "known_obstacles_only": true,
+      "reason": "clear",
+      "worst_base_pose": [
+        -1.136681540303275,
+        5.7565303843285545,
+        -1.5803542930168222
+      ],
+      "worst_sensor_xy": [
+        -1.12993649543949,
+        6.462207649627668
+      ],
+      "samples": 65,
+      "body_sweep_checked": true,
+      "body_sweep_safe": true,
+      "signed_angle_rad": -0.7853981633974483,
+      "rotation_samples": 31
+    },
+    "navigation_result": {
+      "status": 4,
+      "error_code": 0,
+      "error_msg": ""
+    },
+    "signed_angle_traveled_rad": -0.6442699999967539,
+    "distance_odom_m": 1.4996266059181713e-13,
+    "minimum_scan_m": 2.805100917816162,
+    "map_gain": {
+      "gain_status": "FEEDBACK_INCOMPLETE",
+      "observed_new_known_area_m2": 39.28401418388353,
+      "observed_lost_known_area_m2": 23.886513725002263,
+      "net_known_area_change_m2": 15.397500458881265,
+      "observed_new_free_area_m2": 38.71379497625858,
+      "observed_new_occupied_area_m2": 0.5702192076249398,
+      "observed_new_ambiguous_area_m2": 0.0,
+      "measurement_status": "REGISTERED_MAP_CHANGE",
+      "registration": "fractional_cell_area_overlap",
+      "grid_shift_cells": [
+        -0.649018719084993,
+        -0.12086290581931618
+      ],
+      "accepted_scan_evidence": "UNAVAILABLE",
+      "note": "Map-window change, not causal gain. Fractional origins/SLAM corrections can create boundary changes; no LOW_GAIN claim.",
+      "at_stop": {
+        "gain_status": "FEEDBACK_INCOMPLETE",
+        "observed_new_known_area_m2": 26.297074039833163,
+        "observed_lost_known_area_m2": 26.362074041770317,
+        "net_known_area_change_m2": -0.06500000193715394,
+        "observed_new_free_area_m2": 26.117887591119143,
+        "observed_new_occupied_area_m2": 0.1791864487140301,
+        "observed_new_ambiguous_area_m2": 0.0,
+        "measurement_status": "REGISTERED_MAP_CHANGE",
+        "registration": "fractional_cell_area_overlap",
+        "grid_shift_cells": [
+          -0.649018719084993,
+          -3.5527136258609424e-14
+        ],
+        "accepted_scan_evidence": "UNAVAILABLE",
+        "note": "Map-window change, not causal gain. Fractional origins/SLAM corrections can create boundary changes; no LOW_GAIN claim."
+      },
+      "settling": {
+        "gain_status": "FEEDBACK_INCOMPLETE",
+        "observed_new_known_area_m2": 22.286693825192092,
+        "observed_lost_known_area_m2": 6.82419336437368,
+        "net_known_area_change_m2": 15.462500460818411,
+        "observed_new_free_area_m2": 21.82029457712309,
+        "observed_new_occupied_area_m2": 0.4663992480689978,
+        "observed_new_ambiguous_area_m2": 0.0,
+        "measurement_status": "REGISTERED_MAP_CHANGE",
+        "registration": "fractional_cell_area_overlap",
+        "grid_shift_cells": [
+          0.0,
+          -0.12086290581928065
+        ],
+        "accepted_scan_evidence": "UNAVAILABLE",
+        "note": "Map-window change, not causal gain. Fractional origins/SLAM corrections can create boundary changes; no LOW_GAIN claim."
+      },
+      "feedback_wait_wall_s": 10.10399104300086,
+      "sensor_feedback_fresh": true,
+      "map_message_advanced": true,
+      "usable_for_trend": false,
+      "causal_action_gain_valid": false,
+      "trend_scope": "registered_map_window_only_not_causal_action_gain",
+      "before_map_stamp_sim_s": 4182.4,
+      "after_map_stamp_sim_s": 4190.4,
+      "before_geometry": {
+        "resolution": 0.05000000074505806,
+        "origin": [
+          -4.512710434141142,
+          -5.00301964305536,
+          0.0
+        ],
+        "frame": "map",
+        "stamp_sim_s": 4182.4
+      },
+      "after_geometry": {
+        "resolution": 0.05000000074505806,
+        "origin": [
+          -4.545161370578948,
+          -5.009062788436376,
+          0.0
+        ],
+        "frame": "map",
+        "stamp_sim_s": 4190.4
+      },
+      "raw_known_area_delta_m2": 15.397500458881268,
+      "comparable_gain_m2": null,
+      "distance_odom_m": 1.4996266059181713e-13,
+      "elapsed_sim_s": 7.939000000000306,
+      "elapsed_wall_s": 19.769865554999342,
+      "new_area_per_meter": null,
+      "new_area_per_sim_s": null,
+      "new_area_per_wall_s": null
+    },
+    "observation_metrics": {
+      "gain_status": "FEEDBACK_INCOMPLETE",
+      "observed_new_known_area_m2": 39.28401418388353,
+      "observed_lost_known_area_m2": 23.886513725002263,
+      "net_known_area_change_m2": 15.397500458881265,
+      "observed_new_free_area_m2": 38.71379497625858,
+      "observed_new_occupied_area_m2": 0.5702192076249398,
+      "observed_new_ambiguous_area_m2": 0.0,
+      "measurement_status": "REGISTERED_MAP_CHANGE",
+      "registration": "fractional_cell_area_overlap",
+      "grid_shift_cells": [
+        -0.649018719084993,
+        -0.12086290581931618
+      ],
+      "accepted_scan_evidence": "UNAVAILABLE",
+      "note": "Map-window change, not causal gain. Fractional origins/SLAM corrections can create boundary changes; no LOW_GAIN claim.",
+      "at_stop": {
+        "gain_status": "FEEDBACK_INCOMPLETE",
+        "observed_new_known_area_m2": 26.297074039833163,
+        "observed_lost_known_area_m2": 26.362074041770317,
+        "net_known_area_change_m2": -0.06500000193715394,
+        "observed_new_free_area_m2": 26.117887591119143,
+        "observed_new_occupied_area_m2": 0.1791864487140301,
+        "observed_new_ambiguous_area_m2": 0.0,
+        "measurement_status": "REGISTERED_MAP_CHANGE",
+        "registration": "fractional_cell_area_overlap",
+        "grid_shift_cells": [
+          -0.649018719084993,
+          -3.5527136258609424e-14
+        ],
+        "accepted_scan_evidence": "UNAVAILABLE",
+        "note": "Map-window change, not causal gain. Fractional origins/SLAM corrections can create boundary changes; no LOW_GAIN claim."
+      },
+      "settling": {
+        "gain_status": "FEEDBACK_INCOMPLETE",
+        "observed_new_known_area_m2": 22.286693825192092,
+        "observed_lost_known_area_m2": 6.82419336437368,
+        "net_known_area_change_m2": 15.462500460818411,
+        "observed_new_free_area_m2": 21.82029457712309,
+        "observed_new_occupied_area_m2": 0.4663992480689978,
+        "observed_new_ambiguous_area_m2": 0.0,
+        "measurement_status": "REGISTERED_MAP_CHANGE",
+        "registration": "fractional_cell_area_overlap",
+        "grid_shift_cells": [
+          0.0,
+          -0.12086290581928065
+        ],
+        "accepted_scan_evidence": "UNAVAILABLE",
+        "note": "Map-window change, not causal gain. Fractional origins/SLAM corrections can create boundary changes; no LOW_GAIN claim."
+      },
+      "feedback_wait_wall_s": 10.10399104300086,
+      "sensor_feedback_fresh": true,
+      "map_message_advanced": true,
+      "usable_for_trend": false,
+      "causal_action_gain_valid": false,
+      "trend_scope": "registered_map_window_only_not_causal_action_gain",
+      "before_map_stamp_sim_s": 4182.4,
+      "after_map_stamp_sim_s": 4190.4,
+      "before_geometry": {
+        "resolution": 0.05000000074505806,
+        "origin": [
+          -4.512710434141142,
+          -5.00301964305536,
+          0.0
+        ],
+        "frame": "map",
+        "stamp_sim_s": 4182.4
+      },
+      "after_geometry": {
+        "resolution": 0.05000000074505806,
+        "origin": [
+          -4.545161370578948,
+          -5.009062788436376,
+          0.0
+        ],
+        "frame": "map",
+        "stamp_sim_s": 4190.4
+      },
+      "raw_known_area_delta_m2": 15.397500458881268,
+      "comparable_gain_m2": null,
+      "distance_odom_m": 1.4996266059181713e-13,
+      "elapsed_sim_s": 7.939000000000306,
+      "elapsed_wall_s": 19.769865554999342,
+      "new_area_per_meter": null,
+      "new_area_per_sim_s": null,
+      "new_area_per_wall_s": null
+    },
+    "after": {
+      "wall_elapsed": 23.8302685689996,
+      "simulation_seconds": 4190.8730000000005,
+      "pose": [
+        -1.1295228590387,
+        5.757400156735219,
+        -1.7603778243377415
+      ],
+      "known_cells": 45930,
+      "known_area_m2": 114.8250034220517,
+      "map_version": "360d21f5ae51b7f7b3b2",
+      "map_width": 295,
+      "map_height": 402,
+      "path_length_odom_m": 1.4996266059181713e-13,
+      "nearest_scan_m": 2.818253517150879,
+      "velocity": [
+        0.0,
+        0.0
+      ]
+    },
+    "known_area_gain_m2": 15.397500458881268,
+    "phase_timing": [
+      {
+        "phase": "initial_feedback_wait",
+        "wall_s": 3.669240264000109,
+        "sim_s": null,
+        "start_sim_s": null,
+        "end_sim_s": 4182.934
+      },
+      {
+        "phase": "preplan_validation",
+        "wall_s": 8.869323687998985,
+        "sim_s": 3.48700000000008,
+        "start_sim_s": 4182.934,
+        "end_sim_s": 4186.421
+      },
+      {
+        "phase": "stop_verification",
+        "wall_s": 8.80170009622816e-05,
+        "sim_s": 0.0,
+        "start_sim_s": 4186.421,
+        "end_sim_s": 4186.421
+      },
+      {
+        "phase": "stop_verification",
+        "wall_s": 0.7576211899995542,
+        "sim_s": 0.45100000000002183,
+        "start_sim_s": 4186.421,
+        "end_sim_s": 4186.872
+      },
+      {
+        "phase": "map_feedback_wait",
+        "wall_s": 10.14153056000032,
+        "sim_s": 4.001000000000204,
+        "start_sim_s": 4186.872,
+        "end_sim_s": 4190.8730000000005
+      },
+      {
+        "phase": "terminal_metrics",
+        "wall_s": 8.485900070809294e-05,
+        "sim_s": 0.0,
+        "start_sim_s": 4190.8730000000005,
+        "end_sim_s": 4190.8730000000005
+      }
+    ],
+    "navigation_motion_sim_s": {},
+    "navigation_motion_scope": "odometry stamped intervals; turn_while_translating overlaps translation; gaps above .5s excluded"
+  },
+  "phase": "finished",
+  "distance_odom_m": 1.3430191517278155e-13,
+  "report_age_wall_s": 1.8761277198791504
+}

@@ -110,6 +110,77 @@ class UpgradeLedgerTests(unittest.TestCase):
             RobotSkills(self.store,self.mid).get_decision_context()
         self.assertFalse(path.exists())
 
+    def test_model_context_does_not_expose_other_mission_task_details(self):
+        from robot_skills.api import RobotSkills
+        tasks=[{'task_id':'old','mission_id':'old-map-session','status':'succeeded'},
+               {'task_id':'current','mission_id':self.mid,'status':'succeeded'}]
+        with patch('robot_skills.api.get_robot_status',return_value={'sources':{}}), \
+             patch.object(self.store,'tasks',return_value=tasks):
+            result=RobotSkills(self.store,self.mid).get_decision_context()
+        self.assertEqual([t['task_id'] for t in result['recent_tasks']],['current'])
+
+    def test_continuation_only_receives_history_from_current_map_session(self):
+        from robot_skills.api import RobotSkills
+        catalog=self.store.meta('catalog');catalog['region_epoch']='fresh';self.store.set_meta('catalog',catalog)
+        tasks=[{'task_id':epoch,'mission_id':'prior','status':'aborted','reason':'body_sweep_nonfree',
+                'candidate':{'region_epoch':epoch,'x':2.,'y':3.,'yaw':0.,'frontier_id':'F'},
+                'result':{'private_old_map_data':'not_for_model'}} for epoch in ('old','fresh')]
+        with patch('robot_skills.api.get_robot_status',return_value={'sources':{}}), \
+             patch.object(self.store,'tasks',return_value=tasks):
+            result=RobotSkills(self.store,self.mid).get_decision_context()
+        self.assertEqual([t['task_id'] for t in result['map_session_task_history']],['fresh'])
+        self.assertNotIn('private_old_map_data',json.dumps(result))
+
+    def test_wide_search_is_opt_in_and_cannot_reuse_old_catalog(self):
+        self.assertEqual(self.m['candidate_search'],'baseline')
+        mission.update(self.store,self.mid,candidate_search='wide_4_5')
+        task,launch=self.submit()
+        self.assertFalse(launch)
+        self.assertEqual(task['reason'],'candidate_search_mismatch')
+        self.catalog()
+        catalog=self.store.meta('catalog');catalog['candidate_search']='wide_4_5'
+        self.store.set_meta('catalog',catalog)
+        task,launch=self.submit(frontier='F_b')
+        self.assertTrue(launch)
+        self.assertEqual(task['candidate_search'],'wide_4_5')
+
+    def test_operator_assistance_blocks_motion_but_allows_stop(self):
+        self.catalog();self.store.set_meta('active_operator_assistance','local-operator')
+        task,launch=self.submit(frontier='F_b')
+        self.assertFalse(launch);self.assertEqual(task['reason'],'operator_assistance_active')
+        task,launch=self.store.submit('stop_robot',{},str(uuid.uuid4()))
+        self.assertTrue(launch);self.assertTrue(self.store.meta('stop_latched'))
+
+    def test_catalog_with_different_clearance_cannot_dispatch(self):
+        self.catalog()
+        catalog=self.store.meta('catalog');catalog['path_clearance_m']=1.48
+        self.store.set_meta('catalog',catalog)
+        task,launch=self.submit(frontier='F_b')
+        self.assertFalse(launch)
+        self.assertEqual(task['reason'],'path_clearance_mismatch')
+
+    def test_short_start_is_only_for_first_attempt_in_own_mission(self):
+        from robot_skills.exploration_upgrade import short_start_for
+        mission.update(self.store,self.mid,candidate_search='wide_4_5',short_start=True)
+        self.assertTrue(short_start_for(self.store))
+        task={'task_id':'first','mission_id':self.mid,'kind':'execute_frontier','status':'running'}
+        with patch.object(self.store,'tasks',return_value=[task]):
+            self.assertFalse(short_start_for(self.store))
+            self.assertTrue(short_start_for(self.store,task))
+        with patch.object(self.store,'tasks',return_value=[{**task,'status':'rejected'}]):
+            self.assertFalse(short_start_for(self.store))
+        with patch.object(self.store,'tasks',return_value=[{**task,'mission_id':'different'}]):
+            self.assertTrue(short_start_for(self.store))
+        mission.update(self.store,self.mid,short_start=False)
+        self.assertFalse(short_start_for(self.store))
+
+    def test_wide_search_requires_memory_and_three_task_cap(self):
+        for kwargs,reason in [({'candidate_search':'anything'},'invalid_candidate_search'),
+                              ({'candidate_search':'wide_4_5'},'requires_memory'),
+                              ({'candidate_search':'wide_4_5','exploration_mode':'memory'},'at_most_three')]:
+            with self.assertRaisesRegex(ValueError,reason):
+                mission.start(self.store,mission.limits(max_steps=4),{},**kwargs)
+
     def test_shadow_diagnostics_cannot_leak_through_action_tuples(self):
         value={'available_actions':{'F':('MOVE',{'x':1,'classical_score':2,'exploration_upgrade':{'policy':'deny'}})},
                'context':{'mission':{'exploration_mode':'shadow'},'exploration_upgrade':{'cycle':True}}}

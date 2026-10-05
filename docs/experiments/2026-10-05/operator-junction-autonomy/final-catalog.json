@@ -1,0 +1,562 @@
+{
+  "catalog_id": "3058d152a7a4",
+  "catalog_schema": 3,
+  "region_epoch": "4d09abc4e79b",
+  "candidate_search": "wide_4_5",
+  "short_start": false,
+  "path_clearance_m": 1.48,
+  "minimum_goal_distance_m": 1.2,
+  "unknown_space": {
+    "cells": {
+      "free": 143649,
+      "occupied": 5931,
+      "unknown": 47834,
+      "uncertain_occupancy": 0
+    },
+    "area_m2": {
+      "free": 359.1225107026846,
+      "occupied": 14.827500441893939,
+      "unknown": 119.58500356391075,
+      "uncertain_occupancy": 0.0
+    },
+    "unknown_remaining_in_grid": true,
+    "outside_grid": "unobserved_extent_not_counted",
+    "task_scope": "not_configured",
+    "historical_unknown_causes": "not_inferable_from_occupancy_alone",
+    "navigation_rule": "only_known_free_body_and_path",
+    "exploration_rule": "seek_safe_free_views_of_unknown",
+    "world_coverage": null,
+    "analysis_map_version": "1b605706ffcfa2b0497f",
+    "safe_sampled_action_count": 1,
+    "completion_evidence": "SAFE_ACTIONS_AVAILABLE",
+    "all_unknown_unreachable_proven": false,
+    "world_complete": false
+  },
+  "frontier_horizons": {
+    "local": [],
+    "regional": [],
+    "distant": [
+      "F_3058d152a7a4_1"
+    ]
+  },
+  "current_region_id": "R_1_-1",
+  "search_complete": false,
+  "search_scope": "sampled_current_map_poses_not_all_possible_poses",
+  "planning_attempts": 5,
+  "shortlist_size": 9,
+  "candidate_offset": 0,
+  "next_candidate_offset": 5,
+  "more_candidates": true,
+  "created_unix_s": 1791200108.6359437,
+  "expires_unix_s": 1791200228.6359448,
+  "map_version": "1b605706ffcfa2b0497f",
+  "robot_pose": [
+    7.843503842923289,
+    -0.9457629620705283,
+    0.3800090425002687
+  ],
+  "sensor_fresh": {
+    "odometry": true,
+    "scan": true,
+    "map": true,
+    "localization": true
+  },
+  "candidates": [
+    {
+      "x": 2.3814718537032604,
+      "y": -0.7503716215780375,
+      "yaw": 3.125044418515767,
+      "dx": -5.462031989220028,
+      "dy": 0.19539134049249085,
+      "euclidean_distance_m": 5.465525704559658,
+      "frontier_distance_m": null,
+      "estimated_gain_m2": 23.040000686645513,
+      "unknown_analysis": {
+        "unknown_type": "UNKNOWN_OCCLUDED",
+        "classification_basis": "sampled_map_rays_from_this_sensor_pose",
+        "historical_unknown_cause": "UNDETERMINED",
+        "visible_unknown_area_proxy_m2": 0.0,
+        "occluded_unknown_area_proxy_m2": 2.8400000846385964,
+        "uncertain_unknown_area_proxy_m2": 0.0,
+        "occluded_fraction_proxy": 1.0,
+        "beyond_current_sensor_range_proxy_m2": 0.0,
+        "sensor_range_m": 12.0,
+        "proxy_range_m": 8.0,
+        "unknown_depth_cap_m": 2.0,
+        "map_edge_rays": 26,
+        "gain_confidence": "optimistic_proxy_not_observed_area",
+        "unknown_is_traversable": false
+      },
+      "gain_model": "sensor_offset_occlusion_aware_rays_v2",
+      "preplan_score": 7.824278413352573,
+      "region_id": "R_0_-1",
+      "id": "information-1",
+      "frontier_cluster_id": "cluster-5",
+      "frontier_lineage": [
+        "cluster-5",
+        "cluster-9"
+      ],
+      "frontier_relation": "split_merge",
+      "frontier_centroid": [
+        4.071277511258019,
+        11.53996578353365
+      ],
+      "region_epoch": "4d09abc4e79b",
+      "target_region_id": "R_0_2",
+      "transit": true,
+      "regional_target_frontier_distance_m": 1.2649110829159953,
+      "regional_target": [
+        3.9314716839320196,
+        10.85064538491245,
+        -0.3217505543966422
+      ],
+      "gain_map_version": "1b605706ffcfa2b0497f",
+      "novel_unknown_area_proxy_m2": 0.0,
+      "regional_target_unknown_analysis": {
+        "unknown_type": "UNKNOWN_OUT_OF_RANGE",
+        "classification_basis": "sampled_map_rays_from_this_sensor_pose",
+        "historical_unknown_cause": "UNDETERMINED",
+        "visible_unknown_area_proxy_m2": 23.040000686645513,
+        "occluded_unknown_area_proxy_m2": 2.7200000810623175,
+        "uncertain_unknown_area_proxy_m2": 16.64000049591065,
+        "occluded_fraction_proxy": 0.06415094339622641,
+        "beyond_current_sensor_range_proxy_m2": 17.720000528097156,
+        "sensor_range_m": 12.0,
+        "proxy_range_m": 8.0,
+        "unknown_depth_cap_m": 2.0,
+        "map_edge_rays": 28,
+        "gain_confidence": "optimistic_proxy_not_observed_area",
+        "unknown_is_traversable": false
+      },
+      "distance_tier": "regional",
+      "regional_route_length_m": 22.406996274147552,
+      "target_distance_tier": "distant",
+      "regional_potential_proxy_m2": 22.840000680685048,
+      "regional_score": 0.13484475162413528,
+      "estimated_sim_seconds": 79.41927030694744,
+      "action_time_estimate": {
+        "method": "start_connector_corrected_v1",
+        "components": {
+          "translation_sim_s": 36.63639392261631,
+          "turning_sim_s": 29.199306356426817,
+          "planning_validation_sim_s": 2.0,
+          "stop_verification_sim_s": 1.0,
+          "feedback_wait_sim_s": 4.0
+        },
+        "raw_turn_rad": 5.839861271285364,
+        "timing_turn_rad": 5.839861271285364,
+        "ignored_start_connector_m": 0.0,
+        "legacy_sim_s": 69.83570027904312,
+        "expected_sim_s": 72.83570027904312,
+        "budget_reserve_sim_s": 6.583570027904313,
+        "budget_sim_s": 79.41927030694744,
+        "scope": "worker_before_to_after; catalog_and_model_measured_separately",
+        "calibration": "provisional_two_recorded_windows; not_a_deadline_guarantee",
+        "safety_path_modified": false
+      },
+      "joint_score": 0.0,
+      "frontier_id": "F_3058d152a7a4_1",
+      "map_version": "1b605706ffcfa2b0497f",
+      "planned_length_m": 5.495459088392446,
+      "clearance": {
+        "safe": true,
+        "map_version": "1b605706ffcfa2b0497f",
+        "guard_threshold_m": 1.9,
+        "planning_margin_m": null,
+        "experimental_reduced_clearance": true,
+        "required_clearance_m": 1.48,
+        "sensor_offset_m": [
+          -0.7057095,
+          0.0
+        ],
+        "predicted_min_clearance_m": 2.8065485652888533,
+        "guard_margin_m": 0.9065485652888534,
+        "known_obstacles_only": true,
+        "reason": "clear",
+        "worst_base_pose": [
+          7.843503842923288,
+          -0.9457629620705283,
+          2.7381184014805555
+        ],
+        "worst_sensor_xy": [
+          8.49254663465262,
+          -1.222835791655903
+        ],
+        "samples": 769,
+        "body_sweep": {
+          "safe": true,
+          "reason": "clear",
+          "checked_samples": 1211,
+          "sample_travel_bound_m": 0.05
+        }
+      },
+      "classical_score": 9.30081269593102,
+      "exploration_upgrade": {
+        "candidate_id": "F_3058d152a7a4_1",
+        "mode": "memory",
+        "visibility": {
+          "visible_unknown_boundary_proxy_m2": 0.0,
+          "incremental_boundary_proxy_m2": 0.0,
+          "visible_boundary_cells": 0,
+          "current_visible_boundary_cells": 0,
+          "incremental_boundary_cells": 0,
+          "visible_boundary_world_xy": [],
+          "incremental_boundary_world_xy": [],
+          "boundary_novelty_ratio": null,
+          "novelty_reference": "current_pose_on_same_map_not_measured_action_gain",
+          "visibility_method": "first_unknown_supercover_v1",
+          "visibility_range_m": 8.0,
+          "visibility_rays": 180,
+          "ray_stops": {
+            "occupied": 120,
+            "uncertain": 0,
+            "outside_map": 0,
+            "range_limit": 60
+          },
+          "unknown_cause": "not_identified_from_map_alone",
+          "visibility_is_safety_certificate": false
+        },
+        "policy": {
+          "frontier_id": "F_3058d152a7a4_1",
+          "retain_for_safety_recheck": true,
+          "reason": "RETAIN_FOR_EXISTING_SAFETY_CHECKS",
+          "evidence_event": null
+        },
+        "purpose": "transit",
+        "frontier_cluster_id": "cluster-5",
+        "related_observation_events": [],
+        "lineage_is_exclusion": false
+      }
+    }
+  ],
+  "rejected": [
+    {
+      "candidate_id": "information-2",
+      "reason": "no_safe_transit_pose",
+      "transit_attempts": [
+        {
+          "pose": [
+            12.881429997364798,
+            0.7507597267853277,
+            0.7845422424400157
+          ],
+          "reason": "unsafe_pose"
+        },
+        {
+          "pose": [
+            12.481471848114888,
+            0.3653870703402545,
+            0.6792720747979495
+          ],
+          "reason": "unsafe_pose"
+        },
+        {
+          "pose": [
+            12.031471997275483,
+            0.1359466426800036,
+            0.316374801369272
+          ],
+          "reason": "unsafe_pose"
+        },
+        {
+          "pose": [
+            11.531471990048763,
+            0.029773475818952996,
+            0.18246463747775007
+          ],
+          "reason": "unsafe_pose"
+        },
+        {
+          "pose": [
+            11.031471982598305,
+            -0.04384229779292261,
+            0.046315416917636916
+          ],
+          "reason": "unsafe_pose"
+        },
+        {
+          "pose": [
+            10.531471975147724,
+            -0.05127205231413522,
+            0.03009215233026189
+          ],
+          "reason": "unsafe_pose"
+        }
+      ],
+      "transit_options": 6
+    },
+    {
+      "candidate_id": "information-3",
+      "reason": "duplicate_safe_endpoint"
+    },
+    {
+      "candidate_id": "information-4",
+      "reason": "duplicate_safe_endpoint"
+    },
+    {
+      "candidate_id": "information-5",
+      "reason": "duplicate_safe_endpoint"
+    }
+  ],
+  "generation": {
+    "frontier_clusters": 9,
+    "safe_cells": 519,
+    "frontier_cells": 250,
+    "safe_cell_filters": {
+      "known_free_cells": 7690,
+      "obstacle_clearance_rejected": 7122,
+      "known_body_margin_rejected": 2271,
+      "counts_may_overlap": true
+    },
+    "pose_filter_counts": {
+      "too_near": 45,
+      "previously_attempted": 0,
+      "spatial_sample_duplicate": 76,
+      "frontier_too_far": 383,
+      "no_safe_heading": 6,
+      "selected_positions": 9
+    },
+    "oriented_candidates_before_cap": 9,
+    "shortlist_truncated": false,
+    "regional_diversity_enabled": true,
+    "frontier_identity": {
+      "next_id": 11,
+      "clusters": [
+        {
+          "id": "cluster-1",
+          "lineage": [
+            "cluster-1"
+          ],
+          "parents": [
+            "cluster-1"
+          ],
+          "relation": "continued",
+          "centroid": [
+            14.931471847844792,
+            -4.692211989551312
+          ]
+        },
+        {
+          "id": "cluster-2",
+          "lineage": [
+            "cluster-2"
+          ],
+          "parents": [
+            "cluster-2"
+          ],
+          "relation": "continued",
+          "centroid": [
+            15.074328992830672,
+            -3.2636405396925103
+          ]
+        },
+        {
+          "id": "cluster-3",
+          "lineage": [
+            "cluster-3"
+          ],
+          "parents": [
+            "cluster-3"
+          ],
+          "relation": "continued",
+          "centroid": [
+            14.52606643639839,
+            8.504699404009187
+          ]
+        },
+        {
+          "id": "cluster-4",
+          "lineage": [
+            "cluster-4"
+          ],
+          "parents": [
+            "cluster-4"
+          ],
+          "relation": "continued",
+          "centroid": [
+            8.916656943402252,
+            9.902497222635793
+          ]
+        },
+        {
+          "id": "cluster-5",
+          "lineage": [
+            "cluster-5",
+            "cluster-9"
+          ],
+          "parents": [
+            "cluster-5",
+            "cluster-9"
+          ],
+          "relation": "split_merge",
+          "centroid": [
+            4.071277511258019,
+            11.53996578353365
+          ]
+        },
+        {
+          "id": "cluster-10",
+          "lineage": [
+            "cluster-10"
+          ],
+          "parents": [],
+          "relation": "new",
+          "centroid": [
+            5.9814717144794,
+            8.900645355855186
+          ]
+        },
+        {
+          "id": "cluster-6",
+          "lineage": [
+            "cluster-6"
+          ],
+          "parents": [
+            "cluster-6"
+          ],
+          "relation": "continued",
+          "centroid": [
+            11.531471797180844,
+            9.550645365540943
+          ]
+        },
+        {
+          "id": "cluster-8",
+          "lineage": [
+            "cluster-8"
+          ],
+          "parents": [
+            "cluster-8"
+          ],
+          "relation": "continued",
+          "centroid": [
+            -1.9551950704528165,
+            12.457312075520319
+          ]
+        },
+        {
+          "id": "cluster-7",
+          "lineage": [
+            "cluster-5",
+            "cluster-7",
+            "cluster-9"
+          ],
+          "parents": [
+            "cluster-5",
+            "cluster-7",
+            "cluster-9"
+          ],
+          "relation": "split_merge",
+          "centroid": [
+            6.181471717459631,
+            10.175645374854168
+          ]
+        }
+      ],
+      "association_tolerance_m": 0.6,
+      "scope": "current_map_world_coordinates; diagnostic_not_spatial_exclusion"
+    }
+  },
+  "status": "ready",
+  "requires_execution_revalidation": true,
+  "exploration_upgrade": {
+    "mode": "memory",
+    "mission_id": "6b753534-a7f6-4232-848e-11f330bdbe75",
+    "map_epoch": "4d09abc4e79b",
+    "history_revision": "fe44cb5dde769a94348d",
+    "events": 1,
+    "low_gain_pattern_detected": false,
+    "low_gain_cycle_detected": false,
+    "decision_mode": "LOCAL_OR_EXPAND",
+    "policy_rejected_count": 0,
+    "candidate_advice": [
+      {
+        "candidate_id": "F_3058d152a7a4_1",
+        "mode": "memory",
+        "visibility": {
+          "visible_unknown_boundary_proxy_m2": 0.0,
+          "incremental_boundary_proxy_m2": 0.0,
+          "visible_boundary_cells": 0,
+          "current_visible_boundary_cells": 0,
+          "incremental_boundary_cells": 0,
+          "visible_boundary_world_xy": [],
+          "incremental_boundary_world_xy": [],
+          "boundary_novelty_ratio": null,
+          "novelty_reference": "current_pose_on_same_map_not_measured_action_gain",
+          "visibility_method": "first_unknown_supercover_v1",
+          "visibility_range_m": 8.0,
+          "visibility_rays": 180,
+          "ray_stops": {
+            "occupied": 120,
+            "uncertain": 0,
+            "outside_map": 0,
+            "range_limit": 60
+          },
+          "unknown_cause": "not_identified_from_map_alone",
+          "visibility_is_safety_certificate": false
+        },
+        "policy": {
+          "frontier_id": "F_3058d152a7a4_1",
+          "retain_for_safety_recheck": true,
+          "reason": "RETAIN_FOR_EXISTING_SAFETY_CHECKS",
+          "evidence_event": null
+        },
+        "purpose": "transit",
+        "frontier_cluster_id": "cluster-5",
+        "related_observation_events": [],
+        "lineage_is_exclusion": false
+      }
+    ],
+    "range_source": "bounded_8m_proxy_capped_by_scan",
+    "scan_statistics": {
+      "counts": {
+        "finite_in_range": 284,
+        "finite_out_of_range": 0,
+        "positive_inf": 76,
+        "negative_inf": 0,
+        "nan": 0,
+        "at_max_range": 0
+      },
+      "range_bounds_valid": true,
+      "range_min_m": 0.10000000149011612,
+      "range_max_m": 12.0,
+      "inf_clearing_semantics": "not_inferred",
+      "map_cells_written": 0
+    },
+    "remaining_unknown_is_not_completion_proof": true,
+    "is_motion_permission": false,
+    "recent_action_summaries": [
+      {
+        "event_id": "terminal:b201ba5b-7596-463f-9e1b-391798c23fb0",
+        "mission_id": "6b753534-a7f6-4232-848e-11f330bdbe75",
+        "map_epoch": "4d09abc4e79b",
+        "step": 1,
+        "target": [
+          7.843503842923289,
+          -0.9457629620705283,
+          0.3800090425002687
+        ],
+        "status": "succeeded",
+        "stopped": true,
+        "purpose": "transit",
+        "gain_m2": null,
+        "reason": "goal_reached",
+        "failure_scope": "none",
+        "approach_key": "",
+        "frontier_cluster_id": "cluster-3",
+        "frontier_lineage": [
+          "cluster-3"
+        ]
+      }
+    ],
+    "candidate_search_scope": "sampled_current_map_poses_not_all_possible_poses",
+    "candidate_search_truncated": true,
+    "candidate_filter_counts": {
+      "pose_proposals": 9,
+      "planned": 5,
+      "offered": 1,
+      "planning_rejected": 0,
+      "policy_rejected": 0
+    }
+  }
+}

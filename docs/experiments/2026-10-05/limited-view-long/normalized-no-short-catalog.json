@@ -1,0 +1,156 @@
+{
+  "catalog_id": "9c1bb3aaaa8c",
+  "catalog_schema": 3,
+  "region_epoch": "4d09abc4e79b",
+  "candidate_search": "wide_4_5",
+  "unknown_space": {
+    "cells": {
+      "free": 39510,
+      "occupied": 261,
+      "unknown": 78123,
+      "uncertain_occupancy": 0
+    },
+    "area_m2": {
+      "free": 98.77500294372442,
+      "occupied": 0.6525000194460155,
+      "unknown": 195.3075058206171,
+      "uncertain_occupancy": 0.0
+    },
+    "unknown_remaining_in_grid": true,
+    "outside_grid": "unobserved_extent_not_counted",
+    "task_scope": "not_configured",
+    "historical_unknown_causes": "not_inferable_from_occupancy_alone",
+    "navigation_rule": "only_known_free_body_and_path",
+    "exploration_rule": "seek_safe_free_views_of_unknown",
+    "world_coverage": null,
+    "analysis_map_version": "9aa1ca989f1e2f428e25",
+    "safe_sampled_action_count": 0,
+    "completion_evidence": "NO_SAFE_SAMPLED_ACTION",
+    "all_unknown_unreachable_proven": false,
+    "world_complete": false
+  },
+  "frontier_horizons": {
+    "local": [],
+    "regional": [],
+    "distant": []
+  },
+  "current_region_id": "R_-1_1",
+  "search_complete": true,
+  "search_scope": "sampled_current_map_poses_not_all_possible_poses",
+  "planning_attempts": 0,
+  "shortlist_size": 0,
+  "candidate_offset": 0,
+  "next_candidate_offset": 0,
+  "more_candidates": false,
+  "created_unix_s": 1791190564.4985425,
+  "expires_unix_s": 1791190684.4985447,
+  "map_version": "9aa1ca989f1e2f428e25",
+  "robot_pose": [
+    -1.136681540303275,
+    5.756530384328761,
+    -0.9782157010787785
+  ],
+  "sensor_fresh": {
+    "odometry": true,
+    "scan": true,
+    "map": true,
+    "localization": true
+  },
+  "candidates": [],
+  "rejected": [],
+  "generation": {
+    "frontier_clusters": 2,
+    "safe_cells": 30,
+    "frontier_cells": 122,
+    "safe_cell_filters": {
+      "known_free_cells": 474,
+      "obstacle_clearance_rejected": 373,
+      "known_body_margin_rejected": 321,
+      "counts_may_overlap": true
+    },
+    "pose_filter_counts": {
+      "too_near": 29,
+      "previously_attempted": 0,
+      "spatial_sample_duplicate": 0,
+      "frontier_too_far": 0,
+      "no_safe_heading": 1,
+      "selected_positions": 0
+    },
+    "oriented_candidates_before_cap": 0,
+    "shortlist_truncated": false,
+    "regional_diversity_enabled": true,
+    "frontier_identity": {
+      "next_id": 3,
+      "clusters": [
+        {
+          "id": "cluster-1",
+          "lineage": [
+            "cluster-1"
+          ],
+          "parents": [],
+          "relation": "new",
+          "centroid": [
+            -0.580892193734303,
+            5.910616883207064
+          ]
+        },
+        {
+          "id": "cluster-2",
+          "lineage": [
+            "cluster-2"
+          ],
+          "parents": [],
+          "relation": "new",
+          "centroid": [
+            -2.7527104079150977,
+            7.94364721653188
+          ]
+        }
+      ],
+      "association_tolerance_m": 0.6,
+      "scope": "current_map_world_coordinates; diagnostic_not_spatial_exclusion"
+    }
+  },
+  "status": "no_safe_reachable_frontiers",
+  "requires_execution_revalidation": true,
+  "exploration_upgrade": {
+    "mode": "memory",
+    "mission_id": "6c284c5c-c30c-420d-8996-d3edab7e62fc",
+    "map_epoch": "4d09abc4e79b",
+    "history_revision": "4f53cda18c2baa0c0354",
+    "events": 0,
+    "low_gain_pattern_detected": false,
+    "low_gain_cycle_detected": false,
+    "decision_mode": "LOCAL_OR_EXPAND",
+    "policy_rejected_count": 0,
+    "candidate_advice": [],
+    "range_source": "bounded_8m_proxy_capped_by_scan",
+    "scan_statistics": {
+      "counts": {
+        "finite_in_range": 273,
+        "finite_out_of_range": 0,
+        "positive_inf": 87,
+        "negative_inf": 0,
+        "nan": 0,
+        "at_max_range": 0
+      },
+      "range_bounds_valid": true,
+      "range_min_m": 0.10000000149011612,
+      "range_max_m": 12.0,
+      "inf_clearing_semantics": "not_inferred",
+      "map_cells_written": 0
+    },
+    "remaining_unknown_is_not_completion_proof": true,
+    "is_motion_permission": false,
+    "recent_action_summaries": [],
+    "candidate_search_scope": "sampled_current_map_poses_not_all_possible_poses",
+    "candidate_search_truncated": false,
+    "candidate_filter_counts": {
+      "pose_proposals": 0,
+      "planned": 0,
+      "offered": 0,
+      "planning_rejected": 0,
+      "policy_rejected": 0
+    }
+  }
+}

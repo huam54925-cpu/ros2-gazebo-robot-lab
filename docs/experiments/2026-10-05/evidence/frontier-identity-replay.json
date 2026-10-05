@@ -1,0 +1,308 @@
+{
+  "scope": "world-coordinate association of three recorded catalogs; advisory only",
+  "rounds": [
+    {
+      "catalog_id": "1714019cf5b5",
+      "clusters": [
+        {
+          "id": "cluster-1",
+          "lineage": [
+            "cluster-1"
+          ],
+          "parents": [],
+          "relation": "new",
+          "centroid": [
+            15.71352416273351,
+            -4.412610797661139
+          ]
+        },
+        {
+          "id": "cluster-2",
+          "lineage": [
+            "cluster-2"
+          ],
+          "parents": [],
+          "relation": "new",
+          "centroid": [
+            10.930190758122954,
+            -0.7959440771019387
+          ]
+        },
+        {
+          "id": "cluster-3",
+          "lineage": [
+            "cluster-3"
+          ],
+          "parents": [],
+          "relation": "new",
+          "centroid": [
+            7.884357379403166,
+            4.7915560061583
+          ]
+        },
+        {
+          "id": "cluster-4",
+          "lineage": [
+            "cluster-4"
+          ],
+          "parents": [],
+          "relation": "new",
+          "centroid": [
+            4.0927692725896385,
+            10.757200749141372
+          ]
+        },
+        {
+          "id": "cluster-5",
+          "lineage": [
+            "cluster-5"
+          ],
+          "parents": [],
+          "relation": "new",
+          "centroid": [
+            -2.1494390664083403,
+            12.187389449698136
+          ]
+        },
+        {
+          "id": "cluster-6",
+          "lineage": [
+            "cluster-6"
+          ],
+          "parents": [],
+          "relation": "new",
+          "centroid": [
+            0.5635239369809213,
+            12.887389460128952
+          ]
+        }
+      ]
+    },
+    {
+      "catalog_id": "4b69ed5f263f",
+      "clusters": [
+        {
+          "id": "cluster-1",
+          "lineage": [
+            "cluster-1"
+          ],
+          "parents": [
+            "cluster-1"
+          ],
+          "relation": "continued",
+          "centroid": [
+            15.813524164223626,
+            -4.412610797661139
+          ]
+        },
+        {
+          "id": "cluster-2",
+          "lineage": [
+            "cluster-2"
+          ],
+          "parents": [
+            "cluster-2"
+          ],
+          "relation": "continued",
+          "centroid": [
+            11.64403257666963,
+            -0.6837971827754525
+          ]
+        },
+        {
+          "id": "cluster-7",
+          "lineage": [
+            "cluster-7"
+          ],
+          "parents": [],
+          "relation": "new",
+          "centroid": [
+            16.773524178528742,
+            -1.5326107547457954
+          ]
+        },
+        {
+          "id": "cluster-3",
+          "lineage": [
+            "cluster-3"
+          ],
+          "parents": [
+            "cluster-3"
+          ],
+          "relation": "continued",
+          "centroid": [
+            7.884357379403166,
+            4.7915560061583
+          ]
+        },
+        {
+          "id": "cluster-4",
+          "lineage": [
+            "cluster-4"
+          ],
+          "parents": [
+            "cluster-4"
+          ],
+          "relation": "continued",
+          "centroid": [
+            4.0927692725896385,
+            10.757200749141372
+          ]
+        },
+        {
+          "id": "cluster-5",
+          "lineage": [
+            "cluster-5"
+          ],
+          "parents": [
+            "cluster-5"
+          ],
+          "relation": "continued",
+          "centroid": [
+            -2.1494390664083403,
+            12.187389449698136
+          ]
+        },
+        {
+          "id": "cluster-6",
+          "lineage": [
+            "cluster-6"
+          ],
+          "parents": [
+            "cluster-6"
+          ],
+          "relation": "continued",
+          "centroid": [
+            0.5635239369809213,
+            12.887389460128952
+          ]
+        }
+      ]
+    },
+    {
+      "catalog_id": "36390b968e1c",
+      "clusters": [
+        {
+          "id": "cluster-1",
+          "lineage": [
+            "cluster-1"
+          ],
+          "parents": [
+            "cluster-1"
+          ],
+          "relation": "continued",
+          "centroid": [
+            15.913524165713742,
+            -4.4359025376862595
+          ]
+        },
+        {
+          "id": "cluster-7",
+          "lineage": [
+            "cluster-7"
+          ],
+          "parents": [
+            "cluster-7"
+          ],
+          "relation": "continued",
+          "centroid": [
+            17.81352419402595,
+            -1.7825691648151791
+          ]
+        },
+        {
+          "id": "cluster-8",
+          "lineage": [
+            "cluster-8"
+          ],
+          "parents": [],
+          "relation": "new",
+          "centroid": [
+            14.731891495044845,
+            0.6355261093124858
+          ]
+        },
+        {
+          "id": "cluster-9",
+          "lineage": [
+            "cluster-9"
+          ],
+          "parents": [],
+          "relation": "new",
+          "centroid": [
+            17.213524185085255,
+            0.5640975368195464
+          ]
+        },
+        {
+          "id": "cluster-10",
+          "lineage": [
+            "cluster-10"
+          ],
+          "parents": [],
+          "relation": "new",
+          "centroid": [
+            18.013524197006184,
+            1.964097557681172
+          ]
+        },
+        {
+          "id": "cluster-3",
+          "lineage": [
+            "cluster-3"
+          ],
+          "parents": [
+            "cluster-3"
+          ],
+          "relation": "continued",
+          "centroid": [
+            7.855190712301883,
+            4.8182642668782405
+          ]
+        },
+        {
+          "id": "cluster-4",
+          "lineage": [
+            "cluster-4"
+          ],
+          "parents": [
+            "cluster-4"
+          ],
+          "relation": "continued",
+          "centroid": [
+            4.151985528914699,
+            10.806405381749506
+          ]
+        },
+        {
+          "id": "cluster-5",
+          "lineage": [
+            "cluster-5"
+          ],
+          "parents": [
+            "cluster-5"
+          ],
+          "relation": "continued",
+          "centroid": [
+            -2.143618960501508,
+            12.199811995919477
+          ]
+        },
+        {
+          "id": "cluster-6",
+          "lineage": [
+            "cluster-6"
+          ],
+          "parents": [
+            "cluster-6"
+          ],
+          "relation": "continued",
+          "centroid": [
+            0.5635239369809213,
+            12.864097720103823
+          ]
+        }
+      ]
+    }
+  ]
+}

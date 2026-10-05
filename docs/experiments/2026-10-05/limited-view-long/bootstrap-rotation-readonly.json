@@ -1,0 +1,118 @@
+[
+  {
+    "safe": true,
+    "map_version": "offline",
+    "guard_threshold_m": 1.9,
+    "planning_margin_m": 0.25,
+    "required_clearance_m": 2.15,
+    "sensor_offset_m": [
+      -0.7057095,
+      0
+    ],
+    "predicted_min_clearance_m": 2.5583974448813067,
+    "guard_margin_m": 0.6583974448813068,
+    "known_obstacles_only": true,
+    "reason": "clear",
+    "worst_base_pose": [
+      -1.1366815403032753,
+      5.756530384328638,
+      -0.19281753768133036
+    ],
+    "worst_sensor_xy": [
+      -1.8293129877697194,
+      5.89176195006234
+    ],
+    "samples": 65,
+    "body_sweep_checked": true,
+    "body_sweep_safe": true,
+    "signed_angle_rad": 0.7853981633974483,
+    "rotation_samples": 31
+  },
+  {
+    "safe": true,
+    "map_version": "offline",
+    "guard_threshold_m": 1.9,
+    "planning_margin_m": 0.25,
+    "required_clearance_m": 2.15,
+    "sensor_offset_m": [
+      -0.7057095,
+      0
+    ],
+    "predicted_min_clearance_m": 2.759772919658517,
+    "guard_margin_m": 0.8597729196585169,
+    "known_obstacles_only": true,
+    "reason": "clear",
+    "worst_base_pose": [
+      -1.1366815403032753,
+      5.756530384328638,
+      -1.5803542930168222
+    ],
+    "worst_sensor_xy": [
+      -1.1299364954394902,
+      6.462207649627752
+    ],
+    "samples": 65,
+    "body_sweep_checked": true,
+    "body_sweep_safe": true,
+    "signed_angle_rad": -0.7853981633974483,
+    "rotation_samples": 31
+  },
+  {
+    "safe": false,
+    "map_version": "offline",
+    "guard_threshold_m": 1.9,
+    "planning_margin_m": 0.25,
+    "required_clearance_m": 2.15,
+    "sensor_offset_m": [
+      -0.7057095,
+      0
+    ],
+    "predicted_min_clearance_m": 2.545335997299581,
+    "guard_margin_m": 0.6453359972995809,
+    "known_obstacles_only": true,
+    "reason": "body_sweep_nonfree",
+    "worst_base_pose": [
+      -1.1366815403032753,
+      5.756530384328638,
+      0.006859961487512556
+    ],
+    "worst_sensor_xy": [
+      -1.842374435351445,
+      5.751689282307103
+    ],
+    "samples": 123,
+    "body_sweep_checked": true,
+    "body_sweep_safe": false,
+    "signed_angle_rad": 1.5707963267948966,
+    "rotation_samples": 60
+  },
+  {
+    "safe": true,
+    "map_version": "offline",
+    "guard_threshold_m": 1.9,
+    "planning_margin_m": 0.25,
+    "required_clearance_m": 2.15,
+    "sensor_offset_m": [
+      -0.7057095,
+      0
+    ],
+    "predicted_min_clearance_m": 2.759757289909461,
+    "guard_margin_m": 0.859757289909461,
+    "known_obstacles_only": true,
+    "reason": "clear",
+    "worst_base_pose": [
+      -1.1366815403032753,
+      5.756530384328638,
+      -1.563936365307384
+    ],
+    "worst_sensor_xy": [
+      -1.1415226423248108,
+      6.462223279376808
+    ],
+    "samples": 123,
+    "body_sweep_checked": true,
+    "body_sweep_safe": true,
+    "signed_angle_rad": -1.5707963267948966,
+    "rotation_samples": 60
+  }
+]

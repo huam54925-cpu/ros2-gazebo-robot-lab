@@ -1,0 +1,40 @@
+{
+  "request_id": "85d306b6-a3a2-4129-b976-dba91a8b5a60",
+  "task_id": "e231b07a-0d63-4f5a-9edc-ae1df19ef851",
+  "kind": "stop_robot",
+  "mission_id": null,
+  "payload": {},
+  "exploration_mode": "baseline",
+  "candidate_search": "baseline",
+  "exploration_step": 9,
+  "accepted": true,
+  "status": "succeeded",
+  "running": false,
+  "stopped": true,
+  "reason": "stop_confirmed_and_latched",
+  "sensor_fresh": {
+    "odometry": true
+  },
+  "sensor_observed_unix_s": 1791195742.4356203,
+  "map_version": null,
+  "candidate": null,
+  "cancel_requested": false,
+  "created_unix_s": 1791195726.831559,
+  "updated_unix_s": 1791195742.4356275,
+  "result": {
+    "navigation_paused": true,
+    "cancel_return_code": {
+      "navigate_to_pose": 0,
+      "spin": 0
+    },
+    "stopped": true,
+    "status": "succeeded",
+    "reason": "stop_confirmed_and_latched"
+  },
+  "phase": "finished",
+  "navigation_paused": true,
+  "cancel_return_code": {
+    "navigate_to_pose": 0,
+    "spin": 0
+  }
+}

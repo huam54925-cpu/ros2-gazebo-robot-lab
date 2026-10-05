@@ -10,8 +10,21 @@ from robot_skills.ros_worker import Executor
 
 
 class RegionalExecutorTests(unittest.TestCase):
+    def test_wide_live_path_rejects_body_witness_despite_lidar_clearance(self):
+        worker=object.__new__(Executor);worker.candidate_search='wide_4_5'
+        worker.grid_snapshot=Mock(return_value={'data':np.zeros((4,4)),'resolution':1.,'origin':[0,0,0]})
+        worker.pose=Mock(return_value=[0,0,0])
+        witness={'safe':False,'reason':'body_sweep_nonfree','witness_pose':[1,0,0]}
+        with patch('robot_skills.ros_worker.Explorer.evaluate_path',return_value={'safe':True,'required_clearance_m':2.15}),\
+             patch('observation.body_sweep',return_value=witness) as body:
+            result=worker.evaluate_path([[0,0,0],[2,0,0]],{'x':2,'y':0,'yaw':0})
+        self.assertFalse(result['safe']);self.assertEqual(result['body_sweep'],witness)
+        self.assertEqual(result['required_clearance_m'],2.15);body.assert_called_once()
+
     def worker(self):
         worker=object.__new__(Executor)
+        from aggressive import settings
+        worker.config=settings();worker.short_start=False
         worker.ready=Mock();worker.health=Mock();worker.store=Mock()
         worker.store.tasks.return_value=[];worker.store.meta.return_value={}
         worker.pose=Mock(return_value=[0,0,0]);worker.latest={'map_version':'v1'}
@@ -21,6 +34,7 @@ class RegionalExecutorTests(unittest.TestCase):
         candidate={'id':'far','x':10.,'y':0.,'yaw':0.,'dx':10.,'dy':0.,
                    'region_id':'R_2_0','estimated_gain_m2':2.,'euclidean_distance_m':10.,'frontier_distance_m':1.}
         model=Mock();model.candidates.return_value=([candidate],{'shortlist_truncated':False});model.is_safe.return_value=True
+        model.frontier=np.zeros((2,2),dtype=bool);model.resolution=1.
         worker.model=Mock(return_value=model);worker.nav=Mock()
         worker.plan=Mock()
         return worker

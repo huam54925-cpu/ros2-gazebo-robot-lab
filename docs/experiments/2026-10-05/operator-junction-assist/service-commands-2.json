@@ -1,0 +1,34 @@
+{
+  "assist": [
+    "systemd-run",
+    "--user",
+    "--unit=robot-junction-assist2-20261005",
+    "--description=Explicit local operator assistance to junction transit",
+    "--property=Restart=no",
+    "--property=RuntimeMaxSec=480",
+    "--property=TimeoutStopSec=30",
+    "--property=StandardOutput=append:/mnt/robot_disk/ros_sim/docs/experiments/2026-10-05/operator-junction-assist/assist.log",
+    "--property=StandardError=append:/mnt/robot_disk/ros_sim/docs/experiments/2026-10-05/operator-junction-assist/assist.log",
+    "docker",
+    "exec",
+    "robot-nav2",
+    "bash",
+    "-lc",
+    "source /opt/ros/lyrical/setup.bash; exec python3 /work/robot_ws/robot_skills/operator_assist.py --output /work/robot_ws/log/operator-assist/junction2-20261005.json --target 4.523477233946323 -0.8933879174292088 --reverse-m 0.76684"
+  ],
+  "awake": [
+    "systemd-run",
+    "--user",
+    "--unit=robot-junction-assist2-20261005-awake",
+    "--property=BindsTo=robot-junction-assist2-20261005.service",
+    "--property=After=robot-junction-assist2-20261005.service",
+    "--property=RuntimeMaxSec=510",
+    "/usr/bin/systemd-inhibit",
+    "--what=idle:sleep",
+    "--who=robot-junction-assist",
+    "--why=Bounded operator assistance experiment",
+    "--mode=block",
+    "/usr/bin/sleep",
+    "510"
+  ]
+}

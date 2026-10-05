@@ -1,0 +1,6 @@
+{
+  "automation_id": "automation",
+  "status": "PAUSED",
+  "no_new_motion": true,
+  "stop_confirmed": true
+}

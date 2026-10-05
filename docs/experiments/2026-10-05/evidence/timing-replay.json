@@ -1,0 +1,230 @@
+{
+  "scope": "offline; original logs unchanged; no motion",
+  "steps": [
+    {
+      "step": 1,
+      "task_id": "7e879dbb-75cc-4537-b832-736939afacf9",
+      "old_estimate_sim_s": 54.91294409041612,
+      "recomputed": {
+        "method": "start_connector_corrected_v1",
+        "components": {
+          "translation_sim_s": 13.780747183339573,
+          "turning_sim_s": 15.739321734284895,
+          "planning_validation_sim_s": 2.0,
+          "stop_verification_sim_s": 1.0,
+          "feedback_wait_sim_s": 4.0
+        },
+        "raw_turn_rad": 7.42643938141531,
+        "timing_turn_rad": 3.147864346856979,
+        "ignored_start_connector_m": 0.037861838625909416,
+        "legacy_sim_s": 54.91294409041612,
+        "expected_sim_s": 36.52006891762447,
+        "budget_reserve_sim_s": 3.0,
+        "budget_sim_s": 39.52006891762447,
+        "scope": "worker_before_to_after; catalog_and_model_measured_separately",
+        "calibration": "provisional_two_recorded_windows; not_a_deadline_guarantee",
+        "safety_path_modified": false
+      },
+      "observed_task_window_sim_s": 26.722999999999956,
+      "observed_task_window_wall_s": 114.41540352499942,
+      "round_wall_s": 188.7135500907898,
+      "model_wall_s": 8.796583764000388,
+      "feedback_wait_wall_s": 15.160029038001085,
+      "first_navigation_sample_minus_before_sim_s": 1.3119999999998981,
+      "sampled_navigation_sim_s": {
+        "translating_including_curves": 11.199999999999818,
+        "turning_in_place": 7.036000000000058,
+        "stationary": 2.5850000000000364
+      },
+      "sampled_navigation_scope": "left_sample_velocity; sparse trace, not exact phase boundaries",
+      "exact_planning_sim_s": null,
+      "exact_stop_sim_s": null,
+      "exact_model_sim_s": null,
+      "measured_gain_m2": 5.212500155344607
+    },
+    {
+      "step": 2,
+      "task_id": "c66ed4f5-a8ed-4b1a-a1ac-917cfbf1beda",
+      "old_estimate_sim_s": 67.2269642146225,
+      "recomputed": {
+        "method": "start_connector_corrected_v1",
+        "components": {
+          "translation_sim_s": 14.92891226211272,
+          "turning_sim_s": 18.290878313585946,
+          "planning_validation_sim_s": 2.0,
+          "stop_verification_sim_s": 1.0,
+          "feedback_wait_sim_s": 4.0
+        },
+        "raw_turn_rad": 9.659610390501957,
+        "timing_turn_rad": 3.6581756627171895,
+        "ignored_start_connector_m": 0.011940963416158168,
+        "legacy_sim_s": 67.2269642146225,
+        "expected_sim_s": 40.21979057569867,
+        "budget_reserve_sim_s": 3.321979057569867,
+        "budget_sim_s": 43.54176963326854,
+        "scope": "worker_before_to_after; catalog_and_model_measured_separately",
+        "calibration": "provisional_two_recorded_windows; not_a_deadline_guarantee",
+        "safety_path_modified": false
+      },
+      "observed_task_window_sim_s": 32.72900000000027,
+      "observed_task_window_wall_s": 150.5601463460007,
+      "round_wall_s": 252.47811770439148,
+      "model_wall_s": 11.865873536997242,
+      "feedback_wait_wall_s": 17.77881500500007,
+      "first_navigation_sample_minus_before_sim_s": 1.0200000000004366,
+      "sampled_navigation_sim_s": {
+        "translating_including_curves": 10.561000000001513,
+        "turning_in_place": 10.823999999998705,
+        "stationary": 5.687999999999192
+      },
+      "sampled_navigation_scope": "left_sample_velocity; sparse trace, not exact phase boundaries",
+      "exact_planning_sim_s": null,
+      "exact_stop_sim_s": null,
+      "exact_model_sim_s": null,
+      "measured_gain_m2": null
+    }
+  ],
+  "stop_budget": {
+    "remaining_sim_s": 39.998999999999796,
+    "candidates": [
+      {
+        "id": "F_36390b968e1c_1",
+        "old_sim_s": 59.2583241060254,
+        "method": "start_connector_corrected_v1",
+        "components": {
+          "translation_sim_s": 9.46349669036233,
+          "turning_sim_s": 22.378556909524438,
+          "planning_validation_sim_s": 2.0,
+          "stop_verification_sim_s": 1.0,
+          "feedback_wait_sim_s": 4.0
+        },
+        "raw_turn_rad": 9.158965483132615,
+        "timing_turn_rad": 4.475711381904888,
+        "ignored_start_connector_m": 0.03150619377209591,
+        "legacy_sim_s": 59.2583241060254,
+        "expected_sim_s": 38.84205359988677,
+        "budget_reserve_sim_s": 3.184205359988677,
+        "budget_sim_s": 42.02625895987544,
+        "scope": "worker_before_to_after; catalog_and_model_measured_separately",
+        "calibration": "provisional_two_recorded_windows; not_a_deadline_guarantee",
+        "safety_path_modified": false
+      },
+      {
+        "id": "F_36390b968e1c_3",
+        "old_sim_s": 70.07314437224164,
+        "method": "start_connector_corrected_v1",
+        "components": {
+          "translation_sim_s": 20.378150315803815,
+          "turning_sim_s": 26.898974271479545,
+          "planning_validation_sim_s": 2.0,
+          "stop_verification_sim_s": 1.0,
+          "feedback_wait_sim_s": 4.0
+        },
+        "raw_turn_rad": 9.138998811287564,
+        "timing_turn_rad": 5.379794854295909,
+        "ignored_start_connector_m": 0.03150619377209591,
+        "legacy_sim_s": 70.07314437224164,
+        "expected_sim_s": 54.27712458728336,
+        "budget_reserve_sim_s": 4.727712458728337,
+        "budget_sim_s": 59.004837046011694,
+        "scope": "worker_before_to_after; catalog_and_model_measured_separately",
+        "calibration": "provisional_two_recorded_windows; not_a_deadline_guarantee",
+        "safety_path_modified": false
+      },
+      {
+        "id": "F_36390b968e1c_4",
+        "old_sim_s": 77.56836734898124,
+        "method": "start_connector_corrected_v1",
+        "components": {
+          "translation_sim_s": 35.863780313326316,
+          "turning_sim_s": 18.908989999290036,
+          "planning_validation_sim_s": 2.0,
+          "stop_verification_sim_s": 1.0,
+          "feedback_wait_sim_s": 4.0
+        },
+        "raw_turn_rad": 7.540917407130984,
+        "timing_turn_rad": 3.781797999858007,
+        "ignored_start_connector_m": 0.03150619377209591,
+        "legacy_sim_s": 77.56836734898124,
+        "expected_sim_s": 61.77277031261635,
+        "budget_reserve_sim_s": 5.477277031261636,
+        "budget_sim_s": 67.25004734387798,
+        "scope": "worker_before_to_after; catalog_and_model_measured_separately",
+        "calibration": "provisional_two_recorded_windows; not_a_deadline_guarantee",
+        "safety_path_modified": false
+      },
+      {
+        "id": "F_36390b968e1c_6",
+        "old_sim_s": 53.408913828987494,
+        "method": "start_connector_corrected_v1",
+        "components": {
+          "translation_sim_s": 9.229803510212307,
+          "turning_sim_s": 21.37450331434539,
+          "planning_validation_sim_s": 2.0,
+          "stop_verification_sim_s": 1.0,
+          "feedback_wait_sim_s": 4.0
+        },
+        "raw_turn_rad": 8.035822063755038,
+        "timing_turn_rad": 4.274900662869078,
+        "ignored_start_connector_m": 0.03150619377209591,
+        "legacy_sim_s": 53.408913828987494,
+        "expected_sim_s": 37.604306824557696,
+        "budget_reserve_sim_s": 3.06043068245577,
+        "budget_sim_s": 40.66473750701346,
+        "scope": "worker_before_to_after; catalog_and_model_measured_separately",
+        "calibration": "provisional_two_recorded_windows; not_a_deadline_guarantee",
+        "safety_path_modified": false
+      },
+      {
+        "id": "F_36390b968e1c_7",
+        "old_sim_s": 61.06968902951842,
+        "method": "start_connector_corrected_v1",
+        "components": {
+          "translation_sim_s": 18.472256986584675,
+          "turning_sim_s": 19.801893936545262,
+          "planning_validation_sim_s": 2.0,
+          "stop_verification_sim_s": 1.0,
+          "feedback_wait_sim_s": 4.0
+        },
+        "raw_turn_rad": 7.719486408586749,
+        "timing_turn_rad": 3.960378787309053,
+        "ignored_start_connector_m": 0.03150619377209591,
+        "legacy_sim_s": 61.06968902951842,
+        "expected_sim_s": 45.27415092312994,
+        "budget_reserve_sim_s": 3.827415092312994,
+        "budget_sim_s": 49.101566015442934,
+        "scope": "worker_before_to_after; catalog_and_model_measured_separately",
+        "calibration": "provisional_two_recorded_windows; not_a_deadline_guarantee",
+        "safety_path_modified": false
+      },
+      {
+        "id": "F_36390b968e1c_9",
+        "old_sim_s": 64.7044409705944,
+        "method": "start_connector_corrected_v1",
+        "components": {
+          "translation_sim_s": 15.045686119059027,
+          "turning_sim_s": 26.862735066926987,
+          "planning_validation_sim_s": 2.0,
+          "stop_verification_sim_s": 1.0,
+          "feedback_wait_sim_s": 4.0
+        },
+        "raw_turn_rad": 9.131750970307076,
+        "timing_turn_rad": 5.372547013385398,
+        "ignored_start_connector_m": 0.03150619377209591,
+        "legacy_sim_s": 64.7044409705944,
+        "expected_sim_s": 48.908421185986015,
+        "budget_reserve_sim_s": 4.190842118598602,
+        "budget_sim_s": 53.09926330458462,
+        "scope": "worker_before_to_after; catalog_and_model_measured_separately",
+        "calibration": "provisional_two_recorded_windows; not_a_deadline_guarantee",
+        "safety_path_modified": false
+      }
+    ],
+    "fits_revised_before_model": 0
+  },
+  "limitations": [
+    "Two windows cannot calibrate a general speed model.",
+    "Historical logs lack exact plan/stop/model simulation phase boundaries; null is intentional.",
+    "A counterfactual fit does not prove dispatch feasibility after new planning/model waits."
+  ]
+}

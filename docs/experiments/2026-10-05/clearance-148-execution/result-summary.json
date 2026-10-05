@@ -1,0 +1,19 @@
+{
+  "mission_id": "2af196a7-9584-4177-8c12-46a178364dbf",
+  "task_id": "cabdc07f-4eb7-4535-ab85-5505c33e76a7",
+  "path_clearance_m": 1.48,
+  "guard_stop_radius_m": 1.9,
+  "status": "aborted",
+  "stop_reason": "path_guard_clearance",
+  "stopped": true,
+  "initial_predicted_min_clearance_m": 1.4837621112461772,
+  "updated_predicted_min_clearance_m": 1.420277467791395,
+  "minimum_measured_scan_m": 2.669816493988037,
+  "distance_odom_m": 8.86847235856441e-12,
+  "turn_odom_degrees": -59.16362192542161,
+  "raw_map_window_gain_m2": 5.955000177472812,
+  "verified_successful_action_gain_m2": null,
+  "gain_note": "Registered map-window change exists, but task aborted and causal_action_gain_valid is false. Not successful exploration gain.",
+  "replay_error_m": 0.0,
+  "final_stop_latched": true
+}

@@ -1,0 +1,1688 @@
+{
+  "mission_id": "61be983e-12c4-4855-94e4-f84c50bde9a6",
+  "limits": {
+    "max_steps": 56,
+    "max_distance": 223.94166179591272,
+    "max_sim_time": 3218.0,
+    "max_wall_time": 2728.0,
+    "max_failures": 1,
+    "profile": "hour"
+  },
+  "rounds": [],
+  "policy": "model-loop",
+  "observations_enabled": false,
+  "regional_baseline": false,
+  "expansion_priority": true,
+  "exploration_mode": "memory",
+  "candidate_search": "wide_4_5",
+  "short_start": false,
+  "max_reselections": 2,
+  "source_sha256": {
+    "exploration_support/__init__.py": "26c4ef37d193dc16f69c1ca6bf20dc541e5a906a1f5f039ac0cd80bb4c20a1c5",
+    "exploration_support/adapter.py": "72457c91fd0964bdfc3ecdb4b00ef7d4660251c76672a38e51e82bb247b9f39e",
+    "exploration_support/demo.py": "ce23319d283b2518b4b651067c031dbb5aba980e9d5d0c0456bdd845789c138f",
+    "exploration_support/frontier_identity.py": "32b9f386540718768bcd96436c571bf01e2438534cc03dd2144ccdf628ed580a",
+    "exploration_support/grid.py": "c2d229e27e94a9dd6d2390e1aae459eb898e73fd1b8b597c565750dae8078288",
+    "exploration_support/memory.py": "bc87d81df3fa1e7e59e0e92ffae7641b2c249ad9523a06412f96024ccf591ba1",
+    "exploration_support/policy.py": "8ceccff901b05d0f6d8b59e54281dd87a104ed98866d6af064be0c07b24c40d7",
+    "navigation_base/exploration/aggressive.py": "5413bb65079418b9103b90a2d47960301f82f468e7e811813734bc6f0bb9ab7e",
+    "navigation_base/exploration/compare_runs.py": "3ce10898e280476dc5943aaeff6ce1448e9a23008e21cde6e13ef81875c9f0e9",
+    "navigation_base/exploration/explore.py": "db96a1c40649d0973873deafa6a45162e48925ea1fa63b711e0d663b77175c81",
+    "navigation_base/exploration/frontier.py": "599f56823e59d5c2441e99e15e73efc1ae19594c18e211c06bad8a2d7284c23b",
+    "navigation_base/exploration/observation.py": "4df1cc2d98799385ba5d331ea1209f8536944511777d5836694098a899974d45",
+    "navigation_base/exploration/path_safety.py": "cb1e84ade1559ea4dbb473ee84614de0e59c6a700861227f44ea6f010a342ec4",
+    "navigation_base/exploration/plot_run.py": "d659ec5822420d5e6a1aea2e09cc615420612bb0a560d0044044e394da0e7fb5",
+    "navigation_base/exploration/regions.py": "4543ee48ba8c3c509775b6bcf4b7b547a1db29c4ae678438c32dc53d81cea35d",
+    "navigation_base/map_identity.py": "929f01081dacfcb2c0a5b3362896a22803ee96950a6e7c45756b3fcb4d47cf01",
+    "navigation_base/navigation/nav2.yaml": "9b09017dea9e15b09fd7a536c3b2bb9a2c9c623c49fb8c517e0cd8d427e1b104",
+    "navigation_base/safety_contract.py": "c23f382f2c190af027933e0762f2735193fdef9a4c0f9353313b957cde2ac706",
+    "robot_agent/check_environment.py": "42407b78946b028adb524d0071e6052b907ec2b67f1e7fd517d73a390462c0cc",
+    "robot_agent/mcp_motion_server.py": "e35f688bd424726c2e52b718006ea9616a2df5519d685b67d08da81c0a9fa6b5",
+    "robot_agent/mcp_server.py": "e5b871acba58ae67579dfcc489c704f074e1e9441319d98302e46c033a3dc6fa",
+    "robot_agent/mcp_skills_server.py": "7e3ad0c6f83aa388b451aadaac5ad2715b162bcb8807faee9519544a45c0f889",
+    "robot_agent/motion_trial.py": "8230294cc602f6e8dbac38ecef3dff7867f30b5efcf9d2224706aa095082c7fe",
+    "robot_agent/motion_trial.xml": "68b2b7e30aaf2a79e306f9ce29a48c89db210e0301db975c541e6fb879d906cf",
+    "robot_agent/motion_worker.py": "8f7fe8cf9a5a09e5ccd36e03cad38c2901f965eb84cc0c274e63350642fe2b12",
+    "robot_agent/replay_reselection.py": "3ceb9bda9cc4cb9105826d7a234f090151731a091e51fbb2d2b44d6310927d99",
+    "robot_agent/robot_status.py": "51a7b59684f0b7c33ec33c5c8d34be2a29d4cb22733f8861529b8941c57fb29e",
+    "robot_agent/ros_status_bridge.py": "d289768d0f8a2fd6f4e9e0d48ef36ec930039c4ef6cffaaa3cf85eff7caf5674",
+    "robot_agent/run_frontier.py": "36bd455736b117a453e9ce893f83b36873e3e3d588adc27d85cb56c4d6287ab3",
+    "robot_agent/run_loop.py": "0023898b1a9134f0c546e20b71b17a1eb06fd935f9696ebda1d3fb207b3aff94",
+    "robot_agent/run_motion_trial.py": "c3754ff7a1ae338b67c16834bf54c4cf361637615d30b0aa11fa36a6ec43e9fd",
+    "robot_agent/run_readonly.py": "0220761fcf11831af097478a21c3d2700d4529da6704d63ad89486579ed16130",
+    "robot_skills/__init__.py": "f526a04594b6dba6727e0b3c7e7d973d2ef12f008454d0700107082db8ab9869",
+    "robot_skills/acceptance_memory.py": "a921d020a59291c493b282537933ceeeea2690edaf7a64b9fce9c72fccd297e5",
+    "robot_skills/api.py": "dc6000caf4c5b9e8156876f0fb99b188ebcd371ecca7e48a78bcc2293c500d65",
+    "robot_skills/compare_viewpoints.py": "a9f70b522d06e88a665cc7a608431d9e3dad8f5eebae80ac6c0f87dfb4fda93a",
+    "robot_skills/exploration_upgrade.py": "b7a737ec10959ebce57b7fe50ab67977198b17e1b985fa6055b9038ebefe8335",
+    "robot_skills/mission.py": "b5f1bd69ed485c26134759412b85da632dd430043a82818b70394cb398cfdd1f",
+    "robot_skills/mission_watchdog.py": "32ff9dec5cafb629cb9946d232b47826e75b52c51abacd237efb7c77f1fc1063",
+    "robot_skills/observation_rules.py": "54fbe4b36e6ea9b590f80f081f42783dbcf9ddbe70fb4c2c7413b75229ca9aa1",
+    "robot_skills/observation_worker.py": "ace685f5a9b13811ee2c3594fddf6a495b7e81c8fd0179a0ddf9cbe0c45542d1",
+    "robot_skills/plan_viewpoint_comparison.py": "741763e848741d9d1438417df70c82d7a228a775b823420725d324575dfa3f23",
+    "robot_skills/provenance.py": "299b251a27314fe18bee1217f64c8e9ce752a4c1b20a82e9e7e7f369c2474fdc",
+    "robot_skills/regional.py": "831c950ba0f76916fd0bb4e80506a25c4d131df19319ff451084e3131ce383d6",
+    "robot_skills/replay_timing.py": "6dd23c6e1f6d60603cbc47944658ccc951163e0bd584ff7c6a72f6e557ecbb12",
+    "robot_skills/replay_upgrade.py": "718d954aa4fab4dee2daf4d08676c3b82f92bfa36f2fdd783150a137a7921e74",
+    "robot_skills/ros_worker.py": "b3fc4440356d3308da7f66f93607123d37db129cd0fceef7e1c60d009f5f8527",
+    "robot_skills/scan_diagnostics.py": "5bba1e61e2c13bb150ab33f4aa4b6b1333f776ed4a010f43b00a56a46538e8de",
+    "robot_skills/store.py": "d4cad072ba7b5d617677437f54ffe6d0ce5868eac1711057059f3c350a8efac4",
+    "robot_skills/supervisor.py": "6816a0da8d25d49691aeb12bff24108d1683598f065c60a73ac09cb2818e4e4d",
+    "robot_skills/timing.py": "63c4621f88571b5aca0fbc5757887b1a4793fd54d05b13600717ffbc616530c3",
+    "robot_skills/upgrade_geometry.py": "951a20235a4eb3aad44a50955cd75f9de3cbf754e1e571858949b8eaf08ee1d4"
+  },
+  "model": "gpt-6.1-sol",
+  "last_candidate_set": {
+    "catalog_id": "bc0f83e1c9c1",
+    "catalog_schema": 3,
+    "region_epoch": "4d09abc4e79b",
+    "candidate_search": "wide_4_5",
+    "short_start": false,
+    "minimum_goal_distance_m": 1.2,
+    "unknown_space": {
+      "cells": {
+        "free": 133286,
+        "occupied": 5305,
+        "unknown": 57997,
+        "uncertain_occupancy": 0
+      },
+      "area_m2": {
+        "free": 333.21500993058095,
+        "occupied": 13.262500395253303,
+        "unknown": 144.99250432111327,
+        "uncertain_occupancy": 0.0
+      },
+      "unknown_remaining_in_grid": true,
+      "outside_grid": "unobserved_extent_not_counted",
+      "task_scope": "not_configured",
+      "historical_unknown_causes": "not_inferable_from_occupancy_alone",
+      "navigation_rule": "only_known_free_body_and_path",
+      "exploration_rule": "seek_safe_free_views_of_unknown",
+      "world_coverage": null,
+      "analysis_map_version": "a759a8e3a9db3649f74c",
+      "safe_sampled_action_count": 0,
+      "completion_evidence": "SEARCH_INCOMPLETE",
+      "all_unknown_unreachable_proven": false,
+      "world_complete": false
+    },
+    "frontier_horizons": {
+      "local": [],
+      "regional": [],
+      "distant": []
+    },
+    "current_region_id": "R_2_-1",
+    "search_complete": false,
+    "search_scope": "sampled_current_map_poses_not_all_possible_poses",
+    "planning_attempts": 1,
+    "shortlist_size": 1,
+    "candidate_offset": 5,
+    "next_candidate_offset": 6,
+    "more_candidates": false,
+    "created_unix_s": 1791196790.4771976,
+    "expires_unix_s": 1791196910.4772,
+    "map_version": "a759a8e3a9db3649f74c",
+    "robot_pose": [
+      9.693797926143715,
+      -1.5061546733544044,
+      -0.06962082475024495
+    ],
+    "sensor_fresh": {
+      "odometry": true,
+      "scan": true,
+      "map": true,
+      "localization": true
+    },
+    "candidates": [],
+    "rejected": [
+      {
+        "candidate_id": "information-1",
+        "reason": {
+          "status": 4,
+          "error_code": 0,
+          "clearance": {
+            "safe": false,
+            "map_version": "a759a8e3a9db3649f74c",
+            "guard_threshold_m": 1.9,
+            "planning_margin_m": 0.25,
+            "required_clearance_m": 2.15,
+            "sensor_offset_m": [
+              -0.7057095,
+              0.0
+            ],
+            "predicted_min_clearance_m": 1.4837621112461772,
+            "guard_margin_m": -0.4162378887538227,
+            "known_obstacles_only": true,
+            "reason": "path_guard_clearance",
+            "worst_base_pose": [
+              9.673477310687304,
+              -1.5433879271149635,
+              2.7227136331111543
+            ],
+            "worst_sensor_xy": [
+              10.318175018827535,
+              -1.8304258401316649
+            ],
+            "samples": 24327
+          }
+        },
+        "target_region_id": "R_0_1",
+        "observation_pose": [
+          0.7234772321107865,
+          4.656612294109765,
+          -0.7531512809621943
+        ],
+        "unknown_analysis": {
+          "unknown_type": "UNKNOWN_OPEN",
+          "classification_basis": "sampled_map_rays_from_this_sensor_pose",
+          "historical_unknown_cause": "UNDETERMINED",
+          "visible_unknown_area_proxy_m2": 0.7600000226497652,
+          "occluded_unknown_area_proxy_m2": 11.880000354051592,
+          "uncertain_unknown_area_proxy_m2": 0.0,
+          "occluded_fraction_proxy": 0.939873417721519,
+          "beyond_current_sensor_range_proxy_m2": 0.36000001072883614,
+          "sensor_range_m": 12.0,
+          "proxy_range_m": 8.0,
+          "unknown_depth_cap_m": 2.0,
+          "map_edge_rays": 19,
+          "gain_confidence": "optimistic_proxy_not_observed_area",
+          "unknown_is_traversable": false
+        },
+        "rejection_scope": "this_sampled_pose_and_planned_path",
+        "recheck_on_map_change": true,
+        "region_proven_unreachable": false
+      }
+    ],
+    "generation": {
+      "frontier_clusters": 8,
+      "safe_cells": 626,
+      "frontier_cells": 290,
+      "safe_cell_filters": {
+        "known_free_cells": 6919,
+        "obstacle_clearance_rejected": 6220,
+        "known_body_margin_rejected": 2299,
+        "counts_may_overlap": true
+      },
+      "pose_filter_counts": {
+        "too_near": 14,
+        "previously_attempted": 0,
+        "spatial_sample_duplicate": 64,
+        "frontier_too_far": 531,
+        "no_safe_heading": 11,
+        "selected_positions": 6
+      },
+      "oriented_candidates_before_cap": 6,
+      "shortlist_truncated": true,
+      "regional_diversity_enabled": true,
+      "frontier_identity": {
+        "next_id": 9,
+        "clusters": [
+          {
+            "id": "cluster-1",
+            "lineage": [
+              "cluster-1"
+            ],
+            "parents": [
+              "cluster-1"
+            ],
+            "relation": "continued",
+            "centroid": [
+              14.123477431786347,
+              -4.643387844471034
+            ]
+          },
+          {
+            "id": "cluster-2",
+            "lineage": [
+              "cluster-2"
+            ],
+            "parents": [
+              "cluster-2"
+            ],
+            "relation": "continued",
+            "centroid": [
+              15.52347745264797,
+              -2.2767211425382863
+            ]
+          },
+          {
+            "id": "cluster-3",
+            "lineage": [
+              "cluster-3",
+              "cluster-4"
+            ],
+            "parents": [
+              "cluster-3",
+              "cluster-4"
+            ],
+            "relation": "split_merge",
+            "centroid": [
+              13.817982921739615,
+              4.329139761757524
+            ]
+          },
+          {
+            "id": "cluster-4",
+            "lineage": [
+              "cluster-3",
+              "cluster-4"
+            ],
+            "parents": [
+              "cluster-3",
+              "cluster-4"
+            ],
+            "relation": "split_merge",
+            "centroid": [
+              13.540144089760666,
+              5.573278974435829
+            ]
+          },
+          {
+            "id": "cluster-5",
+            "lineage": [
+              "cluster-5"
+            ],
+            "parents": [
+              "cluster-5"
+            ],
+            "relation": "continued",
+            "centroid": [
+              14.403477435958672,
+              5.776612310799065
+            ]
+          },
+          {
+            "id": "cluster-6",
+            "lineage": [
+              "cluster-6"
+            ],
+            "parents": [
+              "cluster-6"
+            ],
+            "relation": "continued",
+            "centroid": [
+              4.504511771211207,
+              11.465233085221273
+            ]
+          },
+          {
+            "id": "cluster-7",
+            "lineage": [
+              "cluster-7"
+            ],
+            "parents": [
+              "cluster-7"
+            ],
+            "relation": "continued",
+            "centroid": [
+              6.043477311384964,
+              8.936612357886734
+            ]
+          },
+          {
+            "id": "cluster-8",
+            "lineage": [
+              "cluster-8"
+            ],
+            "parents": [
+              "cluster-8"
+            ],
+            "relation": "continued",
+            "centroid": [
+              -1.8952728069116282,
+              12.494112410897623
+            ]
+          }
+        ],
+        "association_tolerance_m": 0.6,
+        "scope": "current_map_world_coordinates; diagnostic_not_spatial_exclusion"
+      }
+    },
+    "status": "candidate_search_incomplete",
+    "requires_execution_revalidation": true,
+    "exploration_upgrade": {
+      "mode": "memory",
+      "mission_id": "61be983e-12c4-4855-94e4-f84c50bde9a6",
+      "map_epoch": "4d09abc4e79b",
+      "history_revision": "4f53cda18c2baa0c0354",
+      "events": 0,
+      "low_gain_pattern_detected": false,
+      "low_gain_cycle_detected": false,
+      "decision_mode": "LOCAL_OR_EXPAND",
+      "policy_rejected_count": 0,
+      "candidate_advice": [],
+      "range_source": "bounded_8m_proxy_capped_by_scan",
+      "scan_statistics": {
+        "counts": {
+          "finite_in_range": 282,
+          "finite_out_of_range": 0,
+          "positive_inf": 78,
+          "negative_inf": 0,
+          "nan": 0,
+          "at_max_range": 0
+        },
+        "range_bounds_valid": true,
+        "range_min_m": 0.10000000149011612,
+        "range_max_m": 12.0,
+        "inf_clearing_semantics": "not_inferred",
+        "map_cells_written": 0
+      },
+      "remaining_unknown_is_not_completion_proof": true,
+      "is_motion_permission": false,
+      "recent_action_summaries": [],
+      "candidate_search_scope": "sampled_current_map_poses_not_all_possible_poses",
+      "candidate_search_truncated": true,
+      "candidate_filter_counts": {
+        "pose_proposals": 1,
+        "planned": 1,
+        "offered": 0,
+        "planning_rejected": 1,
+        "policy_rejected": 0
+      }
+    }
+  },
+  "last_decision_context": {
+    "robot": {
+      "schema_version": 1,
+      "generated_monotonic_s": 14596.817195094,
+      "generated_unix_s": 1791196791.5572743,
+      "mode": "read_only",
+      "sources": {
+        "guard_output": {
+          "linear_x_m_s": 0.0,
+          "angular_z_rad_s": 0.0,
+          "received_age_wall_s": 0.52,
+          "fresh": true
+        },
+        "clock": {
+          "sim_time_s": 7022.567,
+          "received_age_wall_s": 0.497,
+          "fresh": true
+        },
+        "odometry": {
+          "frame": "vehicle/odom",
+          "child_frame": "vehicle/base_link",
+          "stamp_sim_s": 7022.543,
+          "pose": {
+            "x": 12.830463956873931,
+            "y": -1.2980388832225123,
+            "z": 0.0,
+            "yaw_rad": -0.010290824750245788
+          },
+          "velocity": {
+            "linear_x_m_s": 0.0,
+            "angular_z_rad_s": 0.0
+          },
+          "received_age_wall_s": 0.536,
+          "fresh": true,
+          "stamp_age_sim_s": 0.024
+        },
+        "scan": {
+          "frame": "vehicle/lidar",
+          "stamp_sim_s": 7022.5,
+          "nearest_m": 2.7923710346221924,
+          "valid": true,
+          "sample_count": 360,
+          "no_finite_hit": false,
+          "received_age_wall_s": 0.623,
+          "fresh": true,
+          "stamp_age_sim_s": 0.067
+        },
+        "map_pose": {
+          "frame": "map",
+          "child_frame": "vehicle/base_link",
+          "stamp_sim_s": 7022.543,
+          "pose": {
+            "x": 9.693797926143715,
+            "y": -1.5061546733544044,
+            "z": 0.0,
+            "yaw_rad": -0.06962082475024495
+          },
+          "received_age_wall_s": 0.495,
+          "fresh": true,
+          "stamp_age_sim_s": 0.024
+        },
+        "map": {
+          "frame": "map",
+          "stamp_sim_s": 7022.3,
+          "width": 476,
+          "height": 413,
+          "resolution_m": 0.05000000074505806,
+          "origin": {
+            "x": -5.9765228677269935,
+            "y": -5.443387856391963,
+            "z": 0.0,
+            "yaw_rad": 0.0
+          },
+          "content_hash": "3ecfadcad06b6a56",
+          "map_version": "a759a8e3a9db3649f74c",
+          "unknown_cells": 57997,
+          "free_cells": 133286,
+          "other_known_cells": 5305,
+          "known_area_m2": 346.47751032583426,
+          "coverage": null,
+          "received_age_wall_s": 0.858,
+          "fresh": true,
+          "stamp_age_sim_s": 0.267
+        },
+        "requested_velocity": {
+          "linear_x_m_s": 0.0,
+          "angular_z_rad_s": 0.0,
+          "received_age_wall_s": 1050.459,
+          "fresh": false
+        },
+        "navigation": {
+          "statuses": [
+            {
+              "goal_id": "c8064c7d4e38410097285d030d6fc71a",
+              "status_code": 5
+            }
+          ],
+          "active_goal_count": 0,
+          "received_age_wall_s": 1188.257,
+          "fresh": false
+        }
+      },
+      "graph": {
+        "guard_node_present": true,
+        "navigation_action_server_present": true,
+        "observed_monotonic_s": 14595.317584346
+      },
+      "guard": {
+        "stop_radius_m": 1.9,
+        "reason_inferred_from_inputs": "command timeout",
+        "authoritative_guard_status": false
+      },
+      "snapshot_age_wall_s": 0.496,
+      "status": "available",
+      "motion_tools_enabled": true,
+      "note": "Read-only observations, not permission to move. Stale/missing fields are unknown. Guard reason is inferred, not a guard acknowledgement. No navigation status message means unknown, not proof of idle. Map known area is not room coverage.",
+      "stop_latched": false,
+      "motion_scope": "validated_frontier_ids_only"
+    },
+    "frontiers": {
+      "catalog_id": "bc0f83e1c9c1",
+      "catalog_schema": 3,
+      "region_epoch": "4d09abc4e79b",
+      "candidate_search": "wide_4_5",
+      "short_start": false,
+      "minimum_goal_distance_m": 1.2,
+      "unknown_space": {
+        "cells": {
+          "free": 133286,
+          "occupied": 5305,
+          "unknown": 57997,
+          "uncertain_occupancy": 0
+        },
+        "area_m2": {
+          "free": 333.21500993058095,
+          "occupied": 13.262500395253303,
+          "unknown": 144.99250432111327,
+          "uncertain_occupancy": 0.0
+        },
+        "unknown_remaining_in_grid": true,
+        "outside_grid": "unobserved_extent_not_counted",
+        "task_scope": "not_configured",
+        "historical_unknown_causes": "not_inferable_from_occupancy_alone",
+        "navigation_rule": "only_known_free_body_and_path",
+        "exploration_rule": "seek_safe_free_views_of_unknown",
+        "world_coverage": null,
+        "analysis_map_version": "a759a8e3a9db3649f74c",
+        "safe_sampled_action_count": 0,
+        "completion_evidence": "SEARCH_INCOMPLETE",
+        "all_unknown_unreachable_proven": false,
+        "world_complete": false
+      },
+      "frontier_horizons": {
+        "local": [],
+        "regional": [],
+        "distant": []
+      },
+      "current_region_id": "R_2_-1",
+      "search_complete": false,
+      "search_scope": "sampled_current_map_poses_not_all_possible_poses",
+      "planning_attempts": 1,
+      "shortlist_size": 1,
+      "candidate_offset": 5,
+      "next_candidate_offset": 6,
+      "more_candidates": false,
+      "created_unix_s": 1791196790.4771976,
+      "expires_unix_s": 1791196910.4772,
+      "map_version": "a759a8e3a9db3649f74c",
+      "robot_pose": [
+        9.693797926143715,
+        -1.5061546733544044,
+        -0.06962082475024495
+      ],
+      "sensor_fresh": {
+        "odometry": true,
+        "scan": true,
+        "map": true,
+        "localization": true
+      },
+      "candidates": [],
+      "rejected": [
+        {
+          "candidate_id": "information-1",
+          "reason": {
+            "status": 4,
+            "error_code": 0,
+            "clearance": {
+              "safe": false,
+              "map_version": "a759a8e3a9db3649f74c",
+              "guard_threshold_m": 1.9,
+              "planning_margin_m": 0.25,
+              "required_clearance_m": 2.15,
+              "sensor_offset_m": [
+                -0.7057095,
+                0.0
+              ],
+              "predicted_min_clearance_m": 1.4837621112461772,
+              "guard_margin_m": -0.4162378887538227,
+              "known_obstacles_only": true,
+              "reason": "path_guard_clearance",
+              "worst_base_pose": [
+                9.673477310687304,
+                -1.5433879271149635,
+                2.7227136331111543
+              ],
+              "worst_sensor_xy": [
+                10.318175018827535,
+                -1.8304258401316649
+              ],
+              "samples": 24327
+            }
+          },
+          "target_region_id": "R_0_1",
+          "observation_pose": [
+            0.7234772321107865,
+            4.656612294109765,
+            -0.7531512809621943
+          ],
+          "unknown_analysis": {
+            "unknown_type": "UNKNOWN_OPEN",
+            "classification_basis": "sampled_map_rays_from_this_sensor_pose",
+            "historical_unknown_cause": "UNDETERMINED",
+            "visible_unknown_area_proxy_m2": 0.7600000226497652,
+            "occluded_unknown_area_proxy_m2": 11.880000354051592,
+            "uncertain_unknown_area_proxy_m2": 0.0,
+            "occluded_fraction_proxy": 0.939873417721519,
+            "beyond_current_sensor_range_proxy_m2": 0.36000001072883614,
+            "sensor_range_m": 12.0,
+            "proxy_range_m": 8.0,
+            "unknown_depth_cap_m": 2.0,
+            "map_edge_rays": 19,
+            "gain_confidence": "optimistic_proxy_not_observed_area",
+            "unknown_is_traversable": false
+          },
+          "rejection_scope": "this_sampled_pose_and_planned_path",
+          "recheck_on_map_change": true,
+          "region_proven_unreachable": false
+        }
+      ],
+      "generation": {
+        "frontier_clusters": 8,
+        "safe_cells": 626,
+        "frontier_cells": 290,
+        "safe_cell_filters": {
+          "known_free_cells": 6919,
+          "obstacle_clearance_rejected": 6220,
+          "known_body_margin_rejected": 2299,
+          "counts_may_overlap": true
+        },
+        "pose_filter_counts": {
+          "too_near": 14,
+          "previously_attempted": 0,
+          "spatial_sample_duplicate": 64,
+          "frontier_too_far": 531,
+          "no_safe_heading": 11,
+          "selected_positions": 6
+        },
+        "oriented_candidates_before_cap": 6,
+        "shortlist_truncated": true,
+        "regional_diversity_enabled": true,
+        "frontier_identity": {
+          "next_id": 9,
+          "clusters": [
+            {
+              "id": "cluster-1",
+              "lineage": [
+                "cluster-1"
+              ],
+              "parents": [
+                "cluster-1"
+              ],
+              "relation": "continued",
+              "centroid": [
+                14.123477431786347,
+                -4.643387844471034
+              ]
+            },
+            {
+              "id": "cluster-2",
+              "lineage": [
+                "cluster-2"
+              ],
+              "parents": [
+                "cluster-2"
+              ],
+              "relation": "continued",
+              "centroid": [
+                15.52347745264797,
+                -2.2767211425382863
+              ]
+            },
+            {
+              "id": "cluster-3",
+              "lineage": [
+                "cluster-3",
+                "cluster-4"
+              ],
+              "parents": [
+                "cluster-3",
+                "cluster-4"
+              ],
+              "relation": "split_merge",
+              "centroid": [
+                13.817982921739615,
+                4.329139761757524
+              ]
+            },
+            {
+              "id": "cluster-4",
+              "lineage": [
+                "cluster-3",
+                "cluster-4"
+              ],
+              "parents": [
+                "cluster-3",
+                "cluster-4"
+              ],
+              "relation": "split_merge",
+              "centroid": [
+                13.540144089760666,
+                5.573278974435829
+              ]
+            },
+            {
+              "id": "cluster-5",
+              "lineage": [
+                "cluster-5"
+              ],
+              "parents": [
+                "cluster-5"
+              ],
+              "relation": "continued",
+              "centroid": [
+                14.403477435958672,
+                5.776612310799065
+              ]
+            },
+            {
+              "id": "cluster-6",
+              "lineage": [
+                "cluster-6"
+              ],
+              "parents": [
+                "cluster-6"
+              ],
+              "relation": "continued",
+              "centroid": [
+                4.504511771211207,
+                11.465233085221273
+              ]
+            },
+            {
+              "id": "cluster-7",
+              "lineage": [
+                "cluster-7"
+              ],
+              "parents": [
+                "cluster-7"
+              ],
+              "relation": "continued",
+              "centroid": [
+                6.043477311384964,
+                8.936612357886734
+              ]
+            },
+            {
+              "id": "cluster-8",
+              "lineage": [
+                "cluster-8"
+              ],
+              "parents": [
+                "cluster-8"
+              ],
+              "relation": "continued",
+              "centroid": [
+                -1.8952728069116282,
+                12.494112410897623
+              ]
+            }
+          ],
+          "association_tolerance_m": 0.6,
+          "scope": "current_map_world_coordinates; diagnostic_not_spatial_exclusion"
+        }
+      },
+      "status": "candidate_search_incomplete",
+      "requires_execution_revalidation": true,
+      "exploration_upgrade": {
+        "mode": "memory",
+        "mission_id": "61be983e-12c4-4855-94e4-f84c50bde9a6",
+        "map_epoch": "4d09abc4e79b",
+        "history_revision": "4f53cda18c2baa0c0354",
+        "events": 0,
+        "low_gain_pattern_detected": false,
+        "low_gain_cycle_detected": false,
+        "decision_mode": "LOCAL_OR_EXPAND",
+        "policy_rejected_count": 0,
+        "candidate_advice": [],
+        "range_source": "bounded_8m_proxy_capped_by_scan",
+        "scan_statistics": {
+          "counts": {
+            "finite_in_range": 282,
+            "finite_out_of_range": 0,
+            "positive_inf": 78,
+            "negative_inf": 0,
+            "nan": 0,
+            "at_max_range": 0
+          },
+          "range_bounds_valid": true,
+          "range_min_m": 0.10000000149011612,
+          "range_max_m": 12.0,
+          "inf_clearing_semantics": "not_inferred",
+          "map_cells_written": 0
+        },
+        "remaining_unknown_is_not_completion_proof": true,
+        "is_motion_permission": false,
+        "recent_action_summaries": [],
+        "candidate_search_scope": "sampled_current_map_poses_not_all_possible_poses",
+        "candidate_search_truncated": true,
+        "candidate_filter_counts": {
+          "pose_proposals": 1,
+          "planned": 1,
+          "offered": 0,
+          "planning_rejected": 1,
+          "policy_rejected": 0
+        }
+      }
+    },
+    "exploration_upgrade": {
+      "mode": "memory",
+      "mission_id": "61be983e-12c4-4855-94e4-f84c50bde9a6",
+      "map_epoch": "4d09abc4e79b",
+      "history_revision": "4f53cda18c2baa0c0354",
+      "events": 0,
+      "low_gain_pattern_detected": false,
+      "low_gain_cycle_detected": false,
+      "decision_mode": "LOCAL_OR_EXPAND",
+      "policy_rejected_count": 0,
+      "candidate_advice": [],
+      "range_source": "bounded_8m_proxy_capped_by_scan",
+      "scan_statistics": {
+        "counts": {
+          "finite_in_range": 282,
+          "finite_out_of_range": 0,
+          "positive_inf": 78,
+          "negative_inf": 0,
+          "nan": 0,
+          "at_max_range": 0
+        },
+        "range_bounds_valid": true,
+        "range_min_m": 0.10000000149011612,
+        "range_max_m": 12.0,
+        "inf_clearing_semantics": "not_inferred",
+        "map_cells_written": 0
+      },
+      "remaining_unknown_is_not_completion_proof": true,
+      "is_motion_permission": false,
+      "recent_action_summaries": [],
+      "candidate_search_scope": "sampled_current_map_poses_not_all_possible_poses",
+      "candidate_search_truncated": true,
+      "candidate_filter_counts": {
+        "pose_proposals": 1,
+        "planned": 1,
+        "offered": 0,
+        "planning_rejected": 1,
+        "policy_rejected": 0
+      }
+    },
+    "exploration": {
+      "region_epoch": "4d09abc4e79b",
+      "sector_size_m": 4.0,
+      "current_region_id": "R_2_-1",
+      "regions": [],
+      "arrivals_by_region": {
+        "R_-1_1": 1,
+        "R_-1_0": 1,
+        "R_0_-1": 1
+      },
+      "recent_local_gain_windows": [],
+      "local_gain_evidence": "INSUFFICIENT",
+      "local_saturated": false,
+      "recommended_mode": "LOCAL_EXPLORE",
+      "recommendation_reason": "compare_region_return_and_cost",
+      "committed_region_id": null,
+      "search_complete": false,
+      "unknown_space": {
+        "cells": {
+          "free": 133286,
+          "occupied": 5305,
+          "unknown": 57997,
+          "uncertain_occupancy": 0
+        },
+        "area_m2": {
+          "free": 333.21500993058095,
+          "occupied": 13.262500395253303,
+          "unknown": 144.99250432111327,
+          "uncertain_occupancy": 0.0
+        },
+        "unknown_remaining_in_grid": true,
+        "outside_grid": "unobserved_extent_not_counted",
+        "task_scope": "not_configured",
+        "historical_unknown_causes": "not_inferable_from_occupancy_alone",
+        "navigation_rule": "only_known_free_body_and_path",
+        "exploration_rule": "seek_safe_free_views_of_unknown",
+        "world_coverage": null,
+        "analysis_map_version": "a759a8e3a9db3649f74c",
+        "safe_sampled_action_count": 0,
+        "completion_evidence": "SEARCH_INCOMPLETE",
+        "all_unknown_unreachable_proven": false,
+        "world_complete": false
+      },
+      "coverage_complete": false,
+      "scope": "current_slam_map_spatial_sectors_not_rooms"
+    },
+    "map_version_changed_since_candidates": false,
+    "active_tasks": [],
+    "recent_tasks": [],
+    "map_session_task_history": [
+      {
+        "task_id": "fc989d69-5c3e-40f7-8b17-0b4b3442f2eb",
+        "status": "aborted",
+        "reason": "path_guard_clearance",
+        "stopped": true,
+        "goal": {
+          "x": 10.372759663280537,
+          "y": -1.6302857452162112,
+          "yaw": -1.4288992721907325,
+          "frontier_id": "F_191f277e700a_9"
+        },
+        "mission_id": "24525349-5040-42a7-8f3e-fd26a9372ca3"
+      },
+      {
+        "task_id": "a180af66-be62-4bde-9536-5508483c1a11",
+        "status": "succeeded",
+        "reason": "goal_reached",
+        "stopped": true,
+        "goal": {
+          "x": 3.2860550068124317,
+          "y": -1.5836293893323363,
+          "yaw": -2.375036366626029,
+          "frontier_id": "F_89e6611d285d_7"
+        },
+        "mission_id": "24525349-5040-42a7-8f3e-fd26a9372ca3"
+      },
+      {
+        "task_id": "3b1245f1-5e83-4888-9c7b-a8443e962e22",
+        "status": "succeeded",
+        "reason": "goal_reached",
+        "stopped": true,
+        "goal": {
+          "x": 0.05157570174015902,
+          "y": -0.1370598627793811,
+          "yaw": -2.4227626539681686,
+          "frontier_id": "F_2eff984f71aa_3"
+        },
+        "mission_id": "24525349-5040-42a7-8f3e-fd26a9372ca3"
+      },
+      {
+        "task_id": "992f54d2-0cc7-4724-95ac-1875b805e07a",
+        "status": "aborted",
+        "reason": "body_sweep_nonfree",
+        "stopped": true,
+        "goal": {
+          "x": -0.10914996472961391,
+          "y": -1.1370598776805423,
+          "yaw": -1.022591161599342,
+          "frontier_id": "F_f1465f0f6e69_9"
+        },
+        "mission_id": "4eca7271-cd92-4d20-bc1b-efe7bd9f3287"
+      },
+      {
+        "task_id": "ba91f02e-50db-4738-8228-e8c7a8b7e06d",
+        "status": "aborted",
+        "reason": "client_heartbeat_lost",
+        "stopped": true,
+        "goal": {
+          "x": 0.35224567249717076,
+          "y": 2.6877498183530157,
+          "yaw": -1.8157749899217608,
+          "frontier_id": "F_d3b438d70277_1"
+        },
+        "mission_id": "09950cad-a081-4da5-84a6-5b7293cf8afd"
+      }
+    ],
+    "decision_options": [
+      "execute_frontier",
+      "stop_robot"
+    ],
+    "observation_options": {
+      "options": []
+    },
+    "mission": {
+      "mission_id": "61be983e-12c4-4855-94e4-f84c50bde9a6",
+      "status": "running",
+      "stop_reason": null,
+      "limits": {
+        "max_steps": 56,
+        "max_distance": 223.94166179591272,
+        "max_sim_time": 3218.0,
+        "max_wall_time": 2728.0,
+        "max_failures": 1,
+        "profile": "hour"
+      },
+      "exploration_mode": "memory",
+      "candidate_search": "wide_4_5",
+      "short_start": false,
+      "observations_enabled": false,
+      "start_sim_s": 6978.118,
+      "started_monotonic_s": 14488.722805253,
+      "deadline_monotonic_s": 17216.722805253,
+      "heartbeat_monotonic_s": 14597.445445367,
+      "stop_request_id": "5e09ba5e-b585-40da-9220-f450f378212e",
+      "stopped": false,
+      "started_unix_s": 1791196683.4625707
+    },
+    "observe_available": false,
+    "arbitrary_navigation_available": false,
+    "authority": "Only local task state establishes success, cancellation or stopped.",
+    "session_budget": {
+      "limits": {
+        "max_steps": 56,
+        "max_distance": 223.94166179591272,
+        "max_sim_time": 3218.0,
+        "max_wall_time": 2728.0,
+        "max_failures": 1,
+        "profile": "hour"
+      },
+      "used": {
+        "steps": 0,
+        "distance_m": 0,
+        "failures": 0,
+        "active": false
+      },
+      "remaining_distance_m": 223.94166179591272,
+      "remaining_sim_s": 3173.5510000000004,
+      "remaining_wall_s": 2618.777760557001
+    }
+  },
+  "last_budget_diagnostics": [],
+  "additional_searches": [
+    {
+      "catalog_id": "8498c023acc1",
+      "catalog_schema": 3,
+      "region_epoch": "4d09abc4e79b",
+      "candidate_search": "wide_4_5",
+      "short_start": false,
+      "minimum_goal_distance_m": 1.2,
+      "unknown_space": {
+        "cells": {
+          "free": 133286,
+          "occupied": 5305,
+          "unknown": 57997,
+          "uncertain_occupancy": 0
+        },
+        "area_m2": {
+          "free": 333.21500993058095,
+          "occupied": 13.262500395253303,
+          "unknown": 144.99250432111327,
+          "uncertain_occupancy": 0.0
+        },
+        "unknown_remaining_in_grid": true,
+        "outside_grid": "unobserved_extent_not_counted",
+        "task_scope": "not_configured",
+        "historical_unknown_causes": "not_inferable_from_occupancy_alone",
+        "navigation_rule": "only_known_free_body_and_path",
+        "exploration_rule": "seek_safe_free_views_of_unknown",
+        "world_coverage": null,
+        "analysis_map_version": "a759a8e3a9db3649f74c",
+        "safe_sampled_action_count": 0,
+        "completion_evidence": "SEARCH_INCOMPLETE",
+        "all_unknown_unreachable_proven": false,
+        "world_complete": false
+      },
+      "frontier_horizons": {
+        "local": [],
+        "regional": [],
+        "distant": []
+      },
+      "current_region_id": "R_2_-1",
+      "search_complete": false,
+      "search_scope": "sampled_current_map_poses_not_all_possible_poses",
+      "planning_attempts": 5,
+      "shortlist_size": 6,
+      "candidate_offset": 0,
+      "next_candidate_offset": 5,
+      "more_candidates": true,
+      "created_unix_s": 1791196758.8728023,
+      "expires_unix_s": 1791196878.8728044,
+      "map_version": "a759a8e3a9db3649f74c",
+      "robot_pose": [
+        9.693797926143715,
+        -1.5061546733544044,
+        -0.06962082475024495
+      ],
+      "sensor_fresh": {
+        "odometry": true,
+        "scan": true,
+        "map": true,
+        "localization": true
+      },
+      "candidates": [],
+      "rejected": [
+        {
+          "candidate_id": "information-1",
+          "reason": {
+            "status": 4,
+            "error_code": 0,
+            "clearance": {
+              "safe": false,
+              "map_version": "a759a8e3a9db3649f74c",
+              "guard_threshold_m": 1.9,
+              "planning_margin_m": 0.25,
+              "required_clearance_m": 2.15,
+              "sensor_offset_m": [
+                -0.7057095,
+                0.0
+              ],
+              "predicted_min_clearance_m": 1.4837621112461772,
+              "guard_margin_m": -0.4162378887538227,
+              "known_obstacles_only": true,
+              "reason": "path_guard_clearance",
+              "worst_base_pose": [
+                9.673477310687304,
+                -1.5433879271149635,
+                2.7227136331111543
+              ],
+              "worst_sensor_xy": [
+                10.318175018827535,
+                -1.8304258401316649
+              ],
+              "samples": 25589
+            }
+          },
+          "target_region_id": "R_0_1",
+          "observation_pose": [
+            0.1234772231700898,
+            6.056612314971391,
+            3.5598169831690223
+          ],
+          "unknown_analysis": {
+            "unknown_type": "UNKNOWN_OUT_OF_RANGE",
+            "classification_basis": "sampled_map_rays_from_this_sensor_pose",
+            "historical_unknown_cause": "UNDETERMINED",
+            "visible_unknown_area_proxy_m2": 3.1600000941753397,
+            "occluded_unknown_area_proxy_m2": 14.20000042319298,
+            "uncertain_unknown_area_proxy_m2": 0.8000000238418581,
+            "occluded_fraction_proxy": 0.7819383259911894,
+            "beyond_current_sensor_range_proxy_m2": 2.0400000607967383,
+            "sensor_range_m": 12.0,
+            "proxy_range_m": 8.0,
+            "unknown_depth_cap_m": 2.0,
+            "map_edge_rays": 15,
+            "gain_confidence": "optimistic_proxy_not_observed_area",
+            "unknown_is_traversable": false
+          },
+          "rejection_scope": "this_sampled_pose_and_planned_path",
+          "recheck_on_map_change": true,
+          "region_proven_unreachable": false
+        },
+        {
+          "candidate_id": "information-2",
+          "reason": {
+            "status": 4,
+            "error_code": 0,
+            "clearance": {
+              "safe": false,
+              "map_version": "a759a8e3a9db3649f74c",
+              "guard_threshold_m": 1.9,
+              "planning_margin_m": 0.25,
+              "required_clearance_m": 2.15,
+              "sensor_offset_m": [
+                -0.7057095,
+                0.0
+              ],
+              "predicted_min_clearance_m": 1.4837621112461772,
+              "guard_margin_m": -0.4162378887538227,
+              "known_obstacles_only": true,
+              "reason": "path_guard_clearance",
+              "worst_base_pose": [
+                9.673477310687304,
+                -1.5433879271149635,
+                2.7227136331111543
+              ],
+              "worst_sensor_xy": [
+                10.318175018827535,
+                -1.8304258401316649
+              ],
+              "samples": 25405
+            }
+          },
+          "target_region_id": "R_-1_1",
+          "observation_pose": [
+            -0.6765227887508392,
+            5.856612311991158,
+            3.349088880024996
+          ],
+          "unknown_analysis": {
+            "unknown_type": "UNKNOWN_OPEN",
+            "classification_basis": "sampled_map_rays_from_this_sensor_pose",
+            "historical_unknown_cause": "UNDETERMINED",
+            "visible_unknown_area_proxy_m2": 1.7200000512599949,
+            "occluded_unknown_area_proxy_m2": 14.20000042319298,
+            "uncertain_unknown_area_proxy_m2": 0.20000000596046452,
+            "occluded_fraction_proxy": 0.8808933002481389,
+            "beyond_current_sensor_range_proxy_m2": 0.7200000214576723,
+            "sensor_range_m": 12.0,
+            "proxy_range_m": 8.0,
+            "unknown_depth_cap_m": 2.0,
+            "map_edge_rays": 21,
+            "gain_confidence": "optimistic_proxy_not_observed_area",
+            "unknown_is_traversable": false
+          },
+          "rejection_scope": "this_sampled_pose_and_planned_path",
+          "recheck_on_map_change": true,
+          "region_proven_unreachable": false
+        },
+        {
+          "candidate_id": "information-3",
+          "reason": {
+            "status": 4,
+            "error_code": 0,
+            "clearance": {
+              "safe": false,
+              "map_version": "a759a8e3a9db3649f74c",
+              "guard_threshold_m": 1.9,
+              "planning_margin_m": 0.25,
+              "required_clearance_m": 2.15,
+              "sensor_offset_m": [
+                -0.7057095,
+                0.0
+              ],
+              "predicted_min_clearance_m": 1.4837621112461772,
+              "guard_margin_m": -0.4162378887538227,
+              "known_obstacles_only": true,
+              "reason": "path_guard_clearance",
+              "worst_base_pose": [
+                9.673477310687304,
+                -1.5433879271149635,
+                2.7227136331111543
+              ],
+              "worst_sensor_xy": [
+                10.318175018827535,
+                -1.8304258401316649
+              ],
+              "samples": 24959
+            }
+          },
+          "target_region_id": "R_0_1",
+          "observation_pose": [
+            0.9234772350910188,
+            5.456612306030694,
+            -0.8621700546672263
+          ],
+          "unknown_analysis": {
+            "unknown_type": "UNKNOWN_OUT_OF_RANGE",
+            "classification_basis": "sampled_map_rays_from_this_sensor_pose",
+            "historical_unknown_cause": "UNDETERMINED",
+            "visible_unknown_area_proxy_m2": 2.080000061988831,
+            "occluded_unknown_area_proxy_m2": 14.240000424385073,
+            "uncertain_unknown_area_proxy_m2": 0.20000000596046452,
+            "occluded_fraction_proxy": 0.8619854721549637,
+            "beyond_current_sensor_range_proxy_m2": 1.24000003695488,
+            "sensor_range_m": 12.0,
+            "proxy_range_m": 8.0,
+            "unknown_depth_cap_m": 2.0,
+            "map_edge_rays": 17,
+            "gain_confidence": "optimistic_proxy_not_observed_area",
+            "unknown_is_traversable": false
+          },
+          "rejection_scope": "this_sampled_pose_and_planned_path",
+          "recheck_on_map_change": true,
+          "region_proven_unreachable": false
+        },
+        {
+          "candidate_id": "information-4",
+          "reason": {
+            "status": 4,
+            "error_code": 0,
+            "clearance": {
+              "safe": false,
+              "map_version": "a759a8e3a9db3649f74c",
+              "guard_threshold_m": 1.9,
+              "planning_margin_m": 0.25,
+              "required_clearance_m": 2.15,
+              "sensor_offset_m": [
+                -0.7057095,
+                0.0
+              ],
+              "predicted_min_clearance_m": 1.4837621112461772,
+              "guard_margin_m": -0.4162378887538227,
+              "known_obstacles_only": true,
+              "reason": "path_guard_clearance",
+              "worst_base_pose": [
+                9.673477310687304,
+                -1.5433879271149635,
+                2.7227136331111543
+              ],
+              "worst_sensor_xy": [
+                10.318175018827535,
+                -1.8304258401316649
+              ],
+              "samples": 25046
+            }
+          },
+          "target_region_id": "R_-1_1",
+          "observation_pose": [
+            -1.2765227976915359,
+            5.256612303050462,
+            3.18701593301137
+          ],
+          "unknown_analysis": {
+            "unknown_type": "UNKNOWN_OPEN",
+            "classification_basis": "sampled_map_rays_from_this_sensor_pose",
+            "historical_unknown_cause": "UNDETERMINED",
+            "visible_unknown_area_proxy_m2": 0.5600000166893007,
+            "occluded_unknown_area_proxy_m2": 12.440000370740893,
+            "uncertain_unknown_area_proxy_m2": 0.0,
+            "occluded_fraction_proxy": 0.9569230769230769,
+            "beyond_current_sensor_range_proxy_m2": 0.040000001192092904,
+            "sensor_range_m": 12.0,
+            "proxy_range_m": 8.0,
+            "unknown_depth_cap_m": 2.0,
+            "map_edge_rays": 23,
+            "gain_confidence": "optimistic_proxy_not_observed_area",
+            "unknown_is_traversable": false
+          },
+          "rejection_scope": "this_sampled_pose_and_planned_path",
+          "recheck_on_map_change": true,
+          "region_proven_unreachable": false
+        },
+        {
+          "candidate_id": "information-5",
+          "reason": {
+            "status": 4,
+            "error_code": 0,
+            "clearance": {
+              "safe": false,
+              "map_version": "a759a8e3a9db3649f74c",
+              "guard_threshold_m": 1.9,
+              "planning_margin_m": 0.25,
+              "required_clearance_m": 2.15,
+              "sensor_offset_m": [
+                -0.7057095,
+                0.0
+              ],
+              "predicted_min_clearance_m": 1.4837621112461772,
+              "guard_margin_m": -0.4162378887538227,
+              "known_obstacles_only": true,
+              "reason": "path_guard_clearance",
+              "worst_base_pose": [
+                9.673477310687304,
+                -1.5433879271149635,
+                2.7227136331111543
+              ],
+              "worst_sensor_xy": [
+                10.318175018827535,
+                -1.8304258401316649
+              ],
+              "samples": 24693
+            }
+          },
+          "target_region_id": "R_0_1",
+          "observation_pose": [
+            0.1234772231700898,
+            5.256612303050462,
+            -0.9453112865556675
+          ],
+          "unknown_analysis": {
+            "unknown_type": "UNKNOWN_OPEN",
+            "classification_basis": "sampled_map_rays_from_this_sensor_pose",
+            "historical_unknown_cause": "UNDETERMINED",
+            "visible_unknown_area_proxy_m2": 1.280000038146973,
+            "occluded_unknown_area_proxy_m2": 13.880000413656237,
+            "uncertain_unknown_area_proxy_m2": 0.12000000357627871,
+            "occluded_fraction_proxy": 0.9083769633507853,
+            "beyond_current_sensor_range_proxy_m2": 0.36000001072883614,
+            "sensor_range_m": 12.0,
+            "proxy_range_m": 8.0,
+            "unknown_depth_cap_m": 2.0,
+            "map_edge_rays": 21,
+            "gain_confidence": "optimistic_proxy_not_observed_area",
+            "unknown_is_traversable": false
+          },
+          "rejection_scope": "this_sampled_pose_and_planned_path",
+          "recheck_on_map_change": true,
+          "region_proven_unreachable": false
+        }
+      ],
+      "generation": {
+        "frontier_clusters": 8,
+        "safe_cells": 626,
+        "frontier_cells": 290,
+        "safe_cell_filters": {
+          "known_free_cells": 6919,
+          "obstacle_clearance_rejected": 6220,
+          "known_body_margin_rejected": 2299,
+          "counts_may_overlap": true
+        },
+        "pose_filter_counts": {
+          "too_near": 14,
+          "previously_attempted": 0,
+          "spatial_sample_duplicate": 64,
+          "frontier_too_far": 531,
+          "no_safe_heading": 11,
+          "selected_positions": 6
+        },
+        "oriented_candidates_before_cap": 6,
+        "shortlist_truncated": false,
+        "regional_diversity_enabled": true,
+        "frontier_identity": {
+          "next_id": 9,
+          "clusters": [
+            {
+              "id": "cluster-1",
+              "lineage": [
+                "cluster-1"
+              ],
+              "parents": [],
+              "relation": "new",
+              "centroid": [
+                14.123477431786347,
+                -4.643387844471034
+              ]
+            },
+            {
+              "id": "cluster-2",
+              "lineage": [
+                "cluster-2"
+              ],
+              "parents": [],
+              "relation": "new",
+              "centroid": [
+                15.52347745264797,
+                -2.2767211425382863
+              ]
+            },
+            {
+              "id": "cluster-3",
+              "lineage": [
+                "cluster-3"
+              ],
+              "parents": [],
+              "relation": "new",
+              "centroid": [
+                13.817982921739615,
+                4.329139761757524
+              ]
+            },
+            {
+              "id": "cluster-4",
+              "lineage": [
+                "cluster-4"
+              ],
+              "parents": [],
+              "relation": "new",
+              "centroid": [
+                13.540144089760666,
+                5.573278974435829
+              ]
+            },
+            {
+              "id": "cluster-5",
+              "lineage": [
+                "cluster-5"
+              ],
+              "parents": [],
+              "relation": "new",
+              "centroid": [
+                14.403477435958672,
+                5.776612310799065
+              ]
+            },
+            {
+              "id": "cluster-6",
+              "lineage": [
+                "cluster-6"
+              ],
+              "parents": [],
+              "relation": "new",
+              "centroid": [
+                4.504511771211207,
+                11.465233085221273
+              ]
+            },
+            {
+              "id": "cluster-7",
+              "lineage": [
+                "cluster-7"
+              ],
+              "parents": [],
+              "relation": "new",
+              "centroid": [
+                6.043477311384964,
+                8.936612357886734
+              ]
+            },
+            {
+              "id": "cluster-8",
+              "lineage": [
+                "cluster-8"
+              ],
+              "parents": [],
+              "relation": "new",
+              "centroid": [
+                -1.8952728069116282,
+                12.494112410897623
+              ]
+            }
+          ],
+          "association_tolerance_m": 0.6,
+          "scope": "current_map_world_coordinates; diagnostic_not_spatial_exclusion"
+        }
+      },
+      "status": "candidate_search_incomplete",
+      "requires_execution_revalidation": true,
+      "exploration_upgrade": {
+        "mode": "memory",
+        "mission_id": "61be983e-12c4-4855-94e4-f84c50bde9a6",
+        "map_epoch": "4d09abc4e79b",
+        "history_revision": "4f53cda18c2baa0c0354",
+        "events": 0,
+        "low_gain_pattern_detected": false,
+        "low_gain_cycle_detected": false,
+        "decision_mode": "LOCAL_OR_EXPAND",
+        "policy_rejected_count": 0,
+        "candidate_advice": [],
+        "range_source": "bounded_8m_proxy_capped_by_scan",
+        "scan_statistics": {
+          "counts": {
+            "finite_in_range": 282,
+            "finite_out_of_range": 0,
+            "positive_inf": 78,
+            "negative_inf": 0,
+            "nan": 0,
+            "at_max_range": 0
+          },
+          "range_bounds_valid": true,
+          "range_min_m": 0.10000000149011612,
+          "range_max_m": 12.0,
+          "inf_clearing_semantics": "not_inferred",
+          "map_cells_written": 0
+        },
+        "remaining_unknown_is_not_completion_proof": true,
+        "is_motion_permission": false,
+        "recent_action_summaries": [],
+        "candidate_search_scope": "sampled_current_map_poses_not_all_possible_poses",
+        "candidate_search_truncated": true,
+        "candidate_filter_counts": {
+          "pose_proposals": 6,
+          "planned": 5,
+          "offered": 0,
+          "planning_rejected": 5,
+          "policy_rejected": 0
+        }
+      }
+    }
+  ],
+  "mission": {
+    "mission_id": "61be983e-12c4-4855-94e4-f84c50bde9a6",
+    "status": "finished",
+    "stop_reason": "candidate_generation_unavailable",
+    "limits": {
+      "max_steps": 56,
+      "max_distance": 223.94166179591272,
+      "max_sim_time": 3218.0,
+      "max_wall_time": 2728.0,
+      "max_failures": 1,
+      "profile": "hour"
+    },
+    "exploration_mode": "memory",
+    "candidate_search": "wide_4_5",
+    "short_start": false,
+    "observations_enabled": false,
+    "start_sim_s": 6978.118,
+    "started_monotonic_s": 14488.722805253,
+    "deadline_monotonic_s": 17216.722805253,
+    "heartbeat_monotonic_s": 14613.476388278,
+    "stop_request_id": "5e09ba5e-b585-40da-9220-f450f378212e",
+    "stopped": true,
+    "started_unix_s": 1791196683.4625707,
+    "stop_task_id": "1b828764-8b6a-4b5c-81ca-d9e15de229f4",
+    "final_progress": {
+      "steps": 0,
+      "distance_m": 0,
+      "failures": 0,
+      "active": false
+    }
+  },
+  "final_state": {
+    "schema_version": 1,
+    "generated_monotonic_s": 14614.416456209,
+    "generated_unix_s": 1791196809.1565092,
+    "mode": "read_only",
+    "sources": {
+      "guard_output": {
+        "linear_x_m_s": 0.0,
+        "angular_z_rad_s": 0.0,
+        "received_age_wall_s": 0.5,
+        "fresh": true
+      },
+      "clock": {
+        "sim_time_s": 7030.077,
+        "received_age_wall_s": 0.477,
+        "fresh": true
+      },
+      "odometry": {
+        "frame": "vehicle/odom",
+        "child_frame": "vehicle/base_link",
+        "stamp_sim_s": 7030.057,
+        "pose": {
+          "x": 12.830463956873931,
+          "y": -1.2980388832225123,
+          "z": 0.0,
+          "yaw_rad": -0.010290824750245788
+        },
+        "velocity": {
+          "linear_x_m_s": 0.0,
+          "angular_z_rad_s": 0.0
+        },
+        "received_age_wall_s": 0.536,
+        "fresh": true,
+        "stamp_age_sim_s": 0.02
+      },
+      "scan": {
+        "frame": "vehicle/lidar",
+        "stamp_sim_s": 7030.0,
+        "nearest_m": 2.7923710346221924,
+        "valid": true,
+        "sample_count": 360,
+        "no_finite_hit": false,
+        "received_age_wall_s": 0.69,
+        "fresh": true,
+        "stamp_age_sim_s": 0.077
+      },
+      "map_pose": {
+        "frame": "map",
+        "child_frame": "vehicle/base_link",
+        "stamp_sim_s": 7030.057,
+        "pose": {
+          "x": 9.693797926143715,
+          "y": -1.5061546733544044,
+          "z": 0.0,
+          "yaw_rad": -0.06962082475024495
+        },
+        "received_age_wall_s": 0.277,
+        "fresh": true,
+        "stamp_age_sim_s": 0.02
+      },
+      "map": {
+        "frame": "map",
+        "stamp_sim_s": 7030.0,
+        "width": 476,
+        "height": 413,
+        "resolution_m": 0.05000000074505806,
+        "origin": {
+          "x": -5.9765228677269935,
+          "y": -5.443387856391963,
+          "z": 0.0,
+          "yaw_rad": 0.0
+        },
+        "content_hash": "3ecfadcad06b6a56",
+        "map_version": "a759a8e3a9db3649f74c",
+        "unknown_cells": 57997,
+        "free_cells": 133286,
+        "other_known_cells": 5305,
+        "known_area_m2": 346.47751032583426,
+        "coverage": null,
+        "received_age_wall_s": 0.281,
+        "fresh": true,
+        "stamp_age_sim_s": 0.077
+      },
+      "requested_velocity": {
+        "linear_x_m_s": 0.0,
+        "angular_z_rad_s": 0.0,
+        "received_age_wall_s": 1.663,
+        "fresh": false
+      },
+      "navigation": {
+        "statuses": [
+          {
+            "goal_id": "c8064c7d4e38410097285d030d6fc71a",
+            "status_code": 5
+          }
+        ],
+        "active_goal_count": 0,
+        "received_age_wall_s": 1205.638,
+        "fresh": false
+      }
+    },
+    "graph": {
+      "guard_node_present": true,
+      "navigation_action_server_present": true,
+      "observed_monotonic_s": 14611.817658274
+    },
+    "guard": {
+      "stop_radius_m": 1.9,
+      "reason_inferred_from_inputs": "command timeout",
+      "authoritative_guard_status": false
+    },
+    "snapshot_age_wall_s": 0.277,
+    "status": "available",
+    "motion_tools_enabled": false,
+    "note": "Read-only observations, not permission to move. Stale/missing fields are unknown. Guard reason is inferred, not a guard acknowledgement. No navigation status message means unknown, not proof of idle. Map known area is not room coverage.",
+    "stop_latched": true,
+    "motion_scope": "validated_frontier_ids_only"
+  }
+}

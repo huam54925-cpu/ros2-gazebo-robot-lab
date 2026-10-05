@@ -1,0 +1,44 @@
+{
+  "date": "2026-10-05",
+  "base_commit": "ab046c31c4e8ebb33f19c322b290aa8ceeb920c3",
+  "suites": [
+    {
+      "name": "robot_skills",
+      "tests": 62,
+      "passed": true,
+      "command": "PYTHONPATH=workspace .venv-agent/bin/python -m unittest discover -s workspace/robot_skills -p 'test_*.py'"
+    },
+    {
+      "name": "robot_agent",
+      "tests": 48,
+      "passed": true,
+      "command": "PYTHONPATH=workspace .venv-agent/bin/python -m unittest discover -s workspace/robot_agent -p 'test_*.py'"
+    },
+    {
+      "name": "navigation_base",
+      "tests": 110,
+      "passed": true,
+      "environment": "robot-nav2 with /opt/ros/lyrical/setup.bash",
+      "command": "python3 -m unittest discover -s /work/robot_ws/navigation_base/tests -p 'test_*.py'"
+    },
+    {
+      "name": "exploration_support",
+      "tests": 65,
+      "passed": true,
+      "command": "PYTHONPATH=workspace python3 -m unittest discover -s experimental/exploration_upgrade/tests -p 'test_*.py'"
+    }
+  ],
+  "notes": [
+    "Historical runtime source snapshots are preserved as experiment evidence, not imported by production code.",
+    "Prior RViz configuration edits and papers are excluded from this publication."
+  ],
+  "text_capture_whitespace_normalized": [
+    "docs/experiments/2026-10-05/body-check-audit/final-map-save.txt",
+    "docs/experiments/2026-10-05/body-check-audit/slam-log-excerpt.txt",
+    "docs/experiments/2026-10-05/evidence/slam-restore.txt",
+    "docs/experiments/2026-10-05/limited-view-long/final-map-save.txt",
+    "docs/experiments/2026-10-05/limited-view-long/runtime-slam-parameters.yaml",
+    "docs/experiments/2026-10-05/wide-search-live/live-costmap-parameters.yaml"
+  ],
+  "git_diff_check": "passed_after_normalizing_text_capture_whitespace"
+}

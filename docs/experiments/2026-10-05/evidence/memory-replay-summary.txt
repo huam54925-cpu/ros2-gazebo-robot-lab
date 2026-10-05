@@ -1,0 +1,12 @@
+{
+  "output": "docs/experiments/2026-10-05/evidence/memory-replay.json",
+  "shadow_preserves_baseline": true,
+  "history_events": 2,
+  "incomparable_gain_events": 1,
+  "pose_proposals": {
+    "baseline": 3,
+    "shadow": 3,
+    "memory": 12
+  },
+  "motion_authorized": false
+}

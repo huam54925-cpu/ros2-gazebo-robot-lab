@@ -1,0 +1,117 @@
+{
+  "assistance": {
+    "runs": [
+      {
+        "status": "aborted",
+        "reason": "localization_stale",
+        "stopped": true,
+        "distance_odom_m": 0.23315999993142858,
+        "wall_s": 14.345268996999948,
+        "minimum_scan_m": 2.673330783843994,
+        "target_error_m": 5.013087608425783
+      },
+      {
+        "status": "aborted",
+        "reason": "operator_segment_limit",
+        "stopped": true,
+        "distance_odom_m": 7.212414019420415,
+        "wall_s": 264.26429580200056,
+        "minimum_scan_m": 2.286975622177124,
+        "target_error_m": 0.27328757905424633
+      }
+    ],
+    "total_distance_odom_m": 7.445574019351844,
+    "minimum_scan_m": 2.286975622177124,
+    "target": [
+      4.523477233946323,
+      -0.8933879174292088
+    ],
+    "handoff": {
+      "selector": "local_operator",
+      "status": "aborted",
+      "stopped": true,
+      "target": [
+        4.523477233946323,
+        -0.8933879174292088
+      ],
+      "after": {
+        "wall_elapsed": 264.22834788199907,
+        "simulation_seconds": 8455.371000000001,
+        "pose": [
+          4.796105219121594,
+          -0.9123637590338274,
+          3.073497214495456
+        ],
+        "known_cells": 148202,
+        "known_area_m2": 370.50501104190954,
+        "map_version": "67ac73759dc58110c2f3",
+        "map_width": 477,
+        "map_height": 413,
+        "path_length_odom_m": 7.212414019420415,
+        "nearest_scan_m": 3.4765241146087646,
+        "velocity": [
+          0.0,
+          0.0
+        ]
+      },
+      "distance_odom_m": 7.212414019420415,
+      "not_autonomous_exploration": true,
+      "handoff_accepted": true,
+      "handoff_target_error_m": 0.27328757905424633,
+      "handoff_reason": "user_requested_near_transit_point"
+    },
+    "verified_autonomous_gain_m2": null
+  },
+  "autonomy": {
+    "mission_id": "6b753534-a7f6-4232-848e-11f330bdbe75",
+    "movement_tasks": 1,
+    "successful_tasks": 1,
+    "distance_odom_m": 5.1132911500403235,
+    "minimum_scan_m": 3.199249505996704,
+    "net_map_window_change_m2": 3.4450001026689847,
+    "comparable_gain_m2": null,
+    "causal_action_gain_valid": false,
+    "stop_reason": "model_stop",
+    "stopped": true,
+    "limits": {
+      "max_steps": 3,
+      "max_distance": 20.0,
+      "max_sim_time": 600.0,
+      "max_wall_time": 900.0,
+      "max_failures": 2,
+      "profile": "extended"
+    },
+    "decisions": [
+      {
+        "action": "MOVE",
+        "option_id": "F_7c63dfa1c107_1",
+        "rationale_summary": "优先向未到访分区R_3_1安全转移。相比另一分区，其可见未知潜力代理更高（5.4对2.08㎡），虽完整转移略长（12.82对11.20米），仍在20米预算内；本段约3.38米、58秒，预算充足。候选已通过已知地图净空及车体检查，执行前仍须复核。本段是中间通行点，即时可见未知为零不代表无探索价值；墙后未知不计收益，到达本点不等于到达目标分区，也不重试历史失败目标。"
+      },
+      {
+        "action": "STOP",
+        "option_id": "STOP",
+        "rationale_summary": "唯一安全候选是通往未到访分区R_0_2的中间通行点，本段约5.50米、79.42仿真秒虽可执行，但完整区域转移约22.41米，超过剩余14.89米距离预算。该中间点当前采样可见未知为零，不能把远端23.04㎡乐观代理算成本段收益；无其他本地安全选项可比较，因此预算优先，选择停车。此前任务已有本地成功与停车证据，停车请求仍由执行器确认；这不表示未知没有价值、区域不可达或全图探索完成。"
+      }
+    ],
+    "last_decision_budget": {
+      "limits": {
+        "max_steps": 3,
+        "max_distance": 20.0,
+        "max_sim_time": 600.0,
+        "max_wall_time": 900.0,
+        "max_failures": 2,
+        "profile": "extended"
+      },
+      "used": {
+        "steps": 1,
+        "distance_m": 5.1132911500403235,
+        "failures": 0,
+        "active": false
+      },
+      "remaining_distance_m": 14.886708849959676,
+      "remaining_sim_s": 479.66400000000067,
+      "remaining_wall_s": 583.3777193080023
+    }
+  },
+  "interpretation": "Under a 20 m session distance budget, the model returned right after assistance, reached its selected transit goal, and then stopped based on full-route cost despite a locally feasible partial transit. Not proof of sustained exploration or a general refusal to explore."
+}

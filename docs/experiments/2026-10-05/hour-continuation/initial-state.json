@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "generated_monotonic_s": 10629.317903192,
+  "generated_unix_s": 1791192824.0579817,
+  "mode": "read_only",
+  "sources": {
+    "guard_output": {
+      "linear_x_m_s": 0.0,
+      "angular_z_rad_s": 0.0,
+      "received_age_wall_s": 0.041,
+      "fresh": true
+    },
+    "clock": {
+      "sim_time_s": 5018.645,
+      "received_age_wall_s": 0.017,
+      "fresh": true
+    },
+    "odometry": {
+      "frame": "vehicle/odom",
+      "child_frame": "vehicle/base_link",
+      "stamp_sim_s": 5018.617,
+      "pose": {
+        "x": 0.28686074742104734,
+        "y": 2.742411785269599,
+        "z": 0.0,
+        "yaw_rad": -1.012121161599342
+      },
+      "velocity": {
+        "linear_x_m_s": 0.0,
+        "angular_z_rad_s": 0.0
+      },
+      "received_age_wall_s": 0.074,
+      "fresh": true,
+      "stamp_age_sim_s": 0.028
+    },
+    "scan": {
+      "frame": "vehicle/lidar",
+      "stamp_sim_s": 5018.6,
+      "nearest_m": 3.7226009368896484,
+      "valid": true,
+      "sample_count": 360,
+      "no_finite_hit": false,
+      "received_age_wall_s": 0.102,
+      "fresh": true,
+      "stamp_age_sim_s": 0.045
+    },
+    "map_pose": {
+      "frame": "map",
+      "child_frame": "vehicle/base_link",
+      "stamp_sim_s": 5018.617,
+      "pose": {
+        "x": 0.23864399271524167,
+        "y": 2.875851371107432,
+        "z": 0.0,
+        "yaw_rad": -1.022591161599342
+      },
+      "received_age_wall_s": 0.014,
+      "fresh": true,
+      "stamp_age_sim_s": 0.028
+    },
+    "map": {
+      "frame": "map",
+      "stamp_sim_s": 5017.9,
+      "width": 319,
+      "height": 405,
+      "resolution_m": 0.05000000074505806,
+      "origin": {
+        "x": -4.609150031784839,
+        "y": -5.037059935795071,
+        "z": 0.0,
+        "yaw_rad": 0.0
+      },
+      "content_hash": "a03488081bae23bd",
+      "map_version": "de4bf43fc1dd69a29907",
+      "unknown_cells": 39565,
+      "free_cells": 88244,
+      "other_known_cells": 1386,
+      "known_area_m2": 224.07500667795543,
+      "coverage": null,
+      "received_age_wall_s": 1.281,
+      "fresh": true,
+      "stamp_age_sim_s": 0.745
+    },
+    "requested_velocity": {
+      "linear_x_m_s": 0.0,
+      "angular_z_rad_s": 0.0,
+      "received_age_wall_s": 427.222,
+      "fresh": false
+    },
+    "navigation": {
+      "statuses": [
+        {
+          "goal_id": "505a6f3900cf44998e905f25fb69356c",
+          "status_code": 5
+        }
+      ],
+      "active_goal_count": 0,
+      "received_age_wall_s": 442.979,
+      "fresh": false
+    }
+  },
+  "graph": {
+    "guard_node_present": true,
+    "navigation_action_server_present": true,
+    "observed_monotonic_s": 10627.317731604
+  },
+  "guard": {
+    "stop_radius_m": 1.9,
+    "reason_inferred_from_inputs": "command timeout",
+    "authoritative_guard_status": false
+  },
+  "snapshot_age_wall_s": 0.015,
+  "status": "available",
+  "motion_tools_enabled": false,
+  "note": "Read-only observations, not permission to move. Stale/missing fields are unknown. Guard reason is inferred, not a guard acknowledgement. No navigation status message means unknown, not proof of idle. Map known area is not room coverage.",
+  "stop_latched": true,
+  "motion_scope": "validated_frontier_ids_only"
+}

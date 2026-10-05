@@ -1,0 +1,383 @@
+/global_costmap/global_costmap:
+  ros__parameters:
+    /bond_disable_heartbeat_timeout: true
+    allow_parameter_qos_overrides: true
+    always_send_full_costmap: true
+    autostart_node: false
+    bond_heartbeat_period: 0.25
+    filters: []
+    footprint: '[[-1.73,-0.53],[-0.32,-0.96],[0.32,-0.96],[0.32,0.96],[-0.32,0.96],[-1.73,0.53]]'
+    footprint_padding: 0.05
+    global_frame: map
+    height: 5
+    inflation_layer:
+      cost_scaling_factor: 1.0
+      custom_inscribed_radius: -1.0
+      enabled: true
+      inflate_around_unknown: false
+      inflate_unknown: false
+      inflation_radius: 3.3
+      num_threads: -1
+      plugin: nav2_costmap_2d::InflationLayer
+    initial_transform_timeout: 60.0
+    inscribed_obstacle_cost_value: 99
+    introspection_mode: disabled
+    lethal_cost_threshold: 100
+    map_vis_z: 0.0
+    obstacle_layer:
+      combination_method: 1
+      enabled: true
+      footprint_clearing_enabled: true
+      max_obstacle_height: 2.0
+      min_obstacle_height: 0.0
+      observation_sources: scan
+      plugin: nav2_costmap_2d::ObstacleLayer
+      scan:
+        clearing: true
+        data_type: LaserScan
+        expected_update_rate: 0.0
+        inf_is_valid: true
+        marking: true
+        max_obstacle_height: 2.0
+        min_obstacle_height: 0.0
+        observation_persistence: 0.0
+        obstacle_max_range: 11.5
+        obstacle_min_range: 0.1
+        raytrace_max_range: 12.0
+        raytrace_min_range: 0.1
+        sensor_frame: ''
+        topic: /scan
+        transport_type: raw
+      tf_filter_tolerance: 0.05
+    origin_x: 0.0
+    origin_y: 0.0
+    plugins:
+    - static_layer
+    - obstacle_layer
+    - inflation_layer
+    publish_frequency: 1.0
+    qos_overrides:
+      /clock:
+        subscription:
+          depth: 1
+          durability: volatile
+          history: keep_last
+          reliability: best_effort
+      /global_costmap/costmap:
+        publisher:
+          depth: 1
+          durability: transient_local
+          history: keep_last
+          reliability: reliable
+      /global_costmap/costmap_raw:
+        publisher:
+          depth: 1
+          durability: transient_local
+          history: keep_last
+          reliability: reliable
+      /global_costmap/costmap_raw_updates:
+        publisher:
+          depth: 1
+          durability: transient_local
+          history: keep_last
+          reliability: reliable
+      /global_costmap/costmap_updates:
+        publisher:
+          depth: 1
+          durability: transient_local
+          history: keep_last
+          reliability: reliable
+      /global_costmap/footprint:
+        subscription:
+          depth: 10
+          durability: volatile
+          history: keep_last
+          reliability: reliable
+      /global_costmap/obstacle_layer:
+        publisher:
+          depth: 1
+          durability: transient_local
+          history: keep_last
+          reliability: reliable
+      /global_costmap/obstacle_layer_raw:
+        publisher:
+          depth: 1
+          durability: transient_local
+          history: keep_last
+          reliability: reliable
+      /global_costmap/obstacle_layer_raw_updates:
+        publisher:
+          depth: 1
+          durability: transient_local
+          history: keep_last
+          reliability: reliable
+      /global_costmap/obstacle_layer_updates:
+        publisher:
+          depth: 1
+          durability: transient_local
+          history: keep_last
+          reliability: reliable
+      /global_costmap/published_footprint:
+        publisher:
+          depth: 10
+          durability: volatile
+          history: keep_last
+          reliability: reliable
+      /global_costmap/static_layer:
+        publisher:
+          depth: 1
+          durability: transient_local
+          history: keep_last
+          reliability: reliable
+      /global_costmap/static_layer_raw:
+        publisher:
+          depth: 1
+          durability: transient_local
+          history: keep_last
+          reliability: reliable
+      /global_costmap/static_layer_raw_updates:
+        publisher:
+          depth: 1
+          durability: transient_local
+          history: keep_last
+          reliability: reliable
+      /global_costmap/static_layer_updates:
+        publisher:
+          depth: 1
+          durability: transient_local
+          history: keep_last
+          reliability: reliable
+      /map:
+        subscription:
+          depth: 3
+          durability: transient_local
+          history: keep_last
+          reliability: reliable
+      /map_updates:
+        subscription:
+          depth: 10
+          durability: volatile
+          history: keep_last
+          reliability: reliable
+      /scan:
+        subscription:
+          depth: 50
+          durability: volatile
+          history: keep_last
+          reliability: best_effort
+    resolution: 0.05
+    robot_base_frame: vehicle/base_link
+    robot_radius: 0.1
+    rolling_window: false
+    start_type_description_service: true
+    static_layer:
+      enabled: true
+      footprint_clearing_enabled: false
+      map_subscribe_transient_local: true
+      map_topic: /map
+      plugin: nav2_costmap_2d::StaticLayer
+      restore_cleared_footprint: true
+      subscribe_to_updates: true
+    strict_param_loading: false
+    subscribe_to_stamped_footprint: false
+    track_unknown_space: true
+    transform_tolerance: 0.5
+    trinary_costmap: true
+    unknown_cost_value: 255
+    update_frequency: 1.0
+    use_maximum: false
+    use_sim_time: true
+    warn_on_missing_params: false
+    width: 5
+
+/local_costmap/local_costmap:
+  ros__parameters:
+    /bond_disable_heartbeat_timeout: true
+    allow_parameter_qos_overrides: true
+    always_send_full_costmap: true
+    autostart_node: false
+    bond_heartbeat_period: 0.25
+    filters: []
+    footprint: '[[-1.73,-0.53],[-0.32,-0.96],[0.32,-0.96],[0.32,0.96],[-0.32,0.96],[-1.73,0.53]]'
+    footprint_padding: 0.05
+    global_frame: vehicle/odom
+    height: 10
+    inflation_layer:
+      cost_scaling_factor: 1.0
+      custom_inscribed_radius: -1.0
+      enabled: true
+      inflate_around_unknown: false
+      inflate_unknown: false
+      inflation_radius: 3.3
+      num_threads: -1
+      plugin: nav2_costmap_2d::InflationLayer
+    initial_transform_timeout: 60.0
+    inscribed_obstacle_cost_value: 99
+    introspection_mode: disabled
+    lethal_cost_threshold: 100
+    map_vis_z: 0.0
+    obstacle_layer:
+      combination_method: 1
+      enabled: true
+      footprint_clearing_enabled: true
+      max_obstacle_height: 2.0
+      min_obstacle_height: 0.0
+      observation_sources: scan
+      plugin: nav2_costmap_2d::ObstacleLayer
+      scan:
+        clearing: true
+        data_type: LaserScan
+        expected_update_rate: 0.0
+        inf_is_valid: true
+        marking: true
+        max_obstacle_height: 2.0
+        min_obstacle_height: 0.0
+        observation_persistence: 0.0
+        obstacle_max_range: 11.5
+        obstacle_min_range: 0.1
+        raytrace_max_range: 12.0
+        raytrace_min_range: 0.1
+        sensor_frame: ''
+        topic: /scan
+        transport_type: raw
+      tf_filter_tolerance: 0.05
+    origin_x: 0.0
+    origin_y: 0.0
+    plugins:
+    - static_layer
+    - obstacle_layer
+    - inflation_layer
+    publish_frequency: 2.0
+    qos_overrides:
+      /clock:
+        subscription:
+          depth: 1
+          durability: volatile
+          history: keep_last
+          reliability: best_effort
+      /local_costmap/costmap:
+        publisher:
+          depth: 1
+          durability: transient_local
+          history: keep_last
+          reliability: reliable
+      /local_costmap/costmap_raw:
+        publisher:
+          depth: 1
+          durability: transient_local
+          history: keep_last
+          reliability: reliable
+      /local_costmap/costmap_raw_updates:
+        publisher:
+          depth: 1
+          durability: transient_local
+          history: keep_last
+          reliability: reliable
+      /local_costmap/costmap_updates:
+        publisher:
+          depth: 1
+          durability: transient_local
+          history: keep_last
+          reliability: reliable
+      /local_costmap/footprint:
+        subscription:
+          depth: 10
+          durability: volatile
+          history: keep_last
+          reliability: reliable
+      /local_costmap/obstacle_layer:
+        publisher:
+          depth: 1
+          durability: transient_local
+          history: keep_last
+          reliability: reliable
+      /local_costmap/obstacle_layer_raw:
+        publisher:
+          depth: 1
+          durability: transient_local
+          history: keep_last
+          reliability: reliable
+      /local_costmap/obstacle_layer_raw_updates:
+        publisher:
+          depth: 1
+          durability: transient_local
+          history: keep_last
+          reliability: reliable
+      /local_costmap/obstacle_layer_updates:
+        publisher:
+          depth: 1
+          durability: transient_local
+          history: keep_last
+          reliability: reliable
+      /local_costmap/published_footprint:
+        publisher:
+          depth: 10
+          durability: volatile
+          history: keep_last
+          reliability: reliable
+      /local_costmap/static_layer:
+        publisher:
+          depth: 1
+          durability: transient_local
+          history: keep_last
+          reliability: reliable
+      /local_costmap/static_layer_raw:
+        publisher:
+          depth: 1
+          durability: transient_local
+          history: keep_last
+          reliability: reliable
+      /local_costmap/static_layer_raw_updates:
+        publisher:
+          depth: 1
+          durability: transient_local
+          history: keep_last
+          reliability: reliable
+      /local_costmap/static_layer_updates:
+        publisher:
+          depth: 1
+          durability: transient_local
+          history: keep_last
+          reliability: reliable
+      /map:
+        subscription:
+          depth: 3
+          durability: transient_local
+          history: keep_last
+          reliability: reliable
+      /map_updates:
+        subscription:
+          depth: 10
+          durability: volatile
+          history: keep_last
+          reliability: reliable
+      /scan:
+        subscription:
+          depth: 50
+          durability: volatile
+          history: keep_last
+          reliability: best_effort
+    resolution: 0.05
+    robot_base_frame: vehicle/base_link
+    robot_radius: 0.1
+    rolling_window: true
+    start_type_description_service: true
+    static_layer:
+      enabled: true
+      footprint_clearing_enabled: false
+      map_subscribe_transient_local: true
+      map_topic: /map
+      plugin: nav2_costmap_2d::StaticLayer
+      restore_cleared_footprint: true
+      subscribe_to_updates: true
+    strict_param_loading: false
+    subscribe_to_stamped_footprint: false
+    track_unknown_space: false
+    transform_tolerance: 0.5
+    trinary_costmap: true
+    unknown_cost_value: 255
+    update_frequency: 5.0
+    use_maximum: false
+    use_sim_time: true
+    warn_on_missing_params: false
+    width: 10

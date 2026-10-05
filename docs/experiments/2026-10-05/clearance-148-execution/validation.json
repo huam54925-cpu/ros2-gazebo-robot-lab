@@ -1,0 +1,24 @@
+{
+  "robot_skills": {
+    "tests": 60,
+    "passed": 60,
+    "note": "59 tests passed, then added catalog mismatch test; all 17 exploration_upgrade tests passed"
+  },
+  "robot_agent": {
+    "tests": 48,
+    "passed": 48
+  },
+  "path_safety": {
+    "tests": 13,
+    "passed": 13
+  },
+  "executor_safety": {
+    "tests": 11,
+    "passed": 11
+  },
+  "guard_threshold_m": 1.9,
+  "path_clearance_m": 1.48,
+  "one_goal_only": true,
+  "body_checks_unchanged": true,
+  "map_reloaded": false
+}

@@ -1,0 +1,131 @@
+{
+  "status": "aborted",
+  "stop_reason": null,
+  "policy": "aggressive",
+  "configuration": {
+    "coarse_resolution": 0.2,
+    "minimum_frontier_length": 0.8,
+    "minimum_unknown_area": 2.0,
+    "obstacle_clearance": 2.65,
+    "unknown_clearance": 0.35,
+    "maximum_frontier_distance": 3.0,
+    "minimum_goal_distance": 1.2,
+    "visited_radius": 1.0,
+    "maximum_candidates": 12
+  },
+  "limits": {
+    "wall_seconds": 360,
+    "maximum_goals": 1,
+    "goal_wall_timeout": 100
+  },
+  "ground_truth_used": false,
+  "coverage": null,
+  "coverage_note": "No fixed explorable-area denominator; only known-cell area is reported.",
+  "selector": "local_operator_assistance",
+  "target": [
+    4.523477233946323,
+    -0.8933879174292088
+  ],
+  "segments": [
+    {
+      "start": {
+        "wall_elapsed": 8.269916961999115,
+        "simulation_seconds": 8308.729000000001,
+        "pose": [
+          9.61230641012557,
+          -1.5310955442898835,
+          -1.109200824753959
+        ],
+        "known_cells": 140973,
+        "known_area_m2": 352.43251050330707,
+        "map_version": "e56eb4ddddec097e9516",
+        "map_width": 476,
+        "map_height": 413,
+        "path_length_odom_m": 0.0,
+        "nearest_scan_m": 2.673330783843994,
+        "velocity": [
+          0.0,
+          0.0
+        ]
+      },
+      "requested_distance_m": -1.0,
+      "requested_turn_rad": 0.0,
+      "preflight": {
+        "safe": true,
+        "minimum_clearance_m": 2.2886712785019045,
+        "samples": 21,
+        "sample_travel_bound_m": 0.05,
+        "required_clearance_m": 1.48,
+        "distance_m": -1.0,
+        "turn_rad": 0.0,
+        "end_pose": [
+          9.166929215240993,
+          -0.6357525070819396,
+          -1.109200824753959
+        ]
+      },
+      "travelled_m": -0.17495999993096503,
+      "rotated_rad": 7.245315458703772e-13,
+      "last_pose": [
+        9.61230641012557,
+        -1.5310955442898835,
+        -1.109200824753959
+      ]
+    }
+  ],
+  "path_clearance_m": 1.48,
+  "guard_threshold_m": 1.9,
+  "autonomous_exploration": false,
+  "before": {
+    "wall_elapsed": 8.00885782199839,
+    "simulation_seconds": 8308.729000000001,
+    "pose": [
+      9.61230641012557,
+      -1.5310955442898835,
+      -1.109200824753959
+    ],
+    "known_cells": 140973,
+    "known_area_m2": 352.43251050330707,
+    "map_version": "e56eb4ddddec097e9516",
+    "map_width": 476,
+    "map_height": 413,
+    "path_length_odom_m": 0.0,
+    "nearest_scan_m": 2.673330783843994,
+    "velocity": [
+      0.0,
+      0.0
+    ]
+  },
+  "goals": [],
+  "goal_count": 0,
+  "successful_goals": 0,
+  "failed_goals": 0,
+  "excluded_observation_positions": [],
+  "path_length_odom_m": 0.23315999993142858,
+  "elapsed_wall_seconds": 14.345268996999948,
+  "minimum_scan_m": 2.673330783843994,
+  "reason": "localization_stale",
+  "stopped": true,
+  "after": {
+    "wall_elapsed": 14.311420607999025,
+    "simulation_seconds": 8311.362000000001,
+    "pose": [
+      9.517728071838713,
+      -1.3275606226552523,
+      -1.1266508247532399
+    ],
+    "known_cells": 141554,
+    "known_area_m2": 353.8850105465949,
+    "map_version": "11e2571b5097fc27706e",
+    "map_width": 476,
+    "map_height": 413,
+    "path_length_odom_m": 0.23315999993142858,
+    "nearest_scan_m": 2.8573648929595947,
+    "velocity": [
+      0.0,
+      0.0
+    ]
+  },
+  "target_error_m": 5.013087608425783,
+  "verified_autonomous_gain_m2": null
+}

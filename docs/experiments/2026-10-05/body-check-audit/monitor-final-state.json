@@ -1,0 +1,7 @@
+{
+  "automation_id": "automation",
+  "status": "PAUSED",
+  "reason": "mission_finished_stop_confirmed",
+  "map_odom_translation_change_m": 2.9481463072824328,
+  "no_new_motion": true
+}

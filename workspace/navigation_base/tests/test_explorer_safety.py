@@ -3,6 +3,8 @@ import math
 import sys
 import time
 import unittest
+import tempfile
+import json
 from pathlib import Path
 from types import SimpleNamespace as NS
 from unittest.mock import Mock, patch
@@ -26,6 +28,8 @@ class ExplorerSafetyTests(unittest.TestCase):
     def explorer(self):
         e = Explorer.__new__(Explorer)
         e.handle = None
+        temporary=tempfile.TemporaryDirectory();self.addCleanup(temporary.cleanup)
+        e.output=Path(temporary.name)/'trial.json'
         e.latest = {'nearest': 4., 'map_version': 'v1'}
         e.args = NS(wall_budget=100)
         e.started = time.monotonic()
@@ -83,7 +87,7 @@ class ExplorerSafetyTests(unittest.TestCase):
 
     def add_map(self, e, data):
         origin = NS(position=NS(x=0., y=0.), orientation=NS(w=1., x=0., y=0., z=0.))
-        e.latest.update(data=data, map=NS(info=NS(resolution=.05, origin=origin)))
+        e.latest.update(data=data, map=NS(info=NS(resolution=.05, origin=origin),header=NS(stamp=NS(sec=10,nanosec=0))))
         t = NS(transform=NS(translation=NS(x=-.7057095, y=0.)))
         e.buffer = NS(lookup_transform=lambda *args: t)
         e.clearance_model = None
@@ -101,6 +105,21 @@ class ExplorerSafetyTests(unittest.TestCase):
         self.assertEqual(result['clearance']['map_version'], 'v2')
         self.assertGreater(e.latest['nearest'], 1.9)
         e.cancel_active.assert_called_once()
+
+    def test_failure_snapshot_keeps_trigger_map_when_cancel_updates_map(self):
+        e=self.explorer();self.add_map(e,np.zeros((200,200),dtype=np.int16))
+        e.evaluate_path=Mock(return_value={'safe':False,'reason':'body_sweep_nonfree','map_version':'v1'})
+        def canceled():
+            e.latest.update(data=np.ones((200,200),dtype=np.int16)*100,map_version='v2')
+            return True
+        e.cancel_active.side_effect=canceled
+        result=e.execute(self.client(),object(),100,'navigation')
+        self.assertEqual(result['error_msg'],'body_sweep_nonfree')
+        with np.load(e.output.with_suffix('.invalidated.npz')) as saved:
+            self.assertTrue(np.all(saved['data']==0))
+        saved=json.loads(e.output.with_suffix('.invalidated.json').read_text())
+        self.assertEqual(saved['map_version'],'v1');self.assertEqual(saved['start'],[3.,5.,0.])
+        self.assertTrue(saved['path']);e.cancel_active.assert_called_once()
 
     def test_live_replan_is_checked_and_old_plan_ignored(self):
         e = self.explorer(); data = np.zeros((200, 200), dtype=np.int16)

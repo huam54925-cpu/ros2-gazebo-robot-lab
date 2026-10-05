@@ -1,0 +1,34 @@
+{
+  "selector": "local_operator",
+  "status": "aborted",
+  "stopped": true,
+  "target": [
+    4.523477233946323,
+    -0.8933879174292088
+  ],
+  "after": {
+    "wall_elapsed": 264.22834788199907,
+    "simulation_seconds": 8455.371000000001,
+    "pose": [
+      4.796105219121594,
+      -0.9123637590338274,
+      3.073497214495456
+    ],
+    "known_cells": 148202,
+    "known_area_m2": 370.50501104190954,
+    "map_version": "67ac73759dc58110c2f3",
+    "map_width": 477,
+    "map_height": 413,
+    "path_length_odom_m": 7.212414019420415,
+    "nearest_scan_m": 3.4765241146087646,
+    "velocity": [
+      0.0,
+      0.0
+    ]
+  },
+  "distance_odom_m": 7.212414019420415,
+  "not_autonomous_exploration": true,
+  "handoff_accepted": true,
+  "handoff_target_error_m": 0.27328757905424633,
+  "handoff_reason": "user_requested_near_transit_point"
+}

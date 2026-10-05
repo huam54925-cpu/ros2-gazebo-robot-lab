@@ -1,0 +1,11 @@
+{
+  "motion_tasks": 1,
+  "first_goal_passed": true,
+  "guard_m": 1.9,
+  "path_clearance_m": 2.15,
+  "body_sweep": true,
+  "first_gain_trend_usable": true,
+  "causal_gain_proven": false,
+  "final_stop_latched": true,
+  "git_diff_check": "passed"
+}

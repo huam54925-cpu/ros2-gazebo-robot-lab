@@ -1,0 +1,30 @@
+{
+  "witness": [
+    -0.10914986580610057,
+    -0.8620597217231989,
+    -1.5707963267949283
+  ],
+  "rows": [
+    {
+      "phase": "gain_before",
+      "body_safe_old": true,
+      "legacy_margin_m": 0.14571067917232597,
+      "padding_and_sample_bound_m": 0.07500000000000001,
+      "bad_cells": []
+    },
+    {
+      "phase": "gain_stopped",
+      "body_safe_old": true,
+      "legacy_margin_m": 0.14571067917232597,
+      "padding_and_sample_bound_m": 0.07500000000000001,
+      "bad_cells": []
+    },
+    {
+      "phase": "gain_settled",
+      "body_safe_old": true,
+      "legacy_margin_m": 0.14571067917232597,
+      "padding_and_sample_bound_m": 0.07500000000000001,
+      "bad_cells": []
+    }
+  ]
+}

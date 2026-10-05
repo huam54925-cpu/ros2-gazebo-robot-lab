@@ -1,0 +1,13 @@
+{
+  "previous_mission": "4eca7271-cd92-4d20-bc1b-efe7bd9f3287",
+  "budget": {
+    "max_steps": 59,
+    "max_distance": 239.67967880556648,
+    "max_sim_time": 3532,
+    "max_wall_time": 3451,
+    "max_failures": 2,
+    "profile": "hour"
+  },
+  "operator_diagnosis_gaps_counted_as_runtime": false,
+  "authorization": "用户要求精确合理的检查并继续探索；扣除上次一小时试验已消耗预算。"
+}

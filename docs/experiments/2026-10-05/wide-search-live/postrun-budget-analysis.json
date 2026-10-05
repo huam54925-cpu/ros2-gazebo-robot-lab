@@ -1,0 +1,16 @@
+{
+  "selected_candidate_id": "F_1dc033d18832_1",
+  "remaining_sim_s_after_model": 47.182000000000016,
+  "selected_budget_sim_s": 48.77886051347146,
+  "other_catalog_candidates_fitting_time": [
+    {
+      "candidate_id": "F_1dc033d18832_3",
+      "budget_sim_s": 34.609399527813736,
+      "planned_length_m": 1.4133256321852388
+    }
+  ],
+  "motion_submitted_in_second_round": false,
+  "original_stop_reason": "no_action_fits_remaining_budget",
+  "interpretation": "selected action became too expensive after model latency; original label does not prove all other actions infeasible",
+  "postrun_code_change": "future stop label selected_action_no_longer_fits_after_model with remaining candidate IDs; does not alter archived trial or add automatic reselection"
+}

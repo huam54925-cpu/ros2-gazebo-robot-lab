@@ -82,6 +82,17 @@ class UpgradeGeometryTests(unittest.TestCase):
         self.assertEqual(row['exploration_upgrade']['visibility']['incremental_boundary_proxy_m2'],0)
         self.assertFalse(row['exploration_upgrade']['visibility']['visibility_is_safety_certificate'])
 
+    def test_split_cluster_keeps_history_without_banning_a_new_view(self):
+        self.bridge.events=[Event('terminal:parent','mission','epoch',1,(4.,4.,0.),'succeeded',True,
+            gain_m2=.02,frontier_cluster_id='parent',frontier_lineage=('parent',),
+            patch=capture_patch(self.grid,(4.,4.),8.,.25))]
+        row,retain=self.bridge.enrich({**self.c,'frontier_cluster_id':'child','frontier_lineage':['parent','child']},self.path)
+        self.assertTrue(retain)
+        self.assertEqual(row['exploration_upgrade']['related_observation_events'],['terminal:parent'])
+        proxy=row['exploration_upgrade']['visibility']
+        if proxy['visible_boundary_cells']:
+            self.assertEqual(proxy['boundary_novelty_ratio'],proxy['incremental_boundary_cells']/proxy['visible_boundary_cells'])
+
     def test_preflight_rejections_do_not_count_as_completed_observations(self):
         outcome={'status':4,'clearance':{'safe':False,'reason':'path_guard_clearance','worst_base_pose':[5.,4.,0.],
                                        'worst_sensor_xy':[4.3,4.]}}

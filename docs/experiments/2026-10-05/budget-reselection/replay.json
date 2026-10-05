@@ -1,0 +1,144 @@
+{
+  "source": "docs/experiments/2026-10-05/wide-search-live/trial.json",
+  "source_sha256": "51a540cba62702727e8b511ca2d37fca9b89d0abe0c4954b7559168076e56012",
+  "scope": "counterfactual scheduling only; archived geometry and simulated repeated decision delay; no live authorization",
+  "assumed_each_decision_and_refresh_sim_s": 4.515999999999849,
+  "model_calls_sent": 0,
+  "motion_commands_sent": 0,
+  "initial_remaining_sim_s": 51.697999999999865,
+  "stop_reasons": [],
+  "would_select": "F_1dc033d18832_3",
+  "selected_budget_sim_s": 34.609399527813736,
+  "remaining_after_reselection_sim_s": 42.66600000000017,
+  "reselection_count": 1,
+  "selection_attempts": [
+    {
+      "index": 0,
+      "selector": "recorded_model_choice",
+      "offered_ids": [
+        "F_1dc033d18832_1",
+        "F_1dc033d18832_3"
+      ],
+      "budget_before_decision": {
+        "limits": {
+          "max_steps": 3,
+          "max_distance": 16.0,
+          "max_sim_time": 180.0,
+          "max_wall_time": 900.0,
+          "max_failures": 1,
+          "profile": "trial"
+        },
+        "used": {
+          "steps": 1,
+          "distance_m": 5.5406424477565395,
+          "failures": 0,
+          "active": false
+        },
+        "remaining_distance_m": 10.45935755224346,
+        "remaining_sim_s": 51.697999999999865,
+        "remaining_wall_s": 577.679944648
+      },
+      "choice": {
+        "action": "MOVE",
+        "option_id": "F_1dc033d18832_1",
+        "rationale_summary": "选择R_-1_1观测点：路径和车体扫掠已通过当前已知地图检查，预计1.57米、48.78仿真秒，含预留量仍在剩余51.70秒内，但余量较紧，执行前须复核预算与安全。相比候选3的7格新增边界采样，该点有16格，新增观测代理与总成本之比更优，且探索未到访分区。R_3_1完整转移约25.12米，超过剩余10.46米预算。代理不代表实际收益，不计墙后未知；上轮本地终态已确认成功停车。"
+      },
+      "decision": {
+        "selector": "recorded_model_choice",
+        "latency_wall_s": 10.084413456999755,
+        "usage": null
+      },
+      "budget_after_decision": {
+        "limits": {
+          "max_steps": 3,
+          "max_distance": 16.0,
+          "max_sim_time": 180.0,
+          "max_wall_time": 900.0,
+          "max_failures": 1,
+          "profile": "trial"
+        },
+        "used": {
+          "steps": 1,
+          "distance_m": 5.5406424477565395,
+          "failures": 0,
+          "active": false
+        },
+        "remaining_distance_m": 10.45935755224346,
+        "remaining_sim_s": 47.182000000000016,
+        "remaining_wall_s": 599.9510847199999
+      },
+      "current_catalog_id": "1dc033d18832",
+      "fitting_ids": [
+        "F_1dc033d18832_3"
+      ],
+      "decision_and_refresh_sim_s": 4.515999999999849,
+      "validation": "selected_action_over_budget",
+      "next_decision_reserve_sim_s": 5.644999999999811,
+      "next_decision_reserve_wall_s": 12.605516821249694,
+      "reselection_offered_ids": [
+        "F_1dc033d18832_3"
+      ]
+    },
+    {
+      "index": 1,
+      "selector": "offline_test_fixture",
+      "offered_ids": [
+        "F_1dc033d18832_3"
+      ],
+      "budget_before_decision": {
+        "limits": {
+          "max_steps": 3,
+          "max_distance": 16.0,
+          "max_sim_time": 180.0,
+          "max_wall_time": 900.0,
+          "max_failures": 1,
+          "profile": "trial"
+        },
+        "used": {
+          "steps": 1,
+          "distance_m": 5.5406424477565395,
+          "failures": 0,
+          "active": false
+        },
+        "remaining_distance_m": 10.45935755224346,
+        "remaining_sim_s": 47.182000000000016,
+        "remaining_wall_s": 599.9510847199999
+      },
+      "choice": {
+        "action": "MOVE",
+        "option_id": "F_1dc033d18832_3",
+        "rationale_summary": "Offline deterministic fixture: choose shortest fitting action; not a new model response."
+      },
+      "decision": {
+        "selector": "offline_test_fixture",
+        "latency_wall_s": 10.084413456999755,
+        "usage": null
+      },
+      "budget_after_decision": {
+        "limits": {
+          "max_steps": 3,
+          "max_distance": 16.0,
+          "max_sim_time": 180.0,
+          "max_wall_time": 900.0,
+          "max_failures": 1,
+          "profile": "trial"
+        },
+        "used": {
+          "steps": 1,
+          "distance_m": 5.5406424477565395,
+          "failures": 0,
+          "active": false
+        },
+        "remaining_distance_m": 10.45935755224346,
+        "remaining_sim_s": 42.66600000000017,
+        "remaining_wall_s": 599.9056317699997
+      },
+      "current_catalog_id": "1dc033d18832",
+      "fitting_ids": [
+        "F_1dc033d18832_3"
+      ],
+      "decision_and_refresh_sim_s": 4.515999999999849,
+      "validation": "selected_action_fits_current_budget_and_catalog"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "git_diff_check": "passed",
+  "source_hash_matches_live_trial": {
+    "robot_agent/run_loop.py": true,
+    "robot_agent/replay_reselection.py": true,
+    "robot_skills/mission.py": true,
+    "robot_skills/ros_worker.py": true
+  },
+  "submitted_tasks": 2,
+  "successful_motion_tasks": 1,
+  "pre_navigation_budget_rejections": 1,
+  "live_reselections": 0,
+  "replay_reselections": 1,
+  "live_selectors": [
+    "model",
+    "model"
+  ],
+  "stop_latched": true,
+  "active_tasks": [],
+  "failed_task_memory_gain": null
+}

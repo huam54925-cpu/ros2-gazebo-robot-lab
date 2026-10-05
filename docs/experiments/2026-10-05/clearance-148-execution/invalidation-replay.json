@@ -1,0 +1,84 @@
+{
+  "replayed_path": {
+    "safe": false,
+    "map_version": "57fa86fdbce2e97c66f4",
+    "guard_threshold_m": 1.9,
+    "planning_margin_m": null,
+    "experimental_reduced_clearance": true,
+    "required_clearance_m": 1.48,
+    "sensor_offset_m": [
+      -0.7057095,
+      0.0
+    ],
+    "predicted_min_clearance_m": 1.420277467791395,
+    "guard_margin_m": -0.47972253220860495,
+    "known_obstacles_only": true,
+    "reason": "path_guard_clearance",
+    "worst_base_pose": [
+      9.623477309942245,
+      -1.5433879271149635,
+      2.8623399732707004
+    ],
+    "worst_sensor_xy": [
+      10.301848820752028,
+      -1.7379078276699
+    ],
+    "samples": 9410
+  },
+  "reported_path": {
+    "safe": false,
+    "map_version": "57fa86fdbce2e97c66f4",
+    "guard_threshold_m": 1.9,
+    "planning_margin_m": null,
+    "experimental_reduced_clearance": true,
+    "required_clearance_m": 1.48,
+    "sensor_offset_m": [
+      -0.7057095,
+      0.0
+    ],
+    "predicted_min_clearance_m": 1.420277467791395,
+    "guard_margin_m": -0.47972253220860495,
+    "known_obstacles_only": true,
+    "reason": "path_guard_clearance",
+    "worst_base_pose": [
+      9.623477309942245,
+      -1.5433879271149635,
+      2.8623399732707004
+    ],
+    "worst_sensor_xy": [
+      10.301848820752028,
+      -1.7379078276699
+    ],
+    "samples": 9410
+  },
+  "minimum_absolute_error_m": 0.0,
+  "map_clearance_at_snapshot_current_pose": {
+    "safe": true,
+    "map_version": "57fa86fdbce2e97c66f4",
+    "guard_threshold_m": 1.9,
+    "planning_margin_m": null,
+    "experimental_reduced_clearance": true,
+    "required_clearance_m": 1.48,
+    "sensor_offset_m": [
+      -0.7057095,
+      0.0
+    ],
+    "predicted_min_clearance_m": 2.764487418750727,
+    "guard_margin_m": 0.864487418750727,
+    "known_obstacles_only": true,
+    "reason": "clear",
+    "worst_base_pose": [
+      9.664019282314957,
+      -1.5290983611517157,
+      -0.6712489615912871
+    ],
+    "worst_sensor_xy": [
+      9.111416657255953,
+      -1.0901721291170514
+    ],
+    "samples": 5
+  },
+  "witness_xy_from_snapshot_start_m": 0.04298654695701557,
+  "witness_yaw_change_rad": -2.749596372317599,
+  "interpretation": "Predicted future pose differs from current robot pose. Current scan cannot disprove obstacle clearance at a hypothetical future orientation."
+}

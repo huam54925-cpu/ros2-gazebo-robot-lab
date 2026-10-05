@@ -1,0 +1,13 @@
+{
+  "previous_mission": "24525349-5040-42a7-8f3e-fd26a9372ca3",
+  "budget": {
+    "max_steps": 56,
+    "max_distance": 223.94166179591272,
+    "max_sim_time": 3218,
+    "max_wall_time": 2728,
+    "max_failures": 1,
+    "profile": "hour"
+  },
+  "operator_gaps_counted_as_runtime": false,
+  "authorization": "用户在地图偏移诊断后明确要求继续这个运行。保留地图、历史和安全阈值，使用剩余预算。"
+}

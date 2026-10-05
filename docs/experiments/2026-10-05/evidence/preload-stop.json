@@ -1,0 +1,26 @@
+{
+  "request_id": "2c8d7b1a-97c9-4bd7-a512-db3e2a749941",
+  "command": "stop",
+  "result": {
+    "request_id": "2c8d7b1a-97c9-4bd7-a512-db3e2a749941",
+    "task_id": "3fa8d040-4dc0-412e-ae6e-f15582aff721",
+    "kind": "stop_robot",
+    "mission_id": null,
+    "payload": {},
+    "exploration_mode": "baseline",
+    "exploration_step": 7,
+    "accepted": true,
+    "status": "accepted",
+    "running": false,
+    "stopped": false,
+    "reason": null,
+    "sensor_fresh": {},
+    "sensor_observed_unix_s": null,
+    "map_version": null,
+    "candidate": null,
+    "cancel_requested": false,
+    "created_unix_s": 1791183155.9181576,
+    "updated_unix_s": 1791183155.9181602,
+    "result": null
+  }
+}

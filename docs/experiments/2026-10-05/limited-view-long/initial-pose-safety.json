@@ -1,0 +1,72 @@
+{
+  "pose": [
+    -1.1366815403032777,
+    5.756530384328843,
+    -0.9782157010787785
+  ],
+  "current_body_known_free": false,
+  "stationary_clearance": {
+    "safe": true,
+    "map_version": "fa2af7c046a6a5d3fdf1",
+    "guard_threshold_m": 1.9,
+    "planning_margin_m": 0.25,
+    "required_clearance_m": 2.15,
+    "sensor_offset_m": [
+      -0.7057095,
+      0
+    ],
+    "predicted_min_clearance_m": 2.8568876561419487,
+    "guard_margin_m": 0.9568876561419488,
+    "known_obstacles_only": true,
+    "reason": "clear",
+    "worst_base_pose": [
+      -1.1366815403032777,
+      5.756530384328843,
+      -0.9782157010787785
+    ],
+    "worst_sensor_xy": [
+      -1.5308227765090798,
+      6.341917934856195
+    ],
+    "samples": 5
+  },
+  "full_rotation": {
+    "safe": false,
+    "map_version": "fa2af7c046a6a5d3fdf1",
+    "guard_threshold_m": 1.9,
+    "planning_margin_m": 0.25,
+    "required_clearance_m": 2.15,
+    "sensor_offset_m": [
+      -0.7057095,
+      0
+    ],
+    "predicted_min_clearance_m": 2.5453666414474054,
+    "guard_margin_m": 0.6453666414474055,
+    "known_obstacles_only": true,
+    "reason": "body_sweep_nonfree",
+    "worst_base_pose": [
+      -1.1366815403032777,
+      5.756530384328843,
+      -0.011571807694163216
+    ],
+    "worst_sensor_xy": [
+      -1.8423437912036231,
+      5.764696536697476
+    ],
+    "samples": 473,
+    "body_sweep_checked": true,
+    "body_sweep_safe": false,
+    "signed_angle_rad": 6.283185307,
+    "rotation_samples": 235
+  },
+  "footprint_evidence": {
+    "raw_cells_under_padded_footprint": {
+      "unknown": 374,
+      "occupied": 0,
+      "uncertain": 0,
+      "outside_map": 0
+    },
+    "reason_code": "GOAL_FOOTPRINT_UNKNOWN",
+    "is_safety_certificate": false
+  }
+}

@@ -1,0 +1,241 @@
+{
+  "catalog_id": "9248bd56b7e0",
+  "created_unix_s": 1791191061.762549,
+  "expires_unix_s": 1791191181.762551,
+  "map_version": "39833a5a2370c52f304e",
+  "start_pose": [
+    -1.1366815403032755,
+    5.756530384328569,
+    -0.9782157010787785
+  ],
+  "options": [
+    {
+      "type": "rotate",
+      "signed_angle_rad": 0.7853981633974483,
+      "x": -1.1366815403032755,
+      "y": 5.756530384328569,
+      "yaw": -0.19281753768133025,
+      "region_epoch": "4d09abc4e79b",
+      "region_id": "R_-1_1",
+      "target_region_id": "R_-1_1",
+      "start_pose": [
+        -1.1366815403032755,
+        5.756530384328569,
+        -0.9782157010787785
+      ],
+      "map_version": "39833a5a2370c52f304e",
+      "gain_map_version": "39833a5a2370c52f304e",
+      "safe": true,
+      "novel_unknown_area_proxy_m2": 1.9600000584125523,
+      "gain_model": "sensor_offset_occlusion_aware_rays_v2",
+      "unknown_analysis": {
+        "unknown_type": "UNKNOWN_OPEN",
+        "classification_basis": "sampled_map_rays_from_this_sensor_pose",
+        "historical_unknown_cause": "UNDETERMINED",
+        "visible_unknown_area_proxy_m2": 26.00000077486039,
+        "occluded_unknown_area_proxy_m2": 8.920000265836718,
+        "uncertain_unknown_area_proxy_m2": 39.68000118255616,
+        "occluded_fraction_proxy": 0.1195710455764075,
+        "beyond_current_sensor_range_proxy_m2": 0.0,
+        "sensor_range_m": 12.0,
+        "proxy_range_m": 8.0,
+        "unknown_depth_cap_m": 2.0,
+        "map_edge_rays": 35,
+        "gain_confidence": "optimistic_proxy_not_observed_area",
+        "unknown_is_traversable": false
+      },
+      "gain_confidence": "optimistic_proxy",
+      "estimated_sim_seconds": 7.926990816987241,
+      "estimated_wall_seconds": null,
+      "planned_length_m": 0.0,
+      "clearance": {
+        "safe": true,
+        "map_version": "39833a5a2370c52f304e",
+        "guard_threshold_m": 1.9,
+        "planning_margin_m": 0.25,
+        "required_clearance_m": 2.15,
+        "sensor_offset_m": [
+          -0.7057095,
+          0.0
+        ],
+        "predicted_min_clearance_m": 2.5583974448813063,
+        "guard_margin_m": 0.6583974448813064,
+        "known_obstacles_only": true,
+        "reason": "clear",
+        "worst_base_pose": [
+          -1.1366815403032755,
+          5.756530384328569,
+          -0.19281753768133036
+        ],
+        "worst_sensor_xy": [
+          -1.8293129877697196,
+          5.89176195006227
+        ],
+        "samples": 65,
+        "body_sweep_checked": true,
+        "body_sweep_safe": true,
+        "signed_angle_rad": 0.7853981633974483,
+        "rotation_samples": 31
+      },
+      "score": 0.24725650674557947,
+      "option_id": "OBS_9248bd56b7e0_1"
+    },
+    {
+      "type": "rotate",
+      "signed_angle_rad": -0.7853981633974483,
+      "x": -1.1366815403032755,
+      "y": 5.756530384328569,
+      "yaw": -1.763613864476227,
+      "region_epoch": "4d09abc4e79b",
+      "region_id": "R_-1_1",
+      "target_region_id": "R_-1_1",
+      "start_pose": [
+        -1.1366815403032755,
+        5.756530384328569,
+        -0.9782157010787785
+      ],
+      "map_version": "39833a5a2370c52f304e",
+      "gain_map_version": "39833a5a2370c52f304e",
+      "safe": true,
+      "novel_unknown_area_proxy_m2": 2.000000059604645,
+      "gain_model": "sensor_offset_occlusion_aware_rays_v2",
+      "unknown_analysis": {
+        "unknown_type": "UNKNOWN_OPEN",
+        "classification_basis": "sampled_map_rays_from_this_sensor_pose",
+        "historical_unknown_cause": "UNDETERMINED",
+        "visible_unknown_area_proxy_m2": 26.840000799894337,
+        "occluded_unknown_area_proxy_m2": 14.360000427961353,
+        "uncertain_unknown_area_proxy_m2": 40.48000120639802,
+        "occluded_fraction_proxy": 0.17580803134182174,
+        "beyond_current_sensor_range_proxy_m2": 0.0,
+        "sensor_range_m": 12.0,
+        "proxy_range_m": 8.0,
+        "unknown_depth_cap_m": 2.0,
+        "map_edge_rays": 31,
+        "gain_confidence": "optimistic_proxy_not_observed_area",
+        "unknown_is_traversable": false
+      },
+      "gain_confidence": "optimistic_proxy",
+      "estimated_sim_seconds": 7.926990816987242,
+      "estimated_wall_seconds": null,
+      "planned_length_m": 0.0,
+      "clearance": {
+        "safe": true,
+        "map_version": "39833a5a2370c52f304e",
+        "guard_threshold_m": 1.9,
+        "planning_margin_m": 0.25,
+        "required_clearance_m": 2.15,
+        "sensor_offset_m": [
+          -0.7057095,
+          0.0
+        ],
+        "predicted_min_clearance_m": 2.759772919658517,
+        "guard_margin_m": 0.8597729196585169,
+        "known_obstacles_only": true,
+        "reason": "clear",
+        "worst_base_pose": [
+          -1.1366815403032755,
+          5.756530384328569,
+          -1.5803542930168222
+        ],
+        "worst_sensor_xy": [
+          -1.1299364954394904,
+          6.462207649627683
+        ],
+        "samples": 65,
+        "body_sweep_checked": true,
+        "body_sweep_safe": true,
+        "signed_angle_rad": -0.7853981633974483,
+        "rotation_samples": 31
+      },
+      "score": 0.25230255790365247,
+      "option_id": "OBS_9248bd56b7e0_2"
+    },
+    {
+      "type": "rotate",
+      "signed_angle_rad": -1.5707963267948966,
+      "x": -1.1366815403032755,
+      "y": 5.756530384328569,
+      "yaw": -2.549012027873675,
+      "region_epoch": "4d09abc4e79b",
+      "region_id": "R_-1_1",
+      "target_region_id": "R_-1_1",
+      "start_pose": [
+        -1.1366815403032755,
+        5.756530384328569,
+        -0.9782157010787785
+      ],
+      "map_version": "39833a5a2370c52f304e",
+      "gain_map_version": "39833a5a2370c52f304e",
+      "safe": true,
+      "novel_unknown_area_proxy_m2": 3.280000097751618,
+      "gain_model": "sensor_offset_occlusion_aware_rays_v2",
+      "unknown_analysis": {
+        "unknown_type": "UNKNOWN_OPEN",
+        "classification_basis": "sampled_map_rays_from_this_sensor_pose",
+        "historical_unknown_cause": "UNDETERMINED",
+        "visible_unknown_area_proxy_m2": 26.840000799894337,
+        "occluded_unknown_area_proxy_m2": 12.880000383853915,
+        "uncertain_unknown_area_proxy_m2": 47.12000140428544,
+        "occluded_fraction_proxy": 0.14831874712114232,
+        "beyond_current_sensor_range_proxy_m2": 0.0,
+        "sensor_range_m": 12.0,
+        "proxy_range_m": 8.0,
+        "unknown_depth_cap_m": 2.0,
+        "map_edge_rays": 29,
+        "gain_confidence": "optimistic_proxy_not_observed_area",
+        "unknown_is_traversable": false
+      },
+      "gain_confidence": "optimistic_proxy",
+      "estimated_sim_seconds": 11.853981633974483,
+      "estimated_wall_seconds": null,
+      "planned_length_m": 0.0,
+      "clearance": {
+        "safe": true,
+        "map_version": "39833a5a2370c52f304e",
+        "guard_threshold_m": 1.9,
+        "planning_margin_m": 0.25,
+        "required_clearance_m": 2.15,
+        "sensor_offset_m": [
+          -0.7057095,
+          0.0
+        ],
+        "predicted_min_clearance_m": 2.759757289909461,
+        "guard_margin_m": 0.859757289909461,
+        "known_obstacles_only": true,
+        "reason": "clear",
+        "worst_base_pose": [
+          -1.1366815403032755,
+          5.756530384328569,
+          -1.563936365307384
+        ],
+        "worst_sensor_xy": [
+          -1.141522642324811,
+          6.4622232793767385
+        ],
+        "samples": 123,
+        "body_sweep_checked": true,
+        "body_sweep_safe": true,
+        "signed_angle_rad": -1.5707963267948966,
+        "rotation_samples": 60
+      },
+      "score": 0.2767002851051219,
+      "option_id": "OBS_9248bd56b7e0_3"
+    }
+  ],
+  "rejected": [
+    {
+      "type": "rotate",
+      "angle_rad": 1.5707963267948966,
+      "reason": "body_sweep_nonfree"
+    }
+  ],
+  "status": "ready",
+  "requires_execution_revalidation": true,
+  "sensor_fresh": {
+    "odometry": true,
+    "scan": true,
+    "map": true,
+    "localization": true
+  }
+}

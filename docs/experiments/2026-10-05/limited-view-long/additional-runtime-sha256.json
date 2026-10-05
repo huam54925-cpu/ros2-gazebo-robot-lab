@@ -1,0 +1,8 @@
+{
+  "note": "Separate runtime input hashes; adapter/config were not included in run_loop source_manifest.",
+  "sha256": {
+    "workspace/navigation_base/slam/gazebo_scan_adapter.py": "954012cadfa8183f94e394cc042f7f42ae80d6c2d21d02f917c83f097f75d90d",
+    "docs/experiments/2026-10-05/limited-view-long/normalized-slam-parameters.yaml": "1c7d8b4297daa22aa7f1044656968cf7cbd2ec6e23d5ba637fe682da22ab2f5f",
+    "docs/experiments/2026-10-05/limited-view-long/final-runtime-parameters.yaml": "26c5bab7eae17ddb09a2f3377cc73289c0146d641371acfb3e07a489e4535c4f"
+  }
+}

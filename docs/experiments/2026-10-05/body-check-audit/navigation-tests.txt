@@ -1,0 +1,20 @@
+.............................................E.......................................................
+======================================================================
+ERROR: test_historical_eighth_goal_endpoint_passes_route_fails (test_path_safety.PathSafetyTests.test_historical_eighth_goal_endpoint_passes_route_fails)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/work/robot_ws/navigation_base/tests/test_path_safety.py", line 120, in test_historical_eighth_goal_endpoint_passes_route_fails
+    report = json.loads((root/'frontier-aggressive-20261003.json').read_text())
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.14/pathlib/__init__.py", line 788, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/pathlib/__init__.py", line 772, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/work/docs/experiments/2026-10-03/frontier-comparison/frontier-aggressive-20261003.json'
+
+----------------------------------------------------------------------
+Ran 101 tests in 60.252s
+
+FAILED (errors=1)

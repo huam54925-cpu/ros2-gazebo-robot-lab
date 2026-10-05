@@ -19,6 +19,19 @@ class PathSafetyTests(unittest.TestCase):
             data[int(y/.05), int(x/.05)] = 100
         return PathSafety(data, .05, origin, version)
 
+    def test_explicit_reduced_path_clearance_does_not_change_scan_guard(self):
+        model=self.model((5,5))
+        start,goal=[2,3.49,0],[8,3.49,0]
+        self.assertFalse(model.evaluate([start,goal],start,goal,(0,0))['safe'])
+        result=model.evaluate([start,goal],start,goal,(0,0),1.48)
+        self.assertTrue(result['safe'])
+        self.assertEqual(result['guard_threshold_m'],1.9)
+        self.assertLess(result['guard_margin_m'],0)
+        self.assertIsNone(result['planning_margin_m'])
+        start,goal=[2,3.50,0],[8,3.50,0]
+        self.assertFalse(model.evaluate([start,goal],start,goal,(0,0),1.48)['safe'])
+        with self.assertRaises(ValueError):model.evaluate([start,goal],start,goal,(0,0),1.0)
+
     def test_safe_endpoints_do_not_hide_unsafe_middle(self):
         model = self.model((5, 5))
         start, goal = [2, 3.1, 0], [8, 3.1, 0]

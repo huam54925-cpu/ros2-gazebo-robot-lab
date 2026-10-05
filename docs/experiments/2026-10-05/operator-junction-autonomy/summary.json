@@ -1,0 +1,330 @@
+{
+  "selection_rounds": [
+    {
+      "index": 1,
+      "task_id": "b201ba5b-7596-463f-9e1b-391798c23fb0",
+      "attempts": [
+        {
+          "index": 0,
+          "selector": "model",
+          "offered_ids": [
+            "F_7c63dfa1c107_1",
+            "F_7c63dfa1c107_2"
+          ],
+          "budget_before_decision": {
+            "limits": {
+              "max_steps": 3,
+              "max_distance": 20.0,
+              "max_sim_time": 600.0,
+              "max_wall_time": 900.0,
+              "max_failures": 2,
+              "profile": "extended"
+            },
+            "used": {
+              "steps": 0,
+              "distance_m": 0,
+              "failures": 0,
+              "active": false
+            },
+            "remaining_distance_m": 20.0,
+            "remaining_sim_s": 571.8220000000001,
+            "remaining_wall_s": 824.2214991920009
+          },
+          "choice": {
+            "action": "MOVE",
+            "option_id": "F_7c63dfa1c107_1",
+            "rationale_summary": "优先向未到访分区R_3_1安全转移。相比另一分区，其可见未知潜力代理更高（5.4对2.08㎡），虽完整转移略长（12.82对11.20米），仍在20米预算内；本段约3.38米、58秒，预算充足。候选已通过已知地图净空及车体检查，执行前仍须复核。本段是中间通行点，即时可见未知为零不代表无探索价值；墙后未知不计收益，到达本点不等于到达目标分区，也不重试历史失败目标。"
+          },
+          "decision": {
+            "selector": "model",
+            "latency_wall_s": 11.55354412700035,
+            "usage": {
+              "input_tokens": 13112,
+              "input_tokens_details": {
+                "cache_write_tokens": 12986,
+                "cached_tokens": 0
+              },
+              "output_tokens": 184,
+              "output_tokens_details": {
+                "reasoning_tokens": 0
+              },
+              "total_tokens": 13296
+            }
+          },
+          "budget_after_decision": {
+            "limits": {
+              "max_steps": 3,
+              "max_distance": 20.0,
+              "max_sim_time": 600.0,
+              "max_wall_time": 900.0,
+              "max_failures": 2,
+              "profile": "extended"
+            },
+            "used": {
+              "steps": 0,
+              "distance_m": 0,
+              "failures": 0,
+              "active": false
+            },
+            "remaining_distance_m": 20.0,
+            "remaining_sim_s": 566.1800000000003,
+            "remaining_wall_s": 811.0736752410012
+          },
+          "current_catalog_id": "7c63dfa1c107",
+          "fitting_ids": [
+            "F_7c63dfa1c107_1",
+            "F_7c63dfa1c107_2"
+          ],
+          "decision_and_refresh_sim_s": 5.641999999999825,
+          "validation": "selected_action_fits_current_budget_and_catalog"
+        }
+      ],
+      "reselection_count": 0,
+      "last_choice_rejection": null
+    },
+    {
+      "index": 2,
+      "task_id": null,
+      "attempts": [
+        {
+          "index": 0,
+          "selector": "model",
+          "offered_ids": [
+            "F_3058d152a7a4_1"
+          ],
+          "budget_before_decision": {
+            "limits": {
+              "max_steps": 3,
+              "max_distance": 20.0,
+              "max_sim_time": 600.0,
+              "max_wall_time": 900.0,
+              "max_failures": 2,
+              "profile": "extended"
+            },
+            "used": {
+              "steps": 1,
+              "distance_m": 5.1132911500403235,
+              "failures": 0,
+              "active": false
+            },
+            "remaining_distance_m": 14.886708849959676,
+            "remaining_sim_s": 479.66400000000067,
+            "remaining_wall_s": 583.3777193080023
+          },
+          "choice": {
+            "action": "STOP",
+            "option_id": "STOP",
+            "rationale_summary": "唯一安全候选是通往未到访分区R_0_2的中间通行点，本段约5.50米、79.42仿真秒虽可执行，但完整区域转移约22.41米，超过剩余14.89米距离预算。该中间点当前采样可见未知为零，不能把远端23.04㎡乐观代理算成本段收益；无其他本地安全选项可比较，因此预算优先，选择停车。此前任务已有本地成功与停车证据，停车请求仍由执行器确认；这不表示未知没有价值、区域不可达或全图探索完成。"
+          },
+          "decision": {
+            "selector": "model",
+            "latency_wall_s": 9.604167610999866,
+            "usage": {
+              "input_tokens": 23861,
+              "input_tokens_details": {
+                "cache_write_tokens": 23735,
+                "cached_tokens": 0
+              },
+              "output_tokens": 247,
+              "output_tokens_details": {
+                "reasoning_tokens": 73
+              },
+              "total_tokens": 24108
+            }
+          }
+        }
+      ],
+      "reselection_count": 0,
+      "last_choice_rejection": null
+    }
+  ],
+  "mission": {
+    "mission_id": "6b753534-a7f6-4232-848e-11f330bdbe75",
+    "status": "finished",
+    "stop_reason": "model_stop",
+    "limits": {
+      "max_steps": 3,
+      "max_distance": 20.0,
+      "max_sim_time": 600.0,
+      "max_wall_time": 900.0,
+      "max_failures": 2,
+      "profile": "extended"
+    },
+    "exploration_mode": "memory",
+    "candidate_search": "wide_4_5",
+    "short_start": false,
+    "path_clearance_m": 1.48,
+    "observations_enabled": false,
+    "start_sim_s": 8478.039,
+    "started_monotonic_s": 17599.831210182,
+    "deadline_monotonic_s": 18499.831210182,
+    "heartbeat_monotonic_s": 17944.916188703,
+    "stop_request_id": "4485e9f4-eb53-48de-8fba-f3efac3f7aa1",
+    "stopped": true,
+    "started_unix_s": 1791199794.5709867,
+    "stop_task_id": "0dd42040-bd35-4491-8224-d3a594c785c7",
+    "final_progress": {
+      "steps": 1,
+      "distance_m": 5.1132911500403235,
+      "failures": 0,
+      "active": false
+    }
+  },
+  "candidate_search": "wide_4_5",
+  "rows": [
+    {
+      "index": 1,
+      "task_id": "b201ba5b-7596-463f-9e1b-391798c23fb0",
+      "status": "succeeded",
+      "reason": "goal_reached",
+      "stopped": true,
+      "candidate_id": "F_7c63dfa1c107_1",
+      "transit": true,
+      "predicted_incremental_boundary_cells": 0,
+      "observed_new_known_area_m2": null,
+      "net_known_area_m2": 3.4450001026689847,
+      "gain_usable": false,
+      "distance_odom_m": 5.1132911500403235,
+      "minimum_scan_m": 3.199249505996704,
+      "estimated_sim_s": 53.00745330563178,
+      "budget_sim_s": 57.608198636194956,
+      "actual_sim_s": 51.26100000000042,
+      "actual_wall_s": 139.08509996499924,
+      "catalog_wall_s": 68.42086055500113,
+      "model_wall_s": 11.55354412700035,
+      "first_gate": null,
+      "decision_attempts": 1,
+      "reselection_count": 0,
+      "decision_total_wall_s": 11.55354412700035,
+      "executor_budget_check": {
+        "fits": true,
+        "reasons": [],
+        "remaining_sim_s": 557.0020000000004,
+        "remaining_distance_m": 20.0,
+        "estimated_sim_s": 57.608198636194956,
+        "planned_length_m": 3.3809939993638465
+      }
+    }
+  ],
+  "error": null,
+  "total_distance_m": 5.1132911500403235,
+  "final_state": {
+    "schema_version": 1,
+    "generated_monotonic_s": 17946.318301605,
+    "generated_unix_s": 1791200141.0583737,
+    "mode": "read_only",
+    "sources": {
+      "guard_output": {
+        "linear_x_m_s": 0.0,
+        "angular_z_rad_s": 0.0,
+        "received_age_wall_s": 0.066,
+        "fresh": true
+      },
+      "clock": {
+        "sim_time_s": 8612.515,
+        "received_age_wall_s": 0.043,
+        "fresh": true
+      },
+      "odometry": {
+        "frame": "vehicle/odom",
+        "child_frame": "vehicle/base_link",
+        "stamp_sim_s": 8612.485,
+        "pose": {
+          "x": 10.974639144146577,
+          "y": -0.650858092139391,
+          "z": 0.0,
+          "yaw_rad": 0.49910421181627057
+        },
+        "velocity": {
+          "linear_x_m_s": 0.0,
+          "angular_z_rad_s": 0.0
+        },
+        "received_age_wall_s": 0.118,
+        "fresh": true,
+        "stamp_age_sim_s": 0.03
+      },
+      "scan": {
+        "frame": "vehicle/lidar",
+        "stamp_sim_s": 8612.5,
+        "nearest_m": 3.649284839630127,
+        "valid": true,
+        "sample_count": 360,
+        "no_finite_hit": false,
+        "received_age_wall_s": 0.076,
+        "fresh": true,
+        "stamp_age_sim_s": 0.015
+      },
+      "map_pose": {
+        "frame": "map",
+        "child_frame": "vehicle/base_link",
+        "stamp_sim_s": 8612.485,
+        "pose": {
+          "x": 7.843503842923289,
+          "y": -0.9457629620705283,
+          "z": 0.0,
+          "yaw_rad": 0.3800090425002687
+        },
+        "received_age_wall_s": 0.04,
+        "fresh": true,
+        "stamp_age_sim_s": 0.03
+      },
+      "map": {
+        "frame": "map",
+        "stamp_sim_s": 8611.6,
+        "width": 478,
+        "height": 413,
+        "resolution_m": 0.05000000074505806,
+        "origin": {
+          "x": -5.968528463589476,
+          "y": -5.449354857976477,
+          "z": 0.0,
+          "yaw_rad": 0.0
+        },
+        "content_hash": "b9e7af33e2668589",
+        "map_version": "1b605706ffcfa2b0497f",
+        "unknown_cells": 47834,
+        "free_cells": 143649,
+        "other_known_cells": 5931,
+        "known_area_m2": 373.9500111445785,
+        "coverage": null,
+        "received_age_wall_s": 1.69,
+        "fresh": true,
+        "stamp_age_sim_s": 0.915
+      },
+      "requested_velocity": {
+        "linear_x_m_s": 0.0,
+        "angular_z_rad_s": 0.0,
+        "received_age_wall_s": 2.018,
+        "fresh": false
+      },
+      "navigation": {
+        "statuses": [
+          {
+            "goal_id": "0c83b0d1b08b4e6e82c300057ffab10b",
+            "status_code": 4
+          }
+        ],
+        "active_goal_count": 0,
+        "received_age_wall_s": 112.163,
+        "fresh": false
+      }
+    },
+    "graph": {
+      "guard_node_present": true,
+      "navigation_action_server_present": true,
+      "observed_monotonic_s": 17945.819641997
+    },
+    "guard": {
+      "stop_radius_m": 1.9,
+      "reason_inferred_from_inputs": "command timeout",
+      "authoritative_guard_status": false
+    },
+    "snapshot_age_wall_s": 0.041,
+    "status": "available",
+    "motion_tools_enabled": false,
+    "note": "Read-only observations, not permission to move. Stale/missing fields are unknown. Guard reason is inferred, not a guard acknowledgement. No navigation status message means unknown, not proof of idle. Map known area is not room coverage.",
+    "stop_latched": true,
+    "operator_assistance_active": false,
+    "motion_scope": "validated_frontier_ids_only"
+  }
+}

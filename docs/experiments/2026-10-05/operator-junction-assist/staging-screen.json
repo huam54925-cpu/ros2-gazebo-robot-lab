@@ -1,0 +1,326 @@
+[
+  {
+    "degrees": 0,
+    "length": 0.6,
+    "goal": [
+      10.212306410125569,
+      -1.5310955442898835,
+      0.0
+    ],
+    "clearance": 2.240833638963399,
+    "body": true,
+    "pose_prefilter": false
+  },
+  {
+    "degrees": 0,
+    "length": 1.0,
+    "goal": [
+      10.61230641012557,
+      -1.5310955442898835,
+      0.0
+    ],
+    "clearance": 1.8619281097423321,
+    "body": true,
+    "pose_prefilter": false
+  },
+  {
+    "degrees": 0,
+    "length": 1.4,
+    "goal": [
+      11.01230641012557,
+      -1.5310955442898835,
+      0.0
+    ],
+    "clearance": 1.4938789626607611,
+    "body": true,
+    "pose_prefilter": false
+  },
+  {
+    "degrees": 30,
+    "length": 0.6,
+    "goal": [
+      10.131921652396233,
+      -1.2310955442898837,
+      0.5235987755982988
+    ],
+    "clearance": 2.212321901447385,
+    "body": true,
+    "pose_prefilter": false
+  },
+  {
+    "degrees": 30,
+    "length": 1.0,
+    "goal": [
+      10.478331813910009,
+      -1.0310955442898835,
+      0.5235987755982988
+    ],
+    "clearance": 1.9543780458560196,
+    "body": true,
+    "pose_prefilter": false
+  },
+  {
+    "degrees": 30,
+    "length": 1.4,
+    "goal": [
+      10.824741975423784,
+      -0.8310955442898836,
+      0.5235987755982988
+    ],
+    "clearance": 1.749898759405011,
+    "body": true,
+    "pose_prefilter": false
+  },
+  {
+    "degrees": 30,
+    "length": 1.8,
+    "goal": [
+      11.17115213693756,
+      -0.6310955442898836,
+      0.5235987755982988
+    ],
+    "clearance": 1.6189567402635947,
+    "body": true,
+    "pose_prefilter": false
+  },
+  {
+    "degrees": 60,
+    "length": 0.6,
+    "goal": [
+      9.91230641012557,
+      -1.0114803020192205,
+      1.0471975511965976
+    ],
+    "clearance": 2.1647156976572353,
+    "body": true,
+    "pose_prefilter": false
+  },
+  {
+    "degrees": 60,
+    "length": 1.0,
+    "goal": [
+      10.11230641012557,
+      -0.6650701405054449,
+      1.0471975511965976
+    ],
+    "clearance": 2.0974204066494764,
+    "body": true,
+    "pose_prefilter": false
+  },
+  {
+    "degrees": 60,
+    "length": 1.4,
+    "goal": [
+      10.312306410125569,
+      -0.31865997899166953,
+      1.0471975511965976
+    ],
+    "clearance": 2.091210873781365,
+    "body": true,
+    "pose_prefilter": false
+  },
+  {
+    "degrees": 60,
+    "length": 1.8,
+    "goal": [
+      10.51230641012557,
+      0.027750182522106037,
+      1.0471975511965976
+    ],
+    "clearance": 2.091210873781365,
+    "body": true,
+    "pose_prefilter": false
+  },
+  {
+    "degrees": 75,
+    "length": 0.6,
+    "goal": [
+      9.767597837187083,
+      -0.9515400485164425,
+      1.3089969389957472
+    ],
+    "clearance": 2.1373522070004145,
+    "body": true,
+    "pose_prefilter": false
+  },
+  {
+    "degrees": 75,
+    "length": 1.0,
+    "goal": [
+      9.87112545522809,
+      -0.5651697180008152,
+      1.3089969389957472
+    ],
+    "clearance": 2.1373522070004163,
+    "body": true,
+    "pose_prefilter": false
+  },
+  {
+    "degrees": 75,
+    "length": 1.4,
+    "goal": [
+      9.9746530732691,
+      -0.17879938748518787,
+      1.3089969389957472
+    ],
+    "clearance": 2.1373522070004163,
+    "body": true,
+    "pose_prefilter": false
+  },
+  {
+    "degrees": 75,
+    "length": 1.8,
+    "goal": [
+      10.078180691310106,
+      0.20757094303043955,
+      1.3089969389957472
+    ],
+    "clearance": 2.1373522070004163,
+    "body": true,
+    "pose_prefilter": false
+  },
+  {
+    "degrees": 90,
+    "length": 0.6,
+    "goal": [
+      9.61230641012557,
+      -0.9310955442898835,
+      1.5707963267948966
+    ],
+    "clearance": 2.0361709851529324,
+    "body": true,
+    "pose_prefilter": false
+  },
+  {
+    "degrees": 90,
+    "length": 1.0,
+    "goal": [
+      9.61230641012557,
+      -0.5310955442898835,
+      1.5707963267948966
+    ],
+    "clearance": 2.0361709851529324,
+    "body": true,
+    "pose_prefilter": false
+  },
+  {
+    "degrees": 90,
+    "length": 1.4,
+    "goal": [
+      9.61230641012557,
+      -0.13109554428988357,
+      1.5707963267948966
+    ],
+    "clearance": 2.0361709851529324,
+    "body": true,
+    "pose_prefilter": false
+  },
+  {
+    "degrees": 90,
+    "length": 1.8,
+    "goal": [
+      9.61230641012557,
+      0.26890445571011656,
+      1.5707963267948966
+    ],
+    "clearance": 2.0361709851529324,
+    "body": true,
+    "pose_prefilter": false
+  },
+  {
+    "degrees": 100,
+    "length": 0.6,
+    "goal": [
+      9.508117503525412,
+      -0.9402108924825587,
+      1.7453292519943295
+    ],
+    "clearance": 1.9136258165156925,
+    "body": true,
+    "pose_prefilter": false
+  },
+  {
+    "degrees": 100,
+    "length": 1.0,
+    "goal": [
+      9.43865823245864,
+      -0.5462877912776755,
+      1.7453292519943295
+    ],
+    "clearance": 1.9136258165156925,
+    "body": true,
+    "pose_prefilter": false
+  },
+  {
+    "degrees": 100,
+    "length": 1.4,
+    "goal": [
+      9.369198961391866,
+      -0.1523646900727924,
+      1.7453292519943295
+    ],
+    "clearance": 1.9136258165156907,
+    "body": true,
+    "pose_prefilter": false
+  },
+  {
+    "degrees": 100,
+    "length": 1.8,
+    "goal": [
+      9.299739690325096,
+      0.24155841113209098,
+      1.7453292519943295
+    ],
+    "clearance": 1.9136258165156925,
+    "body": true,
+    "pose_prefilter": false
+  },
+  {
+    "degrees": 110,
+    "length": 0.6,
+    "goal": [
+      9.407094324130169,
+      -0.9672799718183385,
+      1.9198621771937625
+    ],
+    "clearance": 1.794804120816647,
+    "body": true,
+    "pose_prefilter": false
+  },
+  {
+    "degrees": 110,
+    "length": 1.0,
+    "goal": [
+      9.2702862667999,
+      -0.591402923503975,
+      1.9198621771937625
+    ],
+    "clearance": 1.7948041208166452,
+    "body": true,
+    "pose_prefilter": false
+  },
+  {
+    "degrees": 110,
+    "length": 1.4,
+    "goal": [
+      9.133478209469633,
+      -0.21552587518961186,
+      1.9198621771937625
+    ],
+    "clearance": 1.794804120816647,
+    "body": true,
+    "pose_prefilter": false
+  },
+  {
+    "degrees": 110,
+    "length": 1.8,
+    "goal": [
+      8.996670152139366,
+      0.16035117312475178,
+      1.9198621771937625
+    ],
+    "clearance": 1.794804120816647,
+    "body": true,
+    "pose_prefilter": false
+  }
+]

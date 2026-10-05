@@ -1,0 +1,8 @@
+{
+  "mission_id": "4eca7271-cd92-4d20-bc1b-efe7bd9f3287",
+  "started_local": "2026-10-05T10:34:28.879550+01:00",
+  "deadline_local": "2026-10-05T11:34:28.879550+01:00",
+  "automation_id": "automation",
+  "status_at_capture": "running",
+  "captured_unix_s": 1791192913.696071
+}

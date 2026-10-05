@@ -1,0 +1,254 @@
+{
+  "initial_commit": "ab046c31c4e8ebb33f19c322b290aa8ceeb920c3",
+  "memory_mission_id": "1f08fd7e-9a2a-497a-a2a4-9c5f7f910f6b",
+  "memory_result": {
+    "mission_id": "1f08fd7e-9a2a-497a-a2a4-9c5f7f910f6b",
+    "status": "finished",
+    "stop_reason": "no_safe_frontiers",
+    "limits": {
+      "max_steps": 3,
+      "max_distance": 12.0,
+      "max_sim_time": 180.0,
+      "max_wall_time": 900.0,
+      "max_failures": 2,
+      "profile": "trial"
+    },
+    "exploration_mode": "memory",
+    "observations_enabled": false,
+    "start_sim_s": 70.185,
+    "started_monotonic_s": 1105.656303703,
+    "deadline_monotonic_s": 2005.656303703,
+    "heartbeat_monotonic_s": 1148.630225835,
+    "stop_request_id": "d3b4afff-1c0f-49f2-b7f3-49ebb8e00b84",
+    "stopped": true,
+    "started_unix_s": 1791183300.3960783,
+    "stop_task_id": "4e55fa46-219e-41b6-a8c8-5c4c1dc34598",
+    "final_progress": {
+      "steps": 0,
+      "distance_m": 0,
+      "failures": 0,
+      "active": false
+    }
+  },
+  "memory_motion_tasks": 0,
+  "memory_candidate_generation": {
+    "frontier_clusters": 7,
+    "safe_cells": 1107,
+    "frontier_cells": 274,
+    "safe_cell_filters": {
+      "known_free_cells": 9141,
+      "obstacle_clearance_rejected": 8007,
+      "known_body_margin_rejected": 2521,
+      "counts_may_overlap": true
+    },
+    "pose_filter_counts": {
+      "too_near": 110,
+      "previously_attempted": 0,
+      "spatial_sample_duplicate": 0,
+      "frontier_too_far": 995,
+      "no_safe_heading": 2,
+      "selected_positions": 0
+    },
+    "oriented_candidates_before_cap": 0,
+    "shortlist_truncated": false,
+    "regional_diversity_enabled": true,
+    "frontier_identity": {
+      "next_id": 8,
+      "clusters": [
+        {
+          "id": "cluster-1",
+          "lineage": [
+            "cluster-1"
+          ],
+          "parents": [],
+          "relation": "new",
+          "centroid": [
+            16.821274747956092,
+            -3.4052744978097347
+          ]
+        },
+        {
+          "id": "cluster-2",
+          "lineage": [
+            "cluster-2"
+          ],
+          "parents": [],
+          "relation": "new",
+          "centroid": [
+            4.23446137358478,
+            12.118535257322582
+          ]
+        },
+        {
+          "id": "cluster-3",
+          "lineage": [
+            "cluster-3"
+          ],
+          "parents": [],
+          "relation": "new",
+          "centroid": [
+            10.500229661022091,
+            11.764537048992791
+          ]
+        },
+        {
+          "id": "cluster-4",
+          "lineage": [
+            "cluster-4"
+          ],
+          "parents": [],
+          "relation": "new",
+          "centroid": [
+            -3.0462840765216863,
+            11.238203981264665
+          ]
+        },
+        {
+          "id": "cluster-5",
+          "lineage": [
+            "cluster-5"
+          ],
+          "parents": [],
+          "relation": "new",
+          "centroid": [
+            17.58407196211988,
+            12.892907563233923
+          ]
+        },
+        {
+          "id": "cluster-6",
+          "lineage": [
+            "cluster-6"
+          ],
+          "parents": [],
+          "relation": "new",
+          "centroid": [
+            0.3058898864730759,
+            13.071648824638633
+          ]
+        },
+        {
+          "id": "cluster-7",
+          "lineage": [
+            "cluster-7"
+          ],
+          "parents": [],
+          "relation": "new",
+          "centroid": [
+            12.005890060816665,
+            13.201177362548908
+          ]
+        }
+      ],
+      "association_tolerance_m": 0.6,
+      "scope": "current_map_world_coordinates; diagnostic_not_spatial_exclusion"
+    }
+  },
+  "calibration_scope": "one existing bounded fixed_step for timing only; not a frontier success or exploration-gain trial",
+  "fixed_task_id": "9ca1fc09-6ce9-41f8-a322-93d693aaee44",
+  "fixed_status": "succeeded",
+  "fixed_stopped": true,
+  "distance_m": 0.25611023731477556,
+  "minimum_scan_m": 3.8488073348999023,
+  "phases": {
+    "initial_feedback_wait": {
+      "wall_s": 3.755530356999998,
+      "sim_s": null
+    },
+    "preplan_validation": {
+      "wall_s": 0.08861546799994358,
+      "sim_s": 0.0
+    },
+    "planning": {
+      "wall_s": 2.5685261010000886,
+      "sim_s": 0.703000000000003
+    },
+    "execution_validation": {
+      "wall_s": 0.2738519869999436,
+      "sim_s": 0.0
+    },
+    "navigation_including_turns": {
+      "wall_s": 13.741246974999967,
+      "sim_s": 3.3229999999999933
+    },
+    "stop_verification": {
+      "wall_s": 1.4407348259999253,
+      "sim_s": 0.4240000000000066
+    },
+    "map_feedback_wait": {
+      "wall_s": 16.00867625900014,
+      "sim_s": 4.000999999999991
+    },
+    "terminal_metrics": {
+      "wall_s": 0.00011485999993965379,
+      "sim_s": 0.0
+    }
+  },
+  "task_sim_s": 8.450999999999993,
+  "task_wall_s": 34.12184561899994,
+  "revalidated_time_estimate": {
+    "method": "start_connector_corrected_v1",
+    "components": {
+      "translation_sim_s": 2.9435352511758146,
+      "turning_sim_s": 0.5667427034761234,
+      "planning_validation_sim_s": 2.0,
+      "stop_verification_sim_s": 1.0,
+      "feedback_wait_sim_s": 4.0
+    },
+    "raw_turn_rad": 6.169438921478854,
+    "timing_turn_rad": 0.1133485406952247,
+    "ignored_start_connector_m": 0.04165182194493431,
+    "legacy_sim_s": 37.79072985857008,
+    "expected_sim_s": 10.510277954651938,
+    "budget_reserve_sim_s": 3.0,
+    "budget_sim_s": 13.510277954651938,
+    "scope": "worker_before_to_after; catalog_and_model_measured_separately",
+    "calibration": "provisional_two_recorded_windows; not_a_deadline_guarantee",
+    "safety_path_modified": false
+  },
+  "navigation_motion_sim_s": {
+    "stationary": 0.4759999999999991,
+    "translation_including_curves": 2.8219999999999885,
+    "turn_while_translating": 0.5779999999999887
+  },
+  "stop_task": {
+    "task_id": "292d3ea2-7700-4633-8b1c-93f7a98db6ef",
+    "status": "succeeded",
+    "stopped": true,
+    "result": {
+      "navigation_paused": true,
+      "cancel_return_code": {
+        "navigate_to_pose": 0,
+        "spin": 0
+      },
+      "stopped": true,
+      "status": "succeeded",
+      "reason": "stop_confirmed_and_latched"
+    }
+  },
+  "stop_latched": true,
+  "final_odometry": {
+    "frame": "vehicle/odom",
+    "child_frame": "vehicle/base_link",
+    "stamp_sim_s": 121.767,
+    "pose": {
+      "x": 0.25610404040128804,
+      "y": 0.0005157480473893832,
+      "z": 0.0,
+      "yaw_rad": 0.036072822940788986
+    },
+    "velocity": {
+      "linear_x_m_s": 0.0,
+      "angular_z_rad_s": 0.0
+    },
+    "received_age_wall_s": 0.021,
+    "fresh": true,
+    "stamp_age_sim_s": 0.005
+  },
+  "online_low_gain_trigger_verified": false,
+  "thresholds": {
+    "guard_m": 1.9,
+    "path_clearance_m": 2.15,
+    "new_mode_max_tasks": 3
+  }
+}

@@ -1,0 +1,25 @@
+[async_slam_toolbox_node-1] [INFO] [1791195336.657604501] [slam_toolbox]: Message Filter dropping message: frame 'vehicle/lidar' at time 6330.100 for reason 'discarding message because the queue is full'
+[async_slam_toolbox_node-1] [INFO] [1791195482.456188399] [slam_toolbox]: Message Filter dropping message: frame 'vehicle/lidar' at time 6395.500 for reason 'discarding message because the queue is full'
+[async_slam_toolbox_node-1] [INFO] [1791195506.553906678] [slam_toolbox]: Message Filter dropping message: frame 'vehicle/lidar' at time 6405.200 for reason 'discarding message because the queue is full'
+[async_slam_toolbox_node-1] [INFO] [1791195540.440701628] [slam_toolbox]: Message Filter dropping message: frame 'vehicle/lidar' at time 6419.300 for reason 'discarding message because the queue is full'
+[async_slam_toolbox_node-1] [INFO] [1791195554.863488817] [slam_toolbox]: Message Filter dropping message: frame 'vehicle/lidar' at time 6425.300 for reason 'discarding message because the queue is full'
+[async_slam_toolbox_node-1] [INFO] [1791195566.858779170] [slam_toolbox]: Message Filter dropping message: frame 'vehicle/lidar' at time 6430.300 for reason 'discarding message because the queue is full'
+[async_slam_toolbox_node-1] [INFO] [1791195579.063315120] [slam_toolbox]: Message Filter dropping message: frame 'vehicle/lidar' at time 6435.300 for reason 'discarding message because the queue is full'
+[async_slam_toolbox_node-1] [INFO] [1791195586.560496171] [slam_toolbox]: Message Filter dropping message: frame 'vehicle/lidar' at time 6438.400 for reason 'discarding message because the queue is full'
+[async_slam_toolbox_node-1] [INFO] [1791195598.433994567] [slam_toolbox]: Message Filter dropping message: frame 'vehicle/lidar' at time 6443.400 for reason 'discarding message because the queue is full'
+[async_slam_toolbox_node-1] Save To File /work/robot_ws/maps/body-precision-final-20261005.posegraph
+[async_slam_toolbox_node-1] Mapper <- Module
+[async_slam_toolbox_node-1] Mapper <- m_pSequentialScanMatcher
+[async_slam_toolbox_node-1] Mapper <- m_pGraph
+[async_slam_toolbox_node-1] MapperGraph <- Graph; Graph <- m_Edges; Graph <- m_Vertices
+[async_slam_toolbox_node-1] MapperGraph <- m_pMapper; MapperGraph <- m_pLoopScanMatcher; MapperGraph <- m_pTraversal
+[async_slam_toolbox_node-1] Mapper <- m_pMapperSensorManager
+[async_slam_toolbox_node-1] MapperSensorManager <- m_ScanManagers; MapperSensorManager <- m_Scans
+[async_slam_toolbox_node-1] **Finished serializing Mapper**
+[async_slam_toolbox_node-1] Save To File
+[async_slam_toolbox_node-1] **Serializing Dataset**
+[async_slam_toolbox_node-1] Dataset <- m_SensorNameLookup
+[async_slam_toolbox_node-1] Dataset <- m_Data
+[async_slam_toolbox_node-1] Dataset <- m_Lasers
+[async_slam_toolbox_node-1] Dataset <- m_pDatasetInfo
+[async_slam_toolbox_node-1] **Finished serializing Dataset**

@@ -1,0 +1,55 @@
+{
+  "scope": "exact_invalidation_snapshot_readonly_replay",
+  "map_version": "5228f4d0d4bab4b8bccc",
+  "recorded": {
+    "safe": false,
+    "map_version": "5228f4d0d4bab4b8bccc",
+    "guard_threshold_m": 1.9,
+    "planning_margin_m": 0.25,
+    "required_clearance_m": 2.15,
+    "sensor_offset_m": [
+      -0.7057095,
+      0.0
+    ],
+    "predicted_min_clearance_m": 2.0727183622096645,
+    "guard_margin_m": 0.17271836220966463,
+    "known_obstacles_only": true,
+    "reason": "path_guard_clearance",
+    "worst_base_pose": [
+      10.372759663280537,
+      -1.6302857452162112,
+      -1.4288992721907325
+    ],
+    "worst_sensor_xy": [
+      10.272957268680983,
+      -0.9316689830193362
+    ],
+    "samples": 147
+  },
+  "replayed": {
+    "safe": false,
+    "map_version": "5228f4d0d4bab4b8bccc",
+    "guard_threshold_m": 1.9,
+    "planning_margin_m": 0.25,
+    "required_clearance_m": 2.15,
+    "sensor_offset_m": [
+      -0.7057095,
+      0.0
+    ],
+    "predicted_min_clearance_m": 2.0727183622096645,
+    "guard_margin_m": 0.17271836220966463,
+    "known_obstacles_only": true,
+    "reason": "path_guard_clearance",
+    "worst_base_pose": [
+      10.372759663280537,
+      -1.6302857452162112,
+      -1.4288992721907325
+    ],
+    "worst_sensor_xy": [
+      10.272957268680983,
+      -0.9316689830193362
+    ],
+    "samples": 147
+  },
+  "absolute_clearance_difference_m": 0.0
+}

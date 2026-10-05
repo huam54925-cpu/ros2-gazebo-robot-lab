@@ -1,0 +1,47 @@
+.....ssssssssss..................................EE......................
+======================================================================
+ERROR: test_regional_executor (unittest.loader._FailedTest.test_regional_executor)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_regional_executor
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 426, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 367, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/mnt/robot_disk/ros_sim/workspace/navigation_base/tests/test_regional_executor.py", line 9, in <module>
+    from robot_skills.ros_worker import Executor
+  File "/mnt/robot_disk/ros_sim/workspace/robot_skills/ros_worker.py", line 16, in <module>
+    from motion_worker import Trial
+  File "/mnt/robot_disk/ros_sim/workspace/robot_agent/motion_worker.py", line 16, in <module>
+    from explore import Explorer, GetState, NavigateToPose, ManageLifecycleNodes, rclpy
+  File "/mnt/robot_disk/ros_sim/workspace/navigation_base/exploration/explore.py", line 21, in <module>
+    from nav2_msgs.action import NavigateToPose, ComputePathToPose, Spin
+ModuleNotFoundError: No module named 'nav2_msgs'
+
+
+======================================================================
+ERROR: test_skill_executor (unittest.loader._FailedTest.test_skill_executor)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_skill_executor
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/loader.py", line 426, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.14/unittest/loader.py", line 367, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/mnt/robot_disk/ros_sim/workspace/navigation_base/tests/test_skill_executor.py", line 9, in <module>
+    from robot_skills.ros_worker import Executor
+  File "/mnt/robot_disk/ros_sim/workspace/robot_skills/ros_worker.py", line 16, in <module>
+    from motion_worker import Trial
+  File "/mnt/robot_disk/ros_sim/workspace/robot_agent/motion_worker.py", line 16, in <module>
+    from explore import Explorer, GetState, NavigateToPose, ManageLifecycleNodes, rclpy
+  File "/mnt/robot_disk/ros_sim/workspace/navigation_base/exploration/explore.py", line 21, in <module>
+    from nav2_msgs.action import NavigateToPose, ComputePathToPose, Spin
+ModuleNotFoundError: No module named 'nav2_msgs'
+
+
+----------------------------------------------------------------------
+Ran 73 tests in 28.173s
+
+FAILED (errors=2, skipped=10)

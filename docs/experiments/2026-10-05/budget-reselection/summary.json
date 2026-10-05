@@ -1,0 +1,391 @@
+{
+  "selection_rounds": [
+    {
+      "index": 1,
+      "task_id": "03c406dd-4426-4d61-922c-a6edfa2b6bb6",
+      "attempts": [
+        {
+          "index": 0,
+          "selector": "model",
+          "offered_ids": [
+            "F_4cb8caf6cf95_1",
+            "F_4cb8caf6cf95_3"
+          ],
+          "budget_before_decision": {
+            "limits": {
+              "max_steps": 3,
+              "max_distance": 12.0,
+              "max_sim_time": 180.0,
+              "max_wall_time": 900.0,
+              "max_failures": 1,
+              "profile": "trial"
+            },
+            "used": {
+              "steps": 0,
+              "distance_m": 0,
+              "failures": 0,
+              "active": false
+            },
+            "remaining_distance_m": 12.0,
+            "remaining_sim_s": 137.57700000000023,
+            "remaining_wall_s": 820.3717463379999
+          },
+          "choice": {
+            "action": "MOVE",
+            "option_id": "F_4cb8caf6cf95_1",
+            "rationale_summary": "选择跨至邻近分区的候选1：已通过当前已知地图路径与车体扫掠检查，预测最小净空2.64米，执行仍须复核。相比候选3，虽预计耗时48.8秒而非34.6秒，但可见未知代理更高，新增边界采样16格而非7格，观测潜力与整体成本权衡更优；路径约1.57米，剩余预算充足。代理不代表实际收益，不计墙后未知为可见收益。"
+          },
+          "decision": {
+            "selector": "model",
+            "latency_wall_s": 8.597024644999692,
+            "usage": {
+              "input_tokens": 30109,
+              "input_tokens_details": {
+                "cache_write_tokens": 29983,
+                "cached_tokens": 0
+              },
+              "output_tokens": 161,
+              "output_tokens_details": {
+                "reasoning_tokens": 0
+              },
+              "total_tokens": 30270
+            }
+          },
+          "budget_after_decision": {
+            "limits": {
+              "max_steps": 3,
+              "max_distance": 12.0,
+              "max_sim_time": 180.0,
+              "max_wall_time": 900.0,
+              "max_failures": 1,
+              "profile": "trial"
+            },
+            "used": {
+              "steps": 0,
+              "distance_m": 0,
+              "failures": 0,
+              "active": false
+            },
+            "remaining_distance_m": 12.0,
+            "remaining_sim_s": 132.1869999999999,
+            "remaining_wall_s": 810.5784909329996
+          },
+          "current_catalog_id": "4cb8caf6cf95",
+          "fitting_ids": [
+            "F_4cb8caf6cf95_1",
+            "F_4cb8caf6cf95_3"
+          ],
+          "decision_and_refresh_sim_s": 5.390000000000327,
+          "validation": "selected_action_fits_current_budget_and_catalog"
+        }
+      ],
+      "reselection_count": 0,
+      "last_choice_rejection": null
+    },
+    {
+      "index": 2,
+      "task_id": "20f38bb9-0d00-4502-a790-db34494f9664",
+      "attempts": [
+        {
+          "index": 0,
+          "selector": "model",
+          "offered_ids": [
+            "F_7d0486ce0dad_1"
+          ],
+          "budget_before_decision": {
+            "limits": {
+              "max_steps": 3,
+              "max_distance": 12.0,
+              "max_sim_time": 180.0,
+              "max_wall_time": 900.0,
+              "max_failures": 1,
+              "profile": "trial"
+            },
+            "used": {
+              "steps": 1,
+              "distance_m": 1.5154326032562846,
+              "failures": 0,
+              "active": false
+            },
+            "remaining_distance_m": 10.484567396743715,
+            "remaining_sim_s": 44.070000000000164,
+            "remaining_wall_s": 631.6459404649995
+          },
+          "choice": {
+            "action": "MOVE",
+            "option_id": "F_7d0486ce0dad_1",
+            "rationale_summary": "选择邻近分区R_0_1的观测候选：路径约2.11米，含停车验证与储备预计36.16秒，低于剩余44.07秒；已知地图净空与车体扫掠检查通过，执行仍须复核安全及预算。其可见未知代理2.72平方米、新增边界采样14格，具有观测潜力，均非实际收益。比较远区R_3_1：完整转移约25.89米，且仅中间段预计57.48秒，已超本轮预算，不能因区域潜力更高而选取。此前任务本地成功且停车确认，无失败重试；不计墙后未知为可见收益。"
+          },
+          "decision": {
+            "selector": "model",
+            "latency_wall_s": 7.753166860999954,
+            "usage": {
+              "input_tokens": 41348,
+              "input_tokens_details": {
+                "cache_write_tokens": 41222,
+                "cached_tokens": 0
+              },
+              "output_tokens": 204,
+              "output_tokens_details": {
+                "reasoning_tokens": 0
+              },
+              "total_tokens": 41552
+            }
+          },
+          "budget_after_decision": {
+            "limits": {
+              "max_steps": 3,
+              "max_distance": 12.0,
+              "max_sim_time": 180.0,
+              "max_wall_time": 900.0,
+              "max_failures": 1,
+              "profile": "trial"
+            },
+            "used": {
+              "steps": 1,
+              "distance_m": 1.5154326032562846,
+              "failures": 0,
+              "active": false
+            },
+            "remaining_distance_m": 10.484567396743715,
+            "remaining_sim_s": 37.82900000000018,
+            "remaining_wall_s": 622.222543027
+          },
+          "current_catalog_id": "7d0486ce0dad",
+          "fitting_ids": [
+            "F_7d0486ce0dad_1"
+          ],
+          "decision_and_refresh_sim_s": 6.2409999999999854,
+          "validation": "selected_action_fits_current_budget_and_catalog"
+        }
+      ],
+      "reselection_count": 0,
+      "last_choice_rejection": null
+    }
+  ],
+  "mission": {
+    "mission_id": "c4fd091e-8911-432b-b927-e96fffa239d9",
+    "status": "finished",
+    "stop_reason": "max_failures",
+    "limits": {
+      "max_steps": 3,
+      "max_distance": 12.0,
+      "max_sim_time": 180.0,
+      "max_wall_time": 900.0,
+      "max_failures": 1,
+      "profile": "trial"
+    },
+    "exploration_mode": "memory",
+    "candidate_search": "wide_4_5",
+    "observations_enabled": false,
+    "start_sim_s": 2683.663,
+    "started_monotonic_s": 6261.288391122,
+    "deadline_monotonic_s": 7161.288391122,
+    "heartbeat_monotonic_s": 6585.728184252,
+    "stop_request_id": "a24cdd37-0ec8-46af-bfba-9c2b7e7229c1",
+    "stopped": true,
+    "started_unix_s": 1791188456.0281303,
+    "stop_task_id": "ac2ff764-e487-4194-93a5-df4189e19b25",
+    "final_progress": {
+      "steps": 2,
+      "distance_m": 1.5154326032562846,
+      "failures": 1,
+      "active": false
+    }
+  },
+  "candidate_search": "wide_4_5",
+  "rows": [
+    {
+      "index": 1,
+      "task_id": "03c406dd-4426-4d61-922c-a6edfa2b6bb6",
+      "status": "succeeded",
+      "reason": "goal_reached",
+      "stopped": true,
+      "candidate_id": "F_4cb8caf6cf95_1",
+      "transit": false,
+      "predicted_incremental_boundary_cells": 16,
+      "observed_new_known_area_m2": 3.7825001127272855,
+      "net_known_area_m2": 3.7825001127272913,
+      "gain_usable": true,
+      "distance_odom_m": 1.5154326032562846,
+      "minimum_scan_m": 2.7997870445251465,
+      "estimated_sim_s": 44.980782284974055,
+      "budget_sim_s": 48.77886051347146,
+      "actual_sim_s": 38.61799999999994,
+      "actual_wall_s": 83.43449179500021,
+      "catalog_wall_s": 73.29456516000027,
+      "model_wall_s": 8.597024644999692,
+      "first_gate": {
+        "passed": true,
+        "reason": null,
+        "actual_gain_m2": 3.7825001127272855
+      },
+      "decision_attempts": 1,
+      "reselection_count": 0,
+      "decision_total_wall_s": 8.597024644999692,
+      "executor_budget_check": {
+        "fits": true,
+        "reasons": [],
+        "remaining_sim_s": 121.00199999999995,
+        "remaining_distance_m": 12.0,
+        "estimated_sim_s": 48.77886051347146,
+        "planned_length_m": 1.5695983345289297
+      }
+    },
+    {
+      "index": 2,
+      "task_id": "20f38bb9-0d00-4502-a790-db34494f9664",
+      "status": "rejected",
+      "reason": "revalidated_action_over_budget",
+      "stopped": true,
+      "candidate_id": "F_7d0486ce0dad_1",
+      "transit": false,
+      "predicted_incremental_boundary_cells": 14,
+      "observed_new_known_area_m2": null,
+      "net_known_area_m2": 0.0,
+      "gain_usable": true,
+      "distance_odom_m": 0.0,
+      "minimum_scan_m": 2.9227490425109863,
+      "estimated_sim_s": 33.16264870401168,
+      "budget_sim_s": 36.16264870401168,
+      "actual_sim_s": 8.868000000000393,
+      "actual_wall_s": 15.221463851999943,
+      "catalog_wall_s": 76.96305370400023,
+      "model_wall_s": 7.753166860999954,
+      "first_gate": null,
+      "decision_attempts": 1,
+      "reselection_count": 0,
+      "decision_total_wall_s": 7.753166860999954,
+      "executor_budget_check": {
+        "fits": false,
+        "reasons": [
+          "time_budget"
+        ],
+        "remaining_sim_s": 25.460000000000036,
+        "remaining_distance_m": 10.484567396743715,
+        "estimated_sim_s": 36.16264870401168,
+        "planned_length_m": 2.109680603193539
+      }
+    }
+  ],
+  "error": null,
+  "total_distance_m": 1.5154326032562846,
+  "final_state": {
+    "schema_version": 1,
+    "generated_monotonic_s": 6586.923611969,
+    "generated_unix_s": 1791188781.667328,
+    "mode": "read_only",
+    "sources": {
+      "guard_output": {
+        "linear_x_m_s": 0.0,
+        "angular_z_rad_s": 0.0,
+        "received_age_wall_s": 0.459,
+        "fresh": true
+      },
+      "clock": {
+        "sim_time_s": 2852.82,
+        "received_age_wall_s": 0.417,
+        "fresh": true
+      },
+      "odometry": {
+        "frame": "vehicle/odom",
+        "child_frame": "vehicle/base_link",
+        "stamp_sim_s": 2852.817,
+        "pose": {
+          "x": -1.136681540303276,
+          "y": 5.756530384328806,
+          "z": 0.0,
+          "yaw_rad": -0.9782157010787783
+        },
+        "velocity": {
+          "linear_x_m_s": 0.0,
+          "angular_z_rad_s": 0.0
+        },
+        "received_age_wall_s": 0.43,
+        "fresh": true,
+        "stamp_age_sim_s": 0.003
+      },
+      "scan": {
+        "frame": "vehicle/lidar",
+        "stamp_sim_s": 2852.8,
+        "nearest_m": 2.9227490425109863,
+        "valid": true,
+        "sample_count": 360,
+        "no_finite_hit": false,
+        "received_age_wall_s": 0.463,
+        "fresh": true,
+        "stamp_age_sim_s": 0.02
+      },
+      "map_pose": {
+        "frame": "map",
+        "child_frame": "vehicle/base_link",
+        "stamp_sim_s": 2852.817,
+        "pose": {
+          "x": -1.26193653548845,
+          "y": 5.717228953226941,
+          "z": 0.0,
+          "yaw_rad": -0.9782156995043845
+        },
+        "received_age_wall_s": 0.177,
+        "fresh": true,
+        "stamp_age_sim_s": 0.003
+      },
+      "map": {
+        "frame": "map",
+        "stamp_sim_s": 2852.8,
+        "width": 485,
+        "height": 404,
+        "resolution_m": 0.05000000074505806,
+        "origin": {
+          "x": -4.69411018803273,
+          "y": -5.105274523141708,
+          "z": 0.0,
+          "yaw_rad": 0.0
+        },
+        "content_hash": "72a7934df1404a9c",
+        "map_version": "8ccb2dab46d03b8f25d7",
+        "unknown_cells": 29974,
+        "free_cells": 161641,
+        "other_known_cells": 4325,
+        "known_area_m2": 414.9150123654307,
+        "coverage": null,
+        "received_age_wall_s": 0.184,
+        "fresh": true,
+        "stamp_age_sim_s": 0.02
+      },
+      "requested_velocity": {
+        "linear_x_m_s": 0.0,
+        "angular_z_rad_s": 0.0,
+        "received_age_wall_s": 1.475,
+        "fresh": false
+      },
+      "navigation": {
+        "statuses": [
+          {
+            "goal_id": "191d3b64de574e7dbff32c6aa2978931",
+            "status_code": 4
+          }
+        ],
+        "active_goal_count": 0,
+        "received_age_wall_s": 149.517,
+        "fresh": false
+      }
+    },
+    "graph": {
+      "guard_node_present": true,
+      "navigation_action_server_present": true,
+      "observed_monotonic_s": 6586.923611969
+    },
+    "guard": {
+      "stop_radius_m": 1.9,
+      "reason_inferred_from_inputs": "command timeout",
+      "authoritative_guard_status": false
+    },
+    "snapshot_age_wall_s": 0.181,
+    "status": "available",
+    "motion_tools_enabled": false,
+    "note": "Read-only observations, not permission to move. Stale/missing fields are unknown. Guard reason is inferred, not a guard acknowledgement. No navigation status message means unknown, not proof of idle. Map known area is not room coverage.",
+    "stop_latched": true,
+    "motion_scope": "validated_frontier_ids_only"
+  }
+}
