@@ -2,6 +2,10 @@
 
 基于 Docker 的 ROS 2 Lyrical 与 Gazebo 小车仿真实验：2D 激光雷达、SLAM Toolbox、Nav2，以及 **AI → MCP → Robot Skills → 本地安全执行器**。模型从本地验证的候选 ID 中选择下一步，运动结果和停车状态由本地确定；尚未完成整屋自主探索验收。
 
+## 系统改进方案
+
+[导航、实时保护与探索决策重构方案](docs/navigation-exploration-redesign-2026-10-05.md)：统一车体与运动参数，以 Nav2 负责规划、控制和有界恢复，独立实时监控负责保护，异步任务接口连接 Frontier 与模型高层决策。方案包含权限边界、代码迁移顺序和通道/探索验收；当前为设计文档，运行配置尚未因此切换。
+
 ## 实验结果
 
 [2026-10-05 日结：时间标定、有限视野探索、路径阈值与人工引导接管](docs/experiments/2026-10-05/README.md) · [最新接管试验](docs/experiments/2026-10-05/operator-junction-autonomy/README.md) · [走廊穿越问题分析](docs/experiments/2026-10-05/operator-junction-autonomy/corridor-analysis.md)
