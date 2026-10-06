@@ -1,4 +1,4 @@
-"""Small direct-motion MCP interface for the explicitly unprotected Gazebo run."""
+"""V2 motion interface: one launch policy, continuous scan / move / scan."""
 import json
 import os
 from pathlib import Path
@@ -20,6 +20,7 @@ def action(kind, **arguments):
     if remaining<=0 and kind!='stop':return {'status':'failed','reason':'run_wall_budget'}
     identifier=uuid.uuid4().hex
     request={'action':kind,'action_id':identifier,'directory':CONTAINER_RUN,
+             'safety_mount':CONFIG.get('safety_mount'),
              'wall_remaining_s':max(8.,remaining) if kind=='stop' else remaining,**arguments}
     path=RUN/(identifier+'.request.json');path.write_text(json.dumps(request))
     command=['docker','exec','robot-sim-gui','bash','-lc',
@@ -47,8 +48,8 @@ def scan_surroundings() -> dict:
 @tool
 def drive_half_visible_range(heading_map_rad: float, rationale: str) -> dict:
     """Choose any map-frame heading in radians. Turn to that direction and drive straight
-    for half its current laser range (infinity uses sensor range_max). No Nav2 or collision
-    check is active in this Gazebo experiment. Completion is followed by another full scan.
+    for half its current laser range (infinity uses sensor range_max). Nav2 is absent. The run metadata states whether
+    the optional lidar/body sweep mount is active. Completion is followed by another full scan.
     rationale briefly explains the next area to observe; it is not a safety approval.
     """
     return action('drive',heading_map_rad=heading_map_rad,rationale=rationale)

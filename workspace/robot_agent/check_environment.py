@@ -59,7 +59,7 @@ def main():
     report = {"python": platform.python_version(),
               "dependencies": {name: version(name) for name in
                                ("openai", "mcp", "python-dotenv")},
-              "local_environment": "passed", "robot_interface": "read_only_installed",
+              "local_environment": "passed", "robot_interface": "scan_drive_v2",
               "api": {"status": "not_tested", "authenticated": False}}
     try:
         key, base_url, model = configuration()

@@ -1,0 +1,17 @@
+{
+  "version": "2.0.0",
+  "unit_tests_passed": 18,
+  "test_groups": {
+    "safety_mount_and_map": 6,
+    "scan_drive_protocol_geometry": 4,
+    "api_environment": 4,
+    "coverage_and_scan_adapter": 4
+  },
+  "python_ast": "passed",
+  "shell_syntax": "passed",
+  "raw_files_hash_verified": 122,
+  "executed_sources_match_both_run_reports": true,
+  "new_motion_simulation": false,
+  "optional_on_full_simulation": "not_run",
+  "initial_test_invocation_issue": "coverage tests require PYTHONPATH=workspace; rerun passed"
+}

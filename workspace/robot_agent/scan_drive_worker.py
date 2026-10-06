@@ -1,4 +1,4 @@
-"""Direct Gazebo motion primitives: no Nav2, candidate search or collision gate."""
+"""V2 direct Gazebo motion primitives with an optional collision mount."""
 import argparse
 import hashlib
 import json
@@ -11,8 +11,9 @@ import time
 import numpy as np
 
 HERE=Path(__file__).resolve().parent
-sys.path[:0]=[str(HERE.parent),str(HERE.parent/'navigation_base'),str(HERE.parent/'navigation_base/exploration')]
+sys.path.insert(0,str(HERE))
 from scan_drive_geometry import wrap,scan_rays,direction_summary,half_range_goal
+from safety_mode import runtime_policy,load_mount
 
 
 def main():
@@ -27,8 +28,11 @@ def main():
     request=json.loads(Path(args.request).read_text());directory=Path(request['directory'])
     directory.mkdir(parents=True,exist_ok=True)
     output=directory/(request['action_id']+'.result.json')
-    if not Path('/.dockerenv').exists() or os.environ.get('ROBOT_DIRECT_GAZEBO')!='true':
-        raise RuntimeError('direct_gazebo_launch_required')
+    if not Path('/.dockerenv').exists():
+        raise RuntimeError('gazebo_container_required')
+    policy=runtime_policy();mount=load_mount(policy)
+    if request.get('safety_mount') != policy:
+        raise RuntimeError('safety_mount_policy_mismatch')
     rclpy.init(signal_handler_options=SignalHandlerOptions.NO)
     node=rclpy.create_node('scan_drive_executor',parameter_overrides=[rclpy.parameter.Parameter('use_sim_time',value=True)])
     buffer=Buffer();listener=TransformListener(buffer,node);latest={};stopped=[False]
@@ -39,7 +43,9 @@ def main():
         latest['odom']=[p.position.x,p.position.y,yaw(p.orientation)]
         latest['velocity']=[msg.twist.twist.linear.x,msg.twist.twist.angular.z]
         latest['odom_stamp']=msg.header.stamp.sec+msg.header.stamp.nanosec*1e-9
-    def scan(msg):latest['scan']=msg
+    def scan(msg):
+        latest['scan']=msg
+        latest['scan_odom']=list(latest['odom']) if 'odom' in latest else None
     def grid(msg):latest['map']=msg
     subscriptions=[node.create_subscription(Odometry,'/model/vehicle/odometry',odom,qos_profile_sensor_data),
         node.create_subscription(LaserScan,'/scan',scan,qos_profile_sensor_data),
@@ -48,7 +54,7 @@ def main():
     started=time.monotonic();deadline=started+request['wall_remaining_s'];last_trace=0.;distance=0.;previous=None
     phase='initializing';tracefile=directory/(request['action_id']+'.trace.jsonl')
     report={'action_id':request['action_id'],'action':request['action'],'status':'running',
-            'collision_checks':False,'traditional_algorithm':False,'controller':'direct_odometry_feedback',
+            'collision_checks':policy['enabled'],'safety_mount':policy,'traditional_algorithm':False,'controller':'direct_odometry_feedback',
             'started_unix_s':time.time(),'operating_speeds':{'linear_m_s':.6,'angular_rad_s':.8}}
     def map_pose():
         t=buffer.lookup_transform('map','vehicle/base_link',rclpy.time.Time()).transform
@@ -69,6 +75,12 @@ def main():
             with tracefile.open('a') as f:f.write(json.dumps(sample())+'\n')
             last_trace=time.monotonic()
     def command(v=0.,w=0.):
+        if mount is not None and (v or w):
+            evidence=mount.evaluate(latest['scan'],latest['odom'],latest.get('scan_odom'),node.get_clock().now().nanoseconds*1e-9,v,w)
+            if not evidence['allowed']:
+                report['mount_rejection']=evidence
+                pub.publish(Twist())
+                raise RuntimeError('safety_mount:'+evidence['reason'])
         msg=Twist();msg.linear.x=float(v);msg.angular.z=float(w);pub.publish(msg)
     def settle():
         until=time.monotonic()+.6
@@ -87,13 +99,13 @@ def main():
             time.sleep(.02)
         settle();return turned
     def snapshot():
-        from robot_skills.map_view import render
+        from map_view import render
         m=latest['map'];o=m.info.origin;data=np.asarray(m.data).reshape(m.info.height,m.info.width)
         g={'frame':'map','data':data,'resolution':m.info.resolution,
            'origin':[o.position.x,o.position.y,yaw(o.orientation)],
            'stamp_sim_s':m.header.stamp.sec+m.header.stamp.nanosec*1e-9}
         pose=map_pose();version=hashlib.sha256(data.tobytes()).hexdigest()[:20]
-        view=render(g,pose,'direct_scan_drive',version,[], 'collision_checks_disabled')
+        view=render(g,pose,'direct_scan_drive',version,[], 'optional_lidar_sweep' if policy['enabled'] else 'collision_checks_disabled')
         raw=latest['scan'];rays=scan_rays(raw.ranges,raw.angle_min,raw.angle_increment,raw.range_min,raw.range_max,pose[2])
         np.savez_compressed(directory/(request['action_id']+'.map.npz'),data=data,origin=g['origin'],resolution=g['resolution'])
         import base64
