@@ -116,7 +116,7 @@ class RobotSkills:
                     and t['candidate'].get('region_epoch')==catalog['region_epoch']
                     and t.get('mission_id')!=self.mission_id][:5],
                 'decision_options': (['start_investigation','view_map','plan_navigation','navigate_to_pose',
-                                     'navigate_through_poses','finish_investigation','cancel_task','stop_robot']
+                                     'navigate_through_poses','probe_forward','recover_short_reverse','finish_investigation','cancel_task','stop_robot']
                                      if self.investigations_enabled() and self.store.meta('mission:'+self.mission_id,{}).get('phase')=='ai_investigation'
                                      else ['execute_frontier','stop_robot'] + (['perform_observation'] if self.observations else [])),
                 'observation_options': self.store.meta('observation_catalog', {}) if self.observations else {'options': []},
@@ -161,6 +161,8 @@ class RobotSkills:
                 'active':self.store.meta('investigation:'+str(m.get('active_investigation'))),
                 'history':[self.store.meta('investigation:'+iid) for iid in m.get('investigation_ids',[])][-12:],
                 'failure_memory':events[-24:],'oscillation_detected':oscillating(events),
+                'recovery_policy':m.get('recovery_policy'),
+                'recovery_attempts':self.store.meta('recovery_attempts:'+self.mission_id,[]),
                 'world_complete':False}
 
     def view_map(self, request_id):
@@ -191,6 +193,15 @@ class RobotSkills:
         from .investigation import poses_payload
         return self._submit('navigate_through_poses',{**poses_payload(poses,map_epoch),
                             'investigation_id':investigation_id},request_id)
+
+    def probe_forward(self, investigation_id, map_epoch, request_id):
+        return self._submit('probe_forward',{'investigation_id':investigation_id,'map_epoch':map_epoch},request_id)
+
+    def recover_short_reverse(self, investigation_id, map_epoch, source_task_id, request_id):
+        from .store import valid_uuid
+        valid_uuid(source_task_id)
+        return self._submit('recover_short_reverse',{'investigation_id':investigation_id,
+                            'map_epoch':map_epoch,'source_task_id':source_task_id},request_id)
 
     def cancel_task(self, task_id):
         task=self.store.get(task_id)

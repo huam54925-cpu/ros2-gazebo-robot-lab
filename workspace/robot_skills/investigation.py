@@ -6,7 +6,8 @@ import uuid
 
 QUERY_KINDS = {'view_map', 'plan_navigation', 'search_frontiers'}
 NAVIGATION_KINDS = {'navigate_to_pose', 'navigate_through_poses'}
-TASK_KINDS = QUERY_KINDS | NAVIGATION_KINDS
+from .recovery import SHORT_MOTION_KINDS
+TASK_KINDS = QUERY_KINDS | NAVIGATION_KINDS | SHORT_MOTION_KINDS
 DEFAULT_HANDOFF = {'window': 4, 'low_gain_m2': 0.25, 'empty_complete_searches': 2,
                    'repeat_radius_m': 0.5, 'failure_cooldown_s': 120.0}
 
@@ -40,7 +41,7 @@ def failure_code(reason):
         (('unknown', 'outside_known'), 'UNKNOWN_SPACE_BLOCKED'),
         (('body_sweep', 'path_invalidated'), 'PATH_INVALIDATED'),
         (('pose_no_longer_safe', 'unsafe_pose'), 'GOAL_IN_COLLISION'),
-        (('no_motion_progress', 'oscillation'), 'NO_PROGRESS'),
+        (('no_motion_progress', 'short_motion_no_progress', 'Failed to make progress', 'oscillation'), 'NO_PROGRESS'),
         (('planning_deadline', 'action_response_timeout'), 'PLANNING_DEADLINE'),
         (('goal_timeout',), 'EXECUTION_TIMEOUT'),
         (('budget', 'max_'), 'BUDGET_EXHAUSTED'),
@@ -57,7 +58,7 @@ def task_progress(task):
     amount = gain.get('observed_new_known_area_m2') if gain.get('usable_for_trend') else None
     return {'observed_gain_m2': amount,
             'waypoints_reached': result.get('waypoints_reached', 0),
-            'goal_reached': task.get('status') == 'succeeded' and task.get('stopped') is True,
+            'goal_reached': task['kind'] not in SHORT_MOTION_KINDS and task.get('status') == 'succeeded' and task.get('stopped') is True,
             'passage_crossed': result.get('passage_crossed') is True,
             'pose': (result.get('after') or {}).get('pose')}
 
@@ -82,11 +83,11 @@ def record_terminal(store, db, task):
         old.get('x') is not None and math.hypot(goal['x']-old['x'],goal['y']-old['y'])<.5 for old in previous_goals))
     failed = task['status'] != 'succeeded'
     event = {'task_id': task['task_id'], 'investigation_id': task.get('payload', {}).get('investigation_id'),
-             'map_epoch': candidate.get('region_epoch'), 'goal': {k: candidate.get(k) for k in ('x', 'y', 'yaw')},
+             'map_epoch': candidate.get('region_epoch') or result.get('map_epoch'), 'goal': {k: candidate.get(k) for k in ('x', 'y', 'yaw')},
              'approach_pose': (result.get('before') or {}).get('pose'),
              'status': task['status'], 'reason': task.get('reason'), 'transit':candidate.get('transit',False),
              'failure_code': failure_code(task.get('reason')) if failed else None,
-             'progress': progress, 'at_unix_s': time.time(),
+             'progress': progress, 'recoveries':result.get('recoveries',[]), 'at_unix_s': time.time(),
              'recheck_after_unix_s': time.time()+mission['handoff_policy']['failure_cooldown_s'],
              'retry_condition': 'changed_approach_or_goal_or_cooldown_with_fresh_planning'}
     events.append(event)
@@ -227,7 +228,9 @@ def finish(store, mid, iid, outcome, assessment, evidence_ids):
                 (t.get('result') or {}).get('passage_crossed') and t.get('stopped') for t in evidence)):
             raise ValueError('whole_body_passage_evidence_required')
         if outcome == 'blocked':
-            failed = [t for t in evidence if t['status'] in ('rejected', 'aborted') and t.get('accepted')]
+            failed = [t for t in evidence if t['status'] in ('rejected', 'aborted') and t.get('accepted')
+                      and t['kind']!='recover_short_reverse' and t.get('candidate')
+                      and all((t['candidate'].get(k) is not None) for k in ('x','y','yaw'))]
             goals = {(round((t.get('candidate') or {}).get('x',0),1),
                       round((t.get('candidate') or {}).get('y',0),1),
                       round((t.get('candidate') or {}).get('yaw',0),1)) for t in failed}

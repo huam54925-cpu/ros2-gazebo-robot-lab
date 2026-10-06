@@ -148,6 +148,23 @@ class Store:
                 if kind in TASK_KINDS:
                     if not mission.get('two_stage'):
                         reason = reason or 'two_stage_mission_required'
+                    from .recovery import SHORT_MOTION_KINDS, source_reason
+                    if kind in SHORT_MOTION_KINDS:
+                        epoch=payload.get('map_epoch')
+                        inv=self._meta(db,'investigation:'+str(payload.get('investigation_id')), {})
+                        if epoch!=self._meta(db,'regional_epoch',{}).get('id'):
+                            reason=reason or 'map_epoch_changed'
+                        if (mission.get('phase')!='ai_investigation' or inv.get('mission_id')!=mission_id
+                                or inv.get('status')!='active' or inv.get('map_epoch')!=epoch
+                                or mission.get('active_investigation')!=payload.get('investigation_id')):
+                            reason=reason or 'active_investigation_required'
+                        if kind=='recover_short_reverse':
+                            source=next((t for t in tasks if t['task_id']==payload.get('source_task_id')),None)
+                            reason=reason or source_reason(source,tasks,mission_id,epoch,payload.get('investigation_id'))
+                            if any(r['source_task_id']==payload.get('source_task_id') for r in self._meta(db,'recovery_attempts:'+str(mission_id),[])):
+                                reason=reason or 'recovery_source_already_attempted'
+                        allowed={'map_epoch','investigation_id'} | ({'source_task_id'} if kind=='recover_short_reverse' else set())
+                        if set(payload)!=allowed:raise ValueError('invalid_short_motion_payload')
                     if kind in NAVIGATION_KINDS | {'plan_navigation'}:
                         checked=poses_payload(payload.get('poses'),payload.get('map_epoch'))
                         if checked['map_epoch']!=self._meta(db,'regional_epoch',{}).get('id'):

@@ -115,6 +115,21 @@ if skills.investigations_enabled():
         return skills.navigate_through_poses(investigation_id,poses,map_epoch,request_id)
 
     @strict_tool(annotations=WRITE)
+    def probe_forward(investigation_id: str, map_epoch: str, request_id: str) -> dict:
+        """Low-speed short step along current heading, only through confirmed free swept body space.
+        Local policy chooses 5-20 cm at 0.04 m/s. Poll task_id; no speed or safety overrides.
+        """
+        return skills.probe_forward(investigation_id,map_epoch,request_id)
+
+    @strict_tool(annotations=WRITE)
+    def recover_short_reverse(investigation_id: str, map_epoch: str, source_task_id: str, request_id: str) -> dict:
+        """One protected reverse along recent straight odometry after an owned stopped eligible failure.
+        Local policy caps distance, speed and attempts. Automatic recovery may have already consumed it.
+        Never unlocks operator stop or resumes paused navigation. Poll task_id.
+        """
+        return skills.recover_short_reverse(investigation_id,map_epoch,source_task_id,request_id)
+
+    @strict_tool(annotations=WRITE)
     def finish_investigation(investigation_id: str, outcome: str, assessment: str, evidence_task_ids: list[str]) -> dict:
         """Record observations_collected, passage_verified, blocked, or unresolved with local evidence IDs.
         Assessment is interpretation, not map truth. Navigation success alone is not structure confirmation.

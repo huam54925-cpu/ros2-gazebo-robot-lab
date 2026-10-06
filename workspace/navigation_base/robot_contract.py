@@ -31,6 +31,18 @@ def load(path=PATH):
     for profile in value['profiles'].values():
         if any(not math.isfinite(x) or x <= 0 for x in profile.values()):
             raise ValueError('invalid_contract_profile')
+    short = value['short_motion']
+    for key, number in short.items():
+        numbers = number if key == 'probe_steps_m' else [number]
+        if not numbers or any(isinstance(x, bool) or not isinstance(x, (int, float))
+                              or not math.isfinite(x) or x <= 0 for x in numbers):
+            raise ValueError('invalid_short_motion_'+key)
+    if (short['speed_m_s'] > value['profiles']['footprint_075']['max_linear_m_s']
+            or short['minimum_step_m'] > short['reverse_max_m']
+            or short['probe_steps_m'] != sorted(short['probe_steps_m'], reverse=True)
+            or min(short['probe_steps_m']) < short['minimum_step_m']
+            or any(int(short[k]) != short[k] for k in ('max_recoveries','max_recoveries_per_location'))):
+        raise ValueError('invalid_short_motion_limits')
     value['sha256'] = hashlib.sha256(raw).hexdigest()
     return value
 
@@ -57,4 +69,11 @@ def nav2_parameters(config, profile):
     follow['rotate_to_heading_angular_vel']=min(follow['rotate_to_heading_angular_vel'],limits['max_angular_rad_s'])
     follow['regulated_linear_scaling_min_speed']=min(follow['regulated_linear_scaling_min_speed'],limits['max_linear_m_s'])
     follow['min_approach_linear_velocity']=min(follow['min_approach_linear_velocity'],limits['max_linear_m_s'])
+    behavior = cfg['behavior_server']['ros__parameters']
+    behavior['robot_base_frame'] = CONTRACT['base_frame']
+    behavior['local_frame'] = CONTRACT['odom_frame']
+    for name in ('backup', 'drive_on_heading'):
+        behavior[name+'.acceleration_limit'] = CONTRACT['linear_deceleration_m_s2']
+        behavior[name+'.deceleration_limit'] = -CONTRACT['linear_deceleration_m_s2']
+        behavior[name+'.minimum_speed'] = CONTRACT['short_motion']['speed_m_s']
     return cfg

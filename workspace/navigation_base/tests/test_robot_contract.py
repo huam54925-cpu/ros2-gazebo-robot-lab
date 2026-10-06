@@ -23,6 +23,11 @@ class ContractTests(unittest.TestCase):
         follow=derived['controller_server']['ros__parameters']['FollowPath']
         self.assertLessEqual(follow['max_linear_vel'],CONTRACT['profiles']['footprint_075']['max_linear_m_s'])
         self.assertTrue(follow['use_collision_detection'])
+        behavior=derived['behavior_server']['ros__parameters']
+        for name in ('backup','drive_on_heading'):
+            self.assertEqual(behavior[name+'.minimum_speed'],CONTRACT['short_motion']['speed_m_s'])
+            self.assertEqual(behavior[name+'.deceleration_limit'],-CONTRACT['linear_deceleration_m_s2'])
+        self.assertEqual(behavior['local_frame'],CONTRACT['odom_frame'])
 
     def test_center_past_entry_is_not_whole_body_through(self):
         passage={'a':[0,-2],'b':[0,2],'destination_side':-1}

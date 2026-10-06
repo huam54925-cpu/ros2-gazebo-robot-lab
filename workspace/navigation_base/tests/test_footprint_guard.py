@@ -15,6 +15,11 @@ class FootprintGuardTests(unittest.TestCase):
         self.assertFalse(check_sweep([[.44,0]],(.10,0),(.10,0),.3)['safe'])
         self.assertFalse(check_sweep([[-1.85,0]],(-.10,0),(-.10,0),.3)['safe'])
         self.assertTrue(check_sweep([[2.,0]],(.10,0))['safe'])
+    def test_forward_alarm_allows_checked_reverse_but_never_contact(self):
+        self.assertFalse(check_sweep([[.44,0]],(.04,0),scan_age=.5)['safe'])
+        self.assertTrue(check_sweep([[.44,0]],(-.04,0),scan_age=.5)['safe'])
+        for direction in (-.04,.04):
+            self.assertFalse(check_sweep([[.38,0]],(direction,0),scan_age=.5)['safe'])
     def test_turn_sweeps_tail_outside_straight_envelope(self):
         point=[[-1.6,-.75]]
         self.assertTrue(check_sweep(point,(.1,0))['safe'])

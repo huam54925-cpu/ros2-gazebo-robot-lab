@@ -156,9 +156,9 @@ def start(store, budget, state, observations=False, exploration_mode='baseline',
                 'stopped': False, 'started_unix_s': time.time()}
         if two_stage:
             from .investigation import DEFAULT_HANDOFF
-            from navigation_base.robot_contract import CONTRACT_HASH
+            from navigation_base.robot_contract import CONTRACT_HASH, CONTRACT
             body.update(handoff_policy=dict(DEFAULT_HANDOFF),contract_hash=CONTRACT_HASH,
-                        empty_complete_searches=0,investigation_ids=[])
+                        empty_complete_searches=0,investigation_ids=[],recovery_policy=dict(CONTRACT['short_motion']))
         store._set_meta(db, 'mission:'+mid, body); store._set_meta(db, 'active_mission', mid)
     return body
 

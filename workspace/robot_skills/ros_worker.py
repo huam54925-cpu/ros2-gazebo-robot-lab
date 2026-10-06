@@ -29,10 +29,33 @@ from robot_skills.investigation_worker import InvestigationMixin
 from robot_skills.investigation import QUERY_KINDS, NAVIGATION_KINDS, failure_code
 
 
-class Executor(InvestigationMixin, ObservationMixin, Trial):
+from robot_skills.recovery import SHORT_MOTION_KINDS
+from robot_skills.recovery_worker import RecoveryMixin
+
+
+class Executor(RecoveryMixin, InvestigationMixin, ObservationMixin, Trial):
+    def execute(self, client, goal, timeout, kind):
+        outcome=super().execute(client,goal,timeout,kind)
+        self.pending_goal=None
+        return outcome
+
     def odom_cb(self,msg):
         super().odom_cb(msg)
         stamp=msg.header.stamp.sec+msg.header.stamp.nanosec*1e-9
+        from explore import yaw
+        from robot_skills.recovery import POLICY
+        p=msg.pose.pose.position
+        row={'pose':[p.x,p.y,yaw(msg.pose.pose.orientation)],'sim_s':stamp,'frame':msg.header.frame_id}
+        if not all(math.isfinite(v) for v in [*row['pose'],stamp]):
+            raise RuntimeError('odometry_invalid')
+        if self.odom_trace and (stamp<self.odom_trace[-1]['sim_s'] or row['frame']!=self.odom_trace[-1]['frame']):
+            self.odom_trace=[]
+            raise RuntimeError('odometry_discontinuity')
+        self.odom_trace.append(row)
+        # Keep feedback dense enough to detect gaps; bound retained history.
+        cutoff=stamp-POLICY['trace_max_age_s']
+        if len(self.odom_trace)>20000 or self.odom_trace[0]['sim_s']<cutoff:
+            self.odom_trace=[r for r in self.odom_trace[-20000:] if r['sim_s']>=cutoff]
         previous=getattr(self,'timed_odom',None)
         navigating=getattr(getattr(self,'phase_timer',None),'phase',None)=='navigation_including_turns'
         if navigating and previous and previous[3] and 0<stamp-previous[0]<=.5:
@@ -46,6 +69,7 @@ class Executor(InvestigationMixin, ObservationMixin, Trial):
     def scan_cb(self,msg):
         Explorer.scan_cb(self,msg)
         from robot_skills.scan_diagnostics import summarize_scan
+        self.latest['raw_scan']=msg
         self.latest['scan_statistics']=summarize_scan(msg.ranges,msg.range_min,msg.range_max)
 
     def __init__(self, store, task=None):
@@ -54,6 +78,7 @@ class Executor(InvestigationMixin, ObservationMixin, Trial):
         self.cancel_path = DIRECTORY / (self.identifier + '.unused')
         self.dispatched, self.pending_goal, self.start_pose = False, None, None
         self.canceling = False
+        self.odom_trace=[];self.short_clients=[];self.short_motion_active=None
         self.last_status_at = 0
         self.fixed = bool(task and task['kind'] == 'fixed_step')
         self.mission_state=store.meta('mission:'+str((task or {}).get('mission_id')), {})
@@ -61,6 +86,12 @@ class Executor(InvestigationMixin, ObservationMixin, Trial):
         Explorer.__init__(self, NS(output=str(DIRECTORY / (self.identifier + '.detail.json')),
                                   policy='aggressive', wall_budget=240, max_goals=1,
                                   goal_timeout=45 if self.fixed else 180))
+        from action_msgs.msg import GoalStatusArray
+        from rclpy.qos import QoSProfile, DurabilityPolicy
+        status_qos=QoSProfile(depth=1,durability=DurabilityPolicy.TRANSIENT_LOCAL)
+        for action in ('backup','drive_on_heading','spin'):
+            self.subs.append(self.node.create_subscription(GoalStatusArray,'/'+action+'/_action/status',
+                lambda msg, key=action:self.latest.update({key+'_status':msg}),status_qos))
         from robot_skills.exploration_upgrade import search_for,short_start_for,path_clearance_for
         self.candidate_search=(task.get('candidate_search','baseline') if task else search_for(store))
         self.required_path_clearance_m=path_clearance_for(store,(task or {}).get('mission_id'))
@@ -124,6 +155,7 @@ class Executor(InvestigationMixin, ObservationMixin, Trial):
                 self.store.update(self.identifier, sensor_fresh=self.freshness(),
                                   map_version=self.latest.get('map_version'), distance_odom_m=self.distance)
                 self.last_status_at = time.monotonic()
+            self.monitor_short_motion()
 
     def ready(self):
         from safety_profile import FOOTPRINT_MODE
@@ -150,7 +182,8 @@ class Executor(InvestigationMixin, ObservationMixin, Trial):
                 raise RuntimeError('missing_initial_feedback')
             self.spin_once()
         self.observe(1)
-        if any(s.status in (1, 2, 3) for s in self.latest.get('status', NS(status_list=[])).status_list):
+        if any(s.status in (1,2,3) for key in ('status','backup_status','drive_on_heading_status','spin_status')
+               for s in self.latest.get(key,NS(status_list=[])).status_list):
             raise RuntimeError('another_navigation_is_active')
         if not self.stop_confirmed():
             raise RuntimeError('robot_not_stationary')
@@ -176,6 +209,7 @@ class Executor(InvestigationMixin, ObservationMixin, Trial):
         return bool(paused and self.stop_confirmed())
 
     def close(self):
+        for client in self.short_clients:client.destroy()
         self.event_file.close()
         self.node.destroy_node()
         self.lock.close()
@@ -417,11 +451,16 @@ class Executor(InvestigationMixin, ObservationMixin, Trial):
         try:
             self.store.update(self.identifier, status='running', phase='validating')
             self.ready()
-            if self.two_stage:self.require_contract()
+            if self.two_stage:
+                self.require_contract()
+                result['map_epoch']=self.ensure_epoch()
             result['before'] = self.sample()
             self.timing_phase('preplan_validation')
             self.metric_before = self.grid_snapshot()
             self.save_map('gain_before')
+            if self.task['kind'] in SHORT_MOTION_KINDS:
+                self.perform_short_motion(result)
+                return result
             if self.task['kind'] in NAVIGATION_KINDS:
                 self.perform_investigation_navigation(result)
                 return result
@@ -520,10 +559,16 @@ class Executor(InvestigationMixin, ObservationMixin, Trial):
             elif self.dispatched:
                 result['status'] = 'aborted'
         finally:
+            if result['status'] not in ('succeeded','canceled'):
+                try:
+                    self.automatic_retreat(result)
+                except Exception as error:
+                    result['automatic_recovery_blocked_reason']=str(error)
+            self.short_motion_active=None
             self.timing_phase('stop_verification')
             self.canceling = True
             pending_disabled = True
-            if self.dispatched and self.handle is None and self.pending_goal is not None and 'navigation_result' not in result:
+            if self.dispatched and self.handle is None and self.pending_goal is not None:
                 try:
                     handle = self.wait(self.pending_goal, 3)
                     if handle.accepted:
@@ -575,6 +620,7 @@ class Executor(InvestigationMixin, ObservationMixin, Trial):
             result['phase_timing']=self.phase_timer.rows
             result['navigation_motion_sim_s']=self.motion_seconds
             result['navigation_motion_scope']='odometry stamped intervals; turn_while_translating overlaps translation; gaps above .5s excluded'
+            result['odom_trace']=list(self.odom_trace)
             result['trajectory']=[t['pose'] for t in self.traces if t.get('pose')]
             result['failure_code']=None if result['status']=='succeeded' else failure_code(result['reason'])
             self.report.update(result)
@@ -625,7 +671,7 @@ class Stopper:
 
     def stop(self):
         cancel_return = {}
-        for action in ('navigate_to_pose', 'spin'):
+        for action in ('navigate_to_pose', 'spin', 'backup', 'drive_on_heading'):
             client = self.node.create_client(CancelGoal, '/'+action+'/_action/cancel_goal')
             if client.wait_for_service(timeout_sec=3):
                 cancel_return[action] = self.wait(client.call_async(CancelGoal.Request()), 8).return_code
