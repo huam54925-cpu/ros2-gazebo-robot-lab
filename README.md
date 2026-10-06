@@ -8,6 +8,16 @@
 - [本次数据、选点轨迹与总结对比](docs/experiments/2026-10-06/v2-scan-drive/README.md)
 - [完整旧版分支 archive/pre-v2-2026-10-06](https://github.com/huam54925-cpu/ros2-gazebo-robot-lab/tree/archive/pre-v2-2026-10-06)
 
+## 最新运行证据 · 2026-10-06
+
+![2.0 实际仿真界面：左侧 RViz 在线地图，右侧 Gazebo 场景与车辆](docs/experiments/2026-10-06/v2-scan-drive/rviz-gazebo-user-20261006-124226.png)
+
+**实际界面。** 用户选定的本次截图：左侧为 RViz 在线建图，右侧为 Gazebo 场景与车辆位置，展示本轮连续探索后的观测结果。
+
+![2.0 AI 选点与实际轨迹：左侧 Gazebo 世界轨迹，右侧在线地图中的目标点 G1–G8](docs/experiments/2026-10-06/v2-scan-drive/trajectory-and-goals.png)
+
+**数据证据。** 左侧是记录得到的 Gazebo 实际轴心轨迹，右侧是 AI 提交的 8 个目标点；两侧坐标系分别标注。目标点与实际到达应分开判断，完整数据和误差分析见[本次实验记录](docs/experiments/2026-10-06/v2-scan-drive/README.md)。
+
 ## 运行
 
 当前实现用于 ROS 2 Lyrical / Gazebo 的 Docker 仿真。Docker、NVIDIA 图形环境和 X11 可用后，构建环境：
