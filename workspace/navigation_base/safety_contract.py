@@ -2,8 +2,12 @@
 import math
 
 STOP_RADIUS_M = 1.9
-SCAN_FRAME = 'vehicle/lidar'
-BASE_FRAME = 'vehicle/base_link'
+try:
+    from .robot_contract import CONTRACT
+except ImportError:
+    from robot_contract import CONTRACT
+SCAN_FRAME = CONTRACT['scan_frame']
+BASE_FRAME = CONTRACT['base_frame']
 SCAN_TIMEOUT_S = 1.5
 
 
@@ -16,7 +20,7 @@ def scan_state(scan):
 
 
 def blocked_reason(command_age, scan_age, nearest, valid_scan):
-    if command_age > 0.5:
+    if command_age > CONTRACT['command_timeout_s']:
         return 'command timeout'
     if scan_age > SCAN_TIMEOUT_S or not valid_scan:
         return 'scan missing or stale'

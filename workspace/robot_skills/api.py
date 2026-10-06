@@ -1,4 +1,4 @@
-"""Transport-neutral skill API; model requests contain IDs only."""
+"""Transport-neutral skills; mission-scoped investigation goals are checked locally."""
 import json
 from pathlib import Path
 import subprocess
@@ -30,7 +30,8 @@ class RobotSkills:
         state['operator_assistance_active'] = bool(self.store.meta('active_operator_assistance'))
         state['motion_tools_enabled'] = (not state['stop_latched'] and not state['operator_assistance_active'] and
                                          self.store.meta('active_mission') in (None, self.mission_id))
-        state['motion_scope'] = 'validated_frontier_and_observation_ids' if self.observations else 'validated_frontier_ids_only'
+        state['motion_scope'] = ('mission_scoped_investigation_goals' if self.investigations_enabled() else
+                                 'validated_frontier_and_observation_ids' if self.observations else 'validated_frontier_ids_only')
         return state
 
     def catalog_view(self):
@@ -61,7 +62,8 @@ class RobotSkills:
         # Planning only. No navigation action or velocity publisher is used here.
         with (self.store.directory / 'catalog-worker.log').open('w') as log:
             try:
-                result = subprocess.run(robot_command('catalog'), stdout=log, stderr=log, timeout=95)
+                from navigation_base.safety_profile import FOOTPRINT_MODE
+                result = subprocess.run(robot_command('catalog'), stdout=log, stderr=log, timeout=240 if FOOTPRINT_MODE else 95)
             except subprocess.TimeoutExpired:
                 return {'status': 'catalog_timeout', 'candidates': []}
         if result.returncode:
@@ -113,11 +115,15 @@ class RobotSkills:
                     for t in tasks if t.get('candidate') and catalog.get('region_epoch')
                     and t['candidate'].get('region_epoch')==catalog['region_epoch']
                     and t.get('mission_id')!=self.mission_id][:5],
-                'decision_options': ['execute_frontier', 'stop_robot'] + (['perform_observation'] if self.observations else []),
+                'decision_options': (['start_investigation','view_map','plan_navigation','navigate_to_pose',
+                                     'navigate_through_poses','finish_investigation','cancel_task','stop_robot']
+                                     if self.investigations_enabled() and self.store.meta('mission:'+self.mission_id,{}).get('phase')=='ai_investigation'
+                                     else ['execute_frontier','stop_robot'] + (['perform_observation'] if self.observations else [])),
                 'observation_options': self.store.meta('observation_catalog', {}) if self.observations else {'options': []},
                 'mission': self.store.meta('mission:'+self.mission_id) if self.mission_id else None,
                 'operator_assistance': self.store.meta('last_operator_assistance'),
-                'observe_available': self.observations, 'arbitrary_navigation_available': False,
+                'observe_available': self.observations, 'arbitrary_navigation_available': self.investigations_enabled(),
+                'investigations':self.investigation_context(),
                 'authority': 'Only local task state establishes success, cancellation or stopped.'}
 
     def get_task_status(self, task_id):
@@ -142,6 +148,55 @@ class RobotSkills:
         if not isinstance(frontier_id, str) or len(frontier_id) > 64:
             raise ValueError('invalid_frontier_id')
         return self._submit('execute_frontier', {'frontier_id': frontier_id}, request_id)
+
+    def investigations_enabled(self):
+        return bool(self.mission_id and self.store.meta('mission:'+self.mission_id,{}).get('two_stage'))
+
+    def investigation_context(self):
+        if not self.investigations_enabled(): return None
+        m=self.store.meta('mission:'+self.mission_id,{})
+        from .investigation import oscillating
+        events=self.store.meta('investigation_memory:'+self.mission_id,[])
+        return {'phase':m.get('phase'),'handoff_reason':(m.get('handoff') or {}).get('reason'),
+                'active':self.store.meta('investigation:'+str(m.get('active_investigation'))),
+                'history':[self.store.meta('investigation:'+iid) for iid in m.get('investigation_ids',[])][-12:],
+                'failure_memory':events[-24:],'oscillation_detected':oscillating(events),
+                'world_complete':False}
+
+    def view_map(self, request_id):
+        """Asynchronous online map/image snapshot; poll get_task_status."""
+        return self._submit('view_map',{},request_id)
+
+    def start_candidate_search(self, request_id):
+        return self._submit('search_frontiers',{},request_id)
+
+    def plan_navigation(self, poses, map_epoch, request_id):
+        from .investigation import poses_payload
+        return self._submit('plan_navigation',poses_payload(poses,map_epoch),request_id)
+
+    def start_investigation(self, subject, hypothesis, task_type, request_id, passage=None):
+        from .investigation import create
+        return create(self.store,self.mission_id,subject,hypothesis,task_type,request_id,passage)
+
+    def finish_investigation(self, investigation_id, outcome, assessment, evidence_task_ids):
+        from .investigation import finish
+        return finish(self.store,self.mission_id,investigation_id,outcome,assessment,evidence_task_ids)
+
+    def navigate_to_pose(self, investigation_id, pose, map_epoch, request_id):
+        from .investigation import poses_payload
+        return self._submit('navigate_to_pose',{**poses_payload([pose],map_epoch),
+                            'investigation_id':investigation_id},request_id)
+
+    def navigate_through_poses(self, investigation_id, poses, map_epoch, request_id):
+        from .investigation import poses_payload
+        return self._submit('navigate_through_poses',{**poses_payload(poses,map_epoch),
+                            'investigation_id':investigation_id},request_id)
+
+    def cancel_task(self, task_id):
+        task=self.store.get(task_id)
+        if not self.mission_id or task.get('mission_id')!=self.mission_id or task['kind']=='stop_robot':
+            raise ValueError('cancel_requires_owned_non_stop_task')
+        return self.store.cancel(task_id)
 
     def fixed_step(self, request_id):
         return self._submit('fixed_step', {}, request_id)

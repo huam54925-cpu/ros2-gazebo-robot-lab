@@ -1,5 +1,6 @@
 """Information-seeking observation goals; all inputs are the current SLAM map."""
 import math
+import time
 import numpy as np
 from frontier import FrontierMap, Settings, components
 
@@ -7,7 +8,9 @@ from frontier import FrontierMap, Settings, components
 def settings():
     # Replace an all-heading unknown-space circle with the actual oriented body.
     # Known-obstacle clearance and the independent velocity guard are unchanged.
-    return Settings(unknown_clearance=0.35, visited_radius=1.0, minimum_goal_distance=1.2,
+    from safety_profile import FOOTPRINT_MODE
+    return Settings(obstacle_clearance=0. if FOOTPRINT_MODE else 2.65,
+                    unknown_clearance=0. if FOOTPRINT_MODE else 0.35, visited_radius=1.0, minimum_goal_distance=1.2,
                     maximum_frontier_distance=3.0, maximum_candidates=12)
 
 
@@ -36,7 +39,7 @@ class AggressiveMap(FrontierMap):
     def gain(self, x, y, heading=0.):
         return len(self.visibility.visible([x,y,heading]))*self.visibility.resolution**2
 
-    def candidates(self, robot, excluded=(), regional=False, candidate_offset=0, audit=None):
+    def candidates(self, robot, excluded=(), regional=False, candidate_offset=0, audit=None, progress=None):
         groups = [g for g in components(self.frontier)
                   if len(g)*self.resolution>=self.settings.minimum_frontier_length]
         info = {'frontier_clusters':len(groups),'safe_cells':int(self.safe.sum()),
@@ -55,7 +58,10 @@ class AggressiveMap(FrontierMap):
         sampled = []
         def record(point,reason,**extra):
             if audit is not None:audit.append({'position':[float(v) for v in point],'stage':'pose_generation','reason':reason,**extra})
+        feedback_at=time.monotonic()
         for point in points:
+            if progress is not None and time.monotonic()-feedback_at>=.25:
+                progress();feedback_at=time.monotonic()
             delta = point-np.asarray(robot[:2]); distance = float(np.linalg.norm(delta))
             if distance<self.settings.minimum_goal_distance:
                 info['pose_filter_counts']['too_near']+=1

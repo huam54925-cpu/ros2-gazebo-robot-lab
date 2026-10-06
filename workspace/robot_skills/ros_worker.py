@@ -25,7 +25,11 @@ from rclpy.qos import qos_profile_sensor_data
 from robot_skills.observation_worker import ObservationMixin
 
 
-class Executor(ObservationMixin, Trial):
+from robot_skills.investigation_worker import InvestigationMixin
+from robot_skills.investigation import QUERY_KINDS, NAVIGATION_KINDS, failure_code
+
+
+class Executor(InvestigationMixin, ObservationMixin, Trial):
     def odom_cb(self,msg):
         super().odom_cb(msg)
         stamp=msg.header.stamp.sec+msg.header.stamp.nanosec*1e-9
@@ -52,6 +56,8 @@ class Executor(ObservationMixin, Trial):
         self.canceling = False
         self.last_status_at = 0
         self.fixed = bool(task and task['kind'] == 'fixed_step')
+        self.mission_state=store.meta('mission:'+str((task or {}).get('mission_id')), {})
+        self.two_stage=self.mission_state.get('two_stage',False)
         Explorer.__init__(self, NS(output=str(DIRECTORY / (self.identifier + '.detail.json')),
                                   policy='aggressive', wall_budget=240, max_goals=1,
                                   goal_timeout=45 if self.fixed else 180))
@@ -64,9 +70,18 @@ class Executor(ObservationMixin, Trial):
             self.config=replace(self.config,maximum_frontier_distance=4.5,
                                 minimum_goal_distance=.4 if self.short_start else 1.2)
             self.report['configuration']=asdict(self.config)
+        if self.two_stage:
+            from dataclasses import replace,asdict
+            self.config=replace(self.config,maximum_frontier_distance=4.5,maximum_candidates=24)
+            self.report['configuration']=asdict(self.config)
+            self.args.wall_budget=max(1,self.mission_state['deadline_monotonic_s']-time.monotonic())
         self.report['candidate_search']=self.candidate_search
         self.report['short_start']=self.short_start
         self.report['path_clearance_m']=self.required_path_clearance_m
+        from safety_profile import FOOTPRINT_MODE
+        if FOOTPRINT_MODE and not self.fixed:
+            self.args.goal_timeout=600
+            self.report['limits']['goal_wall_timeout']=600
         from robot_skills.provenance import source_manifest
         self.report['source_sha256'] = source_manifest()
 
@@ -95,7 +110,7 @@ class Executor(ObservationMixin, Trial):
         if self.task and not self.canceling:
             if self.store.should_cancel(self.identifier):
                 raise RuntimeError('stop_requested')
-            if self.distance > (.65 if self.fixed else 10):
+            if self.distance > (.65 if self.fixed else self.mission_state['limits']['max_distance'] if self.two_stage else 10):
                 raise RuntimeError('distance_budget_exhausted')
             if time.monotonic()-self.last_status_at >= .5:
                 if self.task.get('mission_id'):
@@ -111,6 +126,14 @@ class Executor(ObservationMixin, Trial):
                 self.last_status_at = time.monotonic()
 
     def ready(self):
+        from safety_profile import FOOTPRINT_MODE
+        if FOOTPRINT_MODE:
+            guard_path=WORKSPACE/'log'/'footprint-guard-status.json'
+            guard=json.loads(guard_path.read_text())
+            from navigation_base.robot_contract import CONTRACT_HASH
+            if (guard.get('profile')!='footprint_075' or time.monotonic()-guard.get('generated_monotonic_s',0)>2
+                    or (self.two_stage and guard.get('contract_hash')!=CONTRACT_HASH)):
+                raise RuntimeError('footprint_guard_profile_not_confirmed')
         for client in (self.planner, self.nav):
             if not client.wait_for_server(timeout_sec=10):
                 raise RuntimeError('nav2_unavailable')
@@ -171,7 +194,7 @@ class Executor(ObservationMixin, Trial):
 
     def evaluate_path(self,path,candidate):
         result=Explorer.evaluate_path(self,path,candidate)
-        if getattr(self,'candidate_search','baseline')=='wide_4_5' and result['safe']:
+        if getattr(self,'candidate_search','baseline')=='wide_4_5' and result['safe'] and 'body_sweep' not in result:
             from observation import body_sweep
             grid=self.grid_snapshot()
             body=body_sweep(grid['data'],grid['resolution'],grid['origin'],path,self.pose(),
@@ -188,7 +211,7 @@ class Executor(ObservationMixin, Trial):
         search=search_for(self.store)
         excluded = [(t['candidate']['x'], t['candidate']['y']) for t in self.store.tasks()
                     if t.get('candidate') and t['accepted']]
-        if mode=='memory':excluded=[] # Policy memory replaces permanent visited circles, never safety geometry.
+        if mode=='memory' or self.two_stage:excluded=[] # Policy memory replaces permanent visited circles, never safety geometry.
         previous=self.store.meta('catalog',{})
         offset=(previous.get('next_candidate_offset',0) if not previous.get('candidates') and
                 previous.get('map_version')==self.latest['map_version'] and previous.get('more_candidates') and
@@ -213,7 +236,11 @@ class Executor(ObservationMixin, Trial):
         bridge=self.upgrade_bridge(grid,start,memory['id'],mid,mode) if mode!='baseline' else None
         generation_audit=[]
         model=self.model()
+        from safety_profile import FOOTPRINT_MODE
+        def drain_feedback():
+            for _ in range(64):rclpy.spin_once(self.node,timeout_sec=0.)
         candidates, info = model.candidates(start, excluded, regional=True,candidate_offset=offset,
+                                             **({'progress':drain_feedback} if FOOTPRINT_MODE else {}),
                                              **({'audit':generation_audit} if bridge else {}))
         if bridge and mode=='memory':
             from frontier import components
@@ -239,7 +266,17 @@ class Executor(ObservationMixin, Trial):
                 break
             self.health()
             attempted += 1
+            if self.task and self.task['kind']=='search_frontiers':
+                self.store.update(self.identifier,phase='searching',search_progress={
+                    'checked':offset+attempted,'shortlist_size':len(candidates),
+                    'total_proposals':info.get('oriented_candidates_before_cap'),
+                    'safe_found':len(safe),'search_complete':False})
             candidate.update(region_epoch=memory['id'], target_region_id=candidate['region_id'], transit=False)
+            if self.two_stage:
+                from robot_skills.investigation import repetition_reason
+                blocked=repetition_reason(self.store.meta('investigation_memory:'+mid,[]),[candidate],memory['id'],start)
+                if blocked:
+                    rejected.append({'candidate_id':candidate['id'],'reason':blocked});continue
             plan, outcome = self.plan(candidate)
             if plan is None:
                 if bridge:plan_rejections.append((dict(candidate),outcome))
@@ -322,7 +359,9 @@ class Executor(ObservationMixin, Trial):
             safe.append(item);checked_paths[item['frontier_id']]=poses
         self.health()
         more=offset+attempted < info.get('oriented_candidates_before_cap',len(candidates))
-        complete = offset==0 and attempted == len(candidates) and not info.get('shortlist_truncated',False) and gain_version == self.latest['map_version']
+        complete = (attempted == len(candidates) and not more and gain_version == self.latest['map_version']
+                    if self.two_stage else offset==0 and attempted == len(candidates)
+                    and not info.get('shortlist_truncated',False) and gain_version == self.latest['map_version'])
         result = {'catalog_id': batch, 'catalog_schema':3, 'region_epoch':memory['id'],
                   'candidate_search':search,'short_start':getattr(self,'short_start',False),
                   'path_clearance_m':getattr(self,'required_path_clearance_m',2.15),
@@ -378,10 +417,14 @@ class Executor(ObservationMixin, Trial):
         try:
             self.store.update(self.identifier, status='running', phase='validating')
             self.ready()
+            if self.two_stage:self.require_contract()
             result['before'] = self.sample()
             self.timing_phase('preplan_validation')
             self.metric_before = self.grid_snapshot()
             self.save_map('gain_before')
+            if self.task['kind'] in NAVIGATION_KINDS:
+                self.perform_investigation_navigation(result)
+                return result
             observation = self.task['kind'] == 'perform_observation'
             if observation:
                 candidate = self.task['candidate']
@@ -400,6 +443,11 @@ class Executor(ObservationMixin, Trial):
                     raise RuntimeError('frontier_no_longer_exists')
                 if time.time() > catalog.get('expires_unix_s', 0):
                     raise RuntimeError('frontier_catalog_expired')
+                if self.two_stage:
+                    from robot_skills.investigation import repetition_reason
+                    why=repetition_reason(self.store.meta('investigation_memory:'+self.task['mission_id'],[]),
+                        [candidate],candidate.get('region_epoch'),self.pose())
+                    if why:raise RuntimeError(why)
                 if not self.model().is_safe(candidate['x'], candidate['y'], candidate['yaw']):
                     if self.task.get('exploration_mode','baseline')!='baseline':
                         from robot_skills.upgrade_geometry import footprint_evidence
@@ -434,6 +482,11 @@ class Executor(ObservationMixin, Trial):
                 if not clearance['safe']:
                     raise RuntimeError('path_invalidated_before_dispatch')
                 self.health()
+                if self.two_stage and version!=self.latest['map_version']:
+                    clearance=self.evaluate_path(plan['path'],candidate)
+                    result['clearance']=clearance
+                    if not clearance['safe']:raise RuntimeError('path_invalidated_before_dispatch')
+                    break
                 if version == self.latest['map_version']:
                     self.recheck_exploration_policy(candidate,plan)
                     self.health()
@@ -522,11 +575,14 @@ class Executor(ObservationMixin, Trial):
             result['phase_timing']=self.phase_timer.rows
             result['navigation_motion_sim_s']=self.motion_seconds
             result['navigation_motion_scope']='odometry stamped intervals; turn_while_translating overlaps translation; gaps above .5s excluded'
+            result['trajectory']=[t['pose'] for t in self.traces if t.get('pose')]
+            result['failure_code']=None if result['status']=='succeeded' else failure_code(result['reason'])
             self.report.update(result)
             self.checkpoint()
             self.store.update(self.identifier, status=result['status'], reason=result['reason'],
                               stopped=result['stopped'], sensor_fresh=self.freshness(),
-                              map_version=self.latest.get('map_version'), phase='finished', result=result)
+                              map_version=self.latest.get('map_version'), phase='finished', result=result,
+                              dispatched=self.dispatched, failure_code=result.get('failure_code'))
         return result
 
     def recheck_exploration_policy(self,candidate,plan):
@@ -629,9 +685,12 @@ def main():
         else:
             task = store.get(args.task_id) if args.operation == 'task' else None
             worker = Executor(store, task)
-            result = (worker.observation_catalog() if args.operation == 'observations' else worker.catalog()) if task is None else worker.perform()
+            result = ((worker.observation_catalog() if args.operation == 'observations' else worker.catalog()) if task is None
+                      else worker.perform_query() if task['kind'] in QUERY_KINDS else worker.perform())
         print(json.dumps(result, allow_nan=False), flush=True)
     except (Exception, KeyboardInterrupt) as error:
+        import traceback
+        traceback.print_exc()
         if args.operation == 'task':
             if worker is None and isinstance(error, BlockingIOError):
                 store.update(args.task_id, status='rejected', reason='another_navigation_owner')

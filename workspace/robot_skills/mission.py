@@ -5,6 +5,17 @@ import uuid
 
 
 def limits(max_steps=3, max_distance=6., max_sim_time=120., max_wall_time=180., max_failures=2, profile='trial'):
+    if profile == 'mission':
+        if max_steps is not None:
+            raise ValueError('mission_uses_time_distance_failure_budgets_not_steps')
+        values = dict(max_steps=None, max_distance=max_distance, max_sim_time=max_sim_time,
+                      max_wall_time=max_wall_time, max_failures=max_failures, profile=profile)
+        for key in ('max_distance','max_sim_time','max_wall_time','max_failures'):
+            if isinstance(values[key],bool) or not math.isfinite(values[key]) or values[key] <= 0:
+                raise ValueError('invalid_'+key)
+        if int(max_failures)!=max_failures:
+            raise ValueError('invalid_max_failures')
+        return values
     if profile not in ('trial','extended','hour'): raise ValueError('invalid_budget_profile')
     values = dict(max_steps=max_steps, max_distance=max_distance, max_sim_time=max_sim_time,
                   max_wall_time=max_wall_time, max_failures=max_failures)
@@ -28,6 +39,8 @@ def extend_operator_budget(store, mid, budget, sim_time):
     """
     import json
     budget=limits(**budget)
+    if budget['profile']=='mission' or store.meta('mission:'+mid,{}).get('two_stage'):
+        raise ValueError('two_stage_budget_is_fixed_for_the_run')
     with store.transaction() as db:
         m=store._meta(db,'mission:'+mid)
         if not m or store._meta(db,'active_mission')!=mid or store._meta(db,'stop_latched',False):
@@ -53,7 +66,9 @@ def extend_operator_budget(store, mid, budget, sim_time):
 
 
 def progress(mission, tasks):
-    owned = [t for t in tasks if t.get('mission_id') == mission['mission_id'] and t['kind'] != 'stop_robot']
+    from .investigation import QUERY_KINDS
+    owned = [t for t in tasks if t.get('mission_id') == mission['mission_id']
+             and t['kind'] not in QUERY_KINDS | {'stop_robot'}]
     return {'steps': len(owned),
             'distance_m': sum(max(t.get('distance_odom_m', 0), (t.get('result') or {}).get('distance_odom_m', 0)) for t in owned),
             'failures': sum(t['status'] in ('rejected','aborted','canceled','indeterminate','stop_unconfirmed') for t in owned),
@@ -72,7 +87,7 @@ def reason(mission, tasks, sim_time=None, now=None, check_steps=True):
         if sim_time-mission['start_sim_s'] >= budget['max_sim_time']: return 'max_sim_time'
     if p['distance_m'] >= budget['max_distance']: return 'max_distance'
     if p['failures'] >= budget['max_failures']: return 'max_failures'
-    if check_steps and not p['active'] and p['steps'] >= budget['max_steps']: return 'max_steps'
+    if check_steps and budget['max_steps'] is not None and not p['active'] and p['steps'] >= budget['max_steps']: return 'max_steps'
     return None
 
 
@@ -90,8 +105,18 @@ def action_budget(mission, tasks, sim_time, estimated_sim_s, path_length_m):
             'remaining_distance_m':distance,'estimated_sim_s':estimated_sim_s,'planned_length_m':path_length_m}
 
 
-def start(store, budget, state, observations=False, exploration_mode='baseline', candidate_search='baseline', short_start=False, path_clearance_m=2.15):
+def start(store, budget, state, observations=False, exploration_mode='baseline', candidate_search='baseline', short_start=False, path_clearance_m=2.15, two_stage=False):
     budget = limits(**budget)
+    from navigation_base.safety_profile import PROFILE,FOOTPRINT_MODE
+    if two_stage:
+        if budget['profile']!='mission' or not FOOTPRINT_MODE or path_clearance_m!=2.15:
+            raise ValueError('two_stage_requires_mission_budget_and_footprint_profile')
+        if observations or exploration_mode!='baseline' or candidate_search!='baseline' or short_start:
+            raise ValueError('two_stage_uses_persistent_investigation_policy')
+    elif budget['profile']=='mission':
+        raise ValueError('mission_budget_requires_two_stage')
+    if not two_stage and FOOTPRINT_MODE and (budget['max_steps']>3 or observations):
+        raise ValueError('footprint_trial_requires_at_most_three_navigation_tasks')
     if path_clearance_m not in (1.48,2.15): raise ValueError('invalid_path_clearance')
     if path_clearance_m==1.48 and (budget['max_steps']>3 or candidate_search!='wide_4_5' or observations):
         raise ValueError('reduced_clearance_requires_at_most_three_wide_frontier_tasks')
@@ -120,7 +145,8 @@ def start(store, budget, state, observations=False, exploration_mode='baseline',
             raise ValueError('unresolved_task')
         now = time.monotonic(); mid = str(uuid.uuid4())
         body = {'mission_id': mid, 'status': 'running', 'stop_reason': None, 'limits': budget,
-                'exploration_mode':exploration_mode,
+                'safety_profile':PROFILE,'exploration_mode':exploration_mode,
+                'two_stage':two_stage,'phase':'classical' if two_stage else 'legacy',
                 'candidate_search':candidate_search,
                 'short_start':short_start,
                 'path_clearance_m':path_clearance_m,
@@ -128,6 +154,11 @@ def start(store, budget, state, observations=False, exploration_mode='baseline',
                 'started_monotonic_s': now, 'deadline_monotonic_s': now+budget['max_wall_time'],
                 'heartbeat_monotonic_s': now, 'stop_request_id': str(uuid.uuid4()),
                 'stopped': False, 'started_unix_s': time.time()}
+        if two_stage:
+            from .investigation import DEFAULT_HANDOFF
+            from navigation_base.robot_contract import CONTRACT_HASH
+            body.update(handoff_policy=dict(DEFAULT_HANDOFF),contract_hash=CONTRACT_HASH,
+                        empty_complete_searches=0,investigation_ids=[])
         store._set_meta(db, 'mission:'+mid, body); store._set_meta(db, 'active_mission', mid)
     return body
 
@@ -140,7 +171,18 @@ def update(store, mid, **changes):
         # A late heartbeat cannot resurrect an ending session.
         if body['status'] == 'stopping' and changes.get('status') == 'running': changes.pop('status')
         if body.get('stop_reason') and changes.get('stop_reason'): changes.pop('stop_reason')
-        body.update(changes); store._set_meta(db, 'mission:'+mid, body)
+        body.update(changes)
+        if body.get('two_stage') and body['status'] in ('stopping','finished'):
+            body['phase']='stop_confirmation' if body['status']=='stopping' else 'finished'
+            if body['status']=='finished' and body.get('active_investigation'):
+                key='investigation:'+body['active_investigation']
+                investigation=store._meta(db,key,{})
+                if investigation.get('status')=='active':
+                    investigation.update(status='unresolved',termination_reason=body.get('stop_reason'),
+                                         updated_unix_s=time.time(),structure_confirmed=False,
+                                         stopped=body.get('stopped',False))
+                    store._set_meta(db,key,investigation)
+        store._set_meta(db, 'mission:'+mid, body)
         if body['status'] == 'finished' and store._meta(db, 'active_mission') == mid:
             store._set_meta(db, 'active_mission', None)
         return body

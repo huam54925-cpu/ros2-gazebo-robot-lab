@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "base_frame": "vehicle/base_link",
+  "scan_frame": "vehicle/lidar",
+  "footprint": [[-1.73,-0.53],[-0.32,-0.96],[0.32,-0.96],[0.32,0.96],[-0.32,0.96],[-1.73,0.53]],
+  "body_padding_m": 0.05,
+  "motion_sample_step_m": 0.05,
+  "scan_in_base": [-0.7057095,0.0,0.0],
+  "linear_deceleration_m_s2": 0.4,
+  "angular_deceleration_rad_s2": 0.5,
+  "reaction_time_s": 0.25,
+  "guard_sample_step_m": 0.01,
+  "laser_hit_square_m": 0.02,
+  "command_timeout_s": 0.5,
+  "profiles": {
+    "radial_default": {"max_linear_m_s": 0.25, "max_angular_rad_s": 0.35, "scan_timeout_s": 1.5, "odom_timeout_s": 2.0},
+    "footprint_075": {"max_linear_m_s": 0.10, "max_angular_rad_s": 0.12, "scan_timeout_s": 0.5, "odom_timeout_s": 0.5}
+  }
+}

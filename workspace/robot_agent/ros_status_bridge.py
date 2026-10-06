@@ -20,6 +20,7 @@ from tf2_ros import Buffer, TransformListener, TransformException
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'navigation_base'))
 from safety_contract import STOP_RADIUS_M, blocked_reason, scan_state
 from map_identity import map_version
+from safety_profile import FOOTPRINT_MODE, PROFILE
 
 OUTPUT = Path(__file__).resolve().parents[1] / 'log' / 'robot-status.json'
 
@@ -129,6 +130,13 @@ class StatusBridge:
                             'reason_inferred_from_inputs': blocked_reason(cmd_age, scan_age,
                                                                         self.nearest, self.valid_scan),
                             'authoritative_guard_status': False}}
+        if FOOTPRINT_MODE:
+            try:
+                guard=json.loads((OUTPUT.parent/'footprint-guard-status.json').read_text())
+                guard['fresh']=now-guard['generated_monotonic_s']<2.
+            except (OSError,ValueError):guard={'fresh':False}
+            result['guard']={'profile':PROFILE,'stop_radius_m':None,'body_margin_m':.075,
+                             'live_guard':guard,'authoritative_guard_status':guard['fresh']}
         # Reject invalid numeric data instead of writing nonstandard NaN/Infinity JSON.
         try:
             encoded = json.dumps(result, allow_nan=False)

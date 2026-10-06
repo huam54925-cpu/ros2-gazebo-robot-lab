@@ -21,7 +21,9 @@ def map_semantics(data,resolution):
 
 
 def navigation_footprint(path=None):
-    path=path or Path(__file__).resolve().parents[1]/'navigation/nav2.yaml'
+    if path is None:
+        from robot_contract import CONTRACT
+        return np.asarray(CONTRACT['footprint'],dtype=float), CONTRACT['body_padding_m']
     config=yaml.safe_load(Path(path).read_text())
     specs=[config[name][name]['ros__parameters'] for name in ('local_costmap','global_costmap')]
     polygons=[ast.literal_eval(c['footprint']) for c in specs]
@@ -34,7 +36,13 @@ def body_sweep(data,resolution,origin,path,start,goal):
     """Check padded body along both planned poses and navigation turn prediction."""
     body,padding=navigation_footprint();radius=float(np.linalg.norm(body,axis=1).max())+padding
     checked=0
-    for chain in (navigation_prediction(path,start,goal),[start,*path,goal]):
+    from safety_profile import FOOTPRINT_MODE
+    predicted=navigation_prediction(path,start,goal,
+        start_connector_tolerance=resolution*math.sqrt(2) if FOOTPRINT_MODE else 0.)
+    # Smac2D waypoint quaternions are not commanded headings. RPP uses a .65 m
+    # carrot and a final goal yaw; do not invent spins at intermediate poses.
+    chains=(predicted,) if FOOTPRINT_MODE else (predicted,[start,*path,goal])
+    for chain in chains:
         for a,b in zip(chain,chain[1:]):
             turn=angle_delta(a[2],b[2]);travel=math.dist(a[:2],b[:2])+radius*abs(turn)
             count=max(1,math.ceil(travel/SAMPLE_STEP_M))
@@ -204,13 +212,18 @@ class Visibility:
         return len(visible-baseline)*self.resolution**2
 
 
-def navigation_prediction(path,start,goal):
+def navigation_prediction(path,start,goal,start_connector_tolerance=0.):
     """Forward segment headings plus starting/final turns, matching clearance assumptions."""
     nodes=[list(start)]
-    for point in [*path,goal]:
+    points=[*path,goal]
+    for index,point in enumerate(points):
         previous=nodes[-1]
         if math.dist(previous[:2],point[:2])>1e-6:
             bearing=math.atan2(point[1]-previous[1],point[0]-previous[0])
+            if index==0 and math.dist(start[:2],point[:2])<=start_connector_tolerance:
+                next_point=next((p for p in points[1:] if math.dist(p[:2],start[:2])>start_connector_tolerance),None)
+                if next_point is not None:
+                    bearing=math.atan2(next_point[1]-start[1],next_point[0]-start[0])
             nodes.extend([[*previous[:2],bearing],[*point[:2],bearing]])
     nodes.append(list(goal))
     return nodes
@@ -240,7 +253,8 @@ def action_time_estimate(length, poses, resolution):
             timed=[poses[0],*poses[first+1:]]
             removed=connector
     turn=sum(abs(angle_delta(a[2],b[2])) for a,b in zip(timed,timed[1:]))
-    components={'translation_sim_s':length/.15,'turning_sim_s':turn/.20,
+    from safety_profile import FOOTPRINT_MODE
+    components={'translation_sim_s':length/(.08 if FOOTPRINT_MODE else .15),'turning_sim_s':turn/(.08 if FOOTPRINT_MODE else .20),
                 'planning_validation_sim_s':2.,'stop_verification_sim_s':1.,'feedback_wait_sim_s':4.}
     expected=sum(components.values())
     reserve=max(3.,.10*(components['translation_sim_s']+components['turning_sim_s']))

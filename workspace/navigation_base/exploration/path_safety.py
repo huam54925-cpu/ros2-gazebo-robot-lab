@@ -12,7 +12,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from safety_contract import STOP_RADIUS_M
 
 PLANNING_MARGIN_M = 0.25  # tracking / localization / map uncertainty allowance
-SAMPLE_STEP_M = 0.05
+from robot_contract import CONTRACT
+SAMPLE_STEP_M = CONTRACT['motion_sample_step_m']
 
 
 def angle_delta(a, b):
@@ -77,6 +78,15 @@ class PathSafety:
             return {**result, 'reason': 'invalid_path_or_pose'}
         if math.dist(path[-1][:2], goal[:2]) > 0.25:
             return {**result, 'reason': 'path_goal_mismatch'}
+        from safety_profile import FOOTPRINT_MODE
+        if FOOTPRINT_MODE:
+            from observation import body_sweep
+            body=body_sweep(self.data,self.resolution,self.origin,path,start,goal)
+            return {**result,'safe':body['safe'],'reason':body['reason'],
+                    'safety_profile':'footprint_075','required_clearance_m':None,
+                    'guard_threshold_m':None,'planning_margin_m':None,
+                    'required_body_margin_m':CONTRACT['body_padding_m']+SAMPLE_STEP_M/2,'body_sweep':body,
+                    'known_obstacles_only':False}
         # Include actual start orientation, stored planner orientations, forward
         # segment tangents and the final goal rotation. Smac2D quaternion yaw
         # alone is not the controller's heading on every part of a curved path.

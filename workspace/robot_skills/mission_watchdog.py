@@ -10,7 +10,7 @@ from robot_skills.store import ACTIVE
 
 
 def run(mid):
-    skills = RobotSkills(); store = skills.store
+    skills = RobotSkills(mission_id=mid); store = skills.store
     with (store.directory/(mid+'.watchdog.lock')).open('w') as lock:
         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
         while True:

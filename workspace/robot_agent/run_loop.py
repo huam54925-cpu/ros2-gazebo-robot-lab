@@ -93,7 +93,9 @@ def classic_choice(available, joint=False):
 def compact_model_data(value):
     if isinstance(value,dict):
         return {k:({'digest':v.get('digest'),'scope':'local_comparison_patch_retained_in_executor'}
-                   if k=='patch' and isinstance(v,dict) else compact_model_data(v)) for k,v in value.items()}
+                   if k=='patch' and isinstance(v,dict) else
+                   {"sample_count":len(v),"scope":"geometry_samples_retained_in_local_evidence"}
+                   if k in ("checked_path","visible_boundary_world_xy","incremental_boundary_world_xy") and isinstance(v,list) else compact_model_data(v)) for k,v in value.items()}
     if isinstance(value,(list,tuple)): return [compact_model_data(v) for v in value]
     return value
 
@@ -142,7 +144,7 @@ async def decide(client, model, context, available, previous, expansion=False):
         '差集为零不等于没有探索价值。记忆仅影响观察终点资格，不是costmap障碍或运动许可。'
         '存在历史失败时比较其他已通过本地检查的接近方式，空候选不证明全图完成。') if mode=='memory' else ''
     payload=compact_model_data(payload)
-    response=await client.responses.create(model=model, instructions=INSTRUCTIONS+(EXPANSION_INSTRUCTIONS if expansion else '')+memory_instructions,
+    response=await client.responses.create(model=model, instructions=INSTRUCTIONS+(EXPANSION_INSTRUCTIONS if expansion else '')+memory_instructions+os.environ.get('ROBOT_EXPERIMENT_INSTRUCTION',''),
         input=[{'role':'user','content':json.dumps(payload,ensure_ascii=False)}],
         tools=[{'type':'function','name':'choose_next_action','description':'Choose one local safe ID or STOP.',
                 'strict':True,'parameters':schema}], tool_choice='required', parallel_tool_calls=False,
@@ -428,10 +430,12 @@ async def decision_loop(call, choose, session_state, end, checkpoint, report, ob
 
 async def run(args, report, output):
     skills=RobotSkills(); store=skills.store
-    budget=mission.limits(args.max_steps,args.max_distance,args.max_sim_time,args.max_wall_time,args.max_failures,profile=args.budget_profile)
+    two_stage=args.command=='two-stage-loop'
+    budget=mission.limits(None if two_stage else args.max_steps,args.max_distance,args.max_sim_time,args.max_wall_time,args.max_failures,profile='mission' if two_stage else args.budget_profile)
     mode=getattr(args,'exploration_mode','baseline')
     search=getattr(args,'candidate_search','baseline')
-    m=mission.start(store,budget,skills.get_robot_state(),args.observations,mode,search,getattr(args,'short_start',False),getattr(args,'path_clearance_m',2.15)); mid=m['mission_id']
+    m=mission.start(store,budget,skills.get_robot_state(),args.observations,mode,search,getattr(args,'short_start',False),getattr(args,'path_clearance_m',2.15),two_stage=two_stage); mid=m['mission_id']
+    skills=RobotSkills(store=store,mission_id=mid,observations=args.observations)
     report.update(mission_id=mid,limits=budget,rounds=[],policy=args.command,observations_enabled=args.observations,
                   regional_baseline=args.regional,
                   expansion_priority=args.expansion,
@@ -472,14 +476,21 @@ async def run(args, report, output):
     try:
         env={**os.environ,'ROBOT_MISSION_ID':mid,'ROBOT_OBSERVATIONS_ENABLED':'1' if args.observations else '0'}
         params=StdioServerParameters(command=sys.executable,args=[str(HERE/'mcp_skills_server.py')],env=env)
+        tool_timeout=260 if m.get('safety_profile')=='footprint_075' else 110
         async with stdio_client(params) as streams:
-            async with ClientSession(*streams,read_timeout_seconds=110) as session:
+            async with ClientSession(*streams,read_timeout_seconds=tool_timeout) as session:
                 await session.initialize()
-                allowed=NAMES | (OBS_TOOLS if args.observations else set())
-                if {t.name for t in (await session.list_tools()).tools} != allowed: raise RuntimeError('unexpected_tools')
+                from investigation_loop import TOOLS as INVESTIGATION_TOOLS
+                allowed=NAMES | (OBS_TOOLS if args.observations else set()) | (INVESTIGATION_TOOLS if two_stage else set())
+                definitions=(await session.list_tools()).tools
+                if {t.name for t in definitions} != allowed: raise RuntimeError('unexpected_tools')
                 async def call(name, arguments=None):
                     if name not in allowed: raise ValueError('tool_not_allowed')
-                    return unpack(await session.call_tool(name,arguments or {},read_timeout_seconds=110))
+                    response=await session.call_tool(name,arguments or {},read_timeout_seconds=tool_timeout)
+                    if two_stage and response.is_error:
+                        return {'status':'request_rejected','reason':''.join(
+                            c.text for c in response.content if c.type=='text')[:1500]}
+                    return unpack(response)
                 if args.command=='classical-loop':
                     async def choose(context,available,previous):
                         from robot_skills.regional import rank
@@ -495,7 +506,11 @@ async def run(args, report, output):
                                 # Log only concise rationale summaries; no hidden reasoning request.
                                 history=[{'choice':r.get('model_choice'),'result':r.get('execution_result'),'metrics':r.get('metrics')} for r in previous]
                                 return await decide(client,model,context,available,history,args.expansion)
-                            await decision_loop(call,choose,session_state,end,checkpoint,report,args.observations,getattr(args,'max_reselections',2))
+                            if two_stage:
+                                from investigation_loop import run as run_investigations
+                                await run_investigations(call,definitions,skills,session_state,end,checkpoint,report,client,model)
+                            else:
+                                await decision_loop(call,choose,session_state,end,checkpoint,report,args.observations,getattr(args,'max_reselections',2))
     except (Exception, asyncio.CancelledError) as error:
         report['error']=({'status':'client_interrupted'} if isinstance(error,asyncio.CancelledError) else safe_error(error))
         end('client_interrupted_or_error')
@@ -537,7 +552,7 @@ def main():
     parser.add_argument('--regional',action='store_true',help='Use regional deterministic baseline for classical-loop; model always receives regional context.')
     parser.add_argument('--output',type=Path)
     args=parser.parse_args(); output=args.output or HERE.parents[1]/'logs'/('loop-'+str(uuid.uuid4())+'.json')
-    output.parent.mkdir(parents=True,exist_ok=True); report={}
+    output.parent.mkdir(parents=True,exist_ok=True); report={'operator_experiment_instruction':os.environ.get('ROBOT_EXPERIMENT_INSTRUCTION','')}
     try:
         asyncio.run(run(args,report,output))
     except (Exception,KeyboardInterrupt) as error:

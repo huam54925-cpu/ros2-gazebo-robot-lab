@@ -1,4 +1,4 @@
-"""Exactly six tools; coordinates and control parameters are not accepted."""
+"""Legacy tools plus mission-scoped persistent investigation capabilities."""
 import asyncio
 import os
 from pathlib import Path
@@ -78,6 +78,53 @@ if skills.observations:
     def perform_observation(option_id: str, request_id: str) -> dict:
         """Execute one local observation ID; no arbitrary angles, coordinates or speeds."""
         return skills.perform_observation(option_id, request_id)
+
+
+if skills.investigations_enabled():
+    @strict_tool(annotations=WRITE)
+    def view_map(request_id: str) -> dict:
+        """Start an online SLAM snapshot; poll task_id for PNG, metric transform and unknown regions."""
+        return skills.view_map(request_id)
+
+    @strict_tool(annotations=WRITE)
+    def start_candidate_search(request_id: str) -> dict:
+        """Start a read-only planning search, returning task_id immediately; never moves."""
+        return skills.start_candidate_search(request_id)
+
+    @strict_tool(annotations=WRITE)
+    def plan_navigation(poses: list[dict[str, float]], map_epoch: str, request_id: str) -> dict:
+        """Query alternatives from current pose. Poses have x,y,yaw in map; no motion or permission grant."""
+        return skills.plan_navigation(poses,map_epoch,request_id)
+
+    @strict_tool(annotations=WRITE)
+    def start_investigation(subject: dict[str, float], hypothesis: str, task_type: str,
+                            request_id: str, passage: dict | None = None) -> dict:
+        """Persist a question: observe_structure or verify_passage. Unknowns remain hypotheses.
+        passage requires a,b endpoint XY arrays and destination_side (-1 or 1).
+        """
+        return skills.start_investigation(subject,hypothesis,task_type,request_id,passage)
+
+    @strict_tool(annotations=WRITE)
+    def navigate_to_pose(investigation_id: str, pose: dict[str, float], map_epoch: str, request_id: str) -> dict:
+        """Submit a checked map goal within an active investigation. Poll the returned task_id."""
+        return skills.navigate_to_pose(investigation_id,pose,map_epoch,request_id)
+
+    @strict_tool(annotations=WRITE)
+    def navigate_through_poses(investigation_id: str, poses: list[dict[str, float]], map_epoch: str, request_id: str) -> dict:
+        """Execute ordered poses with Nav2; each leg replans and confirms stop. Maximum 32 per request."""
+        return skills.navigate_through_poses(investigation_id,poses,map_epoch,request_id)
+
+    @strict_tool(annotations=WRITE)
+    def finish_investigation(investigation_id: str, outcome: str, assessment: str, evidence_task_ids: list[str]) -> dict:
+        """Record observations_collected, passage_verified, blocked, or unresolved with local evidence IDs.
+        Assessment is interpretation, not map truth. Navigation success alone is not structure confirmation.
+        """
+        return skills.finish_investigation(investigation_id,outcome,assessment,evidence_task_ids)
+
+    @strict_tool(annotations=WRITE)
+    def cancel_task(task_id: str) -> dict:
+        """Request cancellation of own task; poll until terminal and stopped. Does not release stop latch."""
+        return skills.cancel_task(task_id)
 
 
 server = MCPServer('robot-skills', log_level='WARNING', tools=registered_tools)

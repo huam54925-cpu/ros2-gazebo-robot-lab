@@ -5,6 +5,8 @@ from pathlib import Path
 import sqlite3
 import time
 import uuid
+import sys
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 
 DIRECTORY = Path(__file__).resolve().parents[1] / 'log' / 'robot-skills'
 ACTIVE = {'accepted', 'running', 'stopping'}
@@ -94,19 +96,24 @@ class Store:
                 body['sensor_observed_unix_s'] = time.time()
             body['running'] = body['status'] in ('running', 'stopping')
             body['updated_unix_s'] = time.time()
-            if body['status'] in TERMINAL and body['kind'] != 'stop_robot' and body['accepted']:
+            from robot_skills.investigation import QUERY_KINDS
+            if body['status'] in TERMINAL and body['kind'] not in QUERY_KINDS | {'stop_robot'} and body['accepted']:
                 if body.get('exploration_mode','baseline')!='baseline':
                     body['exploration_event_pending']=True
                 for key in ('catalog', 'observation_catalog'):
                     catalog = self._meta(db, key, {})
                     catalog['expires_unix_s'] = 0
                     self._set_meta(db, key, catalog)
+            if body['status'] in TERMINAL:
+                from robot_skills.investigation import record_terminal
+                record_terminal(self,db,body)
             self._write(db, body)
             return body
 
     def submit(self, kind, payload, request_id, mission_id=None):
         valid_uuid(request_id)
-        if kind not in ('execute_frontier', 'perform_observation', 'fixed_step', 'stop_robot'):
+        from robot_skills.investigation import TASK_KINDS, QUERY_KINDS, NAVIGATION_KINDS, poses_payload, repetition_reason, failure_code
+        if kind not in TASK_KINDS | {'execute_frontier', 'perform_observation', 'fixed_step', 'stop_robot'}:
             raise ValueError('unknown_skill')
         fingerprint = json.dumps([kind, payload], sort_keys=True, allow_nan=False)
         with self.transaction() as db:
@@ -114,7 +121,10 @@ class Store:
             if row:
                 if row[0] != fingerprint:
                     raise ValueError('request_id_conflict')
-                return {**json.loads(row[1]), 'replayed_without_execution': True}, False
+                previous=json.loads(row[1])
+                if previous.get('mission_id')!=mission_id:
+                    raise ValueError('request_id_mission_conflict')
+                return {**previous, 'replayed_without_execution': True}, False
             tasks = [json.loads(row[0]) for row in db.execute('SELECT body FROM tasks')]
             try:
                 from .mission import admission
@@ -134,6 +144,28 @@ class Store:
                     reason = 'another_task_active'
                 elif any(t['status'] in ('stop_unconfirmed', 'indeterminate') and not t.get('resolved') for t in tasks):
                     reason = 'previous_stop_unconfirmed'
+                mission = self._meta(db,'mission:'+str(mission_id),{})
+                if kind in TASK_KINDS:
+                    if not mission.get('two_stage'):
+                        reason = reason or 'two_stage_mission_required'
+                    if kind in NAVIGATION_KINDS | {'plan_navigation'}:
+                        checked=poses_payload(payload.get('poses'),payload.get('map_epoch'))
+                        if checked['map_epoch']!=self._meta(db,'regional_epoch',{}).get('id'):
+                            reason=reason or 'map_epoch_changed'
+                        if kind in NAVIGATION_KINDS:
+                            inv=self._meta(db,'investigation:'+str(payload.get('investigation_id')),{})
+                            if (mission.get('phase')!='ai_investigation' or inv.get('mission_id')!=mission_id
+                                    or inv.get('status')!='active' or inv.get('map_epoch')!=checked['map_epoch']):
+                                reason=reason or 'active_investigation_required'
+                            selected={**checked['poses'][-1], 'region_epoch':checked['map_epoch'],
+                                      'map_version':payload.get('map_version')}
+                            memory=self._meta(db,'investigation_memory:'+str(mission_id),[])
+                            snapshot=self._meta(db,'map_snapshot',{})
+                            reason=reason or repetition_reason(memory,checked['poses'],checked['map_epoch'],snapshot.get('robot_pose'))
+                if mission.get('two_stage') and kind in ('fixed_step','perform_observation'):
+                    reason=reason or 'use_investigation_navigation'
+                if mission.get('two_stage') and kind=='execute_frontier' and mission.get('phase')!='classical':
+                    reason=reason or 'frontier_execution_only_in_classical_phase'
                 if kind == 'execute_frontier':
                     catalog = self._meta(db, 'catalog', {})
                     selected = next((c for c in catalog.get('candidates', [])
@@ -180,6 +212,7 @@ class Store:
                     'exploration_step':1+sum(t.get('mission_id')==mission_id and t['kind']!='stop_robot' for t in tasks),
                     'accepted': reason is None, 'status': 'rejected' if reason else 'accepted',
                     'running': False, 'stopped': False, 'reason': reason,
+                    'failure_code':failure_code(reason) if reason else None,'source':'task_admission',
                     'sensor_fresh': {}, 'sensor_observed_unix_s': None,
                     'map_version': selected.get('map_version') if selected else None,
                     'candidate': selected, 'cancel_requested': False,
@@ -217,5 +250,8 @@ class Store:
                 raise ValueError('task_does_not_need_recovery')
             body.update(resolved=True, stopped=True, recovery_evidence=evidence,
                         recovery_unix_s=time.time(), updated_unix_s=time.time())
+            if body['status'] in TERMINAL:
+                from robot_skills.investigation import record_terminal
+                record_terminal(self,db,body)
             self._write(db, body)
             return body

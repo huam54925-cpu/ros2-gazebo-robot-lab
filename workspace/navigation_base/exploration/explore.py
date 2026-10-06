@@ -27,6 +27,7 @@ from aggressive import AggressiveMap, settings as aggressive_settings, utility
 from path_safety import PathSafety, remaining_path
 from safety_contract import STOP_RADIUS_M, SCAN_TIMEOUT_S, SCAN_FRAME, BASE_FRAME, scan_state
 from map_identity import map_version
+from safety_profile import FOOTPRINT_MODE, PROFILE
 
 
 def yaw(q):return math.atan2(2*(q.w*q.z+q.x*q.y),1-2*(q.y*q.y+q.z*q.z))
@@ -56,7 +57,7 @@ class Explorer:
         self.config=aggressive_settings() if args.policy=="aggressive" else Settings();self.started=time.monotonic();self.last_trace=self.last_progress=0
         self.report={'status':'running','stop_reason':None,'policy':args.policy,'configuration':asdict(self.config),
             'limits':{'wall_seconds':args.wall_budget,'maximum_goals':args.max_goals,'goal_wall_timeout':args.goal_timeout},
-            'ground_truth_used':False,'coverage':None,'coverage_note':'No fixed explorable-area denominator; only known-cell area is reported.'}
+            'safety_profile':PROFILE,'ground_truth_used':False,'coverage':None,'coverage_note':'No fixed explorable-area denominator; only known-cell area is reported.'}
         qos=QoSProfile(depth=1,durability=DurabilityPolicy.TRANSIENT_LOCAL)
         self.subs=[self.node.create_subscription(OccupancyGrid,'/map',self.map_cb,qos),
             self.node.create_subscription(Odometry,'/model/vehicle/odometry',self.odom_cb,10),
@@ -204,7 +205,7 @@ class Explorer:
 
     def execute(self,client,goal,timeout,kind):
         if self.handle is not None:raise RuntimeError('concurrent_action_disallowed')
-        if self.latest['nearest']<STOP_RADIUS_M:
+        if not FOOTPRINT_MODE and self.latest['nearest']<STOP_RADIUS_M:
             if not self.stop_confirmed():raise RuntimeError('stop_unconfirmed')
             return {'status':5,'error_msg':'guard_stop'}
         self.handle=self.wait(client.send_goal_async(goal),10)
@@ -214,7 +215,7 @@ class Explorer:
         checked_key=None;checked_at=-math.inf
         while not self.action_result.done():
             self.spin_once();self.health();now=time.monotonic()
-            if self.latest['nearest']<STOP_RADIUS_M:
+            if not FOOTPRINT_MODE and self.latest['nearest']<STOP_RADIUS_M:
                 if not self.cancel_active():raise RuntimeError('stop_unconfirmed')
                 return {'status':5,'error_msg':'guard_stop'}
             if kind=='navigation':
@@ -276,7 +277,9 @@ class Explorer:
         if r.result.path.header.frame_id!='map':return None,{'status':0,'error_code':1,'message':'invalid_path_frame'}
         clearance=self.evaluate_path(path,candidate)
         outcome={'status':4,'error_code':0,'clearance':clearance}
-        if not clearance['safe']:return None,outcome
+        if not clearance['safe']:
+            self.event('planning_geometry_rejected',candidate=candidate,checked_path=path,start_pose=self.pose(),clearance=clearance)
+            return None,{**outcome,'path_evidence_file':self.output.with_suffix('.events.jsonl').name}
         return {'length':sum(math.dist(a[:2],b[:2]) for a,b in zip(path,path[1:])),
                 'path':path,'clearance':clearance},outcome
 
@@ -320,7 +323,7 @@ class Explorer:
                 self.health()
                 # Guard blocks rotation as well as translation. Do not dispatch
                 # any new goal while it is still latched by the current scan.
-                if self.latest['nearest']<STOP_RADIUS_M:reason='guard_blocked_no_safe_motion';break
+                if not FOOTPRINT_MODE and self.latest['nearest']<STOP_RADIUS_M:reason='guard_blocked_no_safe_motion';break
                 if time.monotonic()-self.started>=self.args.wall_budget:reason='budget_exhausted';break
                 if len(self.goals)>=self.args.max_goals:reason='goal_budget_exhausted';break
                 model=self.model();pose=self.pose()
