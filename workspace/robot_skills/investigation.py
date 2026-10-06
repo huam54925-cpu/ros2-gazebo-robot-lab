@@ -30,26 +30,56 @@ def poses_payload(poses, map_epoch):
 
 
 def failure_code(reason):
-    reason = str(reason or '')
-    for words, code in [
-        (('stop_unconfirmed',), 'STOP_UNCONFIRMED'),
-        (('localization', 'transform'), 'LOCALIZATION_UNAVAILABLE'),
-        (('stale', 'feedback', 'scan_invalid'), 'SENSOR_STALE'),
-        (('contract', 'profile'), 'CONFIG_MISMATCH'),
-        (('epoch',), 'MAP_EPOCH_CHANGED'),
-        (('guard_stop', 'scan_body_sweep'), 'COLLISION_MONITOR_STOP'),
-        (('unknown', 'outside_known'), 'UNKNOWN_SPACE_BLOCKED'),
-        (('body_sweep', 'path_invalidated'), 'PATH_INVALIDATED'),
-        (('pose_no_longer_safe', 'unsafe_pose'), 'GOAL_IN_COLLISION'),
-        (('no_motion_progress', 'short_motion_no_progress', 'Failed to make progress', 'oscillation'), 'NO_PROGRESS'),
-        (('planning_deadline', 'action_response_timeout'), 'PLANNING_DEADLINE'),
-        (('goal_timeout',), 'EXECUTION_TIMEOUT'),
-        (('budget', 'max_'), 'BUDGET_EXHAUSTED'),
-        (('stop_requested', 'operator'), 'CANCELED'),
-        (('path_rejected', 'no_path'), 'NO_PATH')]:
-        if any(w in reason for w in words):
-            return code
+    """Diagnostic label only. Blocking claims require structured local evidence."""
+    reason=str(reason or '')
+    exact={'body_sweep_nonfree':'PATH_INVALIDATED','body_outside_known_map':'UNKNOWN_SPACE_BLOCKED',
+           'guard_stop':'COLLISION_MONITOR_STOP','scan_body_sweep':'COLLISION_MONITOR_STOP',
+           'Failed to make progress':'NO_PROGRESS','no_motion_progress':'NO_PROGRESS',
+           'short_motion_no_progress':'NO_PROGRESS','path_rejected':'NO_PATH',
+           'no_path':'NO_PATH','goal_timeout':'EXECUTION_TIMEOUT','short_motion_sim_timeout':'EXECUTION_TIMEOUT'}
+    if reason in exact:return exact[reason]
+    for words,code in [
+        (('stop_unconfirmed',),'STOP_UNCONFIRMED'),
+        (('stop_requested','stop_latched','operator','canceled'),'CANCELED'),
+        (('budget','max_','reserve'),'BUDGET_EXHAUSTED'),
+        (('contract','profile','parameter'),'CONFIG_MISMATCH'),
+        (('localization','transform','odometry_discontinuity'),'LOCALIZATION_UNAVAILABLE'),
+        (('stale','feedback','scan_invalid','invalid_scan','clock_','scan_pose'),'SENSOR_STALE'),
+        (('epoch',),'MAP_EPOCH_CHANGED'),
+        (('action_response_timeout','planning_deadline'),'PLANNING_DEADLINE'),
+        (('oscillation','cooldown','already_attempted'),'RETRY_SUPPRESSED')]:
+        if any(w in reason for w in words):return code
     return 'EXECUTION_ERROR'
+
+
+def failure_evidence(task):
+    """Positive local map/planner evidence, never infer obstruction from RPC failure."""
+    result=task.get('result') or {};code=failure_code(task.get('reason'))
+    details={'code':code,'scope':'system_or_unresolved','supports_blocked':False}
+    if any(v is False for v in task.get('sensor_fresh',{}).values()):return {**details,'code':'SENSOR_STALE'}
+    recovery_error=result.get('automatic_recovery_blocked_reason')
+    if recovery_error and failure_code(recovery_error) in {'SENSOR_STALE','LOCALIZATION_UNAVAILABLE','CONFIG_MISMATCH','STOP_UNCONFIRMED'}:
+        return details
+    if (not task.get('accepted') or not task.get('stopped') or task.get('status') not in ('rejected','aborted')
+            or code in {'CANCELED','BUDGET_EXHAUSTED','CONFIG_MISMATCH','LOCALIZATION_UNAVAILABLE',
+                        'SENSOR_STALE','MAP_EPOCH_CHANGED','PLANNING_DEADLINE','STOP_UNCONFIRMED','RETRY_SUPPRESSED'}):
+        return details
+    sources=[result.get('planning') or {},result.get('clearance') or {},
+             (result.get('navigation_result') or {}).get('clearance') or {}]
+    sources.extend(leg.get('planning') or {} for leg in result.get('legs',[]))
+    # The latest failed leg must supply the evidence; a prior successful leg
+    # must never lend geometry evidence to a later system failure.
+    if result.get('legs'):sources=[result['legs'][-1].get('planning') or {},
+                                  (result.get('navigation_result') or {}).get('clearance') or {}]
+    for source in sources:
+        if source.get('failure_category')=='planner_no_path':
+            return {**details,'scope':'route','supports_blocked':True,'source':'nav2_planner_result'}
+        check=source.get('clearance',source)
+        checks=[check,check.get('body_sweep') or {}]
+        for evidence in checks:
+            if evidence.get('safe') is False and evidence.get('reason') in ('body_sweep_nonfree','body_outside_known_map'):
+                return {**details,'scope':'route','supports_blocked':True,'source':'local_map_sweep'}
+    return details
 
 
 def task_progress(task):
@@ -87,6 +117,7 @@ def record_terminal(store, db, task):
              'approach_pose': (result.get('before') or {}).get('pose'),
              'status': task['status'], 'reason': task.get('reason'), 'transit':candidate.get('transit',False),
              'failure_code': failure_code(task.get('reason')) if failed else None,
+             'failure_evidence':failure_evidence(task) if failed else None,
              'progress': progress, 'recoveries':result.get('recoveries',[]), 'at_unix_s': time.time(),
              'recheck_after_unix_s': time.time()+mission['handoff_policy']['failure_cooldown_s'],
              'retry_condition': 'changed_approach_or_goal_or_cooldown_with_fresh_planning'}
@@ -118,7 +149,7 @@ def repetition_reason(events, poses, epoch, approach_pose=None, now=None):
         same_approach = not approach_pose or not old_start or math.dist(approach_pose[:2], old_start[:2]) < .75
         if same_goal and same_heading and same_approach:
             matches.append(event)
-    if any(e.get('failure_code') and now < e['recheck_after_unix_s'] for e in matches):
+    if any((e.get('failure_evidence') or {}).get('scope')=='route' and now < e['recheck_after_unix_s'] for e in matches):
         return 'failed_approach_cooldown'
     scoped=[e for e in events if e.get('map_epoch')==epoch]
     if oscillating(scoped) and any(
@@ -228,7 +259,12 @@ def finish(store, mid, iid, outcome, assessment, evidence_ids):
                 (t.get('result') or {}).get('passage_crossed') and t.get('stopped') for t in evidence)):
             raise ValueError('whole_body_passage_evidence_required')
         if outcome == 'blocked':
+            rejected_evidence=[t for t in evidence if t['status'] in ('rejected','aborted','canceled','indeterminate','stop_unconfirmed')
+                               and not failure_evidence(t)['supports_blocked']]
+            if rejected_evidence:raise ValueError('non_route_failure_requires_unresolved')
             failed = [t for t in evidence if t['status'] in ('rejected', 'aborted') and t.get('accepted')
+                      and failure_evidence(t)['supports_blocked']
+                      and (t.get('result') or {}).get('map_epoch')==inv['map_epoch']
                       and t['kind']!='recover_short_reverse' and t.get('candidate')
                       and all((t['candidate'].get(k) is not None) for k in ('x','y','yaw'))]
             goals = {(round((t.get('candidate') or {}).get('x',0),1),
@@ -257,7 +293,7 @@ def handoff_reason(mission, events, catalog):
     return None
 
 
-def transition(store, mid, catalog, snapshot):
+def transition(store, mid, catalog, snapshot, budget_reason=None):
     """Only called by the deterministic mission owner after a completed search."""
     with store.transaction() as db:
         m = store._meta(db, 'mission:'+mid)
@@ -270,18 +306,22 @@ def transition(store, mid, catalog, snapshot):
             raise ValueError('stop_latched')
         completed = catalog.get('search_complete') is True and not catalog.get('more_candidates')
         healthy_search = catalog.get('status') in ('ready', 'no_safe_reachable_frontiers', 'no_safe_informative_candidate')
-        if not healthy_search:
+        if budget_reason not in (None,'classical_budget_reserved','classical_action_exceeds_allowance'):
+            raise ValueError('invalid_budget_handoff_reason')
+        if not healthy_search and not budget_reason:
             return m
         search_id = catalog.get('catalog_id') or str(catalog.get('created_unix_s'))
         if search_id != m.get('last_handoff_search_id'):
             m['last_handoff_search_id'] = search_id
             m['empty_complete_searches'] = m.get('empty_complete_searches', 0)+1 if completed and not catalog.get('candidates') else 0
         events = store._meta(db, 'investigation_memory:'+mid, [])
-        why = handoff_reason(m, events, catalog)
+        why = budget_reason or handoff_reason(m, events, catalog)
         if why:
             if not snapshot or not snapshot.get('stopped') or not snapshot.get('map_epoch'):
                 raise ValueError('handoff_snapshot_required')
             m.update(phase='ai_investigation', handoff={'reason': why, 'at_unix_s': time.time(),
+                     'trigger':'resource_reservation' if budget_reason else 'exploration_progress',
+                     'ai_reserve':m.get('ai_reserve',{}),
                      'snapshot': snapshot, 'task_ids': [e['task_id'] for e in events],
                      'world_complete': False})
         store._set_meta(db, 'mission:'+mid, m)

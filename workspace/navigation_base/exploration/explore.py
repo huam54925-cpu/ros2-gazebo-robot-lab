@@ -136,7 +136,9 @@ class Explorer:
 
     def health(self):
         now=time.monotonic()
-        deadlines=[('odom_at',2.),('scan_at',SCAN_TIMEOUT_S),('map_at',20.)]
+        from robot_contract import CONTRACT
+        deadlines=[('odom_at',CONTRACT['feedback_wall_timeout_s']),
+                   ('scan_at',CONTRACT['feedback_wall_timeout_s']),('map_at',20.)]
         if any(now-self.latest.get(key,-math.inf)>timeout for key,timeout in deadlines):
             # Synchronous candidate/map geometry can outlast the scan period.
             # Drain already queued feedback before judging its age; do not wait
@@ -253,7 +255,7 @@ class Explorer:
             p=self.pose()
             if math.dist(p[:2],progress_anchor[:2])>.08 or abs(math.atan2(math.sin(p[2]-progress_anchor[2]),math.cos(p[2]-progress_anchor[2])))>.10:
                 progress_anchor=p;progress_at=now
-            if now-progress_at>40:
+            if kind!='short_motion' and now-progress_at>40:
                 if not self.cancel_active():raise RuntimeError('stop_unconfirmed')
                 return {'status':5,'error_msg':'no_motion_progress'}
             if now-self.last_trace>1:
@@ -273,7 +275,11 @@ class Explorer:
         except Exception:
             self.wait(h.cancel_goal_async(),5);raise
         path=[[p.pose.position.x,p.pose.position.y,yaw(p.pose.orientation)] for p in r.result.path.poses]
-        if r.status!=4:return None,{'status':r.status,'error_code':r.result.error_code,'message':r.result.error_msg}
+        if r.status!=4:
+            no_path_codes={getattr(ComputePathToPose.Result,name,None) for name in
+                           ('NO_VALID_PATH','START_OCCUPIED','GOAL_OCCUPIED')}-{None}
+            return None,{'status':r.status,'error_code':r.result.error_code,'message':r.result.error_msg,
+                         'failure_category':'planner_no_path' if r.result.error_code in no_path_codes else 'planner_system_error'}
         if r.result.path.header.frame_id!='map':return None,{'status':0,'error_code':1,'message':'invalid_path_frame'}
         clearance=self.evaluate_path(path,candidate)
         outcome={'status':4,'error_code':0,'clearance':clearance}
@@ -314,11 +320,13 @@ class Explorer:
             if self.args.initial_scan and not self.args.dry_run:
                 if self.latest['nearest']<2.7:raise RuntimeError('insufficient_clearance_for_initial_scan')
                 g=Spin.Goal();g.target_yaw=2*math.pi;g.time_allowance.sec=90;g.disable_collision_checks=False
-                outcome=self.execute(self.spin_client,g,240,'initial_scan');self.report['initial_scan']=outcome
+                outcome=self.execute(self.spin_client,g,max(1,self.args.wall_budget-(time.monotonic()-self.started)),'initial_scan');self.report['initial_scan']=outcome
                 self.event('initial_scan_result',**outcome)
                 if outcome.get('error_msg')=='budget_exhausted':raise MissionEnd('budget_exhausted')
                 if outcome['status']!=4:raise RuntimeError('initial_scan_failed')
                 self.observe(8)
+            if getattr(self.args,'initialize_only',False):
+                raise MissionEnd('initialization_complete')
             while True:
                 self.health()
                 # Guard blocks rotation as well as translation. Do not dispatch
@@ -410,9 +418,11 @@ class Explorer:
 def main():
     p=argparse.ArgumentParser();p.add_argument('--output',required=True);p.add_argument('--dry-run',action='store_true')
     p.add_argument('--policy',choices=['conservative','aggressive'],default='conservative')
+    p.add_argument('--initialize-only',action='store_true',help='Protected initial scan only; no frontier navigation')
     p.add_argument('--initial-scan',action='store_true');p.add_argument('--max-goals',type=int,default=8)
     p.add_argument('--wall-budget',type=float,default=1200);p.add_argument('--goal-timeout',type=float,default=300)
     args=p.parse_args()
+    if args.initialize_only:args.initial_scan=True
     if args.max_goals<1 or args.wall_budget<=0 or args.goal_timeout<=0:p.error('budgets must be positive')
     rclpy.init(signal_handler_options=SignalHandlerOptions.NO)
     signal.signal(signal.SIGINT,signal.default_int_handler);signal.signal(signal.SIGTERM,signal.default_int_handler)

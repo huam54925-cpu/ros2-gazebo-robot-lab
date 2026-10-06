@@ -12,7 +12,7 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path[:0]=[str(ROOT),str(ROOT/'navigation_base'),str(ROOT/'navigation_base/exploration')]
 from robot_skills.recovery import (POLICY, eligible, straight_retreat, straight_sweep,
                                    source_reason, reserve, update_attempt, probe_reason)
-from robot_skills.test_investigation import InvestigationTests
+from robot_skills.test_investigation import InvestigationFixture
 from robot_skills.investigation import task_progress
 
 
@@ -73,7 +73,7 @@ class GeometryTests(unittest.TestCase):
             self.assertFalse(p['goal_reached']);self.assertEqual(p['observed_gain_m2'],0)
 
 
-class RecoveryStoreTests(InvestigationTests):
+class RecoveryStoreTests(InvestigationFixture, unittest.TestCase):
     def running_probe(self):
         iid=self.store.meta('mission:'+self.mid).get('active_investigation')
         if not iid:iid=self.create()['investigation_id']

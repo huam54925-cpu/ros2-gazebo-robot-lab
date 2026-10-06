@@ -1,0 +1,48 @@
+{
+  "trigger_component": "custom navigation path revalidation",
+  "reason": "body_sweep_nonfree",
+  "map_version": "689e3e46529ea0841230",
+  "start_map_pose": [
+    0.17059274145324563,
+    0.17575813873736487,
+    0.5888969114089083
+  ],
+  "first_remaining_path_pose": [
+    0.0997820608317852,
+    0.21069690833340776,
+    0.7853965271467521
+  ],
+  "predicted_collision_pose": [
+    0.17059274145324563,
+    0.17575813873736487,
+    2.6295292637248577
+  ],
+  "blocking_cell": {
+    "cell_xy": [
+      133,
+      98
+    ],
+    "value": -1,
+    "distance_to_unpadded_body_m": 0.06475620384992975,
+    "evidence_type": "unknown_grid_cell, not observed obstacle",
+    "center_map_xy": [
+      2.024781865765802,
+      -0.16430299427152306
+    ],
+    "center_current_base_xy": [
+      1.3529732327949355,
+      -1.3126775362756367
+    ]
+  },
+  "required_margin_m": 0.07500000000000001,
+  "controller_config": {
+    "lookahead_dist_m": 0.65,
+    "rotate_to_heading_min_angle_rad": 0.5
+  },
+  "inferred_carrot_map_xy": [
+    0.5743533256393563,
+    0.6851473716994395
+  ],
+  "inferred_carrot_heading_error_rad": 0.3116644644653157,
+  "interpretation": "Recorded path validator predicts a large initial turn to a nearby path point; configured RPP lookahead would target farther ahead. Carrot is offline inference, not a captured Nav2 output. No clearance rule was relaxed."
+}

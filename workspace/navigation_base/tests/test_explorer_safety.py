@@ -25,6 +25,12 @@ except ModuleNotFoundError as error:
 
 @unittest.skipUnless(ROS_AVAILABLE, 'run in the navigation image for ROS message types')
 class ExplorerSafetyTests(unittest.TestCase):
+    def setUp(self):
+        # These fixtures exercise the retained radial baseline explicitly.
+        # Footprint-mode geometry has its own contract/profile test suite.
+        for target in ('explore.FOOTPRINT_MODE','safety_profile.FOOTPRINT_MODE'):
+            active=patch(target,False);active.start();self.addCleanup(active.stop)
+
     def explorer(self):
         e = Explorer.__new__(Explorer)
         e.handle = None
@@ -76,11 +82,11 @@ class ExplorerSafetyTests(unittest.TestCase):
 
     def test_geometry_work_drains_pending_scan_without_extending_timeout(self):
         e = self.explorer()
-        e.latest.update(scan_at=time.monotonic()-2., odom_at=time.monotonic(),
+        e.latest.update(scan_at=time.monotonic()-6., odom_at=time.monotonic(),
                         map_at=time.monotonic(), scan_valid=True)
         with patch('explore.rclpy.spin_once', side_effect=lambda *a, **kw: e.latest.update(scan_at=time.monotonic())):
             Explorer.health(e)
-        e.latest['scan_at'] = time.monotonic()-1.6
+        e.latest['scan_at'] = time.monotonic()-6.
         with patch('explore.rclpy.spin_once'):
             with self.assertRaisesRegex(RuntimeError, 'scan_at_stale'):
                 Explorer.health(e)

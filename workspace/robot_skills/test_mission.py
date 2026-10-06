@@ -4,9 +4,12 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from robot_skills import mission
 from robot_skills.store import Store
 import tempfile,time,unittest,uuid
+from unittest.mock import patch
 
 class MissionTests(unittest.TestCase):
     def setUp(self):
+        profile=patch('navigation_base.safety_profile.FOOTPRINT_MODE',False)
+        profile.start();self.addCleanup(profile.stop)
         tmp=tempfile.TemporaryDirectory(); self.addCleanup(tmp.cleanup); self.store=Store(tmp.name)
         self.state={'status':'available','sources':{'clock':{'fresh':True,'sim_time_s':100},
                     'odometry':{'fresh':True,'velocity':{'x':0,'z':0}}}}
@@ -87,11 +90,10 @@ class MissionTests(unittest.TestCase):
         self.store.set_meta('stop_latched',True)
         with self.assertRaisesRegex(ValueError,'stop_latched'):
             mission.extend_operator_budget(self.store,self.m['mission_id'],b,110)
-    def test_mission_reserves_execution_against_other_clients(self):
-        t,launch=self.store.submit('fixed_step',{},str(uuid.uuid4()))
-        self.assertFalse(launch); self.assertEqual(t['reason'],'another_mission_active')
-        t,launch=self.store.submit('fixed_step',{},str(uuid.uuid4()),self.m['mission_id'])
-        self.assertTrue(launch)
+    def test_retired_single_step_cannot_bypass_session(self):
+        for mid in (None,self.m['mission_id']):
+            with self.assertRaisesRegex(ValueError,'retired_skill'):
+                self.store.submit('fixed_step',{},str(uuid.uuid4()),mid)
     def test_wall_sim_distance_heartbeat_and_failure_budgets(self):
         m=self.m
         self.assertEqual(mission.reason(m,[],now=m['deadline_monotonic_s']),'max_wall_time')

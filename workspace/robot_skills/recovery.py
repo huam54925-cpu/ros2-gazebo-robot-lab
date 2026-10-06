@@ -137,3 +137,14 @@ def probe_reason(tasks, mid, pose, epoch, now=None):
                 and now-t['updated_unix_s']<POLICY['probe_cooldown_s']):
             return 'probe_approach_cooldown'
     return None
+
+
+def reverse_steps(history_limit):
+    """Longest permitted suffix first, then smaller 5 cm steps, never past history."""
+    if not math.isfinite(history_limit) or history_limit<POLICY['minimum_step_m']:return []
+    limit=min(history_limit,POLICY['reverse_max_m'])
+    values=[limit]
+    n=math.floor((limit-1e-9)/POLICY['reverse_step_m'])
+    values.extend(i*POLICY['reverse_step_m'] for i in range(n,0,-1)
+                  if i*POLICY['reverse_step_m']>=POLICY['minimum_step_m']-1e-9)
+    return values

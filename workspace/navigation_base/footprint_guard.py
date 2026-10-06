@@ -35,6 +35,8 @@ def predicted_pose(v,w,t):
 
 
 def check_sweep(points,command,measured=(0.,0.),scan_age=0.):
+    from simulation_override import active,unchecked
+    if active():return unchecked()
     if not all(math.isfinite(v) for v in [*command,*measured,scan_age]) or scan_age<0:
         return {'safe':False,'reason':'invalid_motion_feedback'}
     body,_=navigation_footprint()

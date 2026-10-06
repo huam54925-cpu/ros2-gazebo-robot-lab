@@ -13,7 +13,7 @@ WORKSPACE = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(WORKSPACE), str(WORKSPACE / 'robot_agent'),
                str(WORKSPACE / 'navigation_base/exploration'), str(WORKSPACE / 'navigation_base')]
 from robot_skills.store import Store, DIRECTORY
-from motion_worker import Trial
+from robot_skills.action_lifecycle import ActionLifecycle
 from explore import Explorer, rclpy, GetState, NavigateToPose, ManageLifecycleNodes
 from aggressive import utility
 from rclpy.signals import SignalHandlerOptions
@@ -22,7 +22,7 @@ from nav_msgs.msg import Odometry
 from rclpy.qos import qos_profile_sensor_data
 
 
-from robot_skills.observation_worker import ObservationMixin
+from robot_skills.map_feedback import MapFeedbackMixin
 
 
 from robot_skills.investigation_worker import InvestigationMixin
@@ -33,7 +33,7 @@ from robot_skills.recovery import SHORT_MOTION_KINDS
 from robot_skills.recovery_worker import RecoveryMixin
 
 
-class Executor(RecoveryMixin, InvestigationMixin, ObservationMixin, Trial):
+class Executor(RecoveryMixin, InvestigationMixin, MapFeedbackMixin, ActionLifecycle):
     def execute(self, client, goal, timeout, kind):
         outcome=super().execute(client,goal,timeout,kind)
         self.pending_goal=None
@@ -51,6 +51,7 @@ class Executor(RecoveryMixin, InvestigationMixin, ObservationMixin, Trial):
         if self.odom_trace and (stamp<self.odom_trace[-1]['sim_s'] or row['frame']!=self.odom_trace[-1]['frame']):
             self.odom_trace=[]
             raise RuntimeError('odometry_discontinuity')
+        self.scan_history.add(stamp,row['pose'],row['frame'])
         self.odom_trace.append(row)
         # Keep feedback dense enough to detect gaps; bound retained history.
         cutoff=stamp-POLICY['trace_max_age_s']
@@ -79,13 +80,14 @@ class Executor(RecoveryMixin, InvestigationMixin, ObservationMixin, Trial):
         self.dispatched, self.pending_goal, self.start_pose = False, None, None
         self.canceling = False
         self.odom_trace=[];self.short_clients=[];self.short_motion_active=None
+        from navigation_base.scan_motion import OdomHistory
+        self.scan_history=OdomHistory()
         self.last_status_at = 0
-        self.fixed = bool(task and task['kind'] == 'fixed_step')
         self.mission_state=store.meta('mission:'+str((task or {}).get('mission_id')), {})
         self.two_stage=self.mission_state.get('two_stage',False)
         Explorer.__init__(self, NS(output=str(DIRECTORY / (self.identifier + '.detail.json')),
                                   policy='aggressive', wall_budget=240, max_goals=1,
-                                  goal_timeout=45 if self.fixed else 180))
+                                  goal_timeout=180))
         from action_msgs.msg import GoalStatusArray
         from rclpy.qos import QoSProfile, DurabilityPolicy
         status_qos=QoSProfile(depth=1,durability=DurabilityPolicy.TRANSIENT_LOCAL)
@@ -110,16 +112,17 @@ class Executor(RecoveryMixin, InvestigationMixin, ObservationMixin, Trial):
         self.report['short_start']=self.short_start
         self.report['path_clearance_m']=self.required_path_clearance_m
         from safety_profile import FOOTPRINT_MODE
-        if FOOTPRINT_MODE and not self.fixed:
+        if FOOTPRINT_MODE:
             self.args.goal_timeout=600
             self.report['limits']['goal_wall_timeout']=600
         from robot_skills.provenance import source_manifest
         self.report['source_sha256'] = source_manifest()
 
     def freshness(self):
+        from navigation_base.robot_contract import CONTRACT
         now = time.monotonic()
         result = {name: now-self.latest.get(key, -math.inf) < limit for name, key, limit in
-                  [('odometry', 'odom_at', 2), ('scan', 'scan_at', 1.5), ('map', 'map_at', 20)]}
+                  [('odometry', 'odom_at', CONTRACT['feedback_wall_timeout_s']), ('scan', 'scan_at', CONTRACT['feedback_wall_timeout_s']), ('map', 'map_at', 20)]}
         result['scan'] &= self.latest.get('scan_valid', False)
         try:
             self.pose(); result['localization'] = True
@@ -141,7 +144,7 @@ class Executor(RecoveryMixin, InvestigationMixin, ObservationMixin, Trial):
         if self.task and not self.canceling:
             if self.store.should_cancel(self.identifier):
                 raise RuntimeError('stop_requested')
-            if self.distance > (.65 if self.fixed else self.mission_state['limits']['max_distance'] if self.two_stage else 10):
+            if self.distance > (self.mission_state['limits']['max_distance'] if self.two_stage else 10):
                 raise RuntimeError('distance_budget_exhausted')
             if time.monotonic()-self.last_status_at >= .5:
                 if self.task.get('mission_id'):
@@ -152,10 +155,29 @@ class Executor(RecoveryMixin, InvestigationMixin, ObservationMixin, Trial):
                         if task['task_id'] == self.identifier: task['distance_odom_m'] = self.distance
                     why = mission.reason(m, tasks, self.node.get_clock().now().nanoseconds*1e-9, check_steps=False)
                     if why: raise RuntimeError(why)
+                    if self.task['kind']!='view_map':
+                        boundary=mission.classical_boundary(m,tasks,self.node.get_clock().now().nanoseconds*1e-9)
+                        if boundary:raise RuntimeError(boundary)
                 self.store.update(self.identifier, sensor_fresh=self.freshness(),
                                   map_version=self.latest.get('map_version'), distance_odom_m=self.distance)
                 self.last_status_at = time.monotonic()
             self.monitor_short_motion()
+
+    def wait_navigation_active(self):
+        # Action servers appear before lifecycle activation finishes.
+        deadline=time.monotonic()+30
+        for name in ('planner_server','controller_server','behavior_server','bt_navigator'):
+            client=self.node.create_client(GetState,'/'+name+'/get_state')
+            try:
+                while True:
+                    if time.monotonic()>=deadline:raise RuntimeError(name+'_not_active')
+                    if self.task and self.store.should_cancel(self.identifier):raise RuntimeError('stop_requested')
+                    if client.wait_for_service(timeout_sec=1):
+                        state=self.wait(client.call_async(GetState.Request()),min(3,max(.1,deadline-time.monotonic())))
+                        if state.current_state.id==3:break
+                    for _ in range(5):self.spin_once()
+            finally:
+                self.node.destroy_client(client)
 
     def ready(self):
         from safety_profile import FOOTPRINT_MODE
@@ -169,13 +191,7 @@ class Executor(RecoveryMixin, InvestigationMixin, ObservationMixin, Trial):
         for client in (self.planner, self.nav):
             if not client.wait_for_server(timeout_sec=10):
                 raise RuntimeError('nav2_unavailable')
-        for name in ('planner_server', 'controller_server', 'behavior_server', 'bt_navigator'):
-            client = self.node.create_client(GetState, '/' + name + '/get_state')
-            if not client.wait_for_service(timeout_sec=3):
-                raise RuntimeError(name + '_unavailable')
-            if self.wait(client.call_async(GetState.Request()), 5).current_state.id != 3:
-                raise RuntimeError(name + '_not_active')
-            self.node.destroy_client(client)
+        self.wait_navigation_active()
         deadline = time.monotonic()+20
         while not all(k in self.latest for k in ('map', 'scan_at', 'odom_at')) or not self.buffer.can_transform('map', 'vehicle/base_link', rclpy.time.Time()):
             if time.monotonic() > deadline:
@@ -273,6 +289,7 @@ class Executor(RecoveryMixin, InvestigationMixin, ObservationMixin, Trial):
         from safety_profile import FOOTPRINT_MODE
         def drain_feedback():
             for _ in range(64):rclpy.spin_once(self.node,timeout_sec=0.)
+            self.health()
         candidates, info = model.candidates(start, excluded, regional=True,candidate_offset=offset,
                                              **({'progress':drain_feedback} if FOOTPRINT_MODE else {}),
                                              **({'audit':generation_audit} if bridge else {}))
@@ -368,7 +385,7 @@ class Executor(RecoveryMixin, InvestigationMixin, ObservationMixin, Trial):
             poses = navigation_prediction(plan['path'], start, [candidate['x'],candidate['y'],candidate['yaw']])
             sampled = [*poses[::max(1,len(poses)//12)], poses[-1]]
             novel = visibility.novel(sampled, start, recent)
-            estimate = action_time_estimate(plan['length'], poses, grid['resolution']) if mode=='memory' else None
+            estimate = action_time_estimate(plan['length'], poses, grid['resolution']) if mode=='memory' or self.two_stage else None
             duration = estimate['budget_sim_s'] if estimate else estimated_time(plan['length'], poses)
             item={**candidate, 'gain_map_version': gain_version, 'novel_unknown_area_proxy_m2': novel,
                          'unknown_analysis':visibility.analyze([candidate['x'],candidate['y'],candidate['yaw']],start),
@@ -464,34 +481,23 @@ class Executor(RecoveryMixin, InvestigationMixin, ObservationMixin, Trial):
             if self.task['kind'] in NAVIGATION_KINDS:
                 self.perform_investigation_navigation(result)
                 return result
-            observation = self.task['kind'] == 'perform_observation'
-            if observation:
-                candidate = self.task['candidate']
-                result['candidate'] = candidate
-                self.prepare_observation(candidate)
-                if candidate['type'] == 'rotate':
-                    self.perform_rotation(candidate, result)
-                    return result
-            if self.fixed:
-                x, y, a = self.pose()
-                candidate = {'x': x+.4*math.cos(a), 'y': y+.4*math.sin(a), 'yaw': a}
-            elif not observation:
-                candidate = self.task['candidate']
-                catalog = self.store.meta('catalog', {})
-                if not any(c['frontier_id'] == candidate['frontier_id'] for c in catalog.get('candidates', [])):
-                    raise RuntimeError('frontier_no_longer_exists')
-                if time.time() > catalog.get('expires_unix_s', 0):
-                    raise RuntimeError('frontier_catalog_expired')
-                if self.two_stage:
-                    from robot_skills.investigation import repetition_reason
-                    why=repetition_reason(self.store.meta('investigation_memory:'+self.task['mission_id'],[]),
-                        [candidate],candidate.get('region_epoch'),self.pose())
-                    if why:raise RuntimeError(why)
-                if not self.model().is_safe(candidate['x'], candidate['y'], candidate['yaw']):
-                    if self.task.get('exploration_mode','baseline')!='baseline':
-                        from robot_skills.upgrade_geometry import footprint_evidence
-                        result['goal_footprint_evidence']=footprint_evidence(self.grid_snapshot(),[candidate['x'],candidate['y'],candidate['yaw']])
-                    raise RuntimeError('frontier_pose_no_longer_safe')
+            if self.task['kind']!='execute_frontier':raise RuntimeError('retired_skill_use_investigation')
+            candidate = self.task['candidate']
+            catalog = self.store.meta('catalog', {})
+            if not any(c['frontier_id'] == candidate['frontier_id'] for c in catalog.get('candidates', [])):
+                raise RuntimeError('frontier_no_longer_exists')
+            if time.time() > catalog.get('expires_unix_s', 0):
+                raise RuntimeError('frontier_catalog_expired')
+            if self.two_stage:
+                from robot_skills.investigation import repetition_reason
+                why=repetition_reason(self.store.meta('investigation_memory:'+self.task['mission_id'],[]),
+                    [candidate],candidate.get('region_epoch'),self.pose())
+                if why:raise RuntimeError(why)
+            if not self.model().is_safe(candidate['x'], candidate['y'], candidate['yaw']):
+                if self.task.get('exploration_mode','baseline')!='baseline':
+                    from robot_skills.upgrade_geometry import footprint_evidence
+                    result['goal_footprint_evidence']=footprint_evidence(self.grid_snapshot(),[candidate['x'],candidate['y'],candidate['yaw']])
+                raise RuntimeError('frontier_pose_no_longer_safe')
             result['candidate'] = candidate
             result['catalog_map_version'] = self.task.get('map_version')
             result['map_changed_since_catalog'] = self.task.get('map_version') != self.latest['map_version']
@@ -502,7 +508,7 @@ class Executor(RecoveryMixin, InvestigationMixin, ObservationMixin, Trial):
             self.timing_phase('execution_validation')
             if plan is None:
                 raise RuntimeError('path_rejected')
-            if plan['length'] > (.8 if self.fixed else (2 if observation else 8)):
+            if plan['length'] > 8:
                 raise RuntimeError('path_budget_exhausted')
             from observation import action_time_estimate,navigation_prediction
             result['revalidated_time_estimate']=action_time_estimate(plan['length'],
@@ -514,7 +520,7 @@ class Executor(RecoveryMixin, InvestigationMixin, ObservationMixin, Trial):
             for _ in range(3):
                 self.health()
                 version = self.latest['map_version']
-                if not self.fixed and not self.model().is_safe(candidate['x'], candidate['y'], candidate['yaw']):
+                if not self.model().is_safe(candidate['x'], candidate['y'], candidate['yaw']):
                     raise RuntimeError('frontier_invalidated_before_dispatch')
                 clearance = self.evaluate_path(plan['path'], candidate)
                 result['clearance'] = clearance
@@ -540,7 +546,7 @@ class Executor(RecoveryMixin, InvestigationMixin, ObservationMixin, Trial):
                     self.node.get_clock().now().nanoseconds*1e-9,
                     result['revalidated_time_estimate']['budget_sim_s'],plan['length'])
                 if not result['dispatch_budget_check']['fits']:
-                    raise RuntimeError('revalidated_action_over_budget')
+                    raise RuntimeError('classical_budget_reserved' if 'classical_budget_reserved' in result['dispatch_budget_check']['reasons'] else 'revalidated_action_over_budget')
             goal = NavigateToPose.Goal()
             goal.pose = self.goal_pose(candidate)
             goal.behavior_tree = str(WORKSPACE / 'robot_agent/motion_trial.xml')
@@ -591,8 +597,6 @@ class Executor(RecoveryMixin, InvestigationMixin, ObservationMixin, Trial):
                 except Exception as error:
                     result['map_gain'] = {'gain_status':'FEEDBACK_INCOMPLETE', 'usable_for_trend':False,
                                           'reason':'metric_collection_failed:'+type(error).__name__}
-                if self.task['kind'] == 'perform_observation':
-                    result['observation_metrics'] = result['map_gain']
             try:
                 result['after'] = self.sample()
                 result['known_area_gain_m2'] = result['after']['known_area_m2'] - result['before']['known_area_m2']
@@ -696,7 +700,7 @@ class Stopper:
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('operation', choices=['catalog', 'observations', 'task', 'resume'])
+    parser.add_argument('operation', choices=['catalog', 'task', 'resume'])
     parser.add_argument('task_id', nargs='?')
     args = parser.parse_args()
     store = Store()
@@ -731,7 +735,7 @@ def main():
         else:
             task = store.get(args.task_id) if args.operation == 'task' else None
             worker = Executor(store, task)
-            result = ((worker.observation_catalog() if args.operation == 'observations' else worker.catalog()) if task is None
+            result = (worker.catalog() if task is None
                       else worker.perform_query() if task['kind'] in QUERY_KINDS else worker.perform())
         print(json.dumps(result, allow_nan=False), flush=True)
     except (Exception, KeyboardInterrupt) as error:

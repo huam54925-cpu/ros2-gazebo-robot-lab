@@ -1,5 +1,6 @@
-"""Legacy tools plus mission-scoped persistent investigation capabilities."""
+"""Two-stage mission tools; outside a mission only status and stop are exposed."""
 import asyncio
+from functools import wraps
 import os
 from pathlib import Path
 import sys
@@ -8,9 +9,17 @@ from robot_skills.api import RobotSkills
 from mcp.server.mcpserver import MCPServer
 from mcp.types import ToolAnnotations
 from mcp.server.mcpserver.tools import Tool
+from typing_extensions import TypedDict
 
-skills = RobotSkills(mission_id=os.environ.get('ROBOT_MISSION_ID'),
-                     observations=os.environ.get('ROBOT_OBSERVATIONS_ENABLED') == '1')
+
+class MapPose(TypedDict):
+    """A complete metric pose in the online map frame; yaw is in radians."""
+    __pydantic_config__ = {'extra': 'forbid', 'strict': True}
+    x: float
+    y: float
+    yaw: float
+
+skills = RobotSkills(mission_id=os.environ.get('ROBOT_MISSION_ID'))
 registered_tools = []
 READ = ToolAnnotations(read_only_hint=True, destructive_hint=False, open_world_hint=False)
 WRITE = ToolAnnotations(read_only_hint=False, destructive_hint=False, idempotent_hint=True, open_world_hint=False)
@@ -18,7 +27,17 @@ WRITE = ToolAnnotations(read_only_hint=False, destructive_hint=False, idempotent
 
 def strict_tool(annotations):
     def decorate(function):
-        tool = Tool.from_function(function, annotations=annotations)
+        @wraps(function)
+        def with_rule_feedback(*args, **kwargs):
+            try:return function(*args, **kwargs)
+            except ValueError as error:
+                # Expected local rule failures must reach the model. The SDK
+                # otherwise masks plain ValueError as an unexpected tool crash.
+                code=str(error)
+                if not code or any(c not in 'abcdefghijklmnopqrstuvwxyz0123456789_' for c in code):
+                    code='request_validation_failed'
+                return {'status':'request_rejected','reason':code}
+        tool = Tool.from_function(with_rule_feedback, annotations=annotations)
         model = tool.fn_metadata.arg_model
         model.model_config['extra'] = 'forbid'
         model.model_rebuild(force=True)
@@ -41,20 +60,6 @@ def get_decision_context() -> dict:
 
 
 @strict_tool(annotations=READ)
-async def get_safe_frontiers() -> dict:
-    """Get locally validated reachable Frontier IDs; may compute paths, never move."""
-    return await asyncio.to_thread(skills.get_safe_frontiers)
-
-
-@strict_tool(annotations=WRITE)
-def execute_frontier(frontier_id: str, request_id: str) -> dict:
-    """Submit one candidate ID with a UUID; accepted is not success. Poll task_id.
-    Local executor replans, rechecks clearance and rejects expired/unsafe candidates.
-    """
-    return skills.execute_frontier(frontier_id, request_id)
-
-
-@strict_tool(annotations=READ)
 def get_task_status(task_id: str) -> dict:
     """Read authoritative local task status including confirmed stopped and sensor freshness."""
     return skills.get_task_status(task_id)
@@ -68,19 +73,12 @@ def stop_robot(request_id: str) -> dict:
     return skills.stop_robot(request_id)
 
 
-if skills.observations:
-    @strict_tool(annotations=READ)
-    async def get_observation_options() -> dict:
-        """Generate finite safe observation IDs; planning only, no movement."""
-        return await asyncio.to_thread(skills.get_observation_options)
-
-    @strict_tool(annotations=WRITE)
-    def perform_observation(option_id: str, request_id: str) -> dict:
-        """Execute one local observation ID; no arbitrary angles, coordinates or speeds."""
-        return skills.perform_observation(option_id, request_id)
-
-
 if skills.investigations_enabled():
+    @strict_tool(annotations=WRITE)
+    def execute_frontier(frontier_id: str, request_id: str) -> dict:
+        """Classical phase only: execute one locally checked frontier within the mission."""
+        return skills.execute_frontier(frontier_id,request_id)
+
     @strict_tool(annotations=WRITE)
     def view_map(request_id: str) -> dict:
         """Start an online SLAM snapshot; poll task_id for PNG, metric transform and unknown regions."""
@@ -92,25 +90,26 @@ if skills.investigations_enabled():
         return skills.start_candidate_search(request_id)
 
     @strict_tool(annotations=WRITE)
-    def plan_navigation(poses: list[dict[str, float]], map_epoch: str, request_id: str) -> dict:
+    def plan_navigation(poses: list[MapPose], map_epoch: str, request_id: str) -> dict:
         """Query alternatives from current pose. Poses have x,y,yaw in map; no motion or permission grant."""
         return skills.plan_navigation(poses,map_epoch,request_id)
 
     @strict_tool(annotations=WRITE)
-    def start_investigation(subject: dict[str, float], hypothesis: str, task_type: str,
+    def start_investigation(subject: MapPose, hypothesis: str, task_type: str,
                             request_id: str, passage: dict | None = None) -> dict:
         """Persist a question: observe_structure or verify_passage. Unknowns remain hypotheses.
+        subject must include x, y, yaw (radians) in map, even for an observation question.
         passage requires a,b endpoint XY arrays and destination_side (-1 or 1).
         """
         return skills.start_investigation(subject,hypothesis,task_type,request_id,passage)
 
     @strict_tool(annotations=WRITE)
-    def navigate_to_pose(investigation_id: str, pose: dict[str, float], map_epoch: str, request_id: str) -> dict:
-        """Submit a checked map goal within an active investigation. Poll the returned task_id."""
+    def navigate_to_pose(investigation_id: str, pose: MapPose, map_epoch: str, request_id: str) -> dict:
+        """Submit checked map x,y,yaw within an active investigation. Poll the returned task_id."""
         return skills.navigate_to_pose(investigation_id,pose,map_epoch,request_id)
 
     @strict_tool(annotations=WRITE)
-    def navigate_through_poses(investigation_id: str, poses: list[dict[str, float]], map_epoch: str, request_id: str) -> dict:
+    def navigate_through_poses(investigation_id: str, poses: list[MapPose], map_epoch: str, request_id: str) -> dict:
         """Execute ordered poses with Nav2; each leg replans and confirms stop. Maximum 32 per request."""
         return skills.navigate_through_poses(investigation_id,poses,map_epoch,request_id)
 

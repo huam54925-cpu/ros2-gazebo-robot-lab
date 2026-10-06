@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "base_frame": "vehicle/base_link",
   "scan_frame": "vehicle/lidar",
   "footprint": [
@@ -69,12 +69,17 @@
     "endpoint_tolerance_m": 0.02,
     "trace_max_age_s": 180.0,
     "trace_gap_s": 0.5,
-    "no_progress_wall_s": 5.0,
-    "action_wall_timeout_s": 30.0,
+    "action_wall_timeout_s": 180.0,
     "max_recoveries": 8,
     "max_recoveries_per_location": 2,
     "location_radius_m": 0.75,
-    "probe_cooldown_s": 30.0
+    "probe_cooldown_s": 30.0,
+    "no_progress_sim_s": 5.0,
+    "clock_stall_wall_s": 10.0,
+    "reverse_step_m": 0.05
   },
-  "odom_frame": "vehicle/odom"
+  "odom_frame": "vehicle/odom",
+  "feedback_wall_timeout_s": 5.0,
+  "command_wall_timeout_s": 5.0,
+  "scan_pose_gap_s": 0.2
 }

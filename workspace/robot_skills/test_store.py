@@ -8,19 +8,26 @@ import uuid
 import gc
 import os
 
-from store import Store
+from robot_skills.store import Store
 
 
 class StoreTests(unittest.TestCase):
     def setUp(self):
         temp = tempfile.TemporaryDirectory(); self.addCleanup(temp.cleanup)
         self.store = Store(Path(temp.name))
+        from robot_skills import mission
+        from robot_skills.investigation import DEFAULT_HANDOFF
+        self.mid=str(uuid.uuid4());now=time.monotonic()
+        self.store.set_meta('active_mission',self.mid)
+        self.store.set_meta('mission:'+self.mid,{'mission_id':self.mid,'two_stage':True,'phase':'classical','status':'running',
+            'limits':mission.limits(None,80,900,3600,12,profile='mission'),'start_sim_s':0,
+            'deadline_monotonic_s':now+3600,'heartbeat_monotonic_s':now,'handoff_policy':dict(DEFAULT_HANDOFF)})
         self.store.set_meta('catalog', {'expires_unix_s': time.time()+120, 'candidates': [
             {'frontier_id': 'F_test_1', 'x': 2, 'y': 3, 'yaw': 0, 'map_version': 'v1'},
             {'frontier_id': 'F_test_2', 'x': 4, 'y': 3, 'yaw': 0, 'map_version': 'v1'}]})
 
     def submit(self, request=None, frontier='F_test_1'):
-        return self.store.submit('execute_frontier', {'frontier_id': frontier}, request or str(uuid.uuid4()))
+        return self.store.submit('execute_frontier', {'frontier_id': frontier}, request or str(uuid.uuid4()),self.mid)
 
     def test_idempotency_and_conflicting_reuse(self):
         rid = str(uuid.uuid4()); first, launch = self.submit(rid)
@@ -81,9 +88,11 @@ class StoreTests(unittest.TestCase):
     def test_new_stop_cannot_be_cleared_by_an_older_resume(self):
         task, _ = self.store.submit('stop_robot', {}, str(uuid.uuid4()))
         self.store.update(task['task_id'], status='succeeded', stopped=True)
+        self.store.set_meta('active_mission',None)
         with self.assertRaisesRegex(ValueError, 'stop_changed_during_resume'):
             self.store.clear_stop_after_verified_resume(0)
         self.assertTrue(self.store.meta('stop_latched'))
+        self.store.set_meta('active_mission',None)
         self.store.clear_stop_after_verified_resume(1)
         self.assertFalse(self.store.meta('stop_latched'))
 

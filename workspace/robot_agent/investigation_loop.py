@@ -49,37 +49,47 @@ async def run(call, definitions, skills, session_state, end, checkpoint, report,
     def request():return {'request_id':str(uuid.uuid4())}
 
     mid=skills.mission_id
+    pending_budget_reason=None
     while session_state()['status']=='running' and session_state().get('phase')=='classical':
-        query=await invoke('start_candidate_search',request())
+        from robot_skills.mission import progress, classical_boundary, classical_remaining
+        m=session_state()
+        state=skills.get_robot_state();sim=state['sources']['clock']['sim_time_s']
+        budget_reason=pending_budget_reason or classical_boundary(m,skills.store.tasks(),sim)
+        query=await invoke('start_candidate_search',request()) if not budget_reason else {}
         if session_state()['status']!='running':return
-        if query.get('status')!='succeeded':
-            end('candidate_search_failed');return
         catalog=(query.get('result') or {}).get('catalog',{})
+        if query and query.get('status')!='succeeded':
+            if query.get('reason')=='classical_budget_reserved':budget_reason='classical_budget_reserved'
+            else:end('candidate_search_failed');return
         snapshot_task=await invoke('view_map',request())
         if snapshot_task.get('status')!='succeeded':
             end('handoff_map_unavailable');return
         snapshot=snapshot_task['result']['snapshot']
-        m=transition(skills.store,mid,catalog,snapshot)
+        state=skills.get_robot_state();sim=state['sources']['clock']['sim_time_s']
+        m=session_state()
+        budget_reason=budget_reason or classical_boundary(m,skills.store.tasks(),sim)
+        candidates=catalog.get('candidates',[])
+        left=classical_remaining(m,skills.store.tasks(),sim)
+        affordable=[c for c in candidates if c['planned_length_m']<=left['distance_m']
+                    and c.get('estimated_sim_seconds',0)<=left['sim_s']]
+        if candidates and not affordable:budget_reason='classical_action_exceeds_allowance'
+        m=transition(skills.store,mid,catalog,snapshot,budget_reason)
         report['phase']=m['phase'];report['handoff']=compact(m.get('handoff'));checkpoint()
         if m['phase']=='ai_investigation':break
-        candidates=catalog.get('candidates',[])
+        candidates=affordable
         if not candidates:
-            # Incomplete searches advance the persisted cursor; healthy completed
-            # empty searches need repeated evidence, not a first-empty shutdown.
             await asyncio.sleep(.2)
             continue
-        from robot_skills.mission import progress
-        state=skills.get_robot_state();sim=state['sources']['clock']['sim_time_s']
-        used=progress(m,skills.store.tasks())
-        candidates=[c for c in candidates if c['planned_length_m']<=m['limits']['max_distance']-used['distance_m']
-                    and c.get('estimated_sim_seconds',0)<=m['limits']['max_sim_time']-(sim-m['start_sim_s'])]
-        if not candidates:
-            end('remaining_budget_insufficient');return
         chosen=max(candidates,key=lambda c:c.get('regional_score',c.get('classical_score',0)))
         task=await invoke('execute_frontier',{'frontier_id':chosen['frontier_id'],**request()})
         report['rounds'].append({'phase':'classical','task_id':task.get('task_id'),
                                  'execution_result':compact(task)})
         checkpoint()
+        # Dispatch revalidation can consume the remaining classical allowance
+        # after selection. Preserve that boundary across the next loop: acquire
+        # a fresh handoff snapshot without launching another frontier search.
+        if task.get('reason')=='classical_budget_reserved' and task.get('stopped'):
+            pending_budget_reason='classical_budget_reserved'
 
     if session_state()['status']!='running':return
     permitted=(TOOLS | {'get_robot_state','get_decision_context','get_task_status','stop_robot'})-{'start_candidate_search'}

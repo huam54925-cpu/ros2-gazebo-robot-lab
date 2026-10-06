@@ -11,7 +11,7 @@ from robot_skills.store import Store
 from robot_skills import investigation as inv, mission
 
 
-class InvestigationTests(unittest.TestCase):
+class InvestigationFixture:
     def setUp(self):
         tmp=tempfile.TemporaryDirectory();self.addCleanup(tmp.cleanup)
         self.store=Store(tmp.name);self.mid=str(uuid.uuid4());now=time.monotonic()
@@ -33,6 +33,7 @@ class InvestigationTests(unittest.TestCase):
             {**inv.poses_payload(poses or [self.pose],'epoch'),'investigation_id':iid},
             request or str(uuid.uuid4()),self.mid)
 
+class InvestigationTests(InvestigationFixture, unittest.TestCase):
     def test_step_count_does_not_end_whole_mission_and_queries_do_not_consume_failures(self):
         tasks=[{'mission_id':self.mid,'kind':'execute_frontier','status':'succeeded'} for _ in range(100)]
         tasks += [{'mission_id':self.mid,'kind':'plan_navigation','status':'aborted'} for _ in range(30)]
@@ -68,7 +69,8 @@ class InvestigationTests(unittest.TestCase):
     def test_terminal_failure_is_remembered_atomically_once(self):
         investigation=self.create();task,_=self.submit(investigation['investigation_id'])
         self.store.update(task['task_id'],status='aborted',reason='path_rejected',stopped=True,
-                          result={'before':{'pose':[0,0,0]},'after':{'pose':[0,0,0]}})
+                          result={'before':{'pose':[0,0,0]},'after':{'pose':[0,0,0]},
+                                  'planning':{'clearance':{'safe':False,'reason':'body_sweep_nonfree'}}})
         self.store.update(task['task_id'],status='aborted',reason='path_rejected')
         events=self.store.meta('investigation_memory:'+self.mid)
         self.assertEqual(len(events),1);self.assertEqual(events[0]['failure_code'],'NO_PATH')

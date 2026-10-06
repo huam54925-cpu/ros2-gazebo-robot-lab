@@ -5,14 +5,18 @@ from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 from launch.event_handlers import OnProcessExit
 from launch.events import Shutdown
+from launch.conditions import UnlessCondition
 
 
 def generate_launch_description():
     root = Path(__file__).resolve().parent
     gui_env = {'LIBGL_ALWAYS_SOFTWARE': LaunchConfiguration('gui_software'),
                '__GLX_VENDOR_LIBRARY_NAME': LaunchConfiguration('gui_gl_vendor')}
-    guard = ExecuteProcess(cmd=['python3', str(root / 'velocity_guard.py')], output='screen')
+    guard = ExecuteProcess(cmd=['python3', str(root / 'velocity_guard.py')],
+                           condition=UnlessCondition(LaunchConfiguration('direct_gazebo')), output='screen')
     return LaunchDescription([
+        DeclareLaunchArgument('headless', default_value='false'),
+        DeclareLaunchArgument('direct_gazebo', default_value='false', description='Explicit unprotected Gazebo scan/drive experiment'),
         DeclareLaunchArgument('gui_software', default_value='1'),
         DeclareLaunchArgument('gui_gl_vendor', default_value='mesa'),
         RegisterEventHandler(OnProcessExit(target_action=guard, on_exit=[
@@ -21,7 +25,7 @@ def generate_launch_description():
         DeclareLaunchArgument("rviz_config", default_value=str(root / "vehicle.rviz")),
         DeclareLaunchArgument("world", default_value=str(root / "vehicle.world.sdf"), description="SDF world path (must use world name demo and model vehicle)"),
         ExecuteProcess(cmd=['gz', 'sim', '-s', '-r', '-v', '3', LaunchConfiguration('world')], output='screen'),
-        ExecuteProcess(cmd=['gz', 'sim', '-g', '-v', '3', '--render-engine', 'ogre'], additional_env=gui_env, output='screen'),
+        ExecuteProcess(cmd=['gz', 'sim', '-g', '-v', '3', '--render-engine', 'ogre'], additional_env=gui_env, condition=UnlessCondition(LaunchConfiguration('headless')), output='screen'),
         Node(package='ros_gz_bridge', executable='parameter_bridge', name='vehicle_bridge', output='screen', arguments=[
             '/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock',
             '/scan@sensor_msgs/msg/LaserScan[gz.msgs.LaserScan',
@@ -54,5 +58,5 @@ def generate_launch_description():
             parameters=[{'use_sim_time': True}],
             output='screen',
         ),
-        Node(package='rviz2', executable='rviz2', arguments=['-d', LaunchConfiguration('rviz_config')], additional_env=gui_env, parameters=[{'use_sim_time':True}], output='screen'),
+        Node(package='rviz2', executable='rviz2', arguments=['-d', LaunchConfiguration('rviz_config')], additional_env=gui_env, condition=UnlessCondition(LaunchConfiguration('headless')), parameters=[{'use_sim_time':True}], output='screen'),
     ])

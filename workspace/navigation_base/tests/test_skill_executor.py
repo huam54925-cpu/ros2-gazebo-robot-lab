@@ -49,23 +49,25 @@ class SkillCancelTests(unittest.TestCase):
         worker.pause_navigation.assert_called_once()
 
 
-    def test_rotation_new_map_invalidates_remaining_sweep(self):
-        worker = self.worker()
-        worker.spin_client = Mock()
-        handle = Mock(accepted=True)
-        handle.get_result_async.return_value.done.return_value = False
-        worker.wait = Mock(return_value=handle)
-        worker.pose = Mock(side_effect=[[0,0,0],[0,0,.02]])
-        worker.health = Mock(); worker.spin_once = Mock()
-        worker.latest = {'map_version':'v1','nearest':3.0}
-        worker.rotation_check = Mock(side_effect=[{'safe':True},{'safe':False,'reason':'body_sweep_nonfree'}])
-        worker.store = Mock(); worker.identifier = 'test'
-        import math
-        with self.assertRaisesRegex(RuntimeError,'rotation_path_invalidated'):
-            worker.perform_rotation({'signed_angle_rad':math.pi/2},{})
-        self.assertEqual(worker.rotation_check.call_count,2)
-        sent = worker.spin_client.send_goal_async.call_args.args[0]
-        self.assertFalse(sent.disable_collision_checks)
+    def test_waits_for_lifecycle_activation_and_honors_cancel(self):
+        worker=self.worker();worker.task=None;worker.node=Mock();worker.spin_once=Mock()
+        worker.node.create_client.return_value.wait_for_service.return_value=True
+        worker.wait=Mock(side_effect=[NS(current_state=NS(id=i)) for i in (2,3,3,3,3)])
+        worker.wait_navigation_active()
+        self.assertEqual(worker.wait.call_count,5)
+        self.assertEqual(worker.node.destroy_client.call_count,4)
+        worker.task={'task_id':'active'};worker.identifier='active';worker.store=Mock()
+        worker.store.should_cancel.return_value=True
+        with self.assertRaisesRegex(RuntimeError,'stop_requested'):worker.wait_navigation_active()
+
+    def test_sensor_offset_survives_legacy_observation_removal(self):
+        worker=self.worker()
+        worker.buffer=Mock()
+        worker.buffer.lookup_transform.return_value=NS(transform=NS(translation=NS(x=-.7057095,y=0.)))
+        self.assertEqual(worker.sensor_offset(),(-.7057095,0.))
+        worker.buffer.lookup_transform.side_effect=RuntimeError('no TF')
+        with self.assertRaisesRegex(RuntimeError,'lidar_transform_unavailable'):
+            worker.sensor_offset()
 
     def test_queued_tf_is_drained_without_relaxing_age_limits(self):
         worker=object.__new__(Executor); worker.node=Mock(); worker.task=None

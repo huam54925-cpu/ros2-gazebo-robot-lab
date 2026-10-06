@@ -1,6 +1,12 @@
 # ros2-gazebo-robot-lab
 
-基于 Docker 的 ROS 2 Lyrical 与 Gazebo 小车仿真实验：2D 激光雷达、SLAM Toolbox、Nav2，以及 **AI → MCP → Robot Skills → 本地安全执行器**。已有运行验证采用本地候选 ID 选点；新增两阶段持续调查代码，允许 AI 在常规探索后提交任务范围内的新坐标与途经点，由本地执行器复核。新增代码尚未运行验收，项目仍未完成整屋自主探索验收。
+基于 Docker 的 ROS 2 Lyrical 与 Gazebo 小车探索实验。当前实验采用 **360° 扫描 → AI 选择方向 → 行驶该方向激光量程的一半 → 再扫描**，连续循环；传统探索与 Nav2 在此模式暂停。
+
+## 当前主实验：AI 连续扫描与移动
+
+入口 `scripts/robot-scan-drive.sh --wall-budget 1800`。一次动作结束后自动开始下一次扫描，不按单轮退出。直行目标速度 0.6 m/s，旋转目标速度 0.8 rad/s；本轮代码冻结，运行中只记录结果。此模式是明确启用的无碰撞检查 Gazebo 实验，启动方法、数据定义和边界见[完整说明](docs/scan-drive-experiment-2026-10-06.md)。
+
+此前两阶段代码及修正保留为独立模式，当前连续实验不加载这些探索与保护链。下面为此前实现记录，不能与本次实验数据混用。
 
 ## 2026-10-06 代码更新：持续调查与两阶段探索
 
@@ -11,7 +17,7 @@
 - **整场状态与交接**：新入口取消三动作上限，采用时间、距离与失败预算；连续低收益、重复无进展或完整补查无目标时交接，第一次空候选不等于探索完成。
 - **失败记忆与防振荡**：保存失败原因、接近方式和进展；允许换方向和必要旧路中转，抑制无进展重复往返。
 
-**验证状态：仅静态语法、契约格式和差异检查通过。按用户要求未执行测试、模型请求或仿真，未启动/重启 ROS、Nav2 和 Gazebo。** 途经点采用逐段 Nav2 导航与停稳复核；已继续加入低速试探与受保护短退代码；完整覆盖率评估及多轮端到端验收仍待后续完成。
+**验证状态：已按后续授权执行回归测试和真实 ROS/Gazebo 仿真。** 当前结果、启动故障与能力边界见[本轮运行记录](docs/runtime-consolidation-2026-10-06.md)。途经点采用逐段 Nav2 导航与停稳复核；不能将接口测试通过当作整屋探索或接触脱困通过。
 
 [完整更改说明与限制](docs/persistent-investigation-implementation-2026-10-06.md) · [新流程入口](workspace/robot_agent/run_investigation.py) · [车辆契约](workspace/navigation_base/config/robot_contract.yaml)
 
@@ -19,7 +25,13 @@
 
 新增 `probe_forward` 与 `recover_short_reverse` MCP 技能。底层以 0.04 m/s 执行 5–20 cm 试探或最多 20 cm 短退；保留完整车体、最新地图/扫描检查和 Nav2 碰撞保护。符合条件的失败先确认停车，再沿最近直线轨迹尝试一次短退，取得新观测并查询新路线。每场/每处/每个失败来源限制恢复次数；恢复成功不等于探索进展，也不会自动反复前进顶推。
 
-[查看低速试探与短退更改记录](docs/protected-short-motion-2026-10-06.md)。本次仍仅完成静态检查，新增回归测试源码未执行，未启动或重启系统。
+[查看低速试探与短退更改记录](docs/protected-short-motion-2026-10-06.md)。该文记录前次提交；本轮测试及运行结果以最新整理记录为准。
+
+### 当前入口与本轮修正
+
+旧的 `model-loop` / `classical-loop` / 单步运动试验入口已移除。使用 `scripts/robot-investigate.sh` 启动两阶段系统；`scripts/robot-skills.sh` 仅用于状态、停止和操作员管理。新建空白地图可先显式执行 `scripts/initialize-exploration-map.sh`，仅进行受保护的初始化扫描并停车；初始化观测与后续探索分别记账。
+
+新增短退距离递减、短步仿真时间判定、默认 30% AI 资源预留、严格的受阻证据筛选，以及基于 odometry 的扫描运动补偿。另提供不发运动指令的停车证据记录器，区分输入异常与几何碰撞拒绝。[查看完整更改及能力边界](docs/runtime-consolidation-2026-10-06.md)。接触后脱困和 State Lattice 尚未实现。用户另行授权了默认关闭的临时 Gazebo 碰撞保护暂停模式；该模式的数据单独标记，不算正常保护模式验收。
 
 ## 系统改进方案
 
@@ -47,17 +59,11 @@
 
 历史记录：[10 月 3 日激进/保守单次对照](docs/experiments/2026-10-03/frontier-comparison/README.md) · [Frontier 首轮](docs/experiments/2026-10-03/frontier/README.md) · [后续路线](docs/robot-skills-roadmap.md) · [运行说明](docs/frontier-exploration.md)。旧图与原始记录保留；不能将不同初始地图下的结果直接比较为模型提升。
 
-2026-10-04 已补充[整条路径的雷达间距检查](docs/guard-path-clearance.md)：考虑雷达 TF 偏置、沿途朝向与地图变化，危险候选提前排除；执行失效时取消并排除目标。独立 guard 仍使用 1.9 m 阈值。
+以下链接记录旧版本验证：[整条路径间距检查](docs/guard-path-clearance.md)、[移动或观察设计](docs/move-or-observe-design.md)、[六工具候选选择](docs/robot-skills-mcp.md)、[有界连续探索](docs/bounded-exploration-agent.md)、[区域探索](docs/regional-exploration.md)。其中的三轮限制、模型只选候选 ID、独立 1.9 m 径向 guard 与旧命令不代表当前两阶段系统。
 
-最初的[移动还是观察决策设计](docs/move-or-observe-design.md)已落实为下述可选观察接口，含动作选择、增量观测收益和旋转安全门。
+## 验证进度（含历史版本）
 
-[OpenAI API 与 MCP 本地环境](docs/openai-environment.md)已安装并通过 API 认证；[模型读取机器人实时状态](docs/robot-readonly.md)和[一次受限运动测试](docs/model-motion-trial.md)已运行验证。现已增加[六工具 Robot Skills / 安全 Frontier 选择](docs/robot-skills-mcp.md)：模型只提交本地候选 ID，统一任务仲裁、去重、路径复核和停车确认。已扩展[有界连续 Frontier 与主动观察](docs/bounded-exploration-agent.md)：默认最多 3 轮，观察动作需显式启用；任意目标导航仍未开放。
-
-## 当前进度
-
-已增加[区域探索与逐步地图收益](docs/regional-exploration.md)：统一 MOVE/OBSERVE 地图变化账本、跨区域候选名额、安全分段转移及 AI 换区上下文。地图配准变化与动作因果收益分开报告，不以空间分区数冒充整屋覆盖率。
-
-新增 `baseline / shadow / memory` 可选模式：保留原评分，增加未知空间语义、第一未知边界增量代理、终态事件记忆和分作用范围的失败过滤。默认新模式限最多 3 次 Frontier 提交；较长会话需要本地显式 extended/hour 预算，1.48 m 实验仍最多 3 次。模型不能改坐标、速度、保护阈值或恢复锁。10 月 5 日已补充时间标定、可见性诊断、簇关联与离线针对性验收；在线循环触发、走廊穿越持续目标及公平策略对照仍待验证，详见最新日结。
+下列已完成项是历史验证记录；新系统的当前代码、入口和未验收范围见上方更新说明及[主运行路径整理记录](docs/runtime-consolidation-2026-10-06.md)。
 
 - [x] Docker 仿真环境与持久化目录
 - [x] 小车前进、转向、停止

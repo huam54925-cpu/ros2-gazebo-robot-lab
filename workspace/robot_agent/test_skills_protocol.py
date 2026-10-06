@@ -8,7 +8,7 @@ import tempfile
 import time
 from types import SimpleNamespace
 import unittest
-from unittest.mock import patch
+from unittest.mock import patch, Mock
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from robot_skills.api import RobotSkills
@@ -18,17 +18,53 @@ from pydantic import ValidationError
 
 
 class ProtocolTests(unittest.TestCase):
-    def test_exact_six_tools_and_no_extra_fields(self):
-        names = {t.name for t in registered_tools}
-        self.assertEqual(names, {'get_robot_state','get_decision_context','get_safe_frontiers',
-                                 'execute_frontier','get_task_status','stop_robot'})
-        for tool in registered_tools:
-            self.assertFalse(tool.parameters['additionalProperties'])
-        execute = next(t for t in registered_tools if t.name == 'execute_frontier')
-        self.assertEqual(set(execute.parameters['properties']), {'frontier_id','request_id'})
-        for extra in ('x','y','yaw','speed','clearance','command'):
-            with self.assertRaises(ValidationError):
-                execute.fn_metadata.validate_arguments({'frontier_id':'F_1','request_id':'uuid',extra:0})
+    def mission_tools(self):
+        import importlib.util
+        spec=importlib.util.spec_from_file_location('mission_protocol_under_test',Path(__file__).with_name('mcp_skills_server.py'))
+        module=importlib.util.module_from_spec(spec)
+        skills=Mock();skills.investigations_enabled.return_value=True
+        with patch('robot_skills.api.RobotSkills',return_value=skills):spec.loader.exec_module(module)
+        return {t.name:t for t in module.registered_tools},skills
+
+    def test_map_pose_schema_requires_yaw_and_rejects_extra_fields(self):
+        tools,_=self.mission_tools()
+        for name,field in [('start_investigation','subject'),('navigate_to_pose','pose'),
+                           ('plan_navigation','poses'),('navigate_through_poses','poses')]:
+            schema=tools[name].parameters
+            pose=schema['$defs']['MapPose']
+            self.assertEqual(set(pose['required']),{'x','y','yaw'})
+            self.assertFalse(pose['additionalProperties'])
+        model=tools['start_investigation'].fn_metadata.arg_model
+        args={'subject':{'x':1.,'y':2.},'hypothesis':'unknown','task_type':'observe_structure','request_id':'id'}
+        with self.assertRaises(ValidationError):model.model_validate(args)
+        args['subject']['yaw']=0.
+        self.assertEqual(model.model_validate(args).subject,args['subject'])
+        args['subject']['speed']=1.
+        with self.assertRaises(ValidationError):model.model_validate(args)
+
+    def test_local_rule_error_is_returned_instead_of_hidden_sdk_crash(self):
+        tools,skills=self.mission_tools()
+        skills.start_investigation.side_effect=ValueError('finish_current_investigation_first')
+        result=tools['start_investigation'].fn(subject={'x':1.,'y':2.,'yaw':0.},
+            hypothesis='unknown',task_type='observe_structure',request_id='id')
+        self.assertEqual(result,{'status':'request_rejected','reason':'finish_current_investigation_first'})
+
+    def test_outside_mission_only_status_and_stop_are_registered(self):
+        self.assertEqual({t.name for t in registered_tools},
+                         {'get_robot_state','get_decision_context','get_task_status','stop_robot'})
+        for tool in registered_tools:self.assertFalse(tool.parameters['additionalProperties'])
+
+    def test_old_motion_skills_are_rejected_before_launch(self):
+        import uuid
+        with tempfile.TemporaryDirectory() as directory:
+            store=Store(directory)
+            for kind in ('fixed_step','perform_observation'):
+                with self.assertRaisesRegex(ValueError,'retired_skill'):
+                    store.submit(kind,{},str(uuid.uuid4()))
+            task,launch=store.submit('execute_frontier',{'frontier_id':'old'},str(uuid.uuid4()))
+            self.assertFalse(launch)
+            self.assertEqual(task['reason'],'two_stage_mission_required')
+
 
     def test_decision_context_does_not_plan_or_launch(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -73,34 +109,7 @@ class ProtocolTests(unittest.TestCase):
                 record.assert_not_called()
 
 
-    def test_optional_observation_tools_accept_only_ids(self):
-        script = """
-import json
-from mcp_skills_server import registered_tools
-from pydantic import ValidationError
-assert len(registered_tools)==8
-observe=next(t for t in registered_tools if t.name=='perform_observation')
-assert set(observe.parameters['properties'])=={'option_id','request_id'}
-for field in ('angle','x','y','speed','clearance','resume'):
-    try:
-        observe.fn_metadata.validate_arguments({'option_id':'OBS','request_id':'UUID',field:1})
-    except ValidationError: pass
-    else: raise AssertionError(field)
-print('passed')
-"""
-        result = subprocess.run([sys.executable,'-c',script], cwd=Path(__file__).resolve().parent,
-            env={**os.environ,'ROBOT_OBSERVATIONS_ENABLED':'1'},capture_output=True,text=True,timeout=20)
-        self.assertEqual(result.returncode,0,result.stderr)
 
-    def test_near_expiry_catalog_is_refreshed_before_model_choice(self):
-        with tempfile.TemporaryDirectory() as directory:
-            skills=RobotSkills(Store(directory))
-            skills.store.set_meta('catalog',{'map_version':'v','expires_unix_s':time.time()+45,'candidates':[]})
-            state={'status':'available','stop_latched':False,'sources':{'map':{'map_version':'v'}}}
-            with patch.object(skills,'get_robot_state',return_value=state), \
-                    patch('robot_skills.api.subprocess.run',return_value=SimpleNamespace(returncode=0)) as plan:
-                skills.get_safe_frontiers()
-            plan.assert_called_once()
 
 if __name__ == '__main__':
     unittest.main()

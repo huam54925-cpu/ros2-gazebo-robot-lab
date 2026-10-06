@@ -20,7 +20,7 @@ from safety_contract import blocked_reason, scan_state
 
 def main():
     rclpy.init(signal_handler_options=SignalHandlerOptions.NO)
-    node = rclpy.create_node('velocity_guard')
+    node = rclpy.create_node('velocity_guard',parameter_overrides=[rclpy.parameter.Parameter('use_sim_time',value=True)])
     stopped = False
     def stop(signum, frame):
         nonlocal stopped
@@ -28,7 +28,7 @@ def main():
     signal.signal(signal.SIGINT, stop)
     signal.signal(signal.SIGTERM, stop)
     command = Twist()
-    command_at = scan_at = float('-inf')
+    command_at = scan_at = command_sim = float('-inf')
     nearest = 0.0
     valid_scan = False
     latest_scan=None
@@ -36,20 +36,31 @@ def main():
     odom_at=float('-inf')
     last_report=0.
     if FOOTPRINT_MODE:
-        from footprint_guard import scan_points,check_sweep
+        from footprint_guard import check_sweep
+        from scan_motion import OdomHistory,compensated_points
+        history=OdomHistory()
+    odom_error=None
     evidence_path=Path(__file__).resolve().parents[1]/'log'/'footprint-guard-status.json'
     def receive_command(msg):
-        nonlocal command, command_at
+        nonlocal command, command_at,command_sim
         command, command_at = msg, time.monotonic()
+        command_sim=node.get_clock().now().nanoseconds*1e-9
     def receive_scan(msg):
         nonlocal scan_at, nearest, valid_scan, latest_scan
         scan_at = time.monotonic()
         nearest, valid_scan = scan_state(msg)
         latest_scan=msg
     def receive_odom(msg):
-        nonlocal measured,odom_at
+        nonlocal measured,odom_at,odom_error
         measured=(msg.twist.twist.linear.x,msg.twist.twist.angular.z)
         odom_at=time.monotonic()
+        if FOOTPRINT_MODE:
+            p=msg.pose.pose.position;q=msg.pose.pose.orientation
+            yaw=math.atan2(2*(q.w*q.z+q.x*q.y),1-2*(q.y*q.y+q.z*q.z))
+            try:
+                history.add(msg.header.stamp.sec+msg.header.stamp.nanosec*1e-9,[p.x,p.y,yaw],msg.header.frame_id)
+                odom_error=None
+            except ValueError as error:odom_error=str(error)
     subscriptions = [
         node.create_subscription(Odometry, "/model/vehicle/odometry", receive_odom, qos_profile_sensor_data),
         node.create_subscription(Twist, '/model/vehicle/cmd_vel', receive_command, 1),
@@ -63,15 +74,18 @@ def main():
         reason = blocked_reason(now-command_at, now-scan_at, nearest, valid_scan)
         evidence={}
         if FOOTPRINT_MODE:
-            reason=('command timeout' if now-command_at>CONTRACT['command_timeout_s'] else
-                    'scan missing or stale' if now-scan_at>PROFILE_LIMITS['scan_timeout_s'] or not valid_scan else
-                    'odometry stale' if now-odom_at>PROFILE_LIMITS['odom_timeout_s'] else '')
+            sim=node.get_clock().now().nanoseconds*1e-9
+            reason=('command timeout' if now-command_at>CONTRACT['command_wall_timeout_s'] or not 0<=sim-command_sim<=CONTRACT['command_timeout_s'] else
+                    'scan missing or stale' if now-scan_at>CONTRACT['feedback_wall_timeout_s'] or not valid_scan else
+                    'odometry stale' if now-odom_at>CONTRACT['feedback_wall_timeout_s'] else odom_error or '')
             if not reason:
                 try:
-                    evidence=check_sweep(scan_points(latest_scan),
+                    points,compensation=compensated_points(latest_scan,history,sim)
+                    evidence=check_sweep(points,
                         (max(-PROFILE_LIMITS['max_linear_m_s'],min(PROFILE_LIMITS['max_linear_m_s'],command.linear.x)),
                          max(-PROFILE_LIMITS['max_angular_rad_s'],min(PROFILE_LIMITS['max_angular_rad_s'],command.angular.z))),
-                        measured,now-scan_at)
+                        measured,compensation['remaining_pose_age_sim_s'])
+                    evidence['motion_compensation']=compensation
                     if not evidence['safe']:reason=evidence['reason']
                 except Exception as error:
                     reason='footprint guard invalid input: '+type(error).__name__

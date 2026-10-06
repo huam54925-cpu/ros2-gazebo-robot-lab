@@ -28,10 +28,10 @@ class RobotSkills:
         state = get_robot_status()
         state['stop_latched'] = self.store.meta('stop_latched', False)
         state['operator_assistance_active'] = bool(self.store.meta('active_operator_assistance'))
-        state['motion_tools_enabled'] = (not state['stop_latched'] and not state['operator_assistance_active'] and
+        state['motion_tools_enabled'] = (self.investigations_enabled() and not state['stop_latched'] and not state['operator_assistance_active'] and
                                          self.store.meta('active_mission') in (None, self.mission_id))
         state['motion_scope'] = ('mission_scoped_investigation_goals' if self.investigations_enabled() else
-                                 'validated_frontier_and_observation_ids' if self.observations else 'validated_frontier_ids_only')
+                                 'status_and_stop_only')
         return state
 
     def catalog_view(self):
@@ -41,59 +41,6 @@ class RobotSkills:
                     'requires_refresh': True}
         return catalog
 
-    def get_safe_frontiers(self):
-        state = self.get_robot_state()
-        current_version = state.get('sources', {}).get('map', {}).get('map_version')
-        catalog = self.catalog_view()
-        from .exploration_upgrade import mode_for, search_for, history_revision, path_clearance_for
-        mode=mode_for(self.store,self.mission_id)
-        audit=catalog.get('exploration_upgrade',{})
-        compatible=(catalog.get('path_clearance_m',2.15)==path_clearance_for(self.store,self.mission_id) and
-            catalog.get('candidate_search','baseline')==search_for(self.store,self.mission_id) and
-            audit.get('mode','baseline')==mode and (mode=='baseline' or
-            (audit.get('mission_id')==self.mission_id and audit.get('history_revision')==history_revision(self.store.tasks(),self.mission_id))))
-        if (catalog.get('candidates') and catalog.get('catalog_schema') == 3 and catalog.get('map_version') == current_version and not catalog.get('requires_refresh')
-                and compatible and catalog.get('expires_unix_s', 0)-time.time() > 90):
-            return catalog
-        if any(t['status'] in ACTIVE for t in self.store.tasks()):
-            return {'status': 'task_active', 'candidates': [], 'requires_refresh': True}
-        if state['status'] != 'available' or state['stop_latched']:
-            return {'status': 'robot_unavailable_or_stop_latched', 'candidates': []}
-        # Planning only. No navigation action or velocity publisher is used here.
-        with (self.store.directory / 'catalog-worker.log').open('w') as log:
-            try:
-                from navigation_base.safety_profile import FOOTPRINT_MODE
-                result = subprocess.run(robot_command('catalog'), stdout=log, stderr=log, timeout=240 if FOOTPRINT_MODE else 95)
-            except subprocess.TimeoutExpired:
-                return {'status': 'catalog_timeout', 'candidates': []}
-        if result.returncode:
-            return {'status': 'catalog_unavailable', 'candidates': [],
-                    'reason': 'check_catalog_worker_log'}
-        return self.catalog_view()
-
-    def get_observation_options(self):
-        if not self.observations:
-            return {'status': 'observations_not_enabled', 'options': []}
-        state = self.get_robot_state()
-        if state['status'] != 'available' or state['stop_latched'] or any(t['status'] in ACTIVE for t in self.store.tasks()):
-            return {'status': 'robot_unavailable_or_busy', 'options': []}
-        catalog = self.store.meta('observation_catalog', {})
-        version = state.get('sources', {}).get('map', {}).get('map_version')
-        if catalog.get('expires_unix_s', 0)-time.time() > 90 and catalog.get('map_version') == version:
-            return catalog
-        with (self.store.directory / 'observation-catalog-worker.log').open('w') as log:
-            try:
-                result = subprocess.run(robot_command('observations'), stdout=log, stderr=log, timeout=95)
-            except subprocess.TimeoutExpired:
-                return {'status': 'observation_catalog_timeout', 'options': []}
-        return self.store.meta('observation_catalog', {}) if result.returncode == 0 else {'status': 'observation_catalog_unavailable', 'options': []}
-
-    def perform_observation(self, option_id, request_id):
-        if not self.observations:
-            raise ValueError('observations_not_enabled')
-        if not isinstance(option_id, str) or len(option_id) > 64:
-            raise ValueError('invalid_observation_id')
-        return self._submit('perform_observation', {'option_id': option_id}, request_id)
 
     def get_decision_context(self):
         """Reads only; does not refresh/plan, launch workers, resume or move."""
@@ -118,11 +65,10 @@ class RobotSkills:
                 'decision_options': (['start_investigation','view_map','plan_navigation','navigate_to_pose',
                                      'navigate_through_poses','probe_forward','recover_short_reverse','finish_investigation','cancel_task','stop_robot']
                                      if self.investigations_enabled() and self.store.meta('mission:'+self.mission_id,{}).get('phase')=='ai_investigation'
-                                     else ['execute_frontier','stop_robot'] + (['perform_observation'] if self.observations else [])),
-                'observation_options': self.store.meta('observation_catalog', {}) if self.observations else {'options': []},
+                                     else ['stop_robot']),
                 'mission': self.store.meta('mission:'+self.mission_id) if self.mission_id else None,
                 'operator_assistance': self.store.meta('last_operator_assistance'),
-                'observe_available': self.observations, 'arbitrary_navigation_available': self.investigations_enabled(),
+                'arbitrary_navigation_available': self.investigations_enabled(),
                 'investigations':self.investigation_context(),
                 'authority': 'Only local task state establishes success, cancellation or stopped.'}
 
@@ -209,8 +155,6 @@ class RobotSkills:
             raise ValueError('cancel_requires_owned_non_stop_task')
         return self.store.cancel(task_id)
 
-    def fixed_step(self, request_id):
-        return self._submit('fixed_step', {}, request_id)
 
     def stop_robot(self, request_id):
         return self._submit('stop_robot', {}, request_id)

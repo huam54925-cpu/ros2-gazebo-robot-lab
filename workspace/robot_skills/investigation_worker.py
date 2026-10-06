@@ -35,6 +35,8 @@ class InvestigationMixin:
 
     def require_contract(self):
         """Detect old guards and inconsistent sensor TF; never activate a profile."""
+        from navigation_base.simulation_override import active
+        collision_bypass=active()
         from safety_profile import PROFILE, CONTRACT_HASH as active_hash
         if PROFILE!='footprint_075' or active_hash!=CONTRACT_HASH:
             raise RuntimeError('config_contract_mismatch')
@@ -64,10 +66,19 @@ class InvestigationMixin:
                                                'FollowPath.use_collision_detection'])
         limits=CONTRACT['profiles']['footprint_075']
         if (len(values)!=3 or not 0<values[0].double_value<=limits['max_linear_m_s']
-                or not 0<values[1].double_value<=limits['max_angular_rad_s'] or not values[2].bool_value):
+                or not 0<values[1].double_value<=limits['max_angular_rad_s']
+                or values[2].bool_value==collision_bypass):
             raise RuntimeError('controller_contract_mismatch')
+        values=parameters('/behavior_server',['max_rotational_vel','backup.minimum_speed','drive_on_heading.minimum_speed'])
+        if (len(values)!=3 or not 0<values[0].double_value<=limits['max_angular_rad_s']
+                or any(abs(v.double_value-CONTRACT['short_motion']['speed_m_s'])>1e-9 for v in values[1:])):
+            raise RuntimeError('behavior_contract_mismatch')
         publishers=self.node.get_publishers_info_by_topic('/model/vehicle/cmd_vel_safe')
-        if len(publishers)!=1 or publishers[0].node_name!='velocity_guard':
+        names=[p.node_name for p in publishers]
+        if collision_bypass:
+            if 'gazebo_diagnostic_relay' not in names or any(n not in ('velocity_guard','gazebo_diagnostic_relay') for n in names):
+                raise RuntimeError('simulation_diagnostic_chain_mismatch')
+        elif len(publishers)!=1 or publishers[0].node_name!='velocity_guard':
             raise RuntimeError('velocity_protection_chain_mismatch')
 
     def perform_query(self):

@@ -11,7 +11,8 @@ def source_manifest():
     files.extend(workspace/path for path in ('navigation_base/navigation/nav2.yaml',
         'navigation_base/safety_contract.py','navigation_base/safety_profile.py',
         'navigation_base/robot_contract.py','navigation_base/config/robot_contract.yaml',
-        'navigation_base/footprint_guard.py','navigation_base/velocity_guard.py',
+        'navigation_base/scan_motion.py','navigation_base/footprint_guard.py','navigation_base/velocity_guard.py',
+        'navigation_base/simulation_override.py','navigation_base/diagnostics/gazebo_collision_bypass.py',
         'navigation_base/navigation/navigation.launch.py','navigation_base/map_identity.py','robot_agent/motion_trial.xml'))
     return {str(path.relative_to(workspace)):hashlib.sha256(path.read_bytes()).hexdigest()
             for path in sorted(files) if not path.name.startswith('test_')}

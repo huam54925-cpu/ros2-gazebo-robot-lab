@@ -11,7 +11,7 @@ class RecoveryMixin:
     def recovery_feedback(self):
         now=time.monotonic();limits=CONTRACT['profiles']['footprint_075']
         for kind in ('scan','odom'):
-            if now-self.latest.get(kind+'_at',-math.inf)>limits[kind+'_timeout_s']:
+            if now-self.latest.get(kind+'_at',-math.inf)>CONTRACT['feedback_wall_timeout_s']:
                 raise RuntimeError('short_motion_'+kind+'_stale')
         row=self.odom_trace[-1] if self.odom_trace else None
         sim=self.node.get_clock().now().nanoseconds*1e-9
@@ -40,22 +40,49 @@ class RecoveryMixin:
         finally:
             self.node.destroy_client(client)
 
-    def short_clearance(self, distance):
-        self.recovery_feedback()
-        speed=math.copysign(POLICY['speed_m_s'],distance)
-        # Reserve the maximum freshness+reaction+full braking travel at the end.
-        braking=abs(speed)*(CONTRACT['reaction_time_s']+CONTRACT['profiles']['footprint_075']['scan_timeout_s']
-                            +abs(speed)/CONTRACT['linear_deceleration_m_s2'])
-        evidence=straight_sweep(self.grid_snapshot(),self.pose(),distance+math.copysign(braking,distance))
-        if not evidence['safe']:raise RuntimeError(evidence['reason'])
-        from navigation_base.footprint_guard import scan_points,check_sweep
+    def synchronized_scan_points(self):
+        from navigation_base.scan_motion import compensated_points
+        # Freeze one scan while waiting for its odometry bracket. Chasing the
+        # newest scan on every callback can perpetually outrun odometry delivery.
         scan=self.latest.get('raw_scan')
         if scan is None:raise RuntimeError('short_motion_scan_unavailable')
-        sim=self.node.get_clock().now().nanoseconds*1e-9
-        age=sim-(scan.header.stamp.sec+scan.header.stamp.nanosec*1e-9)
-        if not 0<=age<=CONTRACT['profiles']['footprint_075']['scan_timeout_s']:
-            raise RuntimeError('short_motion_scan_stamp_stale')
-        scan_check=check_sweep(scan_points(scan),(speed,0.),self.latest['velocity'],age)
+        start=scan.header.stamp.sec+scan.header.stamp.nanosec*1e-9
+        end=start+float(scan.time_increment)*max(0,len(scan.ranges)-1)
+        began=time.monotonic()
+        while True:
+            if self.store.should_cancel(self.identifier):raise RuntimeError('stop_requested')
+            sim=self.node.get_clock().now().nanoseconds*1e-9
+            rows=self.scan_history.rows
+            # Only normal ordering of near-simultaneous messages may wait.
+            pending=bool(rows and start>=rows[0][0] and
+                         (end>rows[-1][0] or start>sim) and
+                         max(end-rows[-1][0],start-sim)<=CONTRACT['scan_pose_gap_s'])
+            if not pending:
+                points,metadata=compensated_points(scan,self.scan_history,sim)
+                metadata['synchronization_wait_wall_s']=time.monotonic()-began
+                return points,metadata
+            if time.monotonic()-began>=CONTRACT['feedback_wall_timeout_s']:
+                raise RuntimeError('scan_pose_sync_timeout')
+            # This issues no command. The independent guard continues to stop
+            # whenever its latest scan cannot yet be compensated.
+            self.spin_once()
+
+    def short_clearance(self, distance):
+        from navigation_base.simulation_override import active,unchecked
+        if active():
+            self.recovery_feedback()
+            return {'map':unchecked(),'scan':unchecked(),'collision_checks':False}
+        points,compensation=self.synchronized_scan_points()
+        self.recovery_feedback()
+        speed=math.copysign(POLICY['speed_m_s'],distance)
+        braking=abs(speed)*(CONTRACT['reaction_time_s']+CONTRACT['profiles']['footprint_075']['scan_timeout_s']
+                            +abs(speed)/CONTRACT['linear_deceleration_m_s2'])
+        # Re-evaluate the map at the current pose AFTER synchronization.
+        evidence=straight_sweep(self.grid_snapshot(),self.pose(),distance+math.copysign(braking,distance))
+        if not evidence['safe']:raise RuntimeError(evidence['reason'])
+        from navigation_base.footprint_guard import check_sweep
+        scan_check=check_sweep(points,(speed,0.),self.latest['velocity'],compensation['remaining_pose_age_sim_s'])
+        scan_check['motion_compensation']=compensation
         if not scan_check['safe']:raise RuntimeError(scan_check['reason'])
         return {'map':evidence,'scan':scan_check,'braking_extension_m':braking}
 
@@ -72,10 +99,18 @@ class RecoveryMixin:
             raise RuntimeError('short_motion_route_deviation')
         if self.distance-ctx['distance_start']>ctx['distance']+2*POLICY['endpoint_tolerance_m']:
             raise RuntimeError('short_motion_distance_limit')
-        if now-ctx['last_progress_at']>POLICY['no_progress_wall_s']:
+        sim=self.node.get_clock().now().nanoseconds*1e-9
+        if sim<ctx['last_sim_s']:raise RuntimeError('simulation_clock_reset')
+        if sim>ctx['last_sim_s']:
+            ctx.update(last_sim_s=sim,clock_advanced_wall=now)
+        if now-ctx['clock_advanced_wall']>POLICY['clock_stall_wall_s']:
+            raise RuntimeError('simulation_clock_stalled')
+        if sim-ctx['start_sim_s']>ctx['allowance_sim_s']:
+            raise RuntimeError('short_motion_sim_timeout')
+        if sim-ctx['last_progress_sim_s']>POLICY['no_progress_sim_s']:
             raise RuntimeError('short_motion_no_progress')
         if travel>ctx['progress']+.005:
-            ctx.update(progress=travel,last_progress_at=now)
+            ctx.update(progress=travel,last_progress_sim_s=sim)
         if now-ctx['last_check_at']>=.1:
             if self.ensure_epoch()!=ctx['epoch']:raise RuntimeError('map_epoch_changed')
             # Recheck against current map and scans; guard independently checks every velocity.
@@ -93,9 +128,8 @@ class RecoveryMixin:
         try:
             if not client.wait_for_server(timeout_sec=3):raise RuntimeError('short_motion_action_unavailable')
             goal=action.Goal();goal.target.x=float(signed_distance);goal.speed=POLICY['speed_m_s']
-            # Older action schemas do not expose a bypass flag; default behavior
-            # still checks collisions. Never set/implement a bypass on any version.
-            if hasattr(goal,'disable_collision_checks'):goal.disable_collision_checks=False
+            from navigation_base.simulation_override import active
+            if hasattr(goal,'disable_collision_checks'):goal.disable_collision_checks=active()
             allowance=abs(signed_distance)/POLICY['speed_m_s']+5.
             goal.time_allowance.sec=math.ceil(allowance)
             from robot_skills import mission
@@ -104,17 +138,20 @@ class RecoveryMixin:
             budget=mission.action_budget(m,self.store.tasks(),self.node.get_clock().now().nanoseconds*1e-9,
                                         allowance,abs(signed_distance)+POLICY['endpoint_tolerance_m'])
             if not budget['fits']:raise RuntimeError('short_motion_budget_exhausted')
-            if m['deadline_monotonic_s']-time.monotonic()<POLICY['action_wall_timeout_s']:
-                raise RuntimeError('short_motion_wall_budget_exhausted')
+            wall_limit=min(POLICY['action_wall_timeout_s'],m['deadline_monotonic_s']-time.monotonic())
+            if wall_limit<=0:raise RuntimeError('short_motion_wall_budget_exhausted')
             audit.update(requested_distance_m=signed_distance,speed_m_s=goal.speed,budget=budget,
-                         collision_checks=True,clearance=self.short_clearance(signed_distance))
+                         collision_checks=not active(),clearance=self.short_clearance(signed_distance))
             odom=self.recovery_feedback();now=time.monotonic()
+            sim=self.node.get_clock().now().nanoseconds*1e-9
+            audit.update(action_wall_limit_s=wall_limit,action_sim_limit_s=allowance)
             self.short_motion_active={'odom_start':odom,'direction':-1 if reverse else 1,
                 'distance':abs(signed_distance),'distance_start':self.distance,'epoch':epoch,
-                'last_check_at':now,'last_progress_at':now,'progress':0.}
+                'last_check_at':now,'last_progress_sim_s':sim,'progress':0.,
+                'start_sim_s':sim,'last_sim_s':sim,'clock_advanced_wall':now,'allowance_sim_s':allowance}
             self.store.update(self.identifier,phase='recovering' if reverse else 'probing',short_motion=audit)
             self.health()
-            outcome=self.execute(client,goal,POLICY['action_wall_timeout_s'],'short_motion')
+            outcome=self.execute(client,goal,wall_limit,'short_motion')
             # Execute has observed terminal result and stopped; late-goal cleanup
             # must only track an actually unresolved send, not an old completed goal.
             self.pending_goal=None
@@ -142,8 +179,19 @@ class RecoveryMixin:
         try:
             self.health()
             distance=straight_retreat(trace,self.recovery_feedback(),self.node.get_clock().now().nanoseconds*1e-9,stationary_bridge)
-            update_attempt(self.store,self.task['mission_id'],attempt['attempt'],status='checking',distance_m=distance)
-            outcome=self.short_action(-distance,epoch,audit)
+            from robot_skills.recovery import reverse_steps
+            audit['history_limit_m']=distance;audit['shorter_step_checks']=[]
+            selected=None
+            for step in reverse_steps(distance):
+                try:
+                    self.health();self.short_clearance(-step);selected=step;break
+                except RuntimeError as error:
+                    if str(error) not in ('body_sweep_nonfree','body_outside_known_map','scan_body_sweep'):raise
+                    audit['shorter_step_checks'].append({'distance_m':step,'reason':str(error)})
+            if selected is None:
+                raise RuntimeError(audit['shorter_step_checks'][-1]['reason'])
+            update_attempt(self.store,self.task['mission_id'],attempt['attempt'],status='checking',distance_m=selected)
+            outcome=self.short_action(-selected,epoch,audit)
             audit['status']='succeeded' if outcome['status']==4 else 'failed'
             if outcome['status']==4:
                 self.observe(.5)

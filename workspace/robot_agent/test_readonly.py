@@ -33,7 +33,8 @@ class ReadonlyTests(unittest.TestCase):
         self.assertFalse(result['sources']['scan']['fresh'])
 
     def test_wall_clock_timeout_even_when_sim_time_paused(self):
-        result = self.read(102)
+        self.data['generated_monotonic_s'] = 106
+        result = self.read(106)
         self.assertFalse(result['sources']['scan']['fresh'])
         self.assertFalse(result['sources']['clock']['fresh'])
 

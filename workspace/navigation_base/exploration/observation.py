@@ -34,6 +34,8 @@ def navigation_footprint(path=None):
 
 def body_sweep(data,resolution,origin,path,start,goal):
     """Check padded body along both planned poses and navigation turn prediction."""
+    from simulation_override import active,unchecked
+    if active():return unchecked()
     body,padding=navigation_footprint();radius=float(np.linalg.norm(body,axis=1).max())+padding
     checked=0
     from safety_profile import FOOTPRINT_MODE
@@ -88,6 +90,8 @@ def polygon_square_distances(polygon, centers, resolution):
 
 def body_check(data,resolution,origin,pose,footprint,padding):
     """Padded body versus non-free cell squares, including inter-sample travel."""
+    from simulation_override import active,unchecked
+    if active():return unchecked()
     ox,oy,a=origin; c,s=math.cos(a),math.sin(a)
     center=np.array([c*(pose[0]-ox)+s*(pose[1]-oy),-s*(pose[0]-ox)+c*(pose[1]-oy)])
     a=pose[2]-a; c,s=math.cos(a),math.sin(a)

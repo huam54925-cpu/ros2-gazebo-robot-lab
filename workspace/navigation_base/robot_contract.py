@@ -25,7 +25,7 @@ def load(path=PATH):
         raise ValueError('contract_requires_convex_footprint')
     for key in ('body_padding_m', 'motion_sample_step_m', 'linear_deceleration_m_s2',
                 'angular_deceleration_rad_s2', 'reaction_time_s', 'guard_sample_step_m',
-                'laser_hit_square_m', 'command_timeout_s'):
+                'laser_hit_square_m', 'command_timeout_s', 'feedback_wall_timeout_s', 'command_wall_timeout_s', 'scan_pose_gap_s'):
         if isinstance(value[key], bool) or not math.isfinite(value[key]) or value[key] <= 0:
             raise ValueError('invalid_contract_'+key)
     for profile in value['profiles'].values():
@@ -72,6 +72,9 @@ def nav2_parameters(config, profile):
     behavior = cfg['behavior_server']['ros__parameters']
     behavior['robot_base_frame'] = CONTRACT['base_frame']
     behavior['local_frame'] = CONTRACT['odom_frame']
+    behavior['max_rotational_vel'] = limits['max_angular_rad_s']
+    behavior['min_rotational_vel'] = min(behavior['min_rotational_vel'],limits['max_angular_rad_s'])
+    behavior['rotational_acc_lim'] = CONTRACT['angular_deceleration_rad_s2']
     for name in ('backup', 'drive_on_heading'):
         behavior[name+'.acceleration_limit'] = CONTRACT['linear_deceleration_m_s2']
         behavior[name+'.deceleration_limit'] = -CONTRACT['linear_deceleration_m_s2']

@@ -1,5 +1,7 @@
 # 模型运动接口：一次受限仿真测试
 
+> 历史版本记录：本文的单步/候选决策入口已退役。当前使用 `scripts/robot-investigate.sh`，见[主运行路径整理记录](runtime-consolidation-2026-10-06.md)。
+
 在只读链路上增加显式启动的运动 MCP 服务。模型通过 `move_forward_trial(request_id)` 请求一次移动；本地执行器根据当前地图位姿，生成**沿当前朝向前方 0.4 m** 的目标，再交给 Nav2。
 
 后续升级见[Robot Skills 与安全 Frontier MCP](robot-skills-mcp.md)。固定前进的新请求已使用统一任务账本、仲裁、停车锁及监督执行器，旧请求保留历史重放语义。

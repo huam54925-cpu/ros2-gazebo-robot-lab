@@ -99,16 +99,21 @@ def action_budget(mission, tasks, sim_time, estimated_sim_s, path_length_m):
     left=mission['limits']['max_sim_time']-(sim_time-mission['start_sim_s'])
     distance=mission['limits']['max_distance']-used['distance_m']
     reasons=[]
+    if mission.get('two_stage') and mission.get('phase')=='classical':
+        classical=classical_remaining(mission,tasks,sim_time)
+        if estimated_sim_s>classical['sim_s'] or path_length_m>classical['distance_m'] or classical['wall_s']<=0 or classical['failures']<=0:
+            reasons.append('classical_budget_reserved')
     if estimated_sim_s>left:reasons.append('time_budget')
     if path_length_m>distance:reasons.append('distance_budget')
     return {'fits':not reasons,'reasons':reasons,'remaining_sim_s':left,
             'remaining_distance_m':distance,'estimated_sim_s':estimated_sim_s,'planned_length_m':path_length_m}
 
 
-def start(store, budget, state, observations=False, exploration_mode='baseline', candidate_search='baseline', short_start=False, path_clearance_m=2.15, two_stage=False):
+def start(store, budget, state, observations=False, exploration_mode='baseline', candidate_search='baseline', short_start=False, path_clearance_m=2.15, two_stage=False, ai_reserve_fraction=.3):
     budget = limits(**budget)
     from navigation_base.safety_profile import PROFILE,FOOTPRINT_MODE
     if two_stage:
+        if not 0<ai_reserve_fraction<1:raise ValueError('invalid_ai_reserve_fraction')
         if budget['profile']!='mission' or not FOOTPRINT_MODE or path_clearance_m!=2.15:
             raise ValueError('two_stage_requires_mission_budget_and_footprint_profile')
         if observations or exploration_mode!='baseline' or candidate_search!='baseline' or short_start:
@@ -158,7 +163,9 @@ def start(store, budget, state, observations=False, exploration_mode='baseline',
             from .investigation import DEFAULT_HANDOFF
             from navigation_base.robot_contract import CONTRACT_HASH, CONTRACT
             body.update(handoff_policy=dict(DEFAULT_HANDOFF),contract_hash=CONTRACT_HASH,
-                        empty_complete_searches=0,investigation_ids=[],recovery_policy=dict(CONTRACT['short_motion']))
+                        empty_complete_searches=0,investigation_ids=[],recovery_policy=dict(CONTRACT['short_motion']),
+                        ai_reserve={k:(max(1,math.ceil(budget[k]*ai_reserve_fraction)) if k=='max_failures' else budget[k]*ai_reserve_fraction)
+                                    for k in ('max_distance','max_sim_time','max_wall_time','max_failures')})
         store._set_meta(db, 'mission:'+mid, body); store._set_meta(db, 'active_mission', mid)
     return body
 
@@ -196,3 +203,19 @@ def admission(store, db, tasks, mid):
         if not body or active != mid: return 'mission_not_active'
         return reason(body, tasks)
     return None
+
+
+def classical_remaining(mission, tasks, sim_time, now=None):
+    """Classical allowance excludes the AI reserve; total mission limits stay fixed."""
+    now=time.monotonic() if now is None else now
+    p=progress(mission,tasks);limits=mission['limits'];reserve=mission.get('ai_reserve',{})
+    return {'distance_m':limits['max_distance']-reserve.get('max_distance',0)-p['distance_m'],
+            'sim_s':limits['max_sim_time']-reserve.get('max_sim_time',0)-(sim_time-mission['start_sim_s']),
+            'wall_s':mission['deadline_monotonic_s']-reserve.get('max_wall_time',0)-now,
+            'failures':limits['max_failures']-reserve.get('max_failures',0)-p['failures']}
+
+
+def classical_boundary(mission, tasks, sim_time, now=None):
+    if not mission.get('two_stage') or mission.get('phase')!='classical':return None
+    left=classical_remaining(mission,tasks,sim_time,now)
+    return 'classical_budget_reserved' if any(v<=0 for v in left.values()) else None

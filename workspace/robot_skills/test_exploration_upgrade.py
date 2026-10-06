@@ -7,6 +7,7 @@ import uuid
 from unittest.mock import patch
 
 from robot_skills import mission
+from robot_skills.investigation import DEFAULT_HANDOFF
 from robot_skills.store import Store
 from robot_skills.exploration_upgrade import history_revision, memory_store, publish_terminal, reconcile, model_view
 
@@ -16,7 +17,10 @@ class UpgradeLedgerTests(unittest.TestCase):
         temp=tempfile.TemporaryDirectory();self.addCleanup(temp.cleanup);self.store=Store(temp.name)
         state={'status':'available','sources':{'clock':{'fresh':True,'sim_time_s':1},
                'odometry':{'fresh':True,'velocity':{'x':0,'z':0}}}}
-        self.m=mission.start(self.store,mission.limits(),state,exploration_mode='memory');self.mid=self.m['mission_id']
+        with patch('navigation_base.safety_profile.FOOTPRINT_MODE',False):
+            self.m=mission.start(self.store,mission.limits(),state,exploration_mode='memory')
+        self.mid=self.m['mission_id']
+        self.m=mission.update(self.store,self.mid,two_stage=True,phase='classical',handoff_policy=dict(DEFAULT_HANDOFF))
         self.catalog()
 
     def catalog(self,mode='memory',mid=None):
@@ -93,14 +97,9 @@ class UpgradeLedgerTests(unittest.TestCase):
         newer,launch=self.submit(frontier='F_b');self.assertFalse(launch)
         self.assertEqual(newer['reason'],'stop_latched')
 
-    def test_upgrade_cannot_extend_beyond_three_or_enable_observation_tools(self):
-        with self.assertRaisesRegex(ValueError,'at_most_three'):
+    def test_two_stage_budget_cannot_be_extended_in_place(self):
+        with self.assertRaisesRegex(ValueError,'two_stage_budget_is_fixed_for_the_run'):
             mission.extend_operator_budget(self.store,self.mid,mission.limits(max_steps=4),2)
-        state={'status':'available'}
-        for options in ({'observations':True,'exploration_mode':'shadow'},
-                        {'exploration_mode':'memory'}):
-            with self.assertRaisesRegex(ValueError,'at_most_three'):
-                mission.start(self.store,mission.limits(max_steps=4),state,**options)
 
     def test_context_read_does_not_create_memory_database(self):
         from robot_skills.api import RobotSkills
@@ -174,6 +173,7 @@ class UpgradeLedgerTests(unittest.TestCase):
         mission.update(self.store,self.mid,short_start=False)
         self.assertFalse(short_start_for(self.store))
 
+    @patch('navigation_base.safety_profile.FOOTPRINT_MODE',False)
     def test_wide_search_requires_memory_and_three_task_cap(self):
         for kwargs,reason in [({'candidate_search':'anything'},'invalid_candidate_search'),
                               ({'candidate_search':'wide_4_5'},'requires_memory'),

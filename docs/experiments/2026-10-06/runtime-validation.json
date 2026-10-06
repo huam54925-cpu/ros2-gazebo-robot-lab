@@ -1,0 +1,660 @@
+{
+  "test_results": {
+    "pure_logic_geometry_store_recovery": 96,
+    "agent_environment_protocol_readonly": 17,
+    "ros_typed_executor": 19,
+    "async_handoff_regression": 1,
+    "total": 133,
+    "status": "passed"
+  },
+  "methodology": {
+    "coverage": "nominal registered fixed-scene observed-free fraction; 465.5 m2 denominator",
+    "initial_scan": "reported separately",
+    "ground_truth_to_agent": false,
+    "comparison": "sequential debugging attempts, not controlled baseline/AI comparison; attempt 6 changed collision policy during the run",
+    "collision_and_passage": "not independently verified"
+  },
+  "attempts": [
+    {
+      "attempt": 1,
+      "mission_id": "1f5de90e-2d81-464a-902f-360517e9de8f",
+      "status": "finished",
+      "stop_reason": "candidate_search_failed",
+      "stopped": true,
+      "error": null,
+      "limits": {
+        "max_steps": null,
+        "max_distance": 40.0,
+        "max_sim_time": 240.0,
+        "max_wall_time": 900.0,
+        "max_failures": 12,
+        "profile": "mission"
+      },
+      "ai_reserve": {
+        "max_distance": 12.0,
+        "max_sim_time": 72.0,
+        "max_wall_time": 270.0,
+        "max_failures": 4
+      },
+      "handoff": {},
+      "report_sha256": "fdc078009f3a765548721c5d8e335ceb2f3e4819e74efd822c33a9aa765c94f0",
+      "actions": [],
+      "model_tool_calls": [],
+      "collision_policy": "normal",
+      "source_manifest_sha256": "f326aec68078230227f6d33ab4609c25135eacc470c4ae595858462ae25ef31a"
+    },
+    {
+      "attempt": 2,
+      "mission_id": "8c272b3a-db47-41e5-9047-d5d036c4721a",
+      "status": "finished",
+      "stop_reason": "client_interrupted_or_error",
+      "stopped": true,
+      "error": {
+        "status": "api_connection_error"
+      },
+      "limits": {
+        "max_steps": null,
+        "max_distance": 40.0,
+        "max_sim_time": 240.0,
+        "max_wall_time": 900.0,
+        "max_failures": 12,
+        "profile": "mission"
+      },
+      "ai_reserve": {
+        "max_distance": 12.0,
+        "max_sim_time": 72.0,
+        "max_wall_time": 270.0,
+        "max_failures": 4
+      },
+      "handoff": {
+        "reason": "bounded_search_exhausted",
+        "at_unix_s": 1791282187.5675664,
+        "trigger": "exploration_progress",
+        "world_complete": false
+      },
+      "report_sha256": "9146193e1a4bb2792985837c2f73e5e9cf1a4ceba10bf5e0a02c6f25cef1c28b",
+      "actions": [],
+      "model_tool_calls": [],
+      "collision_policy": "normal",
+      "source_manifest_sha256": "4ad4286ee9a969c3f7f68bf236ab43fd6eef149cdc275d44aa86af9652a18610"
+    },
+    {
+      "attempt": 3,
+      "mission_id": "44d00ef7-06e5-4791-8b4f-7b038ca54f66",
+      "status": "finished",
+      "stop_reason": "candidate_search_failed",
+      "stopped": true,
+      "error": null,
+      "limits": {
+        "max_steps": null,
+        "max_distance": 40.0,
+        "max_sim_time": 240.0,
+        "max_wall_time": 900.0,
+        "max_failures": 12,
+        "profile": "mission"
+      },
+      "ai_reserve": {
+        "max_distance": 12.0,
+        "max_sim_time": 72.0,
+        "max_wall_time": 270.0,
+        "max_failures": 4
+      },
+      "handoff": {},
+      "report_sha256": "ae00b3f42434885793f5c812bc3caa8346b8b005770263c4e675630bd34097bb",
+      "actions": [],
+      "model_tool_calls": [],
+      "collision_policy": "normal",
+      "source_manifest_sha256": "df8798a61f1fb475e7c37c9652558cb2c26bf5f92ef80a09042aaec90cc54302"
+    },
+    {
+      "attempt": 4,
+      "mission_id": "0999a659-2d0b-4982-89cd-d1bc2859f87b",
+      "status": "finished",
+      "stop_reason": "operator_stop",
+      "stopped": true,
+      "error": null,
+      "limits": {
+        "max_steps": null,
+        "max_distance": 40.0,
+        "max_sim_time": 240.0,
+        "max_wall_time": 900.0,
+        "max_failures": 12,
+        "profile": "mission"
+      },
+      "ai_reserve": {
+        "max_distance": 12.0,
+        "max_sim_time": 72.0,
+        "max_wall_time": 270.0,
+        "max_failures": 4
+      },
+      "handoff": {},
+      "report_sha256": "7507e6abd8513cf4f223fe9e4880ffcb7273d8425681c4f0de4b4024409b42e3",
+      "actions": [
+        {
+          "kind": "execute_frontier",
+          "task_id": "07699ad7-27c0-472f-8b3c-7f7b51e2af7a",
+          "status": "aborted",
+          "reason": "body_sweep_nonfree",
+          "stopped": true,
+          "distance_odom_m": 1.5843002944114093
+        }
+      ],
+      "model_tool_calls": [],
+      "collision_policy": "normal",
+      "source_manifest_sha256": "32375c35da3af2de726eccf65bd82f321762b3833f4b2bfb6c3d4a081e8fba40"
+    },
+    {
+      "attempt": 5,
+      "mission_id": "aa8d0a09-622c-4b47-af6c-a4aa61e47af1",
+      "status": "finished",
+      "stop_reason": "operator_stop",
+      "stopped": true,
+      "error": null,
+      "limits": {
+        "max_steps": null,
+        "max_distance": 40.0,
+        "max_sim_time": 240.0,
+        "max_wall_time": 900.0,
+        "max_failures": 12,
+        "profile": "mission"
+      },
+      "ai_reserve": {
+        "max_distance": 20.0,
+        "max_sim_time": 120.0,
+        "max_wall_time": 450.0,
+        "max_failures": 6
+      },
+      "handoff": {
+        "reason": "classical_action_exceeds_allowance",
+        "at_unix_s": 1791284173.7602456,
+        "trigger": "resource_reservation",
+        "world_complete": false
+      },
+      "report_sha256": "dfff44ec6b6ea6925ed4b67ec1a9fd2af107de9983ebe09773cfc776f2d184ed",
+      "actions": [
+        {
+          "kind": "execute_frontier",
+          "task_id": "9ddafe70-d727-4359-8987-8a67ea8bf9f4",
+          "status": "rejected",
+          "reason": "classical_budget_reserved",
+          "stopped": true,
+          "distance_odom_m": 0.0
+        }
+      ],
+      "model_tool_calls": [
+        {
+          "tool": "get_decision_context",
+          "arguments": {},
+          "status": null,
+          "reason": null,
+          "task_id": null,
+          "model_wall_s": 6.9745399920002455
+        },
+        {
+          "tool": "start_investigation",
+          "arguments": {
+            "subject": {
+              "x": 1.294136693588018,
+              "y": 5.595374510909197
+            },
+            "hypothesis": "在线地图U4附近的灰色楔形边界可能来自遮挡，需从已知自由区域改变观测位置，取得其边界与可能开口的新观测；不将灰色判定为房间或可通行空间。先比较北侧与东北侧观察路线，再根据本地反馈继续接近。现有轨迹为空，先前东北目标仅因常规阶段预算被拒绝、未实际运动，不构成结构阻塞证据。本调查只收集结构观测，若发现候选通道，另建整车通过验证任务。",
+            "task_type": "observe_structure",
+            "request_id": "f9cba2d7-02b6-43bf-9ec8-1c04c0cc6f71"
+          },
+          "status": "request_rejected",
+          "reason": "Error executing tool start_investigation",
+          "task_id": null,
+          "model_wall_s": 11.166225986999962
+        },
+        {
+          "tool": "view_map",
+          "arguments": {
+            "request_id": "7c82b2d6-a9f5-4f10-94ef-c1b293dc8a67"
+          },
+          "status": "succeeded",
+          "reason": "map_snapshot",
+          "task_id": "70224c46-4b56-4f35-bda1-fc9a00cf4b15",
+          "model_wall_s": 4.397505277999699
+        },
+        {
+          "tool": "start_investigation",
+          "arguments": {
+            "subject": {
+              "x": 1.294136693588018,
+              "y": 5.595374510909197
+            },
+            "hypothesis": "北侧U4灰色边界的形状与开口尚不明确；从已知自由空间的不同视点获取遮挡边缘新观测，不将墙后未知判为房间或可通行空间。既往东侧目标因常规阶段预算未派发，并非路径堵塞；轨迹为空。优先比较近处北向观察姿态并逐步接近。",
+            "task_type": "observe_structure",
+            "request_id": "d9be326a-8541-4a7d-a24e-76a3a8a5bed2"
+          },
+          "status": "request_rejected",
+          "reason": "Error executing tool start_investigation",
+          "task_id": null,
+          "model_wall_s": 7.7088464650005335
+        },
+        {
+          "tool": "start_investigation",
+          "arguments": {
+            "subject": {
+              "x": 1.294136693588018,
+              "y": 5.595374510909197
+            },
+            "hypothesis": "北侧U4未知边界的形状和遮挡原因尚未确定；从已知自由区域的不同观察位姿采集新观测，区分可见边界与遮挡，灰色不作为房间或可通行空间。历史拒绝为常规阶段预算保留，并非结构阻塞；本次先比较较近观察点再逐步接近。",
+            "task_type": "observe_structure",
+            "request_id": "3aaf375c-2ca8-4ed3-ae9a-a93696d794db"
+          },
+          "status": "request_rejected",
+          "reason": "Error executing tool start_investigation",
+          "task_id": null,
+          "model_wall_s": 7.152504832999512
+        },
+        {
+          "tool": "start_investigation",
+          "arguments": {
+            "subject": {
+              "x": 1.294136693588018,
+              "y": 5.595374510909197
+            },
+            "hypothesis": "调查北侧U4未知边界：从已知自由空间内改变观察位置，检查遮挡边缘能否取得新的结构观测。灰色区域不视为房间或可通行空间。已有目标拒绝是常规阶段预算保留，并非障碍或不可达证据；轨迹为空，尚无实际接近观测。优先比较东侧(2.45,1.61)与西侧(-0.35,2.21)观察姿态，依据本地整车路径检查选择接近方式。此任务仅观察结构，不验证整车通过。",
+            "task_type": "observe_structure",
+            "request_id": "c892b95e-6d32-4fe8-b5ae-8ce8dba971bf"
+          },
+          "status": "request_rejected",
+          "reason": "Error executing tool start_investigation",
+          "task_id": null,
+          "model_wall_s": 6.927897212000062
+        },
+        {
+          "tool": "start_investigation",
+          "arguments": {
+            "subject": {
+              "x": 1.294136693588018,
+              "y": 5.595374510909197
+            },
+            "hypothesis": "北侧未知边界可能因当前视角遮挡而未被观测；从已知自由区的不同接近姿态取得新扫描，辨别可见边界与遮挡，不预设墙后为房间或自由空间。本调查仅收集结构观测，不验证整车通过。",
+            "task_type": "observe_structure",
+            "request_id": "2874592c-f660-41aa-9fc5-e7977828fca3"
+          },
+          "status": "request_rejected",
+          "reason": "Error executing tool start_investigation",
+          "task_id": null,
+          "model_wall_s": 7.5929058270003225
+        },
+        {
+          "tool": "start_investigation",
+          "arguments": {
+            "subject": {
+              "x": 1.294136693588018,
+              "y": 5.595374510909197
+            },
+            "hypothesis": "调查北侧未知边界：从已知自由区更换观察位置，取得约(1.29,5.60)附近遮挡边缘的新观测，区分可见障碍边界与仍未知的空间；不预设墙后为房间或可通行区。现有轨迹为空，先前东侧目标因常规阶段预算保留被拒绝，并非物理阻塞；优先查询较短的北侧接近路线。",
+            "task_type": "observe_structure",
+            "request_id": "adcb6f47-a61e-4e98-8b32-9fd2b087a614"
+          },
+          "status": "request_rejected",
+          "reason": "Error executing tool start_investigation",
+          "task_id": null,
+          "model_wall_s": 7.199966868000047
+        },
+        {
+          "tool": "get_decision_context",
+          "arguments": {},
+          "status": null,
+          "reason": null,
+          "task_id": null,
+          "model_wall_s": 2.4677264370002376
+        },
+        {
+          "tool": "start_investigation",
+          "arguments": {
+            "subject": {
+              "x": 1.294136693588018,
+              "y": 5.595374510909197
+            },
+            "hypothesis": "北侧U4未知边界可能由遮挡形成；从已知自由区改变视角取得边界和障碍观测，不预判为房间或可通行空间。历史目标未运动是常规阶段预算拒绝，并非通道阻塞；轨迹为空。先比较北侧近距离观察姿态，再依据本地反馈调整接近方式。",
+            "task_type": "observe_structure",
+            "request_id": "e4d6d3c9-e85c-4736-bbfd-6a023b8b477a"
+          },
+          "status": "request_rejected",
+          "reason": "Error executing tool start_investigation",
+          "task_id": null,
+          "model_wall_s": 6.507735238999885
+        },
+        {
+          "tool": "start_investigation",
+          "arguments": {
+            "subject": {
+              "x": 1.294136693588018,
+              "y": 5.595374510909197
+            },
+            "hypothesis": "北侧U4未知边界的结构尚不明确；从已知自由区域的近侧与侧向观察位获取新扫描，区分遮挡边界与可能开口，不将灰色区域视为房间或可通行空间。已有轨迹为空；此前东侧目标仅因常规探索预算保留被拒绝，并非障碍证据。本任务仅收集结构观测，不验证整车通过。",
+            "task_type": "observe_structure",
+            "request_id": "69ebc240-b773-4de7-a091-1dc478a5be39"
+          },
+          "status": "request_rejected",
+          "reason": "Error executing tool start_investigation",
+          "task_id": null,
+          "model_wall_s": 6.309290786999554
+        },
+        {
+          "tool": "start_investigation",
+          "arguments": {
+            "subject": {
+              "x": 1.294136693588018,
+              "y": 5.595374510909197
+            },
+            "hypothesis": "北侧未知边界U4的形状和遮挡关系尚不明确；从已知自由区的不同观察位姿获取新扫描，判断是否存在可继续观察的开口。灰色区域不视为房间或可通行空间；此前东侧目标因常规阶段预算未执行，不构成阻塞证据。",
+            "task_type": "observe_structure",
+            "request_id": "ba4d8ce1-d7ca-40d8-97cb-a398c22b8324"
+          },
+          "status": "request_rejected",
+          "reason": "Error executing tool start_investigation",
+          "task_id": null,
+          "model_wall_s": 5.839134625000042
+        },
+        {
+          "tool": "start_investigation",
+          "arguments": {
+            "subject": {
+              "x": 1.294136693588018,
+              "y": 5.595374510909197
+            },
+            "hypothesis": "调查北侧未知边界U4：从已知自由空间的不同安全视点取得新扫描，辨别边界是否由遮挡造成，并观察可能的结构延伸；灰色区域不预判为房间或可通行空间。现有轨迹为空；历史目标未执行是预算拒绝，不是通路被障碍阻断的证据。优先比较北侧较近观察点及其朝向，所有接近均重新进行整车扫掠与路径检查。",
+            "task_type": "observe_structure",
+            "request_id": "8b7dc1e2-9560-4bb9-8d0b-9a267a54ce31"
+          },
+          "status": "request_rejected",
+          "reason": "Error executing tool start_investigation",
+          "task_id": null,
+          "model_wall_s": 7.731490952000058
+        },
+        {
+          "tool": "view_map",
+          "arguments": {
+            "request_id": "c6e912a8-05c9-4cf4-a282-182d5cf98b46"
+          },
+          "status": "accepted",
+          "reason": null,
+          "task_id": "4700e2af-901c-48b5-ae50-2f1c817b22e9",
+          "model_wall_s": 3.7038674489995174
+        }
+      ],
+      "collision_policy": "normal",
+      "coverage": {
+        "start": {
+          "wall_unix_s": 1791283790.456221,
+          "map_stamp_sim_s": 228.9,
+          "reference_free_area_m2": 465.5000000000001,
+          "observed_free_fraction": 0.27601503759398494,
+          "known_fraction": 0.28135338345864663,
+          "registration": "nominal_initial_axle_map_origin"
+        },
+        "handoff": {
+          "wall_unix_s": 1791284172.3787956,
+          "map_stamp_sim_s": 324.4,
+          "reference_free_area_m2": 465.5000000000001,
+          "observed_free_fraction": 0.27601503759398494,
+          "known_fraction": 0.28135338345864663,
+          "registration": "nominal_initial_axle_map_origin"
+        },
+        "end": {
+          "wall_unix_s": 1791284308.4133565,
+          "map_stamp_sim_s": 358.8,
+          "reference_free_area_m2": 465.5000000000001,
+          "observed_free_fraction": 0.27601503759398494,
+          "known_fraction": 0.28135338345864663,
+          "registration": "nominal_initial_axle_map_origin"
+        },
+        "total_percentage_point_change": 0.0,
+        "ai_percentage_point_change": 0.0
+      },
+      "source_manifest_sha256": "c6601f14e147b4d1c626554a5db11f28faf45efbf68775c0d8ff626347f1e538"
+    },
+    {
+      "attempt": 6,
+      "mission_id": "b614706d-6a34-4aeb-8362-ed8f55dc7f18",
+      "status": "finished",
+      "stop_reason": "max_wall_time",
+      "stopped": true,
+      "error": null,
+      "limits": {
+        "max_steps": null,
+        "max_distance": 40.0,
+        "max_sim_time": 240.0,
+        "max_wall_time": 600.0,
+        "max_failures": 12,
+        "profile": "mission"
+      },
+      "ai_reserve": {
+        "max_distance": 20.0,
+        "max_sim_time": 120.0,
+        "max_wall_time": 300.0,
+        "max_failures": 6
+      },
+      "handoff": {
+        "reason": "classical_action_exceeds_allowance",
+        "at_unix_s": 1791284498.5607893,
+        "trigger": "resource_reservation",
+        "world_complete": false
+      },
+      "report_sha256": "a680b97b0f0b36d9cf73e0a82e7eb7ffc05900cc7d792411cf474df5d1ce4a2c",
+      "actions": [],
+      "model_tool_calls": [
+        {
+          "tool": "start_investigation",
+          "arguments": {
+            "subject": {
+              "x": 1.294136693588018,
+              "y": 5.595374510909197,
+              "yaw": 1.9
+            },
+            "hypothesis": "调查在线地图北侧U4未知边界：从已知自由区改变观察位置，取得尖角遮挡后边界的新激光观测，区分可见障碍延续与尚未观测空间。灰色区域不视为房间或可通行空间。现有轨迹为空，失败记忆为空；历史目标被预算拒绝并非通道阻塞证据。先比较东侧(2.45,1.61,-1.107)和西侧(-0.35,2.21,0.328)安全观察路线；本任务仅收集结构观测，不验证整车通过。",
+            "task_type": "observe_structure",
+            "request_id": "b8b3628c-8725-4aab-9441-a991b4c4fc29"
+          },
+          "status": "active",
+          "reason": null,
+          "task_id": null,
+          "model_wall_s": 11.021279454999785
+        },
+        {
+          "tool": "plan_navigation",
+          "arguments": {
+            "poses": [
+              {
+                "x": 2.4497818720987956,
+                "y": 1.610697032178038,
+                "yaw": -1.1071487177940904
+              },
+              {
+                "x": -0.35021816962445573,
+                "y": 2.2106970411187348,
+                "yaw": 0.32756541430317937
+              }
+            ],
+            "map_epoch": "45fbad429677",
+            "request_id": "e590e380-973b-43ad-9831-b2619d7cf9ac"
+          },
+          "status": "succeeded",
+          "reason": "planning_query_finished",
+          "task_id": "23b4b0f0-11b1-4b2e-9239-223b10a5b34c",
+          "model_wall_s": 5.357447752000553
+        },
+        {
+          "tool": "navigate_to_pose",
+          "arguments": {
+            "investigation_id": "b27a7704-41c9-48d1-b746-2947e2dce033",
+            "pose": {
+              "x": 2.4497818720987956,
+              "y": 1.610697032178038,
+              "yaw": -1.1071487177940904
+            },
+            "map_epoch": "45fbad429677",
+            "request_id": "e4f37cbc-93f2-462e-bcde-61d38794b0e5"
+          },
+          "status": "aborted",
+          "reason": "body_sweep_nonfree",
+          "task_id": "29d5a638-7630-4a1a-9d7d-8bf3679d8c0f",
+          "model_wall_s": 8.189187750999736
+        },
+        {
+          "tool": "plan_navigation",
+          "arguments": {
+            "poses": [
+              {
+                "x": -0.35021816962445573,
+                "y": 2.2106970411187348,
+                "yaw": 0.32756541430317937
+              },
+              {
+                "x": 0.9,
+                "y": 0.9,
+                "yaw": 0.6250343608742329
+              }
+            ],
+            "map_epoch": "45fbad429677",
+            "request_id": "bb37a536-a679-4d04-90d3-7a1dc3e95212"
+          },
+          "status": "succeeded",
+          "reason": "planning_query_finished",
+          "task_id": "7313d648-eb56-45a5-b50e-de3b0a6ec6a6",
+          "model_wall_s": 6.602303107000807
+        },
+        {
+          "tool": "navigate_to_pose",
+          "arguments": {
+            "investigation_id": "b27a7704-41c9-48d1-b746-2947e2dce033",
+            "pose": {
+              "x": -0.35021816962445573,
+              "y": 2.2106970411187348,
+              "yaw": 0.32756541430317937
+            },
+            "map_epoch": "45fbad429677",
+            "request_id": "13e60e82-bfbc-4dbe-b15f-921926a748ac"
+          },
+          "status": "aborted",
+          "reason": "body_sweep_nonfree",
+          "task_id": "59907309-660f-48c3-b551-abcb6976c2d3",
+          "model_wall_s": 5.18325282800015
+        },
+        {
+          "tool": "plan_navigation",
+          "arguments": {
+            "poses": [
+              {
+                "x": 0.4,
+                "y": 1.15,
+                "yaw": 1.3272443608731546
+              },
+              {
+                "x": 0.3,
+                "y": 0.75,
+                "yaw": 1.3272443608731546
+              }
+            ],
+            "map_epoch": "45fbad429677",
+            "request_id": "72f6320f-1c0b-459f-a6e6-32ce8391440a"
+          },
+          "status": "succeeded",
+          "reason": "planning_query_finished",
+          "task_id": "87841141-2bf1-4902-989d-2caff66d0896",
+          "model_wall_s": 11.247422569999799
+        },
+        {
+          "tool": "navigate_to_pose",
+          "arguments": {
+            "investigation_id": "b27a7704-41c9-48d1-b746-2947e2dce033",
+            "pose": {
+              "x": 0.4,
+              "y": 1.15,
+              "yaw": 1.3272443608731546
+            },
+            "map_epoch": "45fbad429677",
+            "request_id": "a364a6b7-2d94-468f-9586-37a9d290d302"
+          },
+          "status": "aborted",
+          "reason": "body_sweep_nonfree",
+          "task_id": "aef93ed0-2fe9-4fdb-bd4e-cf779be731f7",
+          "model_wall_s": 6.18586051300008
+        },
+        {
+          "tool": "probe_forward",
+          "arguments": {
+            "investigation_id": "b27a7704-41c9-48d1-b746-2947e2dce033",
+            "map_epoch": "45fbad429677",
+            "request_id": "41fa9b8c-24f3-4fc8-9dd2-6a7c18df5034"
+          },
+          "status": "running",
+          "reason": null,
+          "task_id": "773b5795-d714-437d-b603-4f09e5cbeca8",
+          "model_wall_s": 6.953341874000216
+        }
+      ],
+      "collision_policy": "normal_then_operator_bypass",
+      "coverage": {
+        "start": {
+          "wall_unix_s": 1791284340.4395585,
+          "map_stamp_sim_s": 367.6,
+          "reference_free_area_m2": 465.5000000000001,
+          "observed_free_fraction": 0.27601503759398494,
+          "known_fraction": 0.28135338345864663,
+          "registration": "nominal_initial_axle_map_origin"
+        },
+        "handoff": {
+          "wall_unix_s": 1791284496.4436414,
+          "map_stamp_sim_s": 409.0,
+          "reference_free_area_m2": 465.5000000000001,
+          "observed_free_fraction": 0.27601503759398494,
+          "known_fraction": 0.28135338345864663,
+          "registration": "nominal_initial_axle_map_origin"
+        },
+        "end": {
+          "wall_unix_s": 1791284958.4079158,
+          "map_stamp_sim_s": 524.9,
+          "reference_free_area_m2": 465.5000000000001,
+          "observed_free_fraction": 0.277749731471536,
+          "known_fraction": 0.28343179377013966,
+          "registration": "nominal_initial_axle_map_origin"
+        },
+        "total_percentage_point_change": 0.17346938775510412,
+        "ai_percentage_point_change": 0.17346938775510412
+      },
+      "source_manifest_sha256": "8c0449d46bd4be2a703f654fb962e4c103bef492dd90bfea362d6ae0895c8ff1"
+    },
+    {
+      "attempt": 7,
+      "mission_id": "ff648f51-7289-4393-b12b-5757ef350891",
+      "status": "running",
+      "stop_reason": null,
+      "stopped": null,
+      "error": null,
+      "limits": {
+        "max_steps": null,
+        "max_distance": 80.0,
+        "max_sim_time": 600.0,
+        "max_wall_time": 900.0,
+        "max_failures": 16,
+        "profile": "mission"
+      },
+      "ai_reserve": {
+        "max_distance": 56.0,
+        "max_sim_time": 420.0,
+        "max_wall_time": 630.0,
+        "max_failures": 12
+      },
+      "handoff": {},
+      "report_sha256": "78e59ff4c8cdbda7b0d6279a84daddd57b7110f0b6da53159b8cdcad25846cd0",
+      "actions": [],
+      "model_tool_calls": [],
+      "collision_policy": "operator_bypass",
+      "coverage": {
+        "start": null,
+        "handoff": null,
+        "end": null,
+        "total_percentage_point_change": null,
+        "ai_percentage_point_change": null
+      },
+      "source_manifest_sha256": "974be70cb4031908ce7271b2979318e943ed468fe9c0c85599a02f72da8771c7"
+    }
+  ]
+}

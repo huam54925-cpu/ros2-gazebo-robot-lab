@@ -112,8 +112,9 @@ class Store:
 
     def submit(self, kind, payload, request_id, mission_id=None):
         valid_uuid(request_id)
+        if kind in ('fixed_step','perform_observation'):raise ValueError('retired_skill_use_investigation')
         from robot_skills.investigation import TASK_KINDS, QUERY_KINDS, NAVIGATION_KINDS, poses_payload, repetition_reason, failure_code
-        if kind not in TASK_KINDS | {'execute_frontier', 'perform_observation', 'fixed_step', 'stop_robot'}:
+        if kind not in TASK_KINDS | {'execute_frontier','stop_robot'}:
             raise ValueError('unknown_skill')
         fingerprint = json.dumps([kind, payload], sort_keys=True, allow_nan=False)
         with self.transaction() as db:
@@ -126,10 +127,7 @@ class Store:
                     raise ValueError('request_id_mission_conflict')
                 return {**previous, 'replayed_without_execution': True}, False
             tasks = [json.loads(row[0]) for row in db.execute('SELECT body FROM tasks')]
-            try:
-                from .mission import admission
-            except ImportError:
-                from mission import admission
+            from .mission import admission
             reason = admission(self, db, tasks, mission_id) if kind != 'stop_robot' else None
             selected = None
             mode=(self._meta(db,'mission:'+mission_id,{}) if mission_id else {}).get('exploration_mode','baseline')
@@ -145,10 +143,12 @@ class Store:
                 elif any(t['status'] in ('stop_unconfirmed', 'indeterminate') and not t.get('resolved') for t in tasks):
                     reason = 'previous_stop_unconfirmed'
                 mission = self._meta(db,'mission:'+str(mission_id),{})
+                if kind=='execute_frontier' and not mission.get('two_stage'):
+                    reason=reason or 'two_stage_mission_required'
                 if kind in TASK_KINDS:
                     if not mission.get('two_stage'):
                         reason = reason or 'two_stage_mission_required'
-                    from .recovery import SHORT_MOTION_KINDS, source_reason
+                    from robot_skills.recovery import SHORT_MOTION_KINDS, source_reason
                     if kind in SHORT_MOTION_KINDS:
                         epoch=payload.get('map_epoch')
                         inv=self._meta(db,'investigation:'+str(payload.get('investigation_id')), {})
@@ -179,8 +179,6 @@ class Store:
                             memory=self._meta(db,'investigation_memory:'+str(mission_id),[])
                             snapshot=self._meta(db,'map_snapshot',{})
                             reason=reason or repetition_reason(memory,checked['poses'],checked['map_epoch'],snapshot.get('robot_pose'))
-                if mission.get('two_stage') and kind in ('fixed_step','perform_observation'):
-                    reason=reason or 'use_investigation_navigation'
                 if mission.get('two_stage') and kind=='execute_frontier' and mission.get('phase')!='classical':
                     reason=reason or 'frontier_execution_only_in_classical_phase'
                 if kind == 'execute_frontier':
@@ -200,18 +198,6 @@ class Store:
                             reason = reason or 'candidate_search_mismatch'
                         from robot_skills.exploration_upgrade import admission_reason
                         reason = reason or admission_reason(catalog,tasks,mission_id,mode)
-                if kind == 'perform_observation':
-                    from robot_skills.observation_rules import exclusion
-                    catalog = self._meta(db, 'observation_catalog', {})
-                    selected = next((c for c in catalog.get('options', []) if c['option_id'] == payload.get('option_id')), None)
-                    if selected is None:
-                        reason = reason or 'unknown_observation_id'
-                    elif time.time() > catalog.get('expires_unix_s', 0):
-                        reason = reason or 'observation_catalog_expired'
-                    else:
-                        reason = reason or exclusion(selected, tasks)
-                    if mission_id and not self._meta(db, 'mission:'+mission_id, {}).get('observations_enabled'):
-                        reason = reason or 'observations_not_enabled'
             else:
                 self._set_meta(db, 'stop_latched', True)
                 self._set_meta(db, 'stop_generation', self._meta(db, 'stop_generation', 0)+1)

@@ -3,6 +3,9 @@ import json
 import math
 from pathlib import Path
 import time
+import sys
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
+from navigation_base.robot_contract import CONTRACT
 
 SNAPSHOT = Path(__file__).resolve().parents[1] / 'log' / 'robot-status.json'
 LIMITS = {'map': 30.0, 'navigation': 3.0, 'requested_velocity': 0.5}
@@ -21,7 +24,8 @@ def get_robot_status(path=SNAPSHOT, now=None):
             received = now - source.pop('received_monotonic_s')
             limit = LIMITS.get(name, 1.5)
             source['received_age_wall_s'] = round(received, 3)
-            source['fresh'] = math.isfinite(received) and 0 <= received <= limit
+            wall_limit=CONTRACT['feedback_wall_timeout_s'] if name in ('scan','odometry') else limit
+            source['fresh'] = math.isfinite(received) and 0 <= received <= wall_limit
             if 'stamp_sim_s' in source and sim_now is not None:
                 sim_age = sim_now - source['stamp_sim_s']
                 source['stamp_age_sim_s'] = round(sim_age, 3)

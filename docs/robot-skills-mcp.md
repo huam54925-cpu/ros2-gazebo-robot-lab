@@ -1,5 +1,7 @@
 # Robot Skills：模型从安全 Frontier 中选择一个
 
+> 历史版本记录：本文的单步/候选决策入口已退役。当前使用 `scripts/robot-investigate.sh`，见[主运行路径整理记录](runtime-consolidation-2026-10-06.md)。
+
 当前链路：**模型选择候选 ID → MCP → 本地任务账本/仲裁 → 当前地图重新规划与路径检查 → Nav2 → 独立 guard → 里程计停车确认 → 本地任务结果 → 模型解释**。
 
 本页描述单次 Frontier 与六工具基础接口。新增[有界连续循环和可选观察工具](bounded-exploration-agent.md)保留这些约束；`model-once` 仍只运行一次，`model-loop --observations` 才增加两个观察工具。没有任意坐标导航、模型速度控制或长期自主探索，机器人仍是本地 Docker 仿真。
