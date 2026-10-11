@@ -49,8 +49,8 @@ Pendulum-v1 实跑128步、保存模型和Replay Buffer、重新加载后继续3
 这是同一Docker daemon的回读与重新运行验证；没有删除原镜像层，也没有在另一台机器实测。
 因此可交付迁移包及复测脚本，但异机验证仍为待验收。
 
-镜像与checkpoint不进入Git；源码与小型验收证据保存在独立本地仓库。
-本地仓库未配置远端，不向GitHub推送。
+初始验收时，源码与小型验收证据保存在未配置远端的独立本地仓库。
+后续按用户授权，将源码提交到主仓库的独立功能分支与PR #7，镜像通过GHCR分发；镜像与checkpoint不进入Git。
 
 
 ## CPU/CUDA设备选择增量
@@ -60,3 +60,10 @@ CUDA不可用且显式请求cuda时会报错，不会回退CPU；CUDA镜像仅�
 GHCR发布状态与digest见ghcr.md；以上初始镜像tar的基线记录保留不变。
 
 CLI额外验证：CPU镜像中 --device auto 选择cpu并完成32+32步；--device cuda 以退出码2明确拒绝不可用设备。
+
+## GHCR发布验收
+
+仿真与CPU-v2训练器均已推送GHCR，并成功按digest拉取。发布镜像只增加OCI标签；
+两者RootFS层分别与已通过短验收的本地镜像完全一致。digest与拉取引用见 `../provenance/ghcr-images.json`。
+匿名manifest访问两者均被拒绝，已登录访问成功；访问记录见 `../provenance/ghcr-access.json`。
+本次拉取在已有镜像层缓存的同一主机完成，验证远端发布、认证与manifest可读取；不替代异机完整下载与运行验收。

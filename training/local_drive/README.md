@@ -30,7 +30,7 @@
 
 需要 Linux amd64 Docker。仿真使用 NVIDIA GPU 与 NVIDIA Container Toolkit；训练器的 CPU 镜像不需要 GPU。
 基础镜像 `robot-sim:lyrical-v1` 来自本机已有封装，未发布到公共 registry。
-无此基础镜像时优先导入本次完整镜像迁移包；不能只复制 Dockerfile 就声称可离线重建。
+无此基础镜像时可直接拉取GHCR上的完整仿真镜像，或导入本次离线迁移包；不能只复制 Dockerfile 就声称可离线重建。
 
 ```bash
 bash scripts/build.sh
