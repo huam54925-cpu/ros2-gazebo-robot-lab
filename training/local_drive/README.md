@@ -2,6 +2,8 @@
 
 独立训练封装目录。从主仓库根目录先执行 `cd training/local_drive`。复用 Robot Exploration 2.0 的现有场景与 ROS/Gazebo 基础镜像。
 目标是环境迁移、算法设计与短验收；今天不声称获得车辆训练效果。
+
+**最新异机进展：** WSL2 / RTX 4060 已通过仿真及CPU/CUDA训练器验收，见[部署记录与训练边界](docs/acceptance-wsl2-rtx4060.md)。当前能运行Pendulum训练工具链；小车训练仍需实现同步Gazebo后端与Gymnasium车辆环境，没有车辆权重。
 原 `/mnt/robot_disk/ros_sim` 工作区保持不变。本目录将初始封装导入GitHub；原仿真入口保留。
 
 ## 内容

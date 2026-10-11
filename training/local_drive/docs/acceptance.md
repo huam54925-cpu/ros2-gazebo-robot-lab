@@ -28,7 +28,7 @@ GitHub 只读参考版本 `73b2c38e64aed874abab65559790d41a1b7bab97`，所用室
 真实GazeboBackend、精确action ACK/step、Gymnasium车辆适配器尚未实现；训练入口明确拒绝Gazebo模式。
 没有车辆训练效果、通道通过率或脱困率结论，没有部署车辆权重。
 没有contact传感器，因此不声称通过接触检测或无碰撞验收。
-异机/WSL2、多GPU、多worker和跨容器训练通信未验收。
+初始验收时异机/WSL2未验收；后续单GPU WSL2异机结果见[RTX 4060增量记录](acceptance-wsl2-rtx4060.md)。多GPU、多worker和跨容器训练通信仍未验收。
 
 ## 训练器短验收
 
@@ -78,3 +78,9 @@ CLI额外验证：CPU镜像中 --device auto 选择cpu并完成32+32步；--devi
 这些是GPU环境及工具链短测，不代表车辆训练效果、GPU加速比或异机运行结果。
 
 设备模式补测：透传GPU时auto选择cuda；不透传GPU且显式cpu时选择cpu，两者均完成32+32步及恢复一致性检查，见 `evidence/cuda/device-modes.json`。
+
+## WSL2 / RTX 4060 异机增量
+
+另一台Windows + WSL2机器已通过无显示仿真、CPU与CUDA训练器短验收。CUDA矩阵乘法和反向传播、14项测试、Pendulum 128+32步与SIGTERM保存恢复通过。
+仿真为Mesa llvmpipe软件EGL渲染；CPU/CUDA训练器按锁定依赖本地构建，CUDA镜像未上传GHCR。
+详见[异机部署、证据与训练边界](acceptance-wsl2-rtx4060.md)。车辆同步后端与Gymnasium车辆环境仍未实现，没有车辆训练权重。

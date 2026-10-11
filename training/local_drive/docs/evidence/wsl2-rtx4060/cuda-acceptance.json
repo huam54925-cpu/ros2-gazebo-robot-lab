@@ -1,0 +1,37 @@
+{
+  "status": "passed",
+  "normal": {
+    "device": "cuda",
+    "requested_device": "cuda",
+    "status": "passed",
+    "purpose": "Pendulum toolchain smoke ONLY; not a robot policy",
+    "initial_steps": 128,
+    "resumed_steps": 160,
+    "replay_size": 160,
+    "deterministic_reload_max_error": 0.0,
+    "elapsed_wall_seconds": 1.5958031930000232,
+    "checkpoint": "/runs/checkpoints/step-160-8028fee9",
+    "versions": {
+      "sb3": "2.7.0",
+      "torch": "2.8.0+cu126",
+      "gymnasium": "1.2.1"
+    }
+  },
+  "sigterm": {
+    "device": "cuda",
+    "requested_device": "cuda",
+    "status": "stopped",
+    "purpose": "Pendulum toolchain smoke ONLY; not a robot policy",
+    "initial_steps": 63,
+    "resumed_steps": 63,
+    "replay_size": 62,
+    "deterministic_reload_max_error": 0.0,
+    "elapsed_wall_seconds": 0.7666285669999979,
+    "checkpoint": "/runs/checkpoints/step-63-a3e114a9",
+    "versions": {
+      "sb3": "2.7.0",
+      "torch": "2.8.0+cu126",
+      "gymnasium": "1.2.1"
+    }
+  }
+}
