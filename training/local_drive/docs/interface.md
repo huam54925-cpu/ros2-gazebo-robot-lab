@@ -57,6 +57,7 @@ reset 返回 (obs,info)，step 返回 (obs,reward,terminated,truncated,info)。
 普通接触不是直接终止；当前没有接触传感器，contact 必须标为 unknown，碰撞项权重为0。
 超时基础设施故障抛异常，不伪装 terminated/truncated。
 
+奖励窗口在reset时清空；停滞窗口未满2秒时不处罚。到达奖励仅计首次到达的终止步；reset时已在目标内应重采初态。
 初始奖励：2*(d_before-d_after) -0.05*dt -0.2*stalled -0.01*||a-a_prev||² +10*arrival。
 距离 d 来自真值；stalled 定义为最近2秒累计真值平面路径 <0.05m 且请求速度绝对值均值 >0.05m/s。
 翻倒阈值建议 |roll|或|pitch|>0.8 rad 持续0.5秒，须实测后定版。

@@ -5,6 +5,25 @@ CUDA镜像与CPU镜像使用相同训练入口，可用 `--device cpu|cuda|auto`
 `nvidia-smi` 显示的CUDA版本是驱动支持上限，不等同于容器内PyTorch运行库版本。
 本配方使用PyTorch 2.8.0 / CUDA 12.6，并固定Python基础镜像digest。
 
+## 另一台机器直接配置依赖（无需下载GPU镜像）
+
+源码与CPU版共用。现有CPU容器内的torch是CPU构建，单独增加 `--gpus all` 不会把它变成CUDA构建；应在自己的Python环境安装CUDA版PyTorch，或在目标机器按Dockerfile重建训练器。宿主机直接运行Python时不需要NVIDIA Container Toolkit；仅Docker GPU透传需要它。
+
+以下命令在Linux x86_64、Python 3.11环境执行；驱动需支持该CUDA运行库和目标GPU架构。进入仓库 `training/local_drive` 后，在非系统盘创建venv：
+
+```bash
+python3.11 -m venv /path/on/data-disk/local-drive-gpu-venv
+source /path/on/data-disk/local-drive-gpu-venv/bin/activate
+python -m pip install torch==2.8.0+cu126 --index-url https://download.pytorch.org/whl/cu126
+python -m pip install -r provenance/trainer-cuda-requirements.lock
+python -m pip check
+python scripts/cuda_probe.py
+python -m unittest discover -s tests -v
+python -m training.train --device cuda --steps 128 --output "$PWD/runs/gpu-smoke"
+```
+
+第一条pip命令选择CUDA wheel，随后按已实测版本清单补齐其余依赖。不要再用CPU lock覆盖torch。安装会从依赖源下载运行库，但不需要传输本项目的完整GPU Docker镜像。目标机器架构或驱动不兼容时应另选官方支持的CUDA wheel并重新验收，不能直接套用本机结果。
+
 ## 本地构建与运行
 
 本机GPU短测已通过。用户说明可以自行配置CUDA后，完整GPU镜像上传已停止；该GPU标签尚未完成发布，不能作为可拉取成品使用。

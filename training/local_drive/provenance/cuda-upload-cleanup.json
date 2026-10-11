@@ -1,0 +1,27 @@
+{
+  "gpu_push_process": "stopped",
+  "gpu_remote_manifest": "manifest unknown",
+  "local_publish_tag": "removed",
+  "local_validated_cuda_image": "retained",
+  "remote_package_versions": [
+    {
+      "id": 1368204434,
+      "digest": "sha256:da556f2b5e95fbf22291e9623101e1854ec43286c6c33bf691a4fab067164cc7",
+      "tags": [
+        "20261011-cpu-v2"
+      ]
+    },
+    {
+      "id": 1368204399,
+      "digest": "sha256:41536e611933edfb90bee4af289eef4c010186df5ec22f8271ae1bf4619f115f",
+      "tags": []
+    },
+    {
+      "id": 1368204384,
+      "digest": "sha256:981273f282e899b11ea5b928b5a36cd3adec0c9f99da1fa251c4e435880d9ea0",
+      "tags": []
+    }
+  ],
+  "all_untagged_versions_belong_to_cpu_index": true,
+  "remote_uncommitted_upload_chunks": "No published version exists; server-side temporary blob reclamation is not inspectable with package-version API; no upload session URL was retained."
+}

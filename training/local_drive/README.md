@@ -12,6 +12,7 @@
 - `training/envs/contracts.py`：接口协议、动作映射、激光编码、时序检查。
 - `training/checkpoints.py`：模型与 Replay Buffer 原子发布、SHA256核验。
 - `training/train.py`：Pendulum 小环境短训练/恢复工具链验收。
+- `docs/algorithm.md`：SAC任务、奖励、回放更新、实现顺序和评价方案。
 - `docs/interface.md`：观测295维、奖励、reset/step、停车、故障与部署约定。
 - `docs/acceptance.md`：本次真实验收结果及尚未实现的部分。
 - `provenance/`：选取的本地工作区文件、来源版本、镜像信息及依赖记录。
@@ -19,6 +20,7 @@
 ## CPU/GPU与发布
 
 训练器新增 `--device cpu|cuda|auto`，默认CPU。CPU-v2和CUDA版均已做短测；CUDA版在本机GTX 1650上通过运算、短训练与保存恢复验收，见[GPU使用说明](docs/cuda.md)。
+GPU完整镜像上传已停止；另一台机器使用同一源码，按[GPU依赖配置](docs/cuda.md)安装即可。CPU镜像不会仅因透传GPU而自动变成CUDA版。
 仿真的GPU激光渲染与训练计算设备独立。详见[设备选择与大文件分发](docs/devices-and-artifacts.md)。
 先前1.5GB迁移包为原CPU基线，匹配其附带源码，不包含新增device参数。
 
