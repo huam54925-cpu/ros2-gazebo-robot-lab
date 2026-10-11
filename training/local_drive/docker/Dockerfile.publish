@@ -1,0 +1,8 @@
+# Add repository metadata to an accepted local image without changing its files.
+ARG IMAGE=robot-trainer:local-drive-cpu-v2
+FROM ${IMAGE}
+ARG VERSION
+ARG DESCRIPTION
+LABEL org.opencontainers.image.source="https://github.com/huam54925-cpu/ros2-gazebo-robot-lab" \
+      org.opencontainers.image.version="${VERSION}" \
+      org.opencontainers.image.description="${DESCRIPTION}"

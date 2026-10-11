@@ -1,0 +1,8 @@
+{
+  "image_ids_unchanged_after_load": true,
+  "sim_after_load": "passed",
+  "scope": "Same Docker daemon save/load and rerun; separate-machine acceptance not performed",
+  "tar_bytes": 1592029184,
+  "tar_sha256": "8655b0d8da39ee0453c97745c6cc8b108e9f1c975ac05d9fec9d02d7d2da2491",
+  "trainer_after_load": "passed"
+}

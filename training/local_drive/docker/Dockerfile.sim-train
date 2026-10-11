@@ -1,0 +1,11 @@
+ARG BASE_IMAGE=robot-sim:lyrical-v1
+FROM ${BASE_IMAGE}
+USER root
+ENV PYTHONUNBUFFERED=1 NVIDIA_DRIVER_CAPABILITIES=compute,utility,graphics ROS_DOMAIN_ID=41 GZ_PARTITION=local-drive-train-01
+WORKDIR /opt/robot-lab
+COPY workspace/ workspace/
+COPY third_party/ third_party/
+COPY scripts/sim_probe.py scripts/sim_probe.py
+COPY docker/entrypoint-sim-train.sh /usr/local/bin/start-sim-train
+RUN chmod +x /usr/local/bin/start-sim-train
+ENTRYPOINT ["/usr/local/bin/start-sim-train"]

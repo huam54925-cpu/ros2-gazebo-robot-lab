@@ -64,3 +64,8 @@ PYTHONPATH=workspace python3 -m unittest discover -s workspace/navigation_base/t
 ```
 
 可选 `on` 模块已做离线逻辑测试，尚未做整场挂载仿真。本次整理没有重新驱动车辆。旧版代码、旧教程和历史实验源快照见存档分支；`docs/experiments/` 内历史数据保留为证据，不是当前运行入口。
+
+## 局部驾驶训练环境（设计与短验收）
+
+新增独立的 [训练封装目录](training/local_drive/README.md)：CPU/CUDA设备选择、SAC接口设计、无显示Gazebo镜像、检查点恢复和验收记录。
+从仓库根目录先 `cd training/local_drive` 再执行其中命令。真实Gazebo同步训练后端仍待实现，目前不提供车辆训练效果或车辆模型。

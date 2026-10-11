@@ -1,0 +1,37 @@
+{
+  "status": "passed",
+  "normal": {
+    "device": "cpu",
+    "requested_device": "cpu",
+    "status": "passed",
+    "purpose": "Pendulum toolchain smoke ONLY; not a robot policy",
+    "initial_steps": 128,
+    "resumed_steps": 160,
+    "replay_size": 160,
+    "deterministic_reload_max_error": 0.0,
+    "elapsed_wall_seconds": 4.191720661001455,
+    "checkpoint": "/runs/checkpoints/step-160-ad0479eb",
+    "versions": {
+      "sb3": "2.7.0",
+      "torch": "2.8.0+cpu",
+      "gymnasium": "1.2.1"
+    }
+  },
+  "sigterm": {
+    "device": "cpu",
+    "requested_device": "cpu",
+    "status": "stopped",
+    "purpose": "Pendulum toolchain smoke ONLY; not a robot policy",
+    "initial_steps": 33,
+    "resumed_steps": 33,
+    "replay_size": 32,
+    "deterministic_reload_max_error": 0.0,
+    "elapsed_wall_seconds": 0.583661607999602,
+    "checkpoint": "/runs/checkpoints/step-33-c722e937",
+    "versions": {
+      "sb3": "2.7.0",
+      "torch": "2.8.0+cpu",
+      "gymnasium": "1.2.1"
+    }
+  }
+}

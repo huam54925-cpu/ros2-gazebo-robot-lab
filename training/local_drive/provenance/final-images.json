@@ -1,0 +1,132 @@
+[
+    {
+        "Id": "sha256:babb29b97bf6dad1f43a5de6c072e9fd5309f474e6751c1733e23d1235c34043",
+        "RepoTags": [
+            "robot-sim:local-drive-20261011"
+        ],
+        "RepoDigests": [
+            "robot-sim@sha256:babb29b97bf6dad1f43a5de6c072e9fd5309f474e6751c1733e23d1235c34043"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-10-11T07:52:07.905695747+01:00",
+        "Config": {
+            "User": "root",
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "LANG=C.UTF-8",
+                "LC_ALL=C.UTF-8",
+                "ROS_DISTRO=lyrical",
+                "DEBIAN_FRONTEND=noninteractive",
+                "PYTHONUNBUFFERED=1",
+                "NVIDIA_DRIVER_CAPABILITIES=compute,utility,graphics",
+                "ROS_DOMAIN_ID=41",
+                "GZ_PARTITION=local-drive-train-01"
+            ],
+            "Entrypoint": [
+                "/usr/local/bin/start-sim-train"
+            ],
+            "WorkingDir": "/opt/robot-lab",
+            "Labels": {
+                "org.opencontainers.image.created": "2026-09-12T10:25:59.825539+00:00",
+                "org.opencontainers.image.description": "The Ubuntu container image maintained by Canonical\n\nUbuntu is a Debian-based Linux operating system that runs from the desktop to the cloud, to all your internet connected things.\nIt is the world's most popular operating system across public clouds and OpenStack clouds.\nIt is the number one platform for containers; from Docker to Kubernetes to LXD, Ubuntu can run your containers at scale.\nFast, secure and simple, Ubuntu powers millions of PCs worldwide.\n",
+                "org.opencontainers.image.title": "ubuntu",
+                "org.opencontainers.image.version": "26.04"
+            },
+            "ArgsEscaped": true
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 1237832994,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:485d137fd3bfb545f1b417ea708e2281594be7a334e8a85ab75c5332db6089e9",
+                "sha256:598e8330e2e633ea6b06bbf1e8b80c275553b7c1de53899af154d1f480a7eefa",
+                "sha256:56f86f8493836303a4afd23a9b75c5ee61fa841d1ec260b34efd428f5fa33153",
+                "sha256:45937b45f641190f8540ed0a63bcae5c2806568cef48bbb5ecbebc90f7ca1d18",
+                "sha256:d00a4b6bbab4b5e6b4b54d079b0ce1698ea2a40583d36c94eeb3ac6844e5eb00",
+                "sha256:a0c68648966ad005fde38001fdb608614a4b2e308357b9bf62149dea8a708f3e",
+                "sha256:6139f3a4e42001816afdd4dc037e0beaf01cbb2228cd21bbda6b6a0ae487f501",
+                "sha256:273721e83b46faba801753df3cba90496f84a723f5de35317b83d610a79c5139",
+                "sha256:b5ba9411397f09850599578b953ed4e96fc48f901c12091f066560e8ef95216f",
+                "sha256:7c5178efb92015c3e2d94ad859971ba714f288f71fadc463e64f66650cdbcad5",
+                "sha256:a10afeeb6e1f81a803026eda82b3d4d99de98c133ceb679c41556d6080465ea1",
+                "sha256:dfacf9a06193aadb45b3c84ef385732a284b858a22b717716f60e5f0e33c61e0",
+                "sha256:ef1dcd48241f2c6292fa97df43b6c55d4779de0fbd0580b45d12bc23e4fbca0f",
+                "sha256:c8f9e6e81f3662b47321dc8353b6891dd088997a0cd38c4fe9904644409b29ad",
+                "sha256:8cd3224daef541f7f419c49f8be0a4967a00f56eadfef8a3c75b3f6d633c4087",
+                "sha256:564dca05b10eb5f0a5405a8c52169acd262321cc9aa70bb46530071d09c2d0f1",
+                "sha256:6ade49490ead02b30d5800f2898401c999dd064ae3098a946f3614f153a4d82f",
+                "sha256:09a20df67cd85cc77a427f68f1ee74756f91f554291535b1cb89f4c907fb4c9c",
+                "sha256:85f89b01d2832ddbbe95b0a1ac54b37027e00f66bf293502564f5001ca5b83c3"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-10-11T06:52:13.740379837Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.oci.image.index.v1+json",
+            "digest": "sha256:babb29b97bf6dad1f43a5de6c072e9fd5309f474e6751c1733e23d1235c34043",
+            "size": 856
+        }
+    },
+    {
+        "Id": "sha256:6cc8785a44e885a56114b05ed563436f5f235bf8e234bbf64579d7e146f699aa",
+        "RepoTags": [
+            "robot-trainer:local-drive-20261011"
+        ],
+        "RepoDigests": [
+            "robot-trainer@sha256:6cc8785a44e885a56114b05ed563436f5f235bf8e234bbf64579d7e146f699aa"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-10-11T07:55:36.060654739+01:00",
+        "Config": {
+            "Env": [
+                "PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "LANG=C.UTF-8",
+                "GPG_KEY=A035C8C19219BA821ECEA86B64E628F8D684696D",
+                "PYTHON_VERSION=3.11.16",
+                "PYTHON_SHA256=91bcdebfdde239a003ae93738a7fce0f9230fee5c4bc2b86f6e6e8c6f98aabe8",
+                "PYTHONUNBUFFERED=1",
+                "PIP_NO_CACHE_DIR=1",
+                "OMP_NUM_THREADS=1",
+                "MKL_NUM_THREADS=1",
+                "MPLCONFIGDIR=/tmp/matplotlib",
+                "XDG_CACHE_HOME=/tmp/cache"
+            ],
+            "Entrypoint": [
+                "python",
+                "-m",
+                "training.train"
+            ],
+            "WorkingDir": "/opt/robot-training"
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 354151182,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:411a86676185cb54d695a805b238194a64e9b77e0c723f3802fbb87d333ea0b3",
+                "sha256:4d43b7f98e4c38fd2d37f37f1bf9965d2c4018b01453d3b29d924653c3275f4b",
+                "sha256:7895f75e926a456464bbd0f1285738ba25e7d70aad4aa94c32c1d274b3b9e85e",
+                "sha256:164ea7718b2462d163b7bd95ece7ebd8b669f0cdb1b094b66009aecec2f1195b",
+                "sha256:261526a6a2c67834f9bbda5cf68fd19e9408fbda30d0dee8af0c3f45ac1fe174",
+                "sha256:16a8429e88448915734d49620cb3391618a9a5ccdd6d438dcc273270bcb1a75b",
+                "sha256:1b3b070fd854cbe4f0d8d3868ccf8fc85081c81553d9c84152875b962d9bcbbb",
+                "sha256:cbde44c6124acfc0b039abb1def185ed9543db4e037829fa7eb433f564f2080c",
+                "sha256:03ca9c5f9437aa8a67264d51ea86757d331a2fc229753bb51c1fb7f2dd51a1f7",
+                "sha256:351baeb49366e6a3a518a521d91586f62f6416567ca485fd55a31f45935b2316",
+                "sha256:9f82f6993218a40233f663f8d43640e3675c2d69006e9e40cc6ef139d9b95101"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-10-11T06:55:42.171049242Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.oci.image.index.v1+json",
+            "digest": "sha256:6cc8785a44e885a56114b05ed563436f5f235bf8e234bbf64579d7e146f699aa",
+            "size": 856
+        }
+    }
+]

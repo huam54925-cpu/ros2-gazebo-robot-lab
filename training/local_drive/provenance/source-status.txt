@@ -1,0 +1,163 @@
+ M README.md
+ D docker/Dockerfile.navigation
+ D docker/start-exploration.sh
+ D docker/start-nav2.sh
+ M docker/start-navigation-base.sh
+ D docs/active-perception-exploration.md
+ D docs/bounded-exploration-agent.md
+ D docs/examples/move-or-observe-context.json
+ D docs/frontier-exploration.md
+ D docs/guard-path-clearance.md
+ D docs/indoor-layout.svg
+ D docs/indoor-mapping.md
+ D docs/model-motion-trial.md
+ D docs/move-or-observe-design.md
+ D docs/nav2-navigation.md
+ D docs/openai-environment.md
+ D docs/regional-exploration.md
+ D docs/robot-readonly.md
+ D docs/robot-skills-mcp.md
+ D docs/robot-skills-roadmap.md
+ D docs/validation.md
+ D experimental/exploration_upgrade/README_zh.md
+ D experimental/exploration_upgrade/exploration_support/__init__.py
+ D experimental/exploration_upgrade/exploration_support/adapter.py
+ D experimental/exploration_upgrade/exploration_support/demo.py
+ D experimental/exploration_upgrade/exploration_support/grid.py
+ D experimental/exploration_upgrade/exploration_support/memory.py
+ D experimental/exploration_upgrade/exploration_support/policy.py
+ D experimental/exploration_upgrade/requirements.txt
+ D experimental/exploration_upgrade/run_checks.sh
+ D experimental/exploration_upgrade/tests/test_grid.py
+ D experimental/exploration_upgrade/tests/test_memory_policy.py
+ D experimental/exploration_upgrade/validation/demo.json
+ D experimental/exploration_upgrade/validation/offline-validation.json
+ D experimental/exploration_upgrade/validation/vendored-source-manifest.json
+ D scripts/replay-exploration-upgrade.sh
+ D scripts/robot-motion-trial.sh
+ D scripts/robot-skills.sh
+ D scripts/robot-status.sh
+ D scripts/start-robot-readonly.sh
+ D workspace/exploration_support/__init__.py
+ D workspace/exploration_support/adapter.py
+ D workspace/exploration_support/demo.py
+ D workspace/exploration_support/frontier_identity.py
+ D workspace/exploration_support/grid.py
+ D workspace/exploration_support/memory.py
+ D workspace/exploration_support/policy.py
+ D workspace/navigation_base/README.md
+ M workspace/navigation_base/bringup.launch.py
+ D workspace/navigation_base/check_mapping_scene.py
+ D workspace/navigation_base/diagnostics/assess_indoor_map.py
+ D workspace/navigation_base/diagnostics/map_indoor_loop.py
+ D workspace/navigation_base/diagnostics/verify_ground_truth.py
+ D workspace/navigation_base/exploration/aggressive.py
+ D workspace/navigation_base/exploration/compare_runs.py
+ D workspace/navigation_base/exploration/explore.py
+ D workspace/navigation_base/exploration/frontier.py
+ D workspace/navigation_base/exploration/observation.py
+ D workspace/navigation_base/exploration/path_safety.py
+ D workspace/navigation_base/exploration/plot_run.py
+ D workspace/navigation_base/exploration/regions.py
+ D workspace/navigation_base/map_identity.py
+ D workspace/navigation_base/navigation/check_goal.py
+ D workspace/navigation_base/navigation/nav2.yaml
+ D workspace/navigation_base/navigation/navigation.launch.py
+ D workspace/navigation_base/navigation/navigation.rviz
+ D workspace/navigation_base/safety_contract.py
+ D workspace/navigation_base/slam/check_slam.py
+ M workspace/navigation_base/slam/mapping.rviz
+ D workspace/navigation_base/slam/verify_slam_motion.py
+ D workspace/navigation_base/tests/check_karto_no_return.cpp
+ D workspace/navigation_base/tests/check_velocity_stop.py
+ D workspace/navigation_base/tests/test_aggressive.py
+ D workspace/navigation_base/tests/test_body_precision.py
+ D workspace/navigation_base/tests/test_explorer_safety.py
+ D workspace/navigation_base/tests/test_frontier.py
+ D workspace/navigation_base/tests/test_frontier_identity.py
+ D workspace/navigation_base/tests/test_observation.py
+ D workspace/navigation_base/tests/test_operator_assist_geometry.py
+ D workspace/navigation_base/tests/test_operator_assist_runtime.py
+ D workspace/navigation_base/tests/test_path_safety.py
+ D workspace/navigation_base/tests/test_regional_executor.py
+ D workspace/navigation_base/tests/test_skill_executor.py
+ D workspace/navigation_base/tests/test_time_calibration.py
+ D workspace/navigation_base/tests/test_unknown_space.py
+ D workspace/navigation_base/tests/test_upgrade_integration.py
+ D workspace/navigation_base/tests/test_viewpoint_comparison.py
+ D workspace/navigation_base/vehicle.original.sdf
+ M workspace/navigation_base/vehicle.rviz
+ D workspace/navigation_base/velocity_guard.py
+ D workspace/navigation_base/verify_motion.py
+ D workspace/navigation_base/world.original.sdf
+ M workspace/robot_agent/check_environment.py
+ D workspace/robot_agent/mcp_motion_server.py
+ D workspace/robot_agent/mcp_server.py
+ D workspace/robot_agent/mcp_skills_server.py
+ D workspace/robot_agent/motion_trial.py
+ D workspace/robot_agent/motion_trial.xml
+ D workspace/robot_agent/motion_worker.py
+ D workspace/robot_agent/replay_reselection.py
+ D workspace/robot_agent/robot_status.py
+ D workspace/robot_agent/ros_status_bridge.py
+ D workspace/robot_agent/run_frontier.py
+ D workspace/robot_agent/run_loop.py
+ D workspace/robot_agent/run_motion_trial.py
+ D workspace/robot_agent/run_readonly.py
+ D workspace/robot_agent/test_loop.py
+ D workspace/robot_agent/test_motion_trial.py
+ D workspace/robot_agent/test_readonly.py
+ D workspace/robot_agent/test_reselection.py
+ D workspace/robot_agent/test_skills_protocol.py
+ D workspace/robot_skills/__init__.py
+ D workspace/robot_skills/acceptance_memory.py
+ D workspace/robot_skills/api.py
+ D workspace/robot_skills/compare_viewpoints.py
+ D workspace/robot_skills/exploration_upgrade.py
+ D workspace/robot_skills/mission.py
+ D workspace/robot_skills/mission_watchdog.py
+ D workspace/robot_skills/observation_rules.py
+ D workspace/robot_skills/observation_worker.py
+ D workspace/robot_skills/operator_assist.py
+ D workspace/robot_skills/operator_assist_geometry.py
+ D workspace/robot_skills/plan_viewpoint_comparison.py
+ D workspace/robot_skills/provenance.py
+ D workspace/robot_skills/regional.py
+ D workspace/robot_skills/replay_timing.py
+ D workspace/robot_skills/replay_upgrade.py
+ D workspace/robot_skills/ros_worker.py
+ D workspace/robot_skills/scan_diagnostics.py
+ D workspace/robot_skills/store.py
+ D workspace/robot_skills/supervisor.py
+ D workspace/robot_skills/test_exploration_upgrade.py
+ D workspace/robot_skills/test_mission.py
+ D workspace/robot_skills/test_observation_rules.py
+ D workspace/robot_skills/test_observation_store.py
+ D workspace/robot_skills/test_regional.py
+ D workspace/robot_skills/test_store.py
+ D workspace/robot_skills/test_watchdog.py
+ D workspace/robot_skills/timing.py
+ D workspace/robot_skills/upgrade_geometry.py
+?? VERSION
+?? docs/experiments/2026-10-06/
+?? docs/v2-design.md
+?? papers/
+?? scripts/robot-scan-drive.sh
+?? scripts/stop-scan-drive.sh
+?? var/
+?? workspace/navigation_base/diagnostics/coverage_monitor.py
+?? workspace/navigation_base/diagnostics/evaluate_passage.py
+?? workspace/navigation_base/diagnostics/passive_truth.py
+?? workspace/navigation_base/diagnostics/record_passage_truth.py
+?? workspace/navigation_base/tests/test_coverage_monitor.py
+?? workspace/robot_agent/api_errors.py
+?? workspace/robot_agent/map_components.py
+?? workspace/robot_agent/map_view.py
+?? workspace/robot_agent/mcp_scan_drive_server.py
+?? workspace/robot_agent/mounts/
+?? workspace/robot_agent/run_scan_drive.py
+?? workspace/robot_agent/safety_mode.py
+?? workspace/robot_agent/scan_drive_geometry.py
+?? workspace/robot_agent/scan_drive_worker.py
+?? workspace/robot_agent/test_safety_mode.py
+?? workspace/robot_agent/test_scan_drive.py

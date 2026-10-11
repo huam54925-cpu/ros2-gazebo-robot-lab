@@ -1,0 +1,19 @@
+{
+  "docker/Dockerfile.sim-train": "448657b8ad1bcbab9794e66a3fc723adf1977bc5cb799dee317862859d0b0000",
+  "docker/Dockerfile.trainer": "03c34839e3b2feada694786d41ec06f9071c4d25066fb915ea8282ccf7b7bb60",
+  "docker/entrypoint-sim-train.sh": "afc74efb4bdf77176f2ea8adacfae6dc5a1de618b39e8e1c4e8982da7f197050",
+  "provenance/trainer-requirements.lock": "d2990b1abcab0d6fc079bcb8cbcbd6be7f7581742d64bd254ccaa61e03a21ff0",
+  "scripts/accept-sim.sh": "ddcf3300047e8887ec52d5fa8e98d5199f4581e323ac0baf706b8ea08debab88",
+  "scripts/accept-trainer.py": "e62be367f3e7f1772e2f9937e7949e7a1985724ee20a2090cc88e396fc847947",
+  "scripts/build.sh": "9593ae244f111b30339681bc0c7700732f0ebf9f51f9781480edc29bbc2e8976",
+  "scripts/export-images.sh": "d5f876ca1d2a05e18d22354200430bcc48a9a7c517d03cbb6dd54a10ec207fd5",
+  "scripts/sim_probe.py": "0dc2b525a60ffe03b5db14bb44887bae58819c8456a6c01f747a547aab275272",
+  "training/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "training/checkpoints.py": "9f422da1c23b9cbb026a40689284a9fe89eb2314281b922ee88b232dcd1acba1",
+  "training/configs/sac_local.json": "53cfe7566254ac42afe991cb9025f6abfab9999841ff86c8b858c7e0a7bd1554",
+  "training/envs/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "training/envs/contracts.py": "1c7d381550261c3f346bc029b67da72b0b81599e0978450f28c46e830369d4c1",
+  "training/train.py": "a94070c9ad754794e982e8beb586f2783f67ff4bd13e6b974ca7a18cce0ae0ba",
+  "workspace/navigation_base/vehicle.world.sdf": "e4acb5f3c8a4e8358f0ebe66b8078b200c48392a339ad9101daa8f1c95fcf58f",
+  "workspace/navigation_base/worlds/indoor_mapping.sdf": "7a50aaf82f6ad04560716dc72c4d48db8743ce3e89ffb1c6f8e32f0eb8b85424"
+}

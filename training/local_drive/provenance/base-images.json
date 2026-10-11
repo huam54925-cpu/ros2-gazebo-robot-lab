@@ -1,0 +1,108 @@
+[
+    {
+        "Id": "sha256:4eaa449a6cb4d46d26fcfc5c1d1ece0a60f409ddb0029a9cd0fa88b43e3de89c",
+        "RepoTags": [
+            "robot-sim:lyrical-v1"
+        ],
+        "RepoDigests": [
+            "robot-sim@sha256:4eaa449a6cb4d46d26fcfc5c1d1ece0a60f409ddb0029a9cd0fa88b43e3de89c"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-10-01T11:20:03.191711371+01:00",
+        "Config": {
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "LANG=C.UTF-8",
+                "LC_ALL=C.UTF-8",
+                "ROS_DISTRO=lyrical",
+                "DEBIAN_FRONTEND=noninteractive"
+            ],
+            "Entrypoint": [
+                "/ros_entrypoint.sh"
+            ],
+            "Cmd": [
+                "bash"
+            ],
+            "WorkingDir": "/work/robot_ws",
+            "Labels": {
+                "org.opencontainers.image.created": "2026-09-12T10:25:59.825539+00:00",
+                "org.opencontainers.image.description": "The Ubuntu container image maintained by Canonical\n\nUbuntu is a Debian-based Linux operating system that runs from the desktop to the cloud, to all your internet connected things.\nIt is the world's most popular operating system across public clouds and OpenStack clouds.\nIt is the number one platform for containers; from Docker to Kubernetes to LXD, Ubuntu can run your containers at scale.\nFast, secure and simple, Ubuntu powers millions of PCs worldwide.\n",
+                "org.opencontainers.image.title": "ubuntu",
+                "org.opencontainers.image.version": "26.04"
+            },
+            "ArgsEscaped": true
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 1237819624,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:485d137fd3bfb545f1b417ea708e2281594be7a334e8a85ab75c5332db6089e9",
+                "sha256:598e8330e2e633ea6b06bbf1e8b80c275553b7c1de53899af154d1f480a7eefa",
+                "sha256:56f86f8493836303a4afd23a9b75c5ee61fa841d1ec260b34efd428f5fa33153",
+                "sha256:45937b45f641190f8540ed0a63bcae5c2806568cef48bbb5ecbebc90f7ca1d18",
+                "sha256:d00a4b6bbab4b5e6b4b54d079b0ce1698ea2a40583d36c94eeb3ac6844e5eb00",
+                "sha256:a0c68648966ad005fde38001fdb608614a4b2e308357b9bf62149dea8a708f3e",
+                "sha256:6139f3a4e42001816afdd4dc037e0beaf01cbb2228cd21bbda6b6a0ae487f501",
+                "sha256:273721e83b46faba801753df3cba90496f84a723f5de35317b83d610a79c5139",
+                "sha256:b5ba9411397f09850599578b953ed4e96fc48f901c12091f066560e8ef95216f",
+                "sha256:7c5178efb92015c3e2d94ad859971ba714f288f71fadc463e64f66650cdbcad5",
+                "sha256:a10afeeb6e1f81a803026eda82b3d4d99de98c133ceb679c41556d6080465ea1",
+                "sha256:dfacf9a06193aadb45b3c84ef385732a284b858a22b717716f60e5f0e33c61e0",
+                "sha256:ef1dcd48241f2c6292fa97df43b6c55d4779de0fbd0580b45d12bc23e4fbca0f"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-10-01T10:28:22.731509884Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.oci.image.index.v1+json",
+            "digest": "sha256:4eaa449a6cb4d46d26fcfc5c1d1ece0a60f409ddb0029a9cd0fa88b43e3de89c",
+            "size": 856
+        }
+    },
+    {
+        "Id": "sha256:9534e5a8e315485d4061ed659af0fd78a284c015f9b73661b41d6bab25604534",
+        "RepoTags": [
+            "python:3.11.16-slim-trixie"
+        ],
+        "RepoDigests": [
+            "python@sha256:9534e5a8e315485d4061ed659af0fd78a284c015f9b73661b41d6bab25604534"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-09-01T00:14:30.682171098Z",
+        "Config": {
+            "Env": [
+                "PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "LANG=C.UTF-8",
+                "GPG_KEY=A035C8C19219BA821ECEA86B64E628F8D684696D",
+                "PYTHON_VERSION=3.11.16",
+                "PYTHON_SHA256=91bcdebfdde239a003ae93738a7fce0f9230fee5c4bc2b86f6e6e8c6f98aabe8"
+            ],
+            "Cmd": [
+                "python3"
+            ]
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 48526805,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:411a86676185cb54d695a805b238194a64e9b77e0c723f3802fbb87d333ea0b3",
+                "sha256:4d43b7f98e4c38fd2d37f37f1bf9965d2c4018b01453d3b29d924653c3275f4b",
+                "sha256:7895f75e926a456464bbd0f1285738ba25e7d70aad4aa94c32c1d274b3b9e85e",
+                "sha256:164ea7718b2462d163b7bd95ece7ebd8b669f0cdb1b094b66009aecec2f1195b"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-09-09T11:31:12.248646477Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.oci.image.index.v1+json",
+            "digest": "sha256:9534e5a8e315485d4061ed659af0fd78a284c015f9b73661b41d6bab25604534",
+            "size": 10373
+        }
+    }
+]

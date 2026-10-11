@@ -1,0 +1,22 @@
+{
+  "docker/Dockerfile.publish": "b77c0f666fd0c3a91ef2dc2f0cebd3c848db1ccae419d3a0ca51c785346ef88e",
+  "docker/Dockerfile.sim-train": "448657b8ad1bcbab9794e66a3fc723adf1977bc5cb799dee317862859d0b0000",
+  "docker/Dockerfile.trainer": "03c34839e3b2feada694786d41ec06f9071c4d25066fb915ea8282ccf7b7bb60",
+  "docker/Dockerfile.trainer.cuda": "609590e16469359ea8f497d70fc58b56f9a9a4aec812a4ba07ac39a0411ed1a2",
+  "docker/entrypoint-sim-train.sh": "afc74efb4bdf77176f2ea8adacfae6dc5a1de618b39e8e1c4e8982da7f197050",
+  "scripts/accept-sim.sh": "ddcf3300047e8887ec52d5fa8e98d5199f4581e323ac0baf706b8ea08debab88",
+  "scripts/accept-trainer.py": "21c3c5a5ccb99bfc22119421a9f621e277cdffe6cd4a78960bef0c07c6b5ed3e",
+  "scripts/build.sh": "0a7f383aacf1ecbcc8b2a88d9470756ebdba4860047d28e1da8aba97d9c23d60",
+  "scripts/export-images.sh": "6d6aa32a0ee33336c6a40d559d2cc5fd0c249739f745b8794f59d4ae0331312c",
+  "scripts/publish-ghcr.sh": "db3166960be5f8e510010152073f612a423ba725ab507f273a5552f592d56f03",
+  "scripts/sim_probe.py": "0dc2b525a60ffe03b5db14bb44887bae58819c8456a6c01f747a547aab275272",
+  "training/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "training/checkpoints.py": "9f422da1c23b9cbb026a40689284a9fe89eb2314281b922ee88b232dcd1acba1",
+  "training/configs/sac_local.json": "53cfe7566254ac42afe991cb9025f6abfab9999841ff86c8b858c7e0a7bd1554",
+  "training/device.py": "d7b00da1ca5ca97d837243a892e43a377ab89e846520817315077bbdb00b56f3",
+  "training/envs/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "training/envs/contracts.py": "1c7d381550261c3f346bc029b67da72b0b81599e0978450f28c46e830369d4c1",
+  "training/train.py": "af0551f6de8191dc7f0a1991afa0301922c911152dd7510a9daf0f686847686a",
+  "workspace/navigation_base/vehicle.world.sdf": "e4acb5f3c8a4e8358f0ebe66b8078b200c48392a339ad9101daa8f1c95fcf58f",
+  "workspace/navigation_base/worlds/indoor_mapping.sdf": "7a50aaf82f6ad04560716dc72c4d48db8743ce3e89ffb1c6f8e32f0eb8b85424"
+}
