@@ -19,9 +19,10 @@
   },
   "trainer_cuda": {
     "tag": "ghcr.io/huam54925-cpu/ros2-gazebo-robot-lab-trainer:20261011-cu126-v1",
-    "status": "upload_in_progress",
+    "status": "upload_stopped_local_gpu_acceptance_passed",
     "local_image_id": "sha256:694fea1148149874cba1338641142a34372ab4cd8a2253b3fd6498433589b675",
     "source_label": "https://github.com/huam54925-cpu/ros2-gazebo-robot-lab",
-    "acceptance": "docs/evidence/cuda/acceptance.json"
+    "acceptance": "docs/evidence/cuda/acceptance.json",
+    "note": "Full CUDA runtime image upload stopped after user clarified they can configure CUDA themselves; no completed GPU tag publication or digest pull verification."
   }
 }
