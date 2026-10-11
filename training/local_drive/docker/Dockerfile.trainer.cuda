@@ -1,5 +1,5 @@
-# Optional CUDA build recipe. GPU training has NOT been accepted yet.
-ARG BASE_IMAGE=python:3.11.16-slim-trixie
+# CUDA 12.6 trainer. Re-run GPU acceptance on each target machine.
+ARG BASE_IMAGE=python:3.11.16-slim-trixie@sha256:9534e5a8e315485d4061ed659af0fd78a284c015f9b73661b41d6bab25604534
 FROM ${BASE_IMAGE}
 ENV PYTHONUNBUFFERED=1 PIP_NO_CACHE_DIR=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 MPLCONFIGDIR=/tmp/matplotlib XDG_CACHE_HOME=/tmp/cache
 WORKDIR /opt/robot-training

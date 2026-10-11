@@ -1,0 +1,36 @@
+{
+  "auto-gpu": {
+    "device": "cuda",
+    "requested_device": "auto",
+    "status": "passed",
+    "purpose": "Pendulum toolchain smoke ONLY; not a robot policy",
+    "initial_steps": 32,
+    "resumed_steps": 64,
+    "replay_size": 64,
+    "deterministic_reload_max_error": 0.0,
+    "elapsed_wall_seconds": 3.9654904380004155,
+    "checkpoint": "/runs/checkpoints/step-64-496a3380",
+    "versions": {
+      "sb3": "2.7.0",
+      "torch": "2.8.0+cu126",
+      "gymnasium": "1.2.1"
+    }
+  },
+  "cpu-forced": {
+    "device": "cpu",
+    "requested_device": "cpu",
+    "status": "passed",
+    "purpose": "Pendulum toolchain smoke ONLY; not a robot policy",
+    "initial_steps": 32,
+    "resumed_steps": 64,
+    "replay_size": 64,
+    "deterministic_reload_max_error": 0.0,
+    "elapsed_wall_seconds": 1.599567418999868,
+    "checkpoint": "/runs/checkpoints/step-64-b092e5c3",
+    "versions": {
+      "sb3": "2.7.0",
+      "torch": "2.8.0+cu126",
+      "gymnasium": "1.2.1"
+    }
+  }
+}

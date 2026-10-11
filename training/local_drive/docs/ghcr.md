@@ -35,7 +35,7 @@ docker run --rm --user "$(id -u):$(id -g)" -v "$PWD/runs/cpu:/runs" \
 ```
 
 该发布镜像是CPU版PyTorch，auto将选择CPU，显式cuda会报错。
-CUDA构建配方见 `docker/Dockerfile.trainer.cuda`；本次没有发布未经验证的CUDA镜像。
+CUDA训练器已在本机GTX 1650上通过短验收，使用独立标签 `20261011-cu126-v1`；运行与复测方法见[CUDA训练器](cuda.md)，发布状态见 `../provenance/ghcr-images.json`。
 无论选择什么计算设备，当前训练脚本都只是Pendulum工具链短测试，真实Gazebo同步训练后端仍待实现。
 
 ## 再次发布

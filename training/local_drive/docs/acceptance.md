@@ -56,7 +56,7 @@ Pendulum-v1 实跑128步、保存模型和Replay Buffer、重新加载后继续3
 ## CPU/CUDA设备选择增量
 
 源代码新增 --device cpu/cuda/auto；CPU-v2容器14项单元测试通过，128+32步及真实SIGTERM保存测试通过，加载前后动作差0。
-CUDA不可用且显式请求cuda时会报错，不会回退CPU；CUDA镜像仅提供配方，尚未GPU实跑验收。
+CUDA不可用且显式请求cuda时会报错，不会回退CPU；此阶段仅提供CUDA配方，后续GPU实测结果见下方增量记录。
 GHCR发布状态与digest见ghcr.md；以上初始镜像tar的基线记录保留不变。
 
 CLI额外验证：CPU镜像中 --device auto 选择cpu并完成32+32步；--device cuda 以退出码2明确拒绝不可用设备。
@@ -67,3 +67,14 @@ CLI额外验证：CPU镜像中 --device auto 选择cpu并完成32+32步；--devi
 两者RootFS层分别与已通过短验收的本地镜像完全一致。digest与拉取引用见 `../provenance/ghcr-images.json`。
 匿名manifest访问两者均被拒绝，已登录访问成功；访问记录见 `../provenance/ghcr-access.json`。
 本次拉取在已有镜像层缓存的同一主机完成，验证远端发布、认证与manifest可读取；不替代异机完整下载与运行验收。
+
+## CUDA训练器实跑增量
+
+在本机NVIDIA GeForce GTX 1650（4GB、compute capability 7.5）、驱动595.91.07上实测。
+容器内PyTorch为2.8.0+cu126，CUDA运行库12.6；CUDA矩阵乘法和反向传播通过，设备为cuda:0。
+14项单元测试通过；指定cuda完成Pendulum 128+32步，Replay Buffer为160条，保存恢复前后动作差0。
+另一次真实SIGTERM在第18步停止，Replay Buffer为17条，成功保存、核验哈希和重新加载，退出码0。
+版本清单见 `../provenance/trainer-cuda-requirements.lock`，结构化证据见 `evidence/cuda/`。
+这些是GPU环境及工具链短测，不代表车辆训练效果、GPU加速比或异机运行结果。
+
+设备模式补测：透传GPU时auto选择cuda；不透传GPU且显式cpu时选择cpu，两者均完成32+32步及恢复一致性检查，见 `evidence/cuda/device-modes.json`。

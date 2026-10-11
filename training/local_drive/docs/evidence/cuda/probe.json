@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "torch": "2.8.0+cu126",
+  "cuda_runtime": "12.6",
+  "gpu_name": "NVIDIA GeForce GTX 1650",
+  "compute_capability": [
+    7,
+    5
+  ],
+  "compiled_architectures": [
+    "sm_50",
+    "sm_60",
+    "sm_70",
+    "sm_75",
+    "sm_80",
+    "sm_86",
+    "sm_90"
+  ],
+  "tensor_device": "cuda:0",
+  "matrix_multiply_and_backward": "passed",
+  "driver": "595.91.07"
+}

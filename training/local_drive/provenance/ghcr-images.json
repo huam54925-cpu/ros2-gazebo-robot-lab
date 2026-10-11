@@ -16,5 +16,12 @@
     "digest": "sha256:da556f2b5e95fbf22291e9623101e1854ec43286c6c33bf691a4fab067164cc7",
     "pull_reference": "ghcr.io/huam54925-cpu/ros2-gazebo-robot-lab-trainer@sha256:da556f2b5e95fbf22291e9623101e1854ec43286c6c33bf691a4fab067164cc7",
     "same_rootfs_as_accepted": true
+  },
+  "trainer_cuda": {
+    "tag": "ghcr.io/huam54925-cpu/ros2-gazebo-robot-lab-trainer:20261011-cu126-v1",
+    "status": "upload_in_progress",
+    "local_image_id": "sha256:694fea1148149874cba1338641142a34372ab4cd8a2253b3fd6498433589b675",
+    "source_label": "https://github.com/huam54925-cpu/ros2-gazebo-robot-lab",
+    "acceptance": "docs/evidence/cuda/acceptance.json"
   }
 }

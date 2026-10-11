@@ -18,7 +18,7 @@
 
 ## CPU/GPU与发布
 
-训练器新增 `--device cpu|cuda|auto`，默认CPU。CPU-v2已做短测；CUDA镜像目前仅提供构建配方，GPU训练尚未实测。
+训练器新增 `--device cpu|cuda|auto`，默认CPU。CPU-v2和CUDA版均已做短测；CUDA版在本机GTX 1650上通过运算、短训练与保存恢复验收，见[GPU使用说明](docs/cuda.md)。
 仿真的GPU激光渲染与训练计算设备独立。详见[设备选择与大文件分发](docs/devices-and-artifacts.md)。
 先前1.5GB迁移包为原CPU基线，匹配其附带源码，不包含新增device参数。
 
