@@ -3,7 +3,7 @@
 独立训练封装目录。从主仓库根目录先执行 `cd training/local_drive`。复用 Robot Exploration 2.0 的现有场景与 ROS/Gazebo 基础镜像。
 目标是环境迁移、算法设计与短验收；今天不声称获得车辆训练效果。
 
-**最新异机进展：** WSL2 / RTX 4060 已通过仿真及CPU/CUDA训练器验收，见[部署记录与训练边界](docs/acceptance-wsl2-rtx4060.md)。当前能运行Pendulum训练工具链；小车训练仍需实现同步Gazebo后端与Gymnasium车辆环境，没有车辆权重。
+**最新异机进展：** WSL2 / RTX 4060 已通过仿真及CPU/CUDA训练器验收，见[部署记录与训练边界](docs/acceptance-wsl2-rtx4060.md)。该记录属于此前的 Pendulum 工具链验收。新增的车辆同步后端、冷 reset、Gymnasium 和独立 SAC 入口见 [同步后端说明](docs/sync_backend.md)；新增镜像仍须在离线 4060 上运行验收脚本。
 原 `/mnt/robot_disk/ros_sim` 工作区保持不变。本目录将初始封装导入GitHub；原仿真入口保留。
 
 ## 内容
@@ -77,6 +77,8 @@ docker load -i local-drive-images.tar
 
 ## 继续开发
 
-先实现 Gazebo 内部动作确认与精确步进、冷reset和Gymnasium适配器，然后接入真实 SAC。
+车辆入口为 `python -m training.train_vehicle`，与下述历史 Pendulum 入口分开。先运行 `scripts/accept_sync.py`，再运行明确标注的短梯度验收；正式参数保留 `learning_starts=5000`。
 先做固定场景单worker验收，再做跨容器RPC、多场景课程和多环境隔离。
 详见接口说明；原场景无接触传感器，接触奖励暂不启用。
+
+当前同步后端及最终镜像的本地结果见 [v2验收记录](docs/acceptance-sync-v2.md)。大镜像通过物理介质携带，GitHub仅保存代码和设计。

@@ -1,5 +1,7 @@
 # 2026-10-11 环境封装验收
 
+> 本页保留初版设计/验收记录；后续 v2 同步实现及独立车辆训练入口见 [同步后端说明](sync_backend.md)。下文“待实现”描述仅代表初版状态。
+
 工作目录 `/mnt/robot_disk/codex-builds/2026-10-11`，独立 ext4 数据盘 `/dev/sdb2`。
 Docker 数据目录 `/mnt/robot_disk/docker-engine`。本地源 `/mnt/robot_disk/ros_sim` 保持原状。
 GitHub 只读参考版本 `73b2c38e64aed874abab65559790d41a1b7bab97`，所用室内场景与远端 blob 一致。

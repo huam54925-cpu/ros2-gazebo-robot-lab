@@ -1,0 +1,8 @@
+cmake_minimum_required(VERSION 3.22)
+project(local_drive_sync LANGUAGES CXX)
+find_package(gz-sim REQUIRED)
+find_package(gz-plugin REQUIRED COMPONENTS register)
+add_library(LocalDriveSync SHARED SyncDrive.cc)
+target_compile_features(LocalDriveSync PRIVATE cxx_std_17)
+target_link_libraries(LocalDriveSync PRIVATE gz-sim::gz-sim gz-plugin::gz-plugin)
+install(TARGETS LocalDriveSync LIBRARY DESTINATION .)

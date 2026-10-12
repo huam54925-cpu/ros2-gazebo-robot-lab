@@ -1,10 +1,10 @@
-"""Versioned training boundary. No live Gazebo backend is claimed here."""
-from dataclasses import dataclass
+"""Raw synchronous frame boundary; policy history belongs only to the environment."""
+from dataclasses import dataclass, field
 from typing import Protocol
 import math
 from numbers import Real
 
-SCHEMA_VERSION = 'local-drive-v1'
+SCHEMA_VERSION = 'local-drive-v2'
 
 class InfrastructureError(RuntimeError):
     """Discard this transition; stop and rebuild the environment."""
@@ -17,6 +17,8 @@ class Frame:
     sensor_times: dict[str, float]
     observation: dict
     evaluation: dict
+    odom_pose: tuple = ()
+    ack: dict = field(default_factory=dict)
 
 class GazeboBackend(Protocol):
     def reset(self, *, seed: int, scenario: str) -> Frame: ...
@@ -48,7 +50,7 @@ def validate_transition(previous: Frame, current: Frame, *, dt=0.2, tolerance=1e
         stamp = current.sensor_times.get(key, float('nan'))
         if not math.isfinite(stamp) or not target-tolerance <= stamp <= current.sim_time+tolerance:
             raise InfrastructureError(f'Stale or invalid {key} sample')
-    if set(current.observation) != {'lidar', 'odom_velocity', 'goal_relative', 'history'}:
+    if set(current.observation) != {'lidar', 'odom_velocity', 'goal_relative'}:
         raise InfrastructureError('Unexpected policy inputs; truth leakage or missing field')
 
 def encode_lidar(ranges, *, sectors=90, range_min=0.08, range_max=10.0):

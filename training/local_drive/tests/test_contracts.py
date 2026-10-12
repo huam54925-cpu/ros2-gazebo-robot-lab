@@ -6,7 +6,7 @@ class ContractTests(unittest.TestCase):
     def setUp(self):
         self.a=Frame(1,0,0.,{}, {}, {})
         self.b=Frame(1,1,.2,dict(lidar=.2,odom=.2,truth=.2),
-                     dict(lidar=[],odom_velocity=[],goal_relative=[],history=[]),dict(truth_pose=[0,0,0]))
+                     dict(lidar=[],odom_velocity=[],goal_relative=[]),dict(truth_pose=[0,0,0]))
     def test_valid(self): validate_transition(self.a,self.b)
     def test_stale(self):
         with self.assertRaises(InfrastructureError): validate_transition(self.a,replace(self.b,sensor_times=dict(lidar=.1,odom=.2,truth=.2)))

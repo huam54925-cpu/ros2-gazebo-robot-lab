@@ -1,0 +1,10 @@
+ARG BASE_IMAGE=robot-trainer:local-drive-cuda-v1
+FROM ${BASE_IMAGE}
+COPY docker-cli /usr/local/bin/docker
+COPY source-manifest.json /opt/robot-training/source-manifest.json
+COPY provenance/trainer-cuda-requirements.lock /opt/robot-training/expected-cuda-requirements.lock
+COPY training/ /opt/robot-training/training/
+COPY scripts/accept_sync.py /opt/robot-training/scripts/accept_sync.py
+COPY tests/ /opt/robot-training/tests/
+ENV LOCAL_DRIVE_SIM_IMAGE=local-drive-sync-sim:20261012-v2 PYTHONPATH=/opt/robot-training
+ENTRYPOINT ["python", "-m", "training.train_vehicle"]

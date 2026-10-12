@@ -1,11 +1,13 @@
-# 局部驾驶训练接口 v1（设计冻结，真实后端待实现）
+# 局部驾驶训练接口 v2（固定场景同步实现）
+
+具体时序、原始 Frame 边界、冷 reset 和验收见 [同步后端](sync_backend.md)。v1 的 history 字段移至环境层唯一维护，严格时间容差不变。
 
 ## 边界与现状
 
-策略 SAC → Gymnasium 适配器（待实现）→ 常驻 GazeboBackend（待实现）→ 仿真控制插件。
-已实现 `training/envs/contracts.py` 的 Protocol、动作解码、激光编码和 transition 时序校验。
+策略 SAC → LocalDriveEnv → GazeboBackendImpl → 每回合独立 worker / SyncDrive 插件。
+`training/envs/contracts.py` 定义原始 Frame、动作解码、激光编码和 transition 校验；应用 ACK 与物理执行回执由后端单独强校验。
 `scripts/sim_probe.py` 是异步诊断工具，绝不能当训练后端。它不证明 action ACK 或精确 step。
-`training.train --backend gazebo` 明确失败，避免误启动未验收的车辆训练。
+`training.train --backend gazebo` 保持拒绝；车辆通过独立入口 `training.train_vehicle`，正式参数不继承 Pendulum 冒烟覆盖。
 
 不启动 SLAM，不调用原 AI API，不依赖 X11，不连接实车。原 Exploration 2.0 入口保留在原仓库。
 
@@ -15,7 +17,7 @@
 初始参数见 `training/configs/sac_local.json`（JSON 避免 YAML 的 off 被隐式解析为布尔值）。
 这些是设计值，没有优化效果证据。
 
-策略观测固定 float32 向量 295 维，按以下顺序拼接（适配器后续实施）：
+策略观测固定 float32 向量 295 维，由 LocalDriveEnv 按以下顺序拼接：
 
 1. 90 个激光扇区，每扇区 `[最近有效距离/range_max, 有效回波比例, +inf无回波比例]`，270 维。
    无效比例为 1 减后两项；NaN、-inf、越界有限值视为无效。不能把无效数据当自由空间。
@@ -25,7 +27,7 @@
 4. 按旧到新排列的4帧历史，每帧 `[归一化动作a0,a1, odom局部dx/0.12,dy/0.12,dyaw/0.16]`，裁剪到 [-1,1]，20 维。
    reset 清零历史。位移必须来自 odom，不来自真值。最初目标由场景同时定义 odom 目标和评价用真值目标。
 
-策略输入仅含 lidar、odom_velocity、goal_relative、history 四个字段。
+策略向量按 lidar、odom_velocity、goal_relative、history 四块组装；后端 Frame.observation 仅返回前三项原始数据，history 只在环境层维护。Frame.odom_pose 另存里程计姿态；Frame.ack 是控制证据，均不作为额外策略输入。
 真实世界位置、接触、真实目标距离只能进入 evaluation。
 评价与目标均以驱动轮轴心为车辆参考点：当前模型轴心相对model原点的偏移为(0.5542825,0)m，真值经yaw旋转此偏移后再计算到点距离；不能混用model原点和轮轴中心。字段名校验不能证明内容来源，后端还需审查生产路径。
 
@@ -37,20 +39,20 @@
 
 `reset(seed,scenario) -> Frame`：冷启动独立仿真进程；生成新的 episode_id；清空缓存、动作编号、历史、控制器状态。
 以零命令推进稳定窗口，验证初始速度与传感器完整性，将起始时刻对齐传感器采样周期后暂停。返回 action_id=0 的同一回合观测。
-相同 seed 必须生成同一场景和初态；第一版仅固定现有 indoor 场景的冷重启诊断已可执行，随机化待实现。
+相同 seed 必须生成同一场景和初态；第一版使用固定 indoor 场景和 odom 前方 3m 目标，随机化待实现；每回合冷启动稳定 600ms。
 
 `advance(v,w,dt) -> Frame`：必须处于暂停状态；把 (episode_id,action_id,v,w) 交给仿真侧控制/步进插件。
 ACK 只有在动作已应用后才能产生（收到 transport 消息不是应用成功）。
 插件推进 N=dt/physics_dt 个物理步；physics_dt 必须在世界配置中显式固定且整除 dt。
 返回时刻 t+dt，激光、odom、真值均须到达目标时刻，时间误差限 1e-6 秒。
-当前10Hz激光与0.2秒周期应对齐；如安装版本传感器时间存在偏移，必须先实测并修订协议，不能偷偷放宽校验。
+原 30Hz odom 实测不满足目标时刻；新插件按 1ms 物理步发布轮式 odom，激光保留 10Hz，严格 1e-6 秒容差不变。
 `validate_transition` 检查回合、动作编号、时间及输入字段；不能替代插件的 ACK 实现。
 
 `stop()`：发送零物理速度并确认应用，推进制动/稳定步，验证 odom 与真值停止，再暂停。
 `close()`：先尝试 stop，再关闭自己拥有的进程；幂等，不关闭其他用户仿真。
 墙钟超时、跨回合数据、旧激光、时钟回退、ACK缺失均为 InfrastructureError；停车、记录、销毁后端，禁止向 Replay Buffer 插入该 transition。
 
-## Gymnasium 与奖励（后续适配器实现要求）
+## Gymnasium 与奖励
 
 reset 返回 (obs,info)，step 返回 (obs,reward,terminated,truncated,info)。
 到点（真值距离 <=0.35m）或翻倒/不可恢复状态为 terminated；120秒上限为 truncated。
@@ -70,7 +72,7 @@ reset 返回 (obs,info)，step 返回 (obs,reward,terminated,truncated,info)。
 模型和 Replay Buffer 的 SHA256 在加载前核验；保存失败不改变上一个 latest。
 该方案防进程中断发布半成品，不承诺断电持久性、不保存逐步可复现的全系统 RNG/仿真状态。
 续训从新回合开始；只加载可信检查点（SB3模型/replay包含可执行反序列化内容）。
-信号处理只设置标志，在正常控制流退出采样、停车、保存；真实后端还需把 stop 接入此流程。
+信号处理只设置标志，在正常控制流退出采样、停车、保存；车辆入口已将 stop/close 接入独立生命周期。
 周期保存也必须走同一个原子发布函数，不能直接混用多个独立 latest 文件。
 
 部署前绑定观测版本、动作范围、代码commit、镜像ID、配置哈希、地图版本、种子和测试报告。

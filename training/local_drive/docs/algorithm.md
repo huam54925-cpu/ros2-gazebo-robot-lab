@@ -1,5 +1,7 @@
 # 局部驾驶算法设计 v1
 
+> 本页保留初版设计/验收记录；后续 v2 同步实现及独立车辆训练入口见 [同步后端说明](sync_backend.md)。下文“待实现”描述仅代表初版状态。
+
 本次交付是算法方案、接口契约、设备选择和保存恢复工具链。已运行的是Pendulum短测；真实GazeboBackend和车辆Gymnasium适配器尚未实现，不能把安装GPU依赖等同于车辆训练已打通。实现边界及字段细节见[接口说明](interface.md)，设计参数以 `training/configs/sac_local.json` 为准。
 
 ## 任务和模块

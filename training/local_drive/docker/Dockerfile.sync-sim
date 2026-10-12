@@ -1,0 +1,9 @@
+ARG BASE_IMAGE=ghcr.io/huam54925-cpu/ros2-gazebo-robot-lab-sim:20261011
+FROM ${BASE_IMAGE} AS builder
+COPY sim_sync/CMakeLists.txt sim_sync/SyncDrive.cc /build/source/
+RUN /usr/local/bin/start-sim-train bash -c 'cmake -S /build/source -B /build/out -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/sync && cmake --build /build/out -j2 && cmake --install /build/out'
+FROM ${BASE_IMAGE}
+COPY --from=builder /sync/ /sync/
+COPY sim_sync/worker.py sim_sync/service_client.py sim_sync/test_service.py /src/training/local_drive/sim_sync/
+RUN mkdir -p /src/workspace/navigation_base/worlds && cp /opt/robot-lab/workspace/navigation_base/worlds/indoor_mapping.sdf /src/workspace/navigation_base/worlds/
+LABEL org.opencontainers.image.description="Local-drive v2 synchronous actuator ACK and isolated cold-reset worker"
