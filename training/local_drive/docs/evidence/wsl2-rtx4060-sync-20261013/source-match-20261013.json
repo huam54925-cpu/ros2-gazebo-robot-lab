@@ -1,0 +1,188 @@
+[
+  {
+    "file": "docker/Dockerfile.publish",
+    "expected": "b77c0f666fd0c3a91ef2dc2f0cebd3c848db1ccae419d3a0ca51c785346ef88e",
+    "actual": "b77c0f666fd0c3a91ef2dc2f0cebd3c848db1ccae419d3a0ca51c785346ef88e",
+    "passed": true
+  },
+  {
+    "file": "docker/Dockerfile.sim-train",
+    "expected": "448657b8ad1bcbab9794e66a3fc723adf1977bc5cb799dee317862859d0b0000",
+    "actual": "448657b8ad1bcbab9794e66a3fc723adf1977bc5cb799dee317862859d0b0000",
+    "passed": true
+  },
+  {
+    "file": "docker/Dockerfile.sync-sim",
+    "expected": "437b1cd0ae6b2cc3373a46d089cb525575f8ddca198412aa79ddbecf80a8aa0c",
+    "actual": "437b1cd0ae6b2cc3373a46d089cb525575f8ddca198412aa79ddbecf80a8aa0c",
+    "passed": true
+  },
+  {
+    "file": "docker/Dockerfile.sync-trainer",
+    "expected": "0153712cd0dc023b94cad7aacd9e1dffd8c491b004882a15f0406183986529f8",
+    "actual": "0153712cd0dc023b94cad7aacd9e1dffd8c491b004882a15f0406183986529f8",
+    "passed": true
+  },
+  {
+    "file": "docker/Dockerfile.trainer",
+    "expected": "03c34839e3b2feada694786d41ec06f9071c4d25066fb915ea8282ccf7b7bb60",
+    "actual": "03c34839e3b2feada694786d41ec06f9071c4d25066fb915ea8282ccf7b7bb60",
+    "passed": true
+  },
+  {
+    "file": "docker/Dockerfile.trainer.cuda",
+    "expected": "666e722a525ea9d214fa4d037a1675c7b26cc5ea5f752e30929adf4a3f754afa",
+    "actual": "666e722a525ea9d214fa4d037a1675c7b26cc5ea5f752e30929adf4a3f754afa",
+    "passed": true
+  },
+  {
+    "file": "docker/entrypoint-sim-train.sh",
+    "expected": "afc74efb4bdf77176f2ea8adacfae6dc5a1de618b39e8e1c4e8982da7f197050",
+    "actual": "afc74efb4bdf77176f2ea8adacfae6dc5a1de618b39e8e1c4e8982da7f197050",
+    "passed": true
+  },
+  {
+    "file": "scripts/accept-sim.sh",
+    "expected": "ddcf3300047e8887ec52d5fa8e98d5199f4581e323ac0baf706b8ea08debab88",
+    "actual": "ddcf3300047e8887ec52d5fa8e98d5199f4581e323ac0baf706b8ea08debab88",
+    "passed": true
+  },
+  {
+    "file": "scripts/accept-trainer.py",
+    "expected": "1a10184f9fad77df8a6460ffaff1d0ec395a92b81fbb8bf110a412b6b0c61c01",
+    "actual": "1a10184f9fad77df8a6460ffaff1d0ec395a92b81fbb8bf110a412b6b0c61c01",
+    "passed": true
+  },
+  {
+    "file": "scripts/accept_sync.py",
+    "expected": "7330e0144c8991c4d4e0a07477f7d866e71d6fe7c65500a65374d8b450676f4c",
+    "actual": "7330e0144c8991c4d4e0a07477f7d866e71d6fe7c65500a65374d8b450676f4c",
+    "passed": true
+  },
+  {
+    "file": "scripts/build.sh",
+    "expected": "0a7f383aacf1ecbcc8b2a88d9470756ebdba4860047d28e1da8aba97d9c23d60",
+    "actual": "0a7f383aacf1ecbcc8b2a88d9470756ebdba4860047d28e1da8aba97d9c23d60",
+    "passed": true
+  },
+  {
+    "file": "scripts/build_sync.sh",
+    "expected": "4ec76ae3812f36359d2e14418b379c4ad11c86393374b79ab1e223326ffe3159",
+    "actual": "4ec76ae3812f36359d2e14418b379c4ad11c86393374b79ab1e223326ffe3159",
+    "passed": true
+  },
+  {
+    "file": "scripts/cuda_probe.py",
+    "expected": "8c6f453af08ef66b2ec12caa71ca51cf8479b6e866136d2b76a293ec9e776ced",
+    "actual": "8c6f453af08ef66b2ec12caa71ca51cf8479b6e866136d2b76a293ec9e776ced",
+    "passed": true
+  },
+  {
+    "file": "scripts/export-images.sh",
+    "expected": "6d6aa32a0ee33336c6a40d559d2cc5fd0c249739f745b8794f59d4ae0331312c",
+    "actual": "6d6aa32a0ee33336c6a40d559d2cc5fd0c249739f745b8794f59d4ae0331312c",
+    "passed": true
+  },
+  {
+    "file": "scripts/publish-ghcr.sh",
+    "expected": "a6747df0eb482ded5dc45b790bab6b38904e2419ff5a959d799b8c4d8a4ceaa2",
+    "actual": "a6747df0eb482ded5dc45b790bab6b38904e2419ff5a959d799b8c4d8a4ceaa2",
+    "passed": true
+  },
+  {
+    "file": "scripts/sim_probe.py",
+    "expected": "0dc2b525a60ffe03b5db14bb44887bae58819c8456a6c01f747a547aab275272",
+    "actual": "0dc2b525a60ffe03b5db14bb44887bae58819c8456a6c01f747a547aab275272",
+    "passed": true
+  },
+  {
+    "file": "sim_sync/CMakeLists.txt",
+    "expected": "dcc48eb9b82e25f3af169701855c3ab2f0ad24d355305c4d8832a29845920596",
+    "actual": "dcc48eb9b82e25f3af169701855c3ab2f0ad24d355305c4d8832a29845920596",
+    "passed": true
+  },
+  {
+    "file": "sim_sync/SyncDrive.cc",
+    "expected": "4c1030ff8edd453a45fcc7849b9867cd11846b383cfb18063859727b9d38922e",
+    "actual": "4c1030ff8edd453a45fcc7849b9867cd11846b383cfb18063859727b9d38922e",
+    "passed": true
+  },
+  {
+    "file": "sim_sync/service_client.py",
+    "expected": "ce2eec2c8123e5037708d46e5333ca2293e929f8b63981778f6733d50e4bf3db",
+    "actual": "ce2eec2c8123e5037708d46e5333ca2293e929f8b63981778f6733d50e4bf3db",
+    "passed": true
+  },
+  {
+    "file": "sim_sync/test_service.py",
+    "expected": "f44cbcfbc5da1917372cd6203cb8b3b3d76712f55989c743b20d101d0362de29",
+    "actual": "f44cbcfbc5da1917372cd6203cb8b3b3d76712f55989c743b20d101d0362de29",
+    "passed": true
+  },
+  {
+    "file": "sim_sync/worker.py",
+    "expected": "0991021d31eac6d0b86f746591710972a735cfe02e76d16634cd8d7e9d0c4946",
+    "actual": "0991021d31eac6d0b86f746591710972a735cfe02e76d16634cd8d7e9d0c4946",
+    "passed": true
+  },
+  {
+    "file": "training/__init__.py",
+    "expected": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "actual": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "passed": true
+  },
+  {
+    "file": "training/checkpoints.py",
+    "expected": "9f422da1c23b9cbb026a40689284a9fe89eb2314281b922ee88b232dcd1acba1",
+    "actual": "9f422da1c23b9cbb026a40689284a9fe89eb2314281b922ee88b232dcd1acba1",
+    "passed": true
+  },
+  {
+    "file": "training/configs/sac_local.json",
+    "expected": "53cfe7566254ac42afe991cb9025f6abfab9999841ff86c8b858c7e0a7bd1554",
+    "actual": "53cfe7566254ac42afe991cb9025f6abfab9999841ff86c8b858c7e0a7bd1554",
+    "passed": true
+  },
+  {
+    "file": "training/device.py",
+    "expected": "d7b00da1ca5ca97d837243a892e43a377ab89e846520817315077bbdb00b56f3",
+    "actual": "d7b00da1ca5ca97d837243a892e43a377ab89e846520817315077bbdb00b56f3",
+    "passed": true
+  },
+  {
+    "file": "training/envs/__init__.py",
+    "expected": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "actual": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "passed": true
+  },
+  {
+    "file": "training/envs/contracts.py",
+    "expected": "2d9025ba15149147ca4b1d15455cc3e5e4ae91a24264e6e5e1861dec60441a8a",
+    "actual": "2d9025ba15149147ca4b1d15455cc3e5e4ae91a24264e6e5e1861dec60441a8a",
+    "passed": true
+  },
+  {
+    "file": "training/envs/gazebo_backend.py",
+    "expected": "c78030284f78a05cec3b15ab14c3474be963b559b474e70ce5e208cb7d6ef54a",
+    "actual": "c78030284f78a05cec3b15ab14c3474be963b559b474e70ce5e208cb7d6ef54a",
+    "passed": true
+  },
+  {
+    "file": "training/envs/local_drive_env.py",
+    "expected": "cf89ba123e376e484992636d2c739f0b66cb609d7995926088ae0262954ea2af",
+    "actual": "cf89ba123e376e484992636d2c739f0b66cb609d7995926088ae0262954ea2af",
+    "passed": true
+  },
+  {
+    "file": "training/train.py",
+    "expected": "af0551f6de8191dc7f0a1991afa0301922c911152dd7510a9daf0f686847686a",
+    "actual": "af0551f6de8191dc7f0a1991afa0301922c911152dd7510a9daf0f686847686a",
+    "passed": true
+  },
+  {
+    "file": "training/train_vehicle.py",
+    "expected": "d03d4d5e9ca51b77e9c85a55bfedc31efac46ed9eed8a5df8c074981bd8d7f79",
+    "actual": "d03d4d5e9ca51b77e9c85a55bfedc31efac46ed9eed8a5df8c074981bd8d7f79",
+    "passed": true
+  }
+]

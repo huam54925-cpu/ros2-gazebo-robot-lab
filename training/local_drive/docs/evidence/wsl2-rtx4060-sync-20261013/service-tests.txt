@@ -1,0 +1,10 @@
+status query attempt 1: no reply
+status query attempt 2: no reply
+status query attempt 3: no reply
+...status query attempt 1: no reply
+status query attempt 2: empty
+.
+----------------------------------------------------------------------
+Ran 4 tests in 0.005s
+
+OK

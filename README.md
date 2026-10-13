@@ -69,3 +69,5 @@ PYTHONPATH=workspace python3 -m unittest discover -s workspace/navigation_base/t
 
 新增独立的 [训练封装目录](training/local_drive/README.md)：CPU/CUDA设备选择、SAC接口设计、无显示Gazebo镜像、检查点恢复和验收记录。
 从仓库根目录先 `cd training/local_drive` 再执行其中命令。新增车辆同步后端及独立 SAC 入口见 [同步后端说明](training/local_drive/docs/sync_backend.md)；短验收仅证明采样、更新和保存恢复，不代表导航性能。
+
+2026-10-13，离线 v2 镜像已在 WSL2 / RTX 4060 上通过车辆同步与 CUDA 64+8 步复测，见 [异机报告、原始数据及检查点下载](training/local_drive/docs/acceptance-wsl2-rtx4060-sync-20261013.md)。

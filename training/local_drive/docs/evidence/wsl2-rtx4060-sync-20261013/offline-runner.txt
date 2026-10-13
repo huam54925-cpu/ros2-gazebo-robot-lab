@@ -1,0 +1,23 @@
+Checking bundle checksums...
+README.txt: OK
+code-revision.txt: OK
+images.json: OK
+local-drive-images.tar.gz: OK
+local-validation-evidence.tar.gz: OK
+local-validation-report.txt: OK
+run-offline.sh: OK
+source-manifest.json: OK
+source.tar.gz: OK
+trainer-cuda-requirements.lock: OK
+WARNING: No blkio throttle.read_bps_device support
+WARNING: No blkio throttle.write_bps_device support
+WARNING: No blkio throttle.read_iops_device support
+WARNING: No blkio throttle.write_iops_device support
+WARNING: Support for cgroup v1 is deprecated and planned to be removed by no later than May 2029 (https://github.com/moby/moby/issues/51111)
+Importing offline images...
+Loaded image: local-drive-sync-sim:20261012-v2
+Loaded image: local-drive-sync-trainer:20261012-v2
+Running unit and transport tests...
+Running real synchronous acceptance (logs: /home/user111/AI-Training/acceptance-20261013/acceptance.log)...
+Running CUDA vehicle training and recovery (logs: /home/user111/AI-Training/acceptance-20261013/training.log)...
+PASS. Results: /home/user111/AI-Training/acceptance-20261013

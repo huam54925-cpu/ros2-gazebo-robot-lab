@@ -1,0 +1,22 @@
+[
+  {
+    "Id": "sha256:3598d20372e59400122d6c02dbb1ee3c434b7af4283876abf7acfeabf74a8203",
+    "RepoTags": [
+      "local-drive-sync-sim:20261012-v2"
+    ],
+    "Created": "2026-10-12T05:08:42.74737664+01:00",
+    "Architecture": "amd64",
+    "Os": "linux",
+    "Size": 1237911886
+  },
+  {
+    "Id": "sha256:34a8e71914067c89ae30df72b5ce6a71f3e7c8c49adb66dc9cc9ebd978373157",
+    "RepoTags": [
+      "local-drive-sync-trainer:20261012-v2"
+    ],
+    "Created": "2026-10-12T05:08:56.96079461+01:00",
+    "Architecture": "amd64",
+    "Os": "linux",
+    "Size": 3573814631
+  }
+]
