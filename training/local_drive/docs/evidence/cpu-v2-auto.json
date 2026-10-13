@@ -1,0 +1,17 @@
+{
+  "device": "cpu",
+  "requested_device": "auto",
+  "status": "passed",
+  "purpose": "Pendulum toolchain smoke ONLY; not a robot policy",
+  "initial_steps": 32,
+  "resumed_steps": 64,
+  "replay_size": 64,
+  "deterministic_reload_max_error": 0.0,
+  "elapsed_wall_seconds": 1.6401089089995367,
+  "checkpoint": "/runs/checkpoints/step-64-98ce64f9",
+  "versions": {
+    "sb3": "2.7.0",
+    "torch": "2.8.0+cpu",
+    "gymnasium": "1.2.1"
+  }
+}

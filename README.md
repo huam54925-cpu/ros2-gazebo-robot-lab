@@ -64,3 +64,12 @@ PYTHONPATH=workspace python3 -m unittest discover -s workspace/navigation_base/t
 ```
 
 可选 `on` 模块已做离线逻辑测试，尚未做整场挂载仿真。本次整理没有重新驱动车辆。旧版代码、旧教程和历史实验源快照见存档分支；`docs/experiments/` 内历史数据保留为证据，不是当前运行入口。
+
+## 局部驾驶训练环境（设计与短验收）
+
+新增独立的 [训练封装目录](training/local_drive/README.md)：CPU/CUDA设备选择、SAC接口设计、无显示Gazebo镜像、检查点恢复和验收记录。
+从仓库根目录先 `cd training/local_drive` 再执行其中命令。新增车辆同步后端及独立 SAC 入口见 [同步后端说明](training/local_drive/docs/sync_backend.md)；短验收仅证明采样、更新和保存恢复，不代表导航性能。
+
+2026-10-13，离线 v2 镜像已在 WSL2 / RTX 4060 上通过车辆同步与 CUDA 64+8 步复测，见 [异机报告、原始数据及检查点下载](training/local_drive/docs/acceptance-wsl2-rtx4060-sync-20261013.md)。
+
+同日完成该短验收模型的 [固定场景导航基线评估](training/local_drive/docs/navigation-baseline-20261013.md)：三回合均超时、到点率 0%。训练链路可用与导航策略有效性分别报告。

@@ -1,0 +1,18 @@
+FROM python:3.11.16-slim-trixie AS dependencies
+ENV PIP_NO_CACHE_DIR=1
+COPY wheels/ /wheels/
+COPY trainer-cuda-requirements.lock /tmp/trainer-cuda-requirements.lock
+RUN python -m pip install --no-index --find-links=/wheels -r /tmp/trainer-cuda-requirements.lock \
+    && python -m pip check
+
+FROM python:3.11.16-slim-trixie
+COPY --from=dependencies /usr/local/ /usr/local/
+ENV PYTHONUNBUFFERED=1 PIP_NO_CACHE_DIR=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 MPLCONFIGDIR=/tmp/matplotlib XDG_CACHE_HOME=/tmp/cache
+WORKDIR /opt/robot-training
+RUN python -m pip freeze > /opt/robot-training/cuda-requirements.resolved.txt
+COPY training/ training/
+COPY tests/ tests/
+LABEL org.opencontainers.image.source="https://github.com/huam54925-cpu/ros2-gazebo-robot-lab" \
+    org.opencontainers.image.revision="dbe2900f5c3e6be3082d3f4b2032fbd0a7433ee0" \
+    org.opencontainers.image.description="Local CUDA 12.6 build from pinned dependencies"
+ENTRYPOINT ["python", "-m", "training.train"]

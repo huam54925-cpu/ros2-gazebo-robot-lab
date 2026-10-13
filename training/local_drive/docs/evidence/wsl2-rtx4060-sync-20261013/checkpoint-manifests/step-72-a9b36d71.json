@@ -1,0 +1,39 @@
+{
+  "environment": "LocalDriveEnv",
+  "schema": "local-drive-v2",
+  "profile": "acceptance",
+  "model_config": {
+    "learning_rate": 0.0003,
+    "buffer_size": 5000,
+    "learning_starts": 16,
+    "batch_size": 32,
+    "train_freq": 1,
+    "gradient_steps": 1,
+    "gamma": 0.99,
+    "tau": 0.005,
+    "ent_coef": "auto",
+    "policy_kwargs": {
+      "net_arch": [
+        128,
+        128
+      ],
+      "use_sde": false
+    }
+  },
+  "seed": 7,
+  "config_sha256": "53cfe7566254ac42afe991cb9025f6abfab9999841ff86c8b858c7e0a7bd1554",
+  "versions": {
+    "torch": "2.8.0+cu126",
+    "gymnasium": "1.2.1",
+    "stable-baselines3": "2.7.0"
+  },
+  "python": "3.11.16",
+  "purpose": "short vehicle gradient acceptance",
+  "simulation_image": "local-drive-sync-sim:20261012-v2",
+  "source_manifest_sha256": "650f07f4c48bb6a7a91b10eb244f86cf4392f0c407ad36f8ec70828fc605095b",
+  "num_timesteps": 72,
+  "files": {
+    "model.zip": "36fd1d011d8bc598e35e3016505d53028579004d8f996288efb2fb40ff7f2cd5",
+    "replay.pkl": "6a0d73e45cc7d13d95646f9673b99198dcfaa64481ea9c8ca564eebf9a83756d"
+  }
+}

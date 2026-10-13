@@ -1,0 +1,9 @@
+{
+  "repository": "huam54925-cpu/ros2-gazebo-robot-lab",
+  "access": "GitHub connector read-only; no writes",
+  "README_blob": "4996bd4d971d63806acb9ebda4eea820304ea27b",
+  "indoor_mapping_sdf_blob": "f133e52da33e2625048587210dff97c55ea133c8",
+  "local_world_blob_matches_remote": true,
+  "date": "2026-10-11",
+  "latest_commit_read": "73b2c38e64aed874abab65559790d41a1b7bab97"
+}

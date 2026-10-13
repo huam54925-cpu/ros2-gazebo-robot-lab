@@ -1,0 +1,13 @@
+{
+  "source": "/mnt/robot_disk/ros_sim",
+  "head": "aca2bde014f2d1ac7e005b1b76c1a38f4a3a05b5",
+  "dirty": true,
+  "copied_sha256": {
+    "workspace/navigation_base/worlds/indoor_mapping.sdf": "7a50aaf82f6ad04560716dc72c4d48db8743ce3e89ffb1c6f8e32f0eb8b85424",
+    "workspace/navigation_base/vehicle.world.sdf": "e4acb5f3c8a4e8358f0ebe66b8078b200c48392a339ad9101daa8f1c95fcf58f",
+    "third_party/README.md": "3523292f8facde0119121592cfac50833643734580cb1df294c98fe8fb69c63b",
+    "third_party/Apache-2.0.txt": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+  },
+  "github_reference": "https://github.com/huam54925-cpu/ros2-gazebo-robot-lab",
+  "note": "Snapshot selected current working-tree files, not the old HEAD; original left untouched."
+}

@@ -1,0 +1,95 @@
+{
+  "status": "passed",
+  "date": "2026-10-13",
+  "repository": "https://github.com/huam54925-cpu/ros2-gazebo-robot-lab",
+  "branch": "feature/local-drive-training-20261011",
+  "previous_commit": "1e8e4d75eefbb8a8f5f5ec4dd469a49888899fad",
+  "tested_commit": "897ace68dc66fc2addbcac4ef04cd2985df219fa",
+  "bundle": "F:\\AI-Training\\images\\local-drive-offline-20261013",
+  "linux_bundle": "/home/user111/AI-Training/local-drive-offline-20261013",
+  "linux_results": "/home/user111/AI-Training/acceptance-20261013",
+  "hardware": "RTX 4060 Laptop 8188 MiB",
+  "driver": "566.24",
+  "docker": "29.1.3",
+  "bundle_checksums_passed": 10,
+  "source_files_match_lf_normalized": 31,
+  "unit_tests_passed": 20,
+  "transport_tests_passed": 4,
+  "acceptance": {
+    "backend": {
+      "cold_episodes": 3,
+      "action_steps": 12,
+      "strict_tolerance_s": 1E-06,
+      "repeatability": "passed"
+    },
+    "random_audit": {
+      "episodes": 3,
+      "transitions": 36,
+      "passed": true
+    },
+    "faults": [
+      {
+        "fault": "missing_ack",
+        "error": "TimeoutError: missing action-applied ACK",
+        "notes": [
+          "cleanup: injected cleanup stop failure"
+        ],
+        "replay_before": 2,
+        "replay_after": 2,
+        "container": "local-drive-1227548f96da4f0f"
+      },
+      {
+        "fault": "stale_lidar",
+        "error": "Stale or invalid lidar sample",
+        "notes": [],
+        "replay_before": 4,
+        "replay_after": 4,
+        "container": "local-drive-226d40c5acb94fb2"
+      },
+      {
+        "fault": "cross_episode",
+        "error": "Cross-episode observation",
+        "notes": [],
+        "replay_before": 6,
+        "replay_after": 6,
+        "container": "local-drive-29af82b7e96b4050"
+      }
+    ],
+    "status": "passed"
+  },
+  "training": {
+    "status": "passed",
+    "profile": "acceptance",
+    "schema": "local-drive-v2",
+    "learning_starts": 16,
+    "initial_steps": 0,
+    "sampled_steps": 64,
+    "gradient_updates": 48,
+    "actor_max_parameter_change": 0.007888644933700562,
+    "replay_before_reload": 64,
+    "resumed_steps": 8,
+    "final_replay_size": 72,
+    "checkpoint": "/results/training/checkpoints/step-72-a9b36d71",
+    "periodic_checkpoints": [
+      "/results/training/checkpoints/step-16-0a52273a",
+      "/results/training/checkpoints/step-32-ad23f7b2",
+      "/results/training/checkpoints/step-48-d5330dee",
+      "/results/training/checkpoints/step-64-5a4fa182"
+    ],
+    "device": "cuda",
+    "simulation_rendering": "Mesa llvmpipe EGL",
+    "renderer": [
+      "04:46:37: GL_RENDERER = llvmpipe (LLVM 21.1.8, 256 bits)"
+    ]
+  },
+  "checkpoint_files_verified": 12,
+  "checkpoint_directories": 6,
+  "containers_remaining": 0,
+  "image_identity_note": "Bundle IDs are OCI image index digests. Imported overlay2 image IDs are config digests; archive index -> amd64 manifest -> config mapping verified for both images.",
+  "limitations": [
+    "Short acceptance proves sampling, gradient updates and save/resume; it does not establish navigation quality.",
+    "Simulation uses Mesa llvmpipe; CUDA is used by the learner.",
+    "Automatic recovery for long-running training and navigation quality evaluation remain unimplemented."
+  ],
+  "environment_note": "WSL startup initially timed out; recovered after WSL shutdown/restart. Original bundle and repository runtime code were not modified."
+}

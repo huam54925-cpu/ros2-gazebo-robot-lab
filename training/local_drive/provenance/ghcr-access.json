@@ -1,0 +1,12 @@
+{
+  "trainer": {
+    "anonymous_manifest_read": false,
+    "exit_code": 1,
+    "detail": "Get \"https://ghcr.io/v2/huam54925-cpu/ros2-gazebo-robot-lab-trainer/manifests/20261011-cpu-v2\": unauthorized"
+  },
+  "sim": {
+    "anonymous_manifest_read": false,
+    "exit_code": 1,
+    "detail": "Get \"https://ghcr.io/v2/huam54925-cpu/ros2-gazebo-robot-lab-sim/manifests/20261011\": unauthorized"
+  }
+}

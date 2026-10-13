@@ -1,0 +1,88 @@
+{
+  "purpose": "Real Gazebo smoke; asynchronous diagnostic only, not synchronized RL sampling",
+  "initial": {
+    "stats": {
+      "t": 0.0,
+      "paused": true,
+      "iterations": 0
+    }
+  },
+  "settled": {
+    "stats": {
+      "t": 0.5670000000000001,
+      "paused": false,
+      "iterations": 567
+    },
+    "truth": {
+      "t": 0.653,
+      "x": -8.000000355343516,
+      "y": -4.999999999999715,
+      "z": 0.32499938652317373
+    },
+    "scan": {
+      "t": 0.6000000000000001,
+      "count": 360,
+      "finite": 283,
+      "valid": 283,
+      "minimum": 3.8488070964813232
+    },
+    "odom": {
+      "t": 0.646,
+      "v": 1.060065724430388e-18,
+      "w": -5.212200697322374e-21
+    }
+  },
+  "moved": {
+    "stats": {
+      "t": 1.675,
+      "paused": false,
+      "iterations": 1675
+    },
+    "truth": {
+      "t": 1.675,
+      "x": -7.900429081045685,
+      "y": -4.9999999944215086,
+      "z": 0.32499999015537384
+    },
+    "scan": {
+      "t": 1.6,
+      "count": 360,
+      "finite": 285,
+      "valid": 285,
+      "minimum": 3.940885305404663
+    },
+    "odom": {
+      "t": 1.666,
+      "v": 0.09999999999895301,
+      "w": -1.2212453270876701e-14
+    }
+  },
+  "truth_displacement_m": 0.09957127429783179,
+  "stop_drift_m": 0.0,
+  "final": {
+    "stats": {
+      "t": 3.161,
+      "paused": true,
+      "iterations": 3161
+    },
+    "truth": {
+      "t": 3.161,
+      "x": -7.89826348766074,
+      "y": -5.00000000470119,
+      "z": 0.3249999902932409
+    },
+    "scan": {
+      "t": 3.1,
+      "count": 360,
+      "finite": 285,
+      "valid": 285,
+      "minimum": 3.9505491256713867
+    },
+    "odom": {
+      "t": 3.128,
+      "v": 0.0,
+      "w": 0.0
+    }
+  },
+  "status": "passed"
+}

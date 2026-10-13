@@ -1,0 +1,12 @@
+ARG BASE_IMAGE=python:3.11.16-slim-trixie
+FROM ${BASE_IMAGE}
+ENV PYTHONUNBUFFERED=1 PIP_NO_CACHE_DIR=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1
+WORKDIR /opt/robot-training
+RUN python -m pip install --index-url https://download.pytorch.org/whl/cpu torch==2.8.0+cpu
+RUN python -m pip install stable-baselines3==2.7.0 gymnasium==1.2.1 numpy==2.2.6
+COPY provenance/trainer-requirements.lock /tmp/requirements.lock
+RUN python -m pip install --no-deps --extra-index-url https://download.pytorch.org/whl/cpu -r /tmp/requirements.lock && python -m pip check
+ENV MPLCONFIGDIR=/tmp/matplotlib XDG_CACHE_HOME=/tmp/cache
+COPY training/ training/
+COPY tests/ tests/
+ENTRYPOINT ["python", "-m", "training.train"]

@@ -1,0 +1,6 @@
+{
+  "status": "passed",
+  "initial_pose_difference_m": 0.0,
+  "tolerance_m": 0.0001,
+  "scope": "Fixed scene cold process/container restart; not randomized Gym reset"
+}

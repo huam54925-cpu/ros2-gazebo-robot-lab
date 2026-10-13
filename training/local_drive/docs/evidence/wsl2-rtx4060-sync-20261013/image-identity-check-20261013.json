@@ -1,0 +1,12 @@
+[
+  {
+    "tag": "local-drive-sync-sim:20261012-v2",
+    "config_matches_imported": true,
+    "config_digest": "sha256:7fae8a467efcf70a9a8956da5150ddbc624f6e3ecc785f513d717760ecdf5ad1"
+  },
+  {
+    "tag": "local-drive-sync-trainer:20261012-v2",
+    "config_matches_imported": true,
+    "config_digest": "sha256:e420f2f1b916ce96bb872d6fa056820e6b3582893c0f928caad0e74419a0f635"
+  }
+]

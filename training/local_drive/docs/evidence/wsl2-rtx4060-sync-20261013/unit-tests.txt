@@ -1,0 +1,25 @@
+test_corruption_detected (test_checkpoints.CheckpointTests.test_corruption_detected) ... ok
+test_interruption_keeps_previous (test_checkpoints.CheckpointTests.test_interruption_keeps_previous) ... ok
+test_action (test_contracts.ContractTests.test_action) ... ok
+test_action_ack (test_contracts.ContractTests.test_action_ack) ... ok
+test_clock (test_contracts.ContractTests.test_clock) ... ok
+test_episode (test_contracts.ContractTests.test_episode) ... ok
+test_lidar_invalid_is_not_free (test_contracts.ContractTests.test_lidar_invalid_is_not_free) ... ok
+test_reject_wrong_action_shape (test_contracts.ContractTests.test_reject_wrong_action_shape) ... ok
+test_stale (test_contracts.ContractTests.test_stale) ... ok
+test_truth_leak (test_contracts.ContractTests.test_truth_leak) ... ok
+test_valid (test_contracts.ContractTests.test_valid) ... ok
+test_auto (test_device.DeviceTests.test_auto) ... ok
+test_cpu_even_when_cuda_exists (test_device.DeviceTests.test_cpu_even_when_cuda_exists) ... ok
+test_explicit_cuda_never_silently_falls_back (test_device.DeviceTests.test_explicit_cuda_never_silently_falls_back) ... ok
+test_arrival_reward_is_terminal_once (test_local_drive_env.EnvTests.test_arrival_reward_is_terminal_once) ... ok
+test_cleanup_does_not_mask_original (test_local_drive_env.EnvTests.test_cleanup_does_not_mask_original) ... ok
+test_history_is_current_and_previous_body_frame (test_local_drive_env.EnvTests.test_history_is_current_and_previous_body_frame) ... ok
+test_missing_truth_fails_and_cleans_up (test_local_drive_env.EnvTests.test_missing_truth_fails_and_cleans_up) ... ok
+test_relative_time_limit (test_local_drive_env.EnvTests.test_relative_time_limit) ... ok
+test_rng_none_continues (test_local_drive_env.EnvTests.test_rng_none_continues) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 0.014s
+
+OK

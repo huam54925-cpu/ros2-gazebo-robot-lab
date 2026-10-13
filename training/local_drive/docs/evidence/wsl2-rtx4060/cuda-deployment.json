@@ -1,0 +1,8 @@
+{
+  "image": "robot-trainer:local-drive-cuda-v1",
+  "image_id": "sha256:985b53a86bb8e301886adcc7c772fd3e70a5af7c60f509c5143bd769a6023df3",
+  "status": "passed",
+  "locked_dependencies_match": true,
+  "probe_and_acceptance_wall_seconds": 14.741471426000004,
+  "published_to_ghcr": false
+}

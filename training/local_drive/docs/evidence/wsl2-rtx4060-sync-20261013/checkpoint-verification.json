@@ -1,0 +1,62 @@
+[
+  {
+    "checkpoint": "step-16-0a52273a",
+    "file": "model.zip",
+    "passed": true
+  },
+  {
+    "checkpoint": "step-16-0a52273a",
+    "file": "replay.pkl",
+    "passed": true
+  },
+  {
+    "checkpoint": "step-32-ad23f7b2",
+    "file": "model.zip",
+    "passed": true
+  },
+  {
+    "checkpoint": "step-32-ad23f7b2",
+    "file": "replay.pkl",
+    "passed": true
+  },
+  {
+    "checkpoint": "step-48-d5330dee",
+    "file": "model.zip",
+    "passed": true
+  },
+  {
+    "checkpoint": "step-48-d5330dee",
+    "file": "replay.pkl",
+    "passed": true
+  },
+  {
+    "checkpoint": "step-64-5a4fa182",
+    "file": "model.zip",
+    "passed": true
+  },
+  {
+    "checkpoint": "step-64-5a4fa182",
+    "file": "replay.pkl",
+    "passed": true
+  },
+  {
+    "checkpoint": "step-64-f9c282d4",
+    "file": "model.zip",
+    "passed": true
+  },
+  {
+    "checkpoint": "step-64-f9c282d4",
+    "file": "replay.pkl",
+    "passed": true
+  },
+  {
+    "checkpoint": "step-72-a9b36d71",
+    "file": "model.zip",
+    "passed": true
+  },
+  {
+    "checkpoint": "step-72-a9b36d71",
+    "file": "replay.pkl",
+    "passed": true
+  }
+]

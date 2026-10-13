@@ -1,0 +1,50 @@
+cold episode 1: passed
+cold episode 2: passed
+cold episode 3: passed
+SB3 check_env: passed
+Gymnasium check_env: passed
+fault missing_ack: discarded, destroyed, rebuilt
+fault stale_lidar: discarded, destroyed, rebuilt
+fault cross_episode: discarded, destroyed, rebuilt
+{
+  "backend": {
+    "cold_episodes": 3,
+    "action_steps": 12,
+    "strict_tolerance_s": 1e-06,
+    "repeatability": "passed"
+  },
+  "random_audit": {
+    "episodes": 3,
+    "transitions": 36,
+    "passed": true
+  },
+  "faults": [
+    {
+      "fault": "missing_ack",
+      "error": "TimeoutError: missing action-applied ACK",
+      "notes": [
+        "cleanup: injected cleanup stop failure"
+      ],
+      "replay_before": 2,
+      "replay_after": 2,
+      "container": "local-drive-1227548f96da4f0f"
+    },
+    {
+      "fault": "stale_lidar",
+      "error": "Stale or invalid lidar sample",
+      "notes": [],
+      "replay_before": 4,
+      "replay_after": 4,
+      "container": "local-drive-226d40c5acb94fb2"
+    },
+    {
+      "fault": "cross_episode",
+      "error": "Cross-episode observation",
+      "notes": [],
+      "replay_before": 6,
+      "replay_after": 6,
+      "container": "local-drive-29af82b7e96b4050"
+    }
+  ],
+  "status": "passed"
+}

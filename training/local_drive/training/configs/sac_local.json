@@ -1,0 +1,19 @@
+{
+  "algorithm": "SAC", "policy": "MlpPolicy", "seed": 0,
+  "environment": {
+    "task": "local_goal", "control_dt": 0.2,
+    "max_episode_sim_seconds": 120, "lidar_sectors": 90,
+    "history_frames": 4, "use_slam": false, "safety_mount": "off",
+    "linear_velocity_range": [-0.2, 0.6], "angular_velocity_range": [-0.8, 0.8]
+  },
+  "model": {
+    "learning_rate": 0.0003, "buffer_size": 200000,
+    "learning_starts": 5000, "batch_size": 256,
+    "train_freq": 1, "gradient_steps": 1, "gamma": 0.99,
+    "tau": 0.005, "ent_coef": "auto", "policy_kwargs": {"net_arch": [128, 128]}
+  },
+  "checkpoint": {"every_environment_steps": 10000, "save_replay_buffer": true},
+  "reward": {"progress": 2.0, "time": 0.05, "contact": 0.0,
+    "stalled": 0.2, "action_delta": 0.01, "arrival": 10.0},
+  "status": "Design baseline, not tuned; real Gazebo training gated on synchronized backend acceptance"
+}
