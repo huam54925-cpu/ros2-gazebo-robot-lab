@@ -77,6 +77,10 @@ docker load -i local-drive-images.tar
 
 ## 继续开发
 
+固定场景确定性导航评估已提供独立入口，见 [评估运行方式与指标定义](docs/navigation-evaluation.md)。可用现有检查点测到点率、真值路径长度、超时率和回合奖励；不执行额外训练。
+
+2026-10-13 的第 72 步检查点基线：三个固定场景回合全部超时，到点率 0%，平均路径 4.309 m、平均回合奖励 -97.122。见 [真实评估结果与逐步轨迹](docs/navigation-baseline-20261013.md)。
+
 车辆入口为 `python -m training.train_vehicle`，与下述历史 Pendulum 入口分开。先运行 `scripts/accept_sync.py`，再运行明确标注的短梯度验收；正式参数保留 `learning_starts=5000`。
 先做固定场景单worker验收，再做跨容器RPC、多场景课程和多环境隔离。
 详见接口说明；原场景无接触传感器，接触奖励暂不启用。

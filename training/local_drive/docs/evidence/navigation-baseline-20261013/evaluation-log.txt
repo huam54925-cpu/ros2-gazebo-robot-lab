@@ -1,0 +1,17 @@
+{"seed": 7, "status": "completed", "outcome": "timeout", "steps": 600, "episode_return": -97.1219034834749, "path_length_m": 4.309370346821167, "sim_elapsed_s": 120.0, "initial_distance_m": 3.0000003553435164, "final_distance_m": 2.4608533891627884, "minimum_distance_m": 1.2767275504327174, "stalled_steps": 461, "cleanup_errors": [], "backend_seed": 2029167941, "terminated": false, "truncated": true, "wall_seconds": 187.75015360499998, "trace": "episode-01.jsonl"}
+{"seed": 17, "status": "completed", "outcome": "timeout", "steps": 600, "episode_return": -97.1219034834749, "path_length_m": 4.309370346821167, "sim_elapsed_s": 120.0, "initial_distance_m": 3.0000003553435164, "final_distance_m": 2.4608533891627884, "minimum_distance_m": 1.2767275504327174, "stalled_steps": 461, "cleanup_errors": [], "backend_seed": 1591207481, "terminated": false, "truncated": true, "wall_seconds": 186.646317175, "trace": "episode-02.jsonl"}
+{"seed": 23, "status": "completed", "outcome": "timeout", "steps": 600, "episode_return": -97.1219034834749, "path_length_m": 4.309370346821167, "sim_elapsed_s": 120.0, "initial_distance_m": 3.0000003553435164, "final_distance_m": 2.4608533891627884, "minimum_distance_m": 1.2767275504327174, "stalled_steps": 461, "cleanup_errors": [], "backend_seed": 77115418, "terminated": false, "truncated": true, "wall_seconds": 186.734537634, "trace": "episode-03.jsonl"}
+{
+  "status": "completed",
+  "requested_episodes": 3,
+  "attempted_episodes": 3,
+  "completed_episodes": 3,
+  "outcome_counts": {
+    "timeout": 3
+  },
+  "success_rate": 0.0,
+  "timeout_rate": 1.0,
+  "mean_path_length_m": 4.309370346821167,
+  "mean_episode_return": -97.1219034834749,
+  "mean_sim_elapsed_s": 120.0
+}
