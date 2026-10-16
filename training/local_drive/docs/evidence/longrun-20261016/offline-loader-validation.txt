@@ -1,0 +1,12 @@
+DELIVERY.json: OK
+SOURCE_REVISION.txt: OK
+archive-verification.json: OK
+images.json: OK
+local-drive-images.tar.gz: OK
+local-drive-source.tar.gz: OK
+prepare_longrun_offline.sh: OK
+使用说明.txt: OK
+Both pinned images available; no host packages installed.
+
+Source: /mnt/robot_disk/codex-builds/2026-10-16/long-train/artifacts/offline-bundle/source/training/local_drive
+Next: follow 使用说明.txt, verify Windows/WSL data-disk placement, then run preflight_longrun.py.

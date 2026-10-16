@@ -1,0 +1,17 @@
+{
+  "source_revision": "c0ffb4d4ff3d268eaa456a89939f0cbcfc4045d3",
+  "images": {
+    "local-drive-sync-trainer:20261016-longrun": "sha256:be3f8c2175d68b28fdacb4f06d25129364b60e4de7294e181271e4713295e497",
+    "local-drive-sync-sim:20261012-v2": "sha256:3598d20372e59400122d6c02dbb1ee3c434b7af4283876abf7acfeabf74a8203"
+  },
+  "archives": {
+    "local-drive-images.tar.gz": {
+      "bytes": 4794133228,
+      "sha256": "803ae17b802a34db34fefb605dc515084039344e6b6bb6f70894c4bcf33dcb2f"
+    },
+    "local-drive-source.tar.gz": {
+      "bytes": 10805548,
+      "sha256": "47e3b869f3a144f972719a1649605a387aa6a577952553b559b99df7f995f820"
+    }
+  }
+}

@@ -124,3 +124,5 @@ nohup python3 -u scripts/long_train.py --run-dir "$RUN_DIR" --hours 3 \
 最终镜像的真实跨进程生命周期测试通过：正式配置从0到8步后写STOP，状态stopped；新进程从8步恢复到16步后发SIGTERM，状态stopped。两次退出后本运行标签的容器均为0。正式预热阶段没有梯度更新是预期，不把这16步当作学会驾驶的证据。
 
 最终镜像也重新通过真实梯度验收：64步采样、48次梯度更新，重载后续跑8步，Replay Buffer共72条；actor最大参数变化0.00788864。
+
+离线镜像压缩文件约4.47GiB，单文件超过FAT32的4GiB限制。移动硬盘/U盘请使用exFAT、NTFS或ext4来携带完整目录；实际训练输出仍建议放在数据盘的WSL ext4文件系统。

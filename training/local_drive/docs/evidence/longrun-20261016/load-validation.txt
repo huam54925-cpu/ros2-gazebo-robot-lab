@@ -1,0 +1,2 @@
+Loaded image: local-drive-sync-trainer:20261016-longrun
+Loaded image: local-drive-sync-sim:20261012-v2

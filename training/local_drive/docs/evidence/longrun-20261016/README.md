@@ -14,3 +14,7 @@
 `scheduler-smoke.json`、`scheduler-events.jsonl`和cold-stop/resume-sigterm记录来自最终镜像，实际覆盖0→8步STOP、8→16步跨进程续跑与SIGTERM、零残留容器。
 
 `vehicle-training-final.json`和`vehicle-acceptance-final.txt`来自最终镜像：CUDA采样64步、48次梯度更新，保存重载后再采样8步，共72条Replay数据，通过。
+
+`offline-delivery.json`记录离线归档大小、SHA256与源码快照提交；`archive-verification.json`和`load-validation.txt`记录本机完整读取与docker load往返成功、镜像ID不变。源码包固定在交付清单中的c0ffb4d提交；本目录后来补充的交付记录不改变运行源码。
+
+`offline-loader-validation.txt`记录包内准备脚本实测：所有SHA256通过，正确跳过已有相同ID镜像，成功解压源码；解压后的27个运行源文件再次与镜像源码清单一致。验证后清理了重复解压目录，目标机执行准备脚本时会重新生成source目录。

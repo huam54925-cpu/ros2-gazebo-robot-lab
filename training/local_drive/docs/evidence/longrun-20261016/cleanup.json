@@ -1,0 +1,18 @@
+[
+  {
+    "path": "/mnt/robot_disk/codex-builds/2026-10-16/long-train/artifacts/formal-lifecycle-pre-fix/checkpoints",
+    "bytes": 477147839
+  },
+  {
+    "path": "/mnt/robot_disk/codex-builds/2026-10-16/long-train/artifacts/vehicle-acceptance-retry/checkpoints",
+    "bytes": 84943122
+  },
+  {
+    "directory": "formal-lifecycle/checkpoints",
+    "bytes": 954295618
+  },
+  {
+    "directory": "vehicle-acceptance-final/checkpoints",
+    "bytes": 84943212
+  }
+]
