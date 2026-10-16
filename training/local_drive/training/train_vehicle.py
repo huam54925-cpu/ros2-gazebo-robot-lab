@@ -1,5 +1,6 @@
 """Bounded vehicle SAC. Formal and short gradient acceptance are explicitly separate."""
 import argparse
+from copy import deepcopy
 import json
 import platform
 import importlib.metadata
@@ -21,6 +22,10 @@ class Lifecycle(BaseCallback):
     def _on_rollout_end(self):
         if self.model.num_timesteps-self.saved>=self.interval:
             self.periodic.append(str(save_checkpoint(self.model,self.root,self.metadata)));self.saved=self.model.num_timesteps
+
+def create_sac(env, seed, device, model_cfg):
+    # SB3 mutates nested policy_kwargs (e.g. use_sde); metadata must stay immutable.
+    return SAC('MlpPolicy', env, seed=seed, device=device, **deepcopy(model_cfg))
 
 def main():
     p=argparse.ArgumentParser(description=__doc__)
@@ -55,7 +60,7 @@ def main():
             if manifest.get('schema')!=SCHEMA_VERSION or manifest.get('environment')!='LocalDriveEnv' or manifest.get('profile')!=args.profile:raise ValueError('Incompatible vehicle checkpoint')
             if manifest.get('model_config')!=model_cfg:raise ValueError('Configuration mismatch')
             model=SAC.load(checkpoint/'model.zip',env=env,device=device);model.load_replay_buffer(checkpoint/'replay.pkl')
-        else:model=SAC('MlpPolicy',env,seed=args.seed,device=device,**model_cfg)
+        else:model=create_sac(env,args.seed,device,model_cfg)
         callback=Lifecycle(root,metadata,16 if args.profile=='acceptance' else cfg['checkpoint']['every_environment_steps'])
         signal.signal(signal.SIGTERM,callback.request);signal.signal(signal.SIGINT,callback.request)
         initial_steps=model.num_timesteps;initial_updates=model._n_updates

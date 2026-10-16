@@ -86,3 +86,5 @@ docker load -i local-drive-images.tar
 详见接口说明；原场景无接触传感器，接触奖励暂不启用。
 
 当前同步后端及最终镜像的本地结果见 [v2验收记录](docs/acceptance-sync-v2.md)。大镜像通过物理介质携带，GitHub仅保存代码和设计。
+
+2026-10-16 新增有界长时调度、STOP/SIGTERM恢复和离线部署：见 [三小时局部驾驶训练使用说明](docs/long-run-offline-20261016.md)。新训练镜像为 `local-drive-sync-trainer:20261016-longrun`；镜像文件通过数据盘离线包携带，不放入Git仓库。

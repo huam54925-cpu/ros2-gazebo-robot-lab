@@ -1,0 +1,17 @@
+test_atomic_json (test_long_train.SchedulerTests.test_atomic_json) ... ok
+test_cleanup_after_start_log_failure (test_long_train.SchedulerTests.test_cleanup_after_start_log_failure) ... ok
+test_cleanup_checks_identity (test_long_train.SchedulerTests.test_cleanup_checks_identity) ... ok
+test_cleanup_fails_closed (test_long_train.SchedulerTests.test_cleanup_fails_closed) ... ok
+test_cleanup_rescans_late_children (test_long_train.SchedulerTests.test_cleanup_rescans_late_children) ... ok
+test_cleanup_when_log_open_fails (test_long_train.SchedulerTests.test_cleanup_when_log_open_fails) ... ok
+test_cli_timeout (test_long_train.SchedulerTests.test_cli_timeout) ... ok
+test_context_uses_selected_context (test_long_train.SchedulerTests.test_context_uses_selected_context) ... ok
+test_formal_checkpoint_validation (test_long_train.SchedulerTests.test_formal_checkpoint_validation) ... ok
+test_sim_label_and_pin (test_long_train.SchedulerTests.test_sim_label_and_pin) ... ok
+test_stop_is_not_eval_error (test_long_train.SchedulerTests.test_stop_is_not_eval_error) ... ok
+test_watchdog_cleans_up (test_long_train.SchedulerTests.test_watchdog_cleans_up) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.030s
+
+OK

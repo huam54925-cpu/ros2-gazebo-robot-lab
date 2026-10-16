@@ -1,0 +1,8 @@
+{"utc": "2026-10-16T13:17:35+00:00", "event": "session_started", "hours": 0.1, "session": 1}
+{"utc": "2026-10-16T13:17:39+00:00", "event": "container_started", "name": "ldtrain-f69380a1ea25-1"}
+{"utc": "2026-10-16T13:18:52+00:00", "event": "chunk_finished", "chunk": 1, "before": 0, "after": 8, "exit_code": 0}
+{"utc": "2026-10-16T13:18:58+00:00", "event": "session_finished", "phase": "stopped", "steps": 8}
+{"utc": "2026-10-16T13:19:06+00:00", "event": "session_started", "hours": 0.1, "session": 2}
+{"utc": "2026-10-16T13:19:16+00:00", "event": "container_started", "name": "ldtrain-f69380a1ea25-2"}
+{"utc": "2026-10-16T13:20:57+00:00", "event": "chunk_finished", "chunk": 2, "before": 8, "after": 16, "exit_code": 0}
+{"utc": "2026-10-16T13:21:05+00:00", "event": "session_finished", "phase": "stopped", "steps": 16}

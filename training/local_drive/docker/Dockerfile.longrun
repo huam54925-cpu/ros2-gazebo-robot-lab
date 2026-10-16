@@ -1,0 +1,9 @@
+# Reuse accepted CUDA/SB3/Gymnasium dependencies; no apt/pip installs.
+ARG BASE_IMAGE=local-drive-sync-trainer:20261012-v2
+FROM ${BASE_IMAGE}
+COPY training/ /opt/robot-training/training/
+COPY scripts/ /opt/robot-training/scripts/
+COPY tests/ /opt/robot-training/tests/
+COPY release-manifest.json /opt/robot-training/release-manifest.json
+LABEL org.opencontainers.image.description="LocalDrive long-run lifecycle support; existing CUDA dependencies and sync simulator"
+ENTRYPOINT ["python", "-m", "training.train_vehicle"]

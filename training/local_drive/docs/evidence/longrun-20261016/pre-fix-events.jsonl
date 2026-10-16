@@ -1,0 +1,14 @@
+{"utc": "2026-10-16T13:12:12+00:00", "event": "session_started", "hours": 0.1, "session": 1}
+{"utc": "2026-10-16T13:12:14+00:00", "event": "container_started", "name": "ldtrain-bdcd6a297d29-1"}
+{"utc": "2026-10-16T13:13:27+00:00", "event": "chunk_finished", "chunk": 1, "before": 0, "after": 8, "exit_code": 0}
+{"utc": "2026-10-16T13:13:33+00:00", "event": "session_finished", "phase": "stopped", "steps": 8}
+{"utc": "2026-10-16T13:13:40+00:00", "event": "session_started", "hours": 0.1, "session": 2}
+{"utc": "2026-10-16T13:13:50+00:00", "event": "container_started", "name": "ldtrain-bdcd6a297d29-2"}
+{"utc": "2026-10-16T13:14:20+00:00", "event": "chunk_finished", "chunk": 2, "before": 8, "after": 8, "exit_code": 1}
+{"utc": "2026-10-16T13:14:20+00:00", "event": "chunk_error", "chunk": 2, "error": "RuntimeError('Chunk failed: exit=1, steps=8->8')"}
+{"utc": "2026-10-16T13:14:31+00:00", "event": "container_started", "name": "ldtrain-bdcd6a297d29-3"}
+{"utc": "2026-10-16T13:15:01+00:00", "event": "chunk_finished", "chunk": 3, "before": 8, "after": 8, "exit_code": 1}
+{"utc": "2026-10-16T13:15:01+00:00", "event": "chunk_error", "chunk": 3, "error": "RuntimeError('Chunk failed: exit=1, steps=8->8')"}
+{"utc": "2026-10-16T13:15:12+00:00", "event": "container_started", "name": "ldtrain-bdcd6a297d29-4"}
+{"utc": "2026-10-16T13:15:20+00:00", "event": "chunk_finished", "chunk": 4, "before": 8, "after": 8, "exit_code": 143}
+{"utc": "2026-10-16T13:15:26+00:00", "event": "session_finished", "phase": "stopped", "steps": 8}

@@ -45,6 +45,11 @@ class GazeboBackendImpl:
         self.stderr=tempfile.TemporaryFile(mode='w+')
         args=['docker','run','--pull','never','--rm','-i','--name',self.name,'--shm-size=1g',
               '-e','GZ_PARTITION='+self.name]
+        run_id=os.environ.get('LOCAL_DRIVE_RUN_ID')
+        if run_id:
+            if len(run_id)!=32 or any(c not in '0123456789abcdef' for c in run_id):
+                raise ValueError('Invalid supervisor run identity')
+            args+=['--label','org.local-drive.run='+run_id,'--label','org.local-drive.role=sim']
         if self.source_root:args+=['-v',str(self.source_root)+':/src:ro']
         if self.plugin_dir:args+=['-v',str(self.plugin_dir)+':/sync:ro']
         if self.gpu:args+=['--gpus','all']

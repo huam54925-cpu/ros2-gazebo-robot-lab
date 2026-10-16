@@ -16,3 +16,10 @@ __pycache__/
 !/.env.example
 /.venv-agent/
 /.tools/
+
+# Offline image exports and local learning artifacts (never publish to Git).
+training/local_drive/runs/
+training/local_drive/offline/
+*.tar
+*.tar.gz
+*.pkl

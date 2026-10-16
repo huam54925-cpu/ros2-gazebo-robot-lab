@@ -1,0 +1,16 @@
+[
+  {
+    "phase": "cold_stop",
+    "before": 0,
+    "after": 8,
+    "state": "stopped",
+    "owned_containers_remaining": 0
+  },
+  {
+    "phase": "resume_sigterm",
+    "before": 8,
+    "after": 16,
+    "state": "stopped",
+    "owned_containers_remaining": 0
+  }
+]

@@ -1,0 +1,330 @@
+[
+  {
+    "relative_path": "artifacts/formal-lifecycle/checkpoints/step-8-ba13611e",
+    "manifest": {
+      "environment": "LocalDriveEnv",
+      "schema": "local-drive-v2",
+      "profile": "formal",
+      "model_config": {
+        "learning_rate": 0.0003,
+        "buffer_size": 200000,
+        "learning_starts": 5000,
+        "batch_size": 256,
+        "train_freq": 1,
+        "gradient_steps": 1,
+        "gamma": 0.99,
+        "tau": 0.005,
+        "ent_coef": "auto",
+        "policy_kwargs": {
+          "net_arch": [
+            128,
+            128
+          ]
+        }
+      },
+      "seed": 7,
+      "config_sha256": "53cfe7566254ac42afe991cb9025f6abfab9999841ff86c8b858c7e0a7bd1554",
+      "versions": {
+        "torch": "2.8.0+cu126",
+        "gymnasium": "1.2.1",
+        "stable-baselines3": "2.7.0"
+      },
+      "python": "3.11.16",
+      "purpose": "formal vehicle configuration",
+      "simulation_image": "sha256:3598d20372e59400122d6c02dbb1ee3c434b7af4283876abf7acfeabf74a8203",
+      "source_manifest_sha256": "650f07f4c48bb6a7a91b10eb244f86cf4392f0c407ad36f8ec70828fc605095b",
+      "num_timesteps": 8,
+      "files": {
+        "model.zip": "0c9ea04468ef384ef42b4f3f2a463936ab26e891bdf8de93834ac2b8e0c674f3",
+        "replay.pkl": "769695536aa5f62a7d03bdc11b7acff83bf44b92d3d511dd0feaf3ca056948a1"
+      }
+    }
+  },
+  {
+    "relative_path": "artifacts/formal-lifecycle/checkpoints/step-16-d0c82217",
+    "manifest": {
+      "environment": "LocalDriveEnv",
+      "schema": "local-drive-v2",
+      "profile": "formal",
+      "model_config": {
+        "learning_rate": 0.0003,
+        "buffer_size": 200000,
+        "learning_starts": 5000,
+        "batch_size": 256,
+        "train_freq": 1,
+        "gradient_steps": 1,
+        "gamma": 0.99,
+        "tau": 0.005,
+        "ent_coef": "auto",
+        "policy_kwargs": {
+          "net_arch": [
+            128,
+            128
+          ]
+        }
+      },
+      "seed": 7,
+      "config_sha256": "53cfe7566254ac42afe991cb9025f6abfab9999841ff86c8b858c7e0a7bd1554",
+      "versions": {
+        "torch": "2.8.0+cu126",
+        "gymnasium": "1.2.1",
+        "stable-baselines3": "2.7.0"
+      },
+      "python": "3.11.16",
+      "purpose": "formal vehicle configuration",
+      "simulation_image": "sha256:3598d20372e59400122d6c02dbb1ee3c434b7af4283876abf7acfeabf74a8203",
+      "source_manifest_sha256": "650f07f4c48bb6a7a91b10eb244f86cf4392f0c407ad36f8ec70828fc605095b",
+      "num_timesteps": 16,
+      "files": {
+        "model.zip": "b8b32a1275097d096f0fa48f4d754ecda25add3216e72318e1ab92df2e697d00",
+        "replay.pkl": "1e0e203a82ea26fea956776dd105ecbada9f591fcb613c365d01f80565ad342b"
+      }
+    }
+  },
+  {
+    "relative_path": "artifacts/vehicle-acceptance-final/checkpoints/step-32-92b07d87",
+    "manifest": {
+      "environment": "LocalDriveEnv",
+      "schema": "local-drive-v2",
+      "profile": "acceptance",
+      "model_config": {
+        "learning_rate": 0.0003,
+        "buffer_size": 5000,
+        "learning_starts": 16,
+        "batch_size": 32,
+        "train_freq": 1,
+        "gradient_steps": 1,
+        "gamma": 0.99,
+        "tau": 0.005,
+        "ent_coef": "auto",
+        "policy_kwargs": {
+          "net_arch": [
+            128,
+            128
+          ]
+        }
+      },
+      "seed": 7,
+      "config_sha256": "53cfe7566254ac42afe991cb9025f6abfab9999841ff86c8b858c7e0a7bd1554",
+      "versions": {
+        "torch": "2.8.0+cu126",
+        "gymnasium": "1.2.1",
+        "stable-baselines3": "2.7.0"
+      },
+      "python": "3.11.16",
+      "purpose": "short vehicle gradient acceptance",
+      "simulation_image": "sha256:3598d20372e59400122d6c02dbb1ee3c434b7af4283876abf7acfeabf74a8203",
+      "source_manifest_sha256": "650f07f4c48bb6a7a91b10eb244f86cf4392f0c407ad36f8ec70828fc605095b",
+      "num_timesteps": 32,
+      "files": {
+        "model.zip": "6f9cce11ba56100f19787f3ed3e74f4d3c2588fd25bfcc5e133473f2a865f113",
+        "replay.pkl": "780d85154dadf821e65b3e42b1ddb669c3b58aea358b7e19ff8b96cf74c6c6fb"
+      }
+    }
+  },
+  {
+    "relative_path": "artifacts/vehicle-acceptance-final/checkpoints/step-48-42d03e78",
+    "manifest": {
+      "environment": "LocalDriveEnv",
+      "schema": "local-drive-v2",
+      "profile": "acceptance",
+      "model_config": {
+        "learning_rate": 0.0003,
+        "buffer_size": 5000,
+        "learning_starts": 16,
+        "batch_size": 32,
+        "train_freq": 1,
+        "gradient_steps": 1,
+        "gamma": 0.99,
+        "tau": 0.005,
+        "ent_coef": "auto",
+        "policy_kwargs": {
+          "net_arch": [
+            128,
+            128
+          ]
+        }
+      },
+      "seed": 7,
+      "config_sha256": "53cfe7566254ac42afe991cb9025f6abfab9999841ff86c8b858c7e0a7bd1554",
+      "versions": {
+        "torch": "2.8.0+cu126",
+        "gymnasium": "1.2.1",
+        "stable-baselines3": "2.7.0"
+      },
+      "python": "3.11.16",
+      "purpose": "short vehicle gradient acceptance",
+      "simulation_image": "sha256:3598d20372e59400122d6c02dbb1ee3c434b7af4283876abf7acfeabf74a8203",
+      "source_manifest_sha256": "650f07f4c48bb6a7a91b10eb244f86cf4392f0c407ad36f8ec70828fc605095b",
+      "num_timesteps": 48,
+      "files": {
+        "model.zip": "c5e562ee6ac9ed85f721e8bff67be41c1e924347074a1e84d2aeb21e7b8977a9",
+        "replay.pkl": "044ebb3d76fd36460a21969652b8259f9091bc2a829a63794b6dd19ef2aa4943"
+      }
+    }
+  },
+  {
+    "relative_path": "artifacts/vehicle-acceptance-final/checkpoints/step-64-6df39421",
+    "manifest": {
+      "environment": "LocalDriveEnv",
+      "schema": "local-drive-v2",
+      "profile": "acceptance",
+      "model_config": {
+        "learning_rate": 0.0003,
+        "buffer_size": 5000,
+        "learning_starts": 16,
+        "batch_size": 32,
+        "train_freq": 1,
+        "gradient_steps": 1,
+        "gamma": 0.99,
+        "tau": 0.005,
+        "ent_coef": "auto",
+        "policy_kwargs": {
+          "net_arch": [
+            128,
+            128
+          ]
+        }
+      },
+      "seed": 7,
+      "config_sha256": "53cfe7566254ac42afe991cb9025f6abfab9999841ff86c8b858c7e0a7bd1554",
+      "versions": {
+        "torch": "2.8.0+cu126",
+        "gymnasium": "1.2.1",
+        "stable-baselines3": "2.7.0"
+      },
+      "python": "3.11.16",
+      "purpose": "short vehicle gradient acceptance",
+      "simulation_image": "sha256:3598d20372e59400122d6c02dbb1ee3c434b7af4283876abf7acfeabf74a8203",
+      "source_manifest_sha256": "650f07f4c48bb6a7a91b10eb244f86cf4392f0c407ad36f8ec70828fc605095b",
+      "num_timesteps": 64,
+      "files": {
+        "model.zip": "cb846a98d5fad3c5bfbc8db28bdc86790c6a5502813fa19b3da31d4accb2b81d",
+        "replay.pkl": "d38a1020d4e17622704219c7df4f068f467cfefcdf1265dab9b96fdd344b668b"
+      }
+    }
+  },
+  {
+    "relative_path": "artifacts/vehicle-acceptance-final/checkpoints/step-64-a754e00f",
+    "manifest": {
+      "environment": "LocalDriveEnv",
+      "schema": "local-drive-v2",
+      "profile": "acceptance",
+      "model_config": {
+        "learning_rate": 0.0003,
+        "buffer_size": 5000,
+        "learning_starts": 16,
+        "batch_size": 32,
+        "train_freq": 1,
+        "gradient_steps": 1,
+        "gamma": 0.99,
+        "tau": 0.005,
+        "ent_coef": "auto",
+        "policy_kwargs": {
+          "net_arch": [
+            128,
+            128
+          ]
+        }
+      },
+      "seed": 7,
+      "config_sha256": "53cfe7566254ac42afe991cb9025f6abfab9999841ff86c8b858c7e0a7bd1554",
+      "versions": {
+        "torch": "2.8.0+cu126",
+        "gymnasium": "1.2.1",
+        "stable-baselines3": "2.7.0"
+      },
+      "python": "3.11.16",
+      "purpose": "short vehicle gradient acceptance",
+      "simulation_image": "sha256:3598d20372e59400122d6c02dbb1ee3c434b7af4283876abf7acfeabf74a8203",
+      "source_manifest_sha256": "650f07f4c48bb6a7a91b10eb244f86cf4392f0c407ad36f8ec70828fc605095b",
+      "num_timesteps": 64,
+      "files": {
+        "model.zip": "8e22195474293b6a9c01f42e414be154f9ae79a3ba5035da2c17142802c279dc",
+        "replay.pkl": "d38a1020d4e17622704219c7df4f068f467cfefcdf1265dab9b96fdd344b668b"
+      }
+    }
+  },
+  {
+    "relative_path": "artifacts/vehicle-acceptance-final/checkpoints/step-16-f778e9eb",
+    "manifest": {
+      "environment": "LocalDriveEnv",
+      "schema": "local-drive-v2",
+      "profile": "acceptance",
+      "model_config": {
+        "learning_rate": 0.0003,
+        "buffer_size": 5000,
+        "learning_starts": 16,
+        "batch_size": 32,
+        "train_freq": 1,
+        "gradient_steps": 1,
+        "gamma": 0.99,
+        "tau": 0.005,
+        "ent_coef": "auto",
+        "policy_kwargs": {
+          "net_arch": [
+            128,
+            128
+          ]
+        }
+      },
+      "seed": 7,
+      "config_sha256": "53cfe7566254ac42afe991cb9025f6abfab9999841ff86c8b858c7e0a7bd1554",
+      "versions": {
+        "torch": "2.8.0+cu126",
+        "gymnasium": "1.2.1",
+        "stable-baselines3": "2.7.0"
+      },
+      "python": "3.11.16",
+      "purpose": "short vehicle gradient acceptance",
+      "simulation_image": "sha256:3598d20372e59400122d6c02dbb1ee3c434b7af4283876abf7acfeabf74a8203",
+      "source_manifest_sha256": "650f07f4c48bb6a7a91b10eb244f86cf4392f0c407ad36f8ec70828fc605095b",
+      "num_timesteps": 16,
+      "files": {
+        "model.zip": "e01c136648263d0f7832a5809f782eefe610665163d59c812031a044917dbcaf",
+        "replay.pkl": "575b710ec1655fadd0d310d88ac2caa740db38cc94ca001538a7533b8dec9f6e"
+      }
+    }
+  },
+  {
+    "relative_path": "artifacts/vehicle-acceptance-final/checkpoints/step-72-14849e96",
+    "manifest": {
+      "environment": "LocalDriveEnv",
+      "schema": "local-drive-v2",
+      "profile": "acceptance",
+      "model_config": {
+        "learning_rate": 0.0003,
+        "buffer_size": 5000,
+        "learning_starts": 16,
+        "batch_size": 32,
+        "train_freq": 1,
+        "gradient_steps": 1,
+        "gamma": 0.99,
+        "tau": 0.005,
+        "ent_coef": "auto",
+        "policy_kwargs": {
+          "net_arch": [
+            128,
+            128
+          ]
+        }
+      },
+      "seed": 7,
+      "config_sha256": "53cfe7566254ac42afe991cb9025f6abfab9999841ff86c8b858c7e0a7bd1554",
+      "versions": {
+        "torch": "2.8.0+cu126",
+        "gymnasium": "1.2.1",
+        "stable-baselines3": "2.7.0"
+      },
+      "python": "3.11.16",
+      "purpose": "short vehicle gradient acceptance",
+      "simulation_image": "sha256:3598d20372e59400122d6c02dbb1ee3c434b7af4283876abf7acfeabf74a8203",
+      "source_manifest_sha256": "650f07f4c48bb6a7a91b10eb244f86cf4392f0c407ad36f8ec70828fc605095b",
+      "num_timesteps": 72,
+      "files": {
+        "model.zip": "51fbf0e7f3824966a4f6decd9c8e91aa02ee709f50953c73f409e6009c6f6280",
+        "replay.pkl": "20648bf940cf5f472d8363a08d87fd5fd6105ccad5950d0cb18591b05680872b"
+      }
+    }
+  }
+]

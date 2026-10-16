@@ -1,0 +1,17 @@
+{
+  "context": "default",
+  "socket": "/var/run/docker.sock",
+  "docker_root": "/mnt/robot_disk/docker-engine",
+  "data_dir": "/mnt/robot_disk/codex-builds/2026-10-16/long-train/artifacts",
+  "free_gb": 813.99,
+  "trainer": "sha256:be3f8c2175d68b28fdacb4f06d25129364b60e4de7294e181271e4713295e497",
+  "sim": "sha256:3598d20372e59400122d6c02dbb1ee3c434b7af4283876abf7acfeabf74a8203",
+  "cuda_probe": {
+    "torch": "2.8.0+cu126",
+    "gymnasium": "1.2.1",
+    "sb3": "2.7.0",
+    "gpu": "NVIDIA GeForce GTX 1650",
+    "cuda_backward": true
+  },
+  "storage_note": "WSL mount / does not reveal the Windows VHD location; check DistributionName/BasePath in PowerShell. Docker containerd root also needs checking."
+}

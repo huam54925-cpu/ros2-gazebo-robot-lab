@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "profile": "acceptance",
+  "schema": "local-drive-v2",
+  "learning_starts": 16,
+  "initial_steps": 0,
+  "sampled_steps": 64,
+  "gradient_updates": 48,
+  "actor_max_parameter_change": 0.007888644933700562,
+  "replay_before_reload": 64,
+  "resumed_steps": 8,
+  "final_replay_size": 72,
+  "checkpoint": "/results/checkpoints/step-72-c63ae2e2",
+  "periodic_checkpoints": [
+    "/results/checkpoints/step-16-b59edd91",
+    "/results/checkpoints/step-32-f0655c17",
+    "/results/checkpoints/step-48-a72c2a5d",
+    "/results/checkpoints/step-64-5f067f6a"
+  ],
+  "device": "cuda",
+  "simulation_rendering": "Mesa llvmpipe EGL",
+  "renderer": [
+    "13:09:55: GL_RENDERER = llvmpipe (LLVM 21.1.8, 256 bits)"
+  ]
+}
