@@ -1,0 +1,23 @@
+{
+  "source": "WSL terminal sha256 comparison and deterministic step-10000 evaluation, 2026-10-17",
+  "status": "candidate_best_on_single_fixed_scenario",
+  "checkpoint_step": 10000,
+  "checkpoint_directory_name": "step-10000-1c2ad374",
+  "model_sha256": "26ea4c6455a9f85ea9aeb1a3c473351115b91b04fa733fd7e731e7c9d13dd3b7",
+  "replay_sha256": "437efe75bce8437a5ec58e440179a5e5c93ca41b4132a5bac8e4476af9ed7304",
+  "other_checkpoint_directory_name": "step-10000-bc2de5b9",
+  "other_checkpoint_replay_sha256_matches": true,
+  "other_checkpoint_model_sha256_matches": false,
+  "other_checkpoint_manifest_sha256_matches": false,
+  "evaluation": {
+    "outcome": "success",
+    "sim_elapsed_s": 9.4,
+    "path_length_m": 2.694423753257497,
+    "final_distance_m": 0.3334710016401533,
+    "episode_return": 14.8610136440115
+  },
+  "limitations": [
+    "one fixed-scene deterministic seed-7 episode",
+    "model checkpoint not uploaded by this GitHub documentation commit"
+  ]
+}
