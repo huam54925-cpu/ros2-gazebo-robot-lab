@@ -1,0 +1,187 @@
+[
+  {
+    "step": 5000,
+    "episodes": [
+      {
+        "seed": 7,
+        "status": "completed",
+        "outcome": "timeout",
+        "steps": 600,
+        "episode_return": -10.388094244970507,
+        "path_length_m": 20.858219769460366,
+        "sim_elapsed_s": 120.0,
+        "initial_distance_m": 3.0000003553435164,
+        "final_distance_m": 5.193284865591013,
+        "minimum_distance_m": 2.1868301542606314,
+        "stalled_steps": 0,
+        "cleanup_errors": [],
+        "backend_seed": 2029167941,
+        "terminated": false,
+        "truncated": true,
+        "wall_seconds": 186.729786933,
+        "trace": "episode-01.jsonl"
+      }
+    ],
+    "metrics": {
+      "requested_episodes": 1,
+      "attempted_episodes": 1,
+      "completed_episodes": 1,
+      "outcome_counts": {
+        "timeout": 1
+      },
+      "success_rate": 0.0,
+      "timeout_rate": 1.0,
+      "mean_path_length_m": 20.858219769460366,
+      "mean_episode_return": -10.388094244970507,
+      "mean_sim_elapsed_s": 120.0
+    }
+  },
+  {
+    "step": 10000,
+    "episodes": [
+      {
+        "seed": 7,
+        "status": "completed",
+        "outcome": "success",
+        "steps": 47,
+        "episode_return": 14.8610136440115,
+        "path_length_m": 2.694423753257497,
+        "sim_elapsed_s": 9.4,
+        "initial_distance_m": 3.0000003553435164,
+        "final_distance_m": 0.3334710016401533,
+        "minimum_distance_m": 0.3334710016401533,
+        "stalled_steps": 0,
+        "cleanup_errors": [],
+        "backend_seed": 2029167941,
+        "terminated": true,
+        "truncated": false,
+        "wall_seconds": 19.902105795000352,
+        "trace": "episode-01.jsonl"
+      }
+    ],
+    "metrics": {
+      "requested_episodes": 1,
+      "attempted_episodes": 1,
+      "completed_episodes": 1,
+      "outcome_counts": {
+        "success": 1
+      },
+      "success_rate": 1.0,
+      "timeout_rate": 0.0,
+      "mean_path_length_m": 2.694423753257497,
+      "mean_episode_return": 14.8610136440115,
+      "mean_sim_elapsed_s": 9.4
+    }
+  },
+  {
+    "step": 15000,
+    "episodes": [
+      {
+        "seed": 7,
+        "status": "completed",
+        "outcome": "timeout",
+        "steps": 600,
+        "episode_return": -1.624677219870951,
+        "path_length_m": 2.6478983400950877,
+        "sim_elapsed_s": 120.0,
+        "initial_distance_m": 3.0000003553435164,
+        "final_distance_m": 0.7974693019762493,
+        "minimum_distance_m": 0.7318401175707933,
+        "stalled_steps": 0,
+        "cleanup_errors": [],
+        "backend_seed": 2029167941,
+        "terminated": false,
+        "truncated": true,
+        "wall_seconds": 186.896089201,
+        "trace": "episode-01.jsonl"
+      }
+    ],
+    "metrics": {
+      "requested_episodes": 1,
+      "attempted_episodes": 1,
+      "completed_episodes": 1,
+      "outcome_counts": {
+        "timeout": 1
+      },
+      "success_rate": 0.0,
+      "timeout_rate": 1.0,
+      "mean_path_length_m": 2.6478983400950877,
+      "mean_episode_return": -1.624677219870951,
+      "mean_sim_elapsed_s": 120.0
+    }
+  },
+  {
+    "step": 20000,
+    "episodes": [
+      {
+        "seed": 7,
+        "status": "completed",
+        "outcome": "timeout",
+        "steps": 600,
+        "episode_return": -2.972981673803748,
+        "path_length_m": 5.2720072324161755,
+        "sim_elapsed_s": 120.0,
+        "initial_distance_m": 3.0000003553435164,
+        "final_distance_m": 1.4557571396183602,
+        "minimum_distance_m": 0.406332398878933,
+        "stalled_steps": 0,
+        "cleanup_errors": [],
+        "backend_seed": 2029167941,
+        "terminated": false,
+        "truncated": true,
+        "wall_seconds": 186.8938247570004,
+        "trace": "episode-01.jsonl"
+      }
+    ],
+    "metrics": {
+      "requested_episodes": 1,
+      "attempted_episodes": 1,
+      "completed_episodes": 1,
+      "outcome_counts": {
+        "timeout": 1
+      },
+      "success_rate": 0.0,
+      "timeout_rate": 1.0,
+      "mean_path_length_m": 5.2720072324161755,
+      "mean_episode_return": -2.972981673803748,
+      "mean_sim_elapsed_s": 120.0
+    }
+  },
+  {
+    "step": 25000,
+    "episodes": [
+      {
+        "seed": 7,
+        "status": "completed",
+        "outcome": "success",
+        "steps": 24,
+        "episode_return": 15.187784474933398,
+        "path_length_m": 2.7828492499405724,
+        "sim_elapsed_s": 4.800000000000001,
+        "initial_distance_m": 3.0000003553435164,
+        "final_distance_m": 0.2727866698197134,
+        "minimum_distance_m": 0.2727866698197134,
+        "stalled_steps": 0,
+        "cleanup_errors": [],
+        "backend_seed": 2029167941,
+        "terminated": true,
+        "truncated": false,
+        "wall_seconds": 13.146650643000612,
+        "trace": "episode-01.jsonl"
+      }
+    ],
+    "metrics": {
+      "requested_episodes": 1,
+      "attempted_episodes": 1,
+      "completed_episodes": 1,
+      "outcome_counts": {
+        "success": 1
+      },
+      "success_rate": 1.0,
+      "timeout_rate": 0.0,
+      "mean_path_length_m": 2.7828492499405724,
+      "mean_episode_return": 15.187784474933398,
+      "mean_sim_elapsed_s": 4.800000000000001
+    }
+  }
+]

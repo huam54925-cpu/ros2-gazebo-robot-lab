@@ -1,0 +1,10 @@
+{
+  "before_working_set_bytes": 3906306048.0,
+  "after_working_set_bytes": 3908374528.0,
+  "terminated_distribution": "Ubuntu",
+  "checked_at": "2026-10-17T09:39:32.7661381Z",
+  "final_action": "wsl --shutdown",
+  "final_vmmem_process_count": 0,
+  "final_working_set_bytes": 0,
+  "final_checked_at_utc": "2026-10-17T09:40:42.7925842Z"
+}

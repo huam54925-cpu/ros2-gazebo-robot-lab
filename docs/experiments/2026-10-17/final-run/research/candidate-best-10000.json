@@ -1,0 +1,23 @@
+{
+  "status": "candidate_best",
+  "checkpoint_step": 10000,
+  "checkpoint_path": "/home/user111/AI-Training/runs/sac-longrun-20261017/checkpoints/step-10000-1c2ad374",
+  "evaluation_path": "/home/user111/AI-Training/runs/sac-longrun-20261017/evaluations/step-10000-seed-7-session-2-chunk-11/evaluation.json",
+  "model_sha256": "26ea4c6455a9f85ea9aeb1a3c473351115b91b04fa733fd7e731e7c9d13dd3b7",
+  "replay_sha256": "437efe75bce8437a5ec58e440179a5e5c93ca41b4132a5bac8e4476af9ed7304",
+  "manifest_sha256": "f54d1445fdfec63f7e320892dc9ff730a7cc2f6c7108e102fa897034e13f22ae",
+  "selection_reason": "Successful deterministic fixed-scenario evaluation",
+  "evaluation": {
+    "outcome": "success",
+    "sim_elapsed_s": 9.4,
+    "path_length_m": 2.694423753257497,
+    "final_distance_m": 0.3334710016401533,
+    "episode_return": 14.8610136440115
+  },
+  "limitations": [
+    "Single deterministic evaluation episode",
+    "Fixed indoor scenario and forward 3m goal",
+    "Not validated on unseen environments"
+  ],
+  "recorded_at_utc": "2026-10-17T08:29:52.380285+00:00"
+}

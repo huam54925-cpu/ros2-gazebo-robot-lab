@@ -1,0 +1,39 @@
+{
+  "identity": {
+    "trainer_image_id": "sha256:0c5150c9837521b1a1a1bee2dc2af024b8621e4cbd629e91bcaefad777205cea",
+    "sim_image_id": "sha256:7fae8a467efcf70a9a8956da5150ddbc624f6e3ecc785f513d717760ecdf5ad1",
+    "docker_context": "wsl-native",
+    "source_hashes": {
+      "training/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "training/checkpoints.py": "9f422da1c23b9cbb026a40689284a9fe89eb2314281b922ee88b232dcd1acba1",
+      "training/configs/sac_local.json": "53cfe7566254ac42afe991cb9025f6abfab9999841ff86c8b858c7e0a7bd1554",
+      "training/device.py": "d7b00da1ca5ca97d837243a892e43a377ab89e846520817315077bbdb00b56f3",
+      "training/envs/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "training/envs/contracts.py": "2d9025ba15149147ca4b1d15455cc3e5e4ae91a24264e6e5e1861dec60441a8a",
+      "training/envs/gazebo_backend.py": "2a4a8e0431faaac09fbb768d67b42098603ad0155ad791494ff9ee89ec778eef",
+      "training/envs/local_drive_env.py": "cf89ba123e376e484992636d2c739f0b66cb609d7995926088ae0262954ea2af",
+      "training/evaluate_vehicle.py": "b7778cdf2eddef97bb88678cda19ce579dd0cbbaf0d103e1f5759897fc573f62",
+      "training/train.py": "af0551f6de8191dc7f0a1991afa0301922c911152dd7510a9daf0f686847686a",
+      "training/train_vehicle.py": "47f148af5eeaaa5161eb6070ad88bacaec13f14221dab199b97c1b2cc13982d1",
+      "scripts/accept-sim.sh": "ddcf3300047e8887ec52d5fa8e98d5199f4581e323ac0baf706b8ea08debab88",
+      "scripts/accept-trainer.py": "1a10184f9fad77df8a6460ffaff1d0ec395a92b81fbb8bf110a412b6b0c61c01",
+      "scripts/accept_sync.py": "7330e0144c8991c4d4e0a07477f7d866e71d6fe7c65500a65374d8b450676f4c",
+      "scripts/build.sh": "0a7f383aacf1ecbcc8b2a88d9470756ebdba4860047d28e1da8aba97d9c23d60",
+      "scripts/build_longrun.sh": "b7c12fbbc89b94a1939d149e13173de163af62c9d58e3e8ab90cd2aac63bbd74",
+      "scripts/build_sync.sh": "4ec76ae3812f36359d2e14418b379c4ad11c86393374b79ab1e223326ffe3159",
+      "scripts/cuda_probe.py": "8c6f453af08ef66b2ec12caa71ca51cf8479b6e866136d2b76a293ec9e776ced",
+      "scripts/evaluate-vehicle.sh": "a0a48c2ff1d794519d1e719046a751869cc5123ff9c2a612166f8b93a8fa6684",
+      "scripts/export-images.sh": "6d6aa32a0ee33336c6a40d559d2cc5fd0c249739f745b8794f59d4ae0331312c",
+      "scripts/long_train.py": "2755f782b3297a00a133e4e470b91d852e99b7eaca728bd588ada249d44ebe33",
+      "scripts/preflight_longrun.py": "d079ff197bbeaf53f0e817cfba641e09e7972baaec6f0c75260669b59e101053",
+      "scripts/prepare_longrun_offline.sh": "3d890a46858c7c19d8970823decff26aef6282e476d3287064a8d4162cc0be58",
+      "scripts/publish-ghcr.sh": "a6747df0eb482ded5dc45b790bab6b38904e2419ff5a959d799b8c4d8a4ceaa2",
+      "scripts/run_offline.sh": "e9edaab399fa73ab6e8e8a338b953b7a1ba36fa44684376ba728c8f07c7dc3b5",
+      "scripts/sim_probe.py": "0dc2b525a60ffe03b5db14bb44887bae58819c8456a6c01f747a547aab275272",
+      "scripts/verify_evaluation.py": "b11e27ef5f2ae318cca1cb53670f82962421ffb865ba6403f8f3b18f7a818470"
+    },
+    "seed": 7,
+    "profile": "formal"
+  },
+  "run_id": "44645c5693504354b3c8996307873eab"
+}

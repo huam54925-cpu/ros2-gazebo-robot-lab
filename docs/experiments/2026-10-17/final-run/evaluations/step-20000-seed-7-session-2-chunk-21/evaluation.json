@@ -1,0 +1,119 @@
+{
+  "status": "completed",
+  "started_at_utc": "2026-10-17T08:30:40.900548+00:00",
+  "checkpoint": "/checkpoint",
+  "checkpoint_manifest": {
+    "environment": "LocalDriveEnv",
+    "schema": "local-drive-v2",
+    "profile": "formal",
+    "model_config": {
+      "learning_rate": 0.0003,
+      "buffer_size": 200000,
+      "learning_starts": 5000,
+      "batch_size": 256,
+      "train_freq": 1,
+      "gradient_steps": 1,
+      "gamma": 0.99,
+      "tau": 0.005,
+      "ent_coef": "auto",
+      "policy_kwargs": {
+        "net_arch": [
+          128,
+          128
+        ]
+      }
+    },
+    "seed": 7,
+    "config_sha256": "53cfe7566254ac42afe991cb9025f6abfab9999841ff86c8b858c7e0a7bd1554",
+    "versions": {
+      "torch": "2.8.0+cu126",
+      "gymnasium": "1.2.1",
+      "stable-baselines3": "2.7.0"
+    },
+    "python": "3.11.16",
+    "purpose": "formal vehicle configuration",
+    "simulation_image": "sha256:7fae8a467efcf70a9a8956da5150ddbc624f6e3ecc785f513d717760ecdf5ad1",
+    "source_manifest_sha256": "650f07f4c48bb6a7a91b10eb244f86cf4392f0c407ad36f8ec70828fc605095b",
+    "num_timesteps": 20000,
+    "files": {
+      "model.zip": "9bca9a37844b29495d0bcf2e7aadc7a3bc3da422b8b6d965c72bd334cb4e270b",
+      "replay.pkl": "1e395375f34678d74c77768dae8ae1e22249760c39960fd6a2e5365ce7f2baed"
+    }
+  },
+  "checkpoint_hashes_before": {
+    "model.zip": "9bca9a37844b29495d0bcf2e7aadc7a3bc3da422b8b6d965c72bd334cb4e270b",
+    "replay.pkl": "1e395375f34678d74c77768dae8ae1e22249760c39960fd6a2e5365ce7f2baed",
+    "manifest.json": "6317d95643f391aab37d6cd548b4c1bb65be1692eff30497e4702e908bc89016"
+  },
+  "code_base_revision": "84361e802f3860237d8636e494dc7dd168c19995",
+  "deterministic": true,
+  "learning_enabled": false,
+  "replay_loaded": false,
+  "device": "cuda",
+  "scenario": "indoor_fixed",
+  "seeds": [
+    7
+  ],
+  "max_steps": 600,
+  "environment_time_limit_s": 120.0,
+  "arrival_threshold_m": 0.35,
+  "source_sha256": {
+    "evaluate_vehicle.py": "b7778cdf2eddef97bb88678cda19ce579dd0cbbaf0d103e1f5759897fc573f62",
+    "local_drive_env.py": "cf89ba123e376e484992636d2c739f0b66cb609d7995926088ae0262954ea2af",
+    "gazebo_backend.py": "2a4a8e0431faaac09fbb768d67b42098603ad0155ad791494ff9ee89ec778eef"
+  },
+  "metric_definitions": {
+    "path_length_m": "Sum of XY truth-pose distances over returned 0.2s transitions; wheel-axis reference. Reset/cleanup motion excluded.",
+    "episode_return": "Undiscounted sum of returned rewards.",
+    "timeout": "Environment truncation without terminal arrival/failure. Evaluator step caps and infrastructure failures are separate.",
+    "rates": "All requested episodes; null if any episode is incomplete. Infrastructure errors stop the run."
+  },
+  "limitations": [
+    "Fixed map, initial state and forward 3m goal. Seeds are repeated baseline trials, not diverse scenarios.",
+    "No collision/contact ground-truth metric; no generalization or navigation quality claim from short training."
+  ],
+  "episodes": [
+    {
+      "seed": 7,
+      "status": "completed",
+      "outcome": "timeout",
+      "steps": 600,
+      "episode_return": -2.972981673803748,
+      "path_length_m": 5.2720072324161755,
+      "sim_elapsed_s": 120.0,
+      "initial_distance_m": 3.0000003553435164,
+      "final_distance_m": 1.4557571396183602,
+      "minimum_distance_m": 0.406332398878933,
+      "stalled_steps": 0,
+      "cleanup_errors": [],
+      "backend_seed": 2029167941,
+      "terminated": false,
+      "truncated": true,
+      "wall_seconds": 186.8938247570004,
+      "trace": "episode-01.jsonl"
+    }
+  ],
+  "simulation_image": "sha256:7fae8a467efcf70a9a8956da5150ddbc624f6e3ecc785f513d717760ecdf5ad1",
+  "simulation_image_id": "sha256:7fae8a467efcf70a9a8956da5150ddbc624f6e3ecc785f513d717760ecdf5ad1",
+  "simulation_rendering": "Mesa llvmpipe EGL",
+  "metrics": {
+    "requested_episodes": 1,
+    "attempted_episodes": 1,
+    "completed_episodes": 1,
+    "outcome_counts": {
+      "timeout": 1
+    },
+    "success_rate": 0.0,
+    "timeout_rate": 1.0,
+    "mean_path_length_m": 5.2720072324161755,
+    "mean_episode_return": -2.972981673803748,
+    "mean_sim_elapsed_s": 120.0
+  },
+  "checkpoint_hashes_after": {
+    "model.zip": "9bca9a37844b29495d0bcf2e7aadc7a3bc3da422b8b6d965c72bd334cb4e270b",
+    "replay.pkl": "1e395375f34678d74c77768dae8ae1e22249760c39960fd6a2e5365ce7f2baed",
+    "manifest.json": "6317d95643f391aab37d6cd548b4c1bb65be1692eff30497e4702e908bc89016"
+  },
+  "checkpoint_unchanged": true,
+  "finished_at_utc": "2026-10-17T08:33:48.099975+00:00"
+}

@@ -1,0 +1,68 @@
+{"utc": "2026-10-17T06:11:21+00:00", "event": "session_started", "hours": 3.0, "session": 1}
+{"utc": "2026-10-17T06:11:23+00:00", "event": "container_started", "name": "ldtrain-44645c569350-1"}
+{"utc": "2026-10-17T06:25:19+00:00", "event": "session_started", "hours": 3.0, "session": 2}
+{"utc": "2026-10-17T06:25:21+00:00", "event": "container_started", "name": "ldtrain-44645c569350-2"}
+{"utc": "2026-10-17T06:30:57+00:00", "event": "chunk_finished", "chunk": 2, "before": 0, "after": 1000, "exit_code": 0}
+{"utc": "2026-10-17T06:30:59+00:00", "event": "container_started", "name": "ldtrain-44645c569350-3"}
+{"utc": "2026-10-17T06:36:36+00:00", "event": "chunk_finished", "chunk": 3, "before": 1000, "after": 2000, "exit_code": 0}
+{"utc": "2026-10-17T06:36:38+00:00", "event": "container_started", "name": "ldtrain-44645c569350-4"}
+{"utc": "2026-10-17T06:42:15+00:00", "event": "chunk_finished", "chunk": 4, "before": 2000, "after": 3000, "exit_code": 0}
+{"utc": "2026-10-17T06:42:18+00:00", "event": "container_started", "name": "ldtrain-44645c569350-5"}
+{"utc": "2026-10-17T06:47:53+00:00", "event": "chunk_finished", "chunk": 5, "before": 3000, "after": 4000, "exit_code": 0}
+{"utc": "2026-10-17T06:47:55+00:00", "event": "container_started", "name": "ldtrain-44645c569350-6"}
+{"utc": "2026-10-17T06:53:30+00:00", "event": "chunk_finished", "chunk": 6, "before": 4000, "after": 5000, "exit_code": 0}
+{"utc": "2026-10-17T06:53:33+00:00", "event": "container_started", "name": "ldeval-44645c569350-6"}
+{"utc": "2026-10-17T06:56:49+00:00", "event": "evaluation_completed", "step": 5000, "path": "evaluations/step-5000-seed-7-session-2-chunk-6"}
+{"utc": "2026-10-17T06:56:51+00:00", "event": "container_started", "name": "ldtrain-44645c569350-7"}
+{"utc": "2026-10-17T07:02:15+00:00", "event": "chunk_finished", "chunk": 7, "before": 5000, "after": 6000, "exit_code": 0}
+{"utc": "2026-10-17T07:02:18+00:00", "event": "container_started", "name": "ldtrain-44645c569350-8"}
+{"utc": "2026-10-17T07:07:42+00:00", "event": "chunk_finished", "chunk": 8, "before": 6000, "after": 7000, "exit_code": 0}
+{"utc": "2026-10-17T07:07:45+00:00", "event": "container_started", "name": "ldtrain-44645c569350-9"}
+{"utc": "2026-10-17T07:13:32+00:00", "event": "chunk_finished", "chunk": 9, "before": 7000, "after": 8000, "exit_code": 0}
+{"utc": "2026-10-17T07:13:35+00:00", "event": "container_started", "name": "ldtrain-44645c569350-10"}
+{"utc": "2026-10-17T07:19:04+00:00", "event": "chunk_finished", "chunk": 10, "before": 8000, "after": 9000, "exit_code": 0}
+{"utc": "2026-10-17T07:19:07+00:00", "event": "container_started", "name": "ldtrain-44645c569350-11"}
+{"utc": "2026-10-17T07:24:55+00:00", "event": "chunk_finished", "chunk": 11, "before": 9000, "after": 10000, "exit_code": 0}
+{"utc": "2026-10-17T07:24:58+00:00", "event": "container_started", "name": "ldeval-44645c569350-11"}
+{"utc": "2026-10-17T07:25:28+00:00", "event": "evaluation_completed", "step": 10000, "path": "evaluations/step-10000-seed-7-session-2-chunk-11"}
+{"utc": "2026-10-17T07:25:31+00:00", "event": "container_started", "name": "ldtrain-44645c569350-12"}
+{"utc": "2026-10-17T07:31:29+00:00", "event": "chunk_finished", "chunk": 12, "before": 10000, "after": 11000, "exit_code": 0}
+{"utc": "2026-10-17T07:31:32+00:00", "event": "container_started", "name": "ldtrain-44645c569350-13"}
+{"utc": "2026-10-17T07:37:50+00:00", "event": "chunk_finished", "chunk": 13, "before": 11000, "after": 12000, "exit_code": 0}
+{"utc": "2026-10-17T07:37:52+00:00", "event": "container_started", "name": "ldtrain-44645c569350-14"}
+{"utc": "2026-10-17T07:43:17+00:00", "event": "chunk_finished", "chunk": 14, "before": 12000, "after": 13000, "exit_code": 0}
+{"utc": "2026-10-17T07:43:20+00:00", "event": "container_started", "name": "ldtrain-44645c569350-15"}
+{"utc": "2026-10-17T07:48:46+00:00", "event": "chunk_finished", "chunk": 15, "before": 13000, "after": 14000, "exit_code": 0}
+{"utc": "2026-10-17T07:48:49+00:00", "event": "container_started", "name": "ldtrain-44645c569350-16"}
+{"utc": "2026-10-17T07:54:13+00:00", "event": "chunk_finished", "chunk": 16, "before": 14000, "after": 15000, "exit_code": 0}
+{"utc": "2026-10-17T07:54:16+00:00", "event": "container_started", "name": "ldeval-44645c569350-16"}
+{"utc": "2026-10-17T07:57:35+00:00", "event": "evaluation_completed", "step": 15000, "path": "evaluations/step-15000-seed-7-session-2-chunk-16"}
+{"utc": "2026-10-17T07:57:37+00:00", "event": "container_started", "name": "ldtrain-44645c569350-17"}
+{"utc": "2026-10-17T08:03:03+00:00", "event": "chunk_finished", "chunk": 17, "before": 15000, "after": 16000, "exit_code": 0}
+{"utc": "2026-10-17T08:03:05+00:00", "event": "container_started", "name": "ldtrain-44645c569350-18"}
+{"utc": "2026-10-17T08:08:46+00:00", "event": "chunk_finished", "chunk": 18, "before": 16000, "after": 17000, "exit_code": 0}
+{"utc": "2026-10-17T08:08:49+00:00", "event": "container_started", "name": "ldtrain-44645c569350-19"}
+{"utc": "2026-10-17T08:15:18+00:00", "event": "chunk_finished", "chunk": 19, "before": 17000, "after": 18000, "exit_code": 0}
+{"utc": "2026-10-17T08:15:22+00:00", "event": "container_started", "name": "ldtrain-44645c569350-20"}
+{"utc": "2026-10-17T08:23:33+00:00", "event": "chunk_finished", "chunk": 20, "before": 18000, "after": 19000, "exit_code": 0}
+{"utc": "2026-10-17T08:23:36+00:00", "event": "container_started", "name": "ldtrain-44645c569350-21"}
+{"utc": "2026-10-17T08:30:34+00:00", "event": "chunk_finished", "chunk": 21, "before": 19000, "after": 20000, "exit_code": 0}
+{"utc": "2026-10-17T08:30:37+00:00", "event": "container_started", "name": "ldeval-44645c569350-21"}
+{"utc": "2026-10-17T08:33:55+00:00", "event": "evaluation_completed", "step": 20000, "path": "evaluations/step-20000-seed-7-session-2-chunk-21"}
+{"utc": "2026-10-17T08:33:57+00:00", "event": "container_started", "name": "ldtrain-44645c569350-22"}
+{"utc": "2026-10-17T08:39:41+00:00", "event": "chunk_finished", "chunk": 22, "before": 20000, "after": 21000, "exit_code": 0}
+{"utc": "2026-10-17T08:39:45+00:00", "event": "container_started", "name": "ldtrain-44645c569350-23"}
+{"utc": "2026-10-17T08:46:21+00:00", "event": "chunk_finished", "chunk": 23, "before": 21000, "after": 22000, "exit_code": 0}
+{"utc": "2026-10-17T08:46:24+00:00", "event": "container_started", "name": "ldtrain-44645c569350-24"}
+{"utc": "2026-10-17T08:55:29+00:00", "event": "chunk_finished", "chunk": 24, "before": 22000, "after": 23000, "exit_code": 0}
+{"utc": "2026-10-17T08:55:32+00:00", "event": "container_started", "name": "ldtrain-44645c569350-25"}
+{"utc": "2026-10-17T09:04:49+00:00", "event": "chunk_finished", "chunk": 25, "before": 23000, "after": 24000, "exit_code": 0}
+{"utc": "2026-10-17T09:04:51+00:00", "event": "container_started", "name": "ldtrain-44645c569350-26"}
+{"utc": "2026-10-17T09:14:09+00:00", "event": "chunk_finished", "chunk": 26, "before": 24000, "after": 25000, "exit_code": 0}
+{"utc": "2026-10-17T09:14:12+00:00", "event": "container_started", "name": "ldeval-44645c569350-26"}
+{"utc": "2026-10-17T09:14:38+00:00", "event": "evaluation_completed", "step": 25000, "path": "evaluations/step-25000-seed-7-session-2-chunk-26"}
+{"utc": "2026-10-17T09:14:41+00:00", "event": "container_started", "name": "ldtrain-44645c569350-27"}
+{"utc": "2026-10-17T09:23:57+00:00", "event": "chunk_finished", "chunk": 27, "before": 25000, "after": 26000, "exit_code": 0}
+{"utc": "2026-10-17T09:23:59+00:00", "event": "container_started", "name": "ldtrain-44645c569350-28"}
+{"utc": "2026-10-17T09:25:35+00:00", "event": "chunk_finished", "chunk": 28, "before": 26000, "after": 26144, "exit_code": 0}
+{"utc": "2026-10-17T09:25:35+00:00", "event": "session_finished", "phase": "budget_complete", "steps": 26144}

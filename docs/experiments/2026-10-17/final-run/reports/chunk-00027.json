@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "profile": "formal",
+  "schema": "local-drive-v2",
+  "learning_starts": 5000,
+  "initial_steps": 25000,
+  "sampled_steps": 1000,
+  "gradient_updates": 1000,
+  "actor_max_parameter_change": 0.14038029313087463,
+  "replay_before_reload": 26000,
+  "resumed_steps": 0,
+  "final_replay_size": 26000,
+  "checkpoint": "/results/checkpoints/step-26000-379c810b",
+  "periodic_checkpoints": [
+    "/results/checkpoints/step-25001-088ac7bd"
+  ],
+  "device": "cuda",
+  "simulation_rendering": "Mesa llvmpipe EGL",
+  "renderer": [
+    "09:23:42: GL_RENDERER = llvmpipe (LLVM 21.1.8, 256 bits)"
+  ]
+}

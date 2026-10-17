@@ -1,0 +1,38 @@
+{
+  "environment": "LocalDriveEnv",
+  "schema": "local-drive-v2",
+  "profile": "formal",
+  "model_config": {
+    "learning_rate": 0.0003,
+    "buffer_size": 200000,
+    "learning_starts": 5000,
+    "batch_size": 256,
+    "train_freq": 1,
+    "gradient_steps": 1,
+    "gamma": 0.99,
+    "tau": 0.005,
+    "ent_coef": "auto",
+    "policy_kwargs": {
+      "net_arch": [
+        128,
+        128
+      ]
+    }
+  },
+  "seed": 7,
+  "config_sha256": "53cfe7566254ac42afe991cb9025f6abfab9999841ff86c8b858c7e0a7bd1554",
+  "versions": {
+    "torch": "2.8.0+cu126",
+    "gymnasium": "1.2.1",
+    "stable-baselines3": "2.7.0"
+  },
+  "python": "3.11.16",
+  "purpose": "formal vehicle configuration",
+  "simulation_image": "sha256:7fae8a467efcf70a9a8956da5150ddbc624f6e3ecc785f513d717760ecdf5ad1",
+  "source_manifest_sha256": "650f07f4c48bb6a7a91b10eb244f86cf4392f0c407ad36f8ec70828fc605095b",
+  "num_timesteps": 1000,
+  "files": {
+    "model.zip": "e97d94a3778a41641ea72e243169cb40cc1b63ac19141b0f24e3981bd05a1b56",
+    "replay.pkl": "eaa5b7ac08c57c7960ef16b821dfe6907f9393218cf7d474ca6cf33bdca281ef"
+  }
+}

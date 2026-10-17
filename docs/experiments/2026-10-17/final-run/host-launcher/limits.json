@@ -1,0 +1,10 @@
+{
+  "trainer_memory_bytes": 6442450944,
+  "sim_memory_bytes": 2147483648,
+  "container_swap_extra_bytes": 0,
+  "image_path": "/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+  "real_docker": "/usr/local/bin/docker",
+  "project": "/home/user111/AI-Training/offline-bundle-20261017/source/training/local_drive",
+  "run": "/home/user111/AI-Training/runs/sac-longrun-20261017",
+  "note": "Container limits do not cap Windows, Docker daemon or other WSL workloads. Release source and image files unchanged."
+}

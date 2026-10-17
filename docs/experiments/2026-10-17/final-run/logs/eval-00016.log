@@ -1,0 +1,15 @@
+{"seed": 7, "status": "completed", "outcome": "timeout", "steps": 600, "episode_return": -1.624677219870951, "path_length_m": 2.6478983400950877, "sim_elapsed_s": 120.0, "initial_distance_m": 3.0000003553435164, "final_distance_m": 0.7974693019762493, "minimum_distance_m": 0.7318401175707933, "stalled_steps": 0, "cleanup_errors": [], "backend_seed": 2029167941, "terminated": false, "truncated": true, "wall_seconds": 186.896089201, "trace": "episode-01.jsonl"}
+{
+  "status": "completed",
+  "requested_episodes": 1,
+  "attempted_episodes": 1,
+  "completed_episodes": 1,
+  "outcome_counts": {
+    "timeout": 1
+  },
+  "success_rate": 0.0,
+  "timeout_rate": 1.0,
+  "mean_path_length_m": 2.6478983400950877,
+  "mean_episode_return": -1.624677219870951,
+  "mean_sim_elapsed_s": 120.0
+}

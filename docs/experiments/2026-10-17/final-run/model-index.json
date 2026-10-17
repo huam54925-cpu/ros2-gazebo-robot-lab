@@ -1,0 +1,56 @@
+{
+  "5000": {
+    "directory": "step-5000-2aedae04",
+    "hashes": {
+      "model.zip": "8f926d03762964c13ec38ef07014e802d2edec88a1d726a17fae13bd52a43dcc",
+      "replay.pkl": "6d4be006eebe6a7db84262474be41c24b0fd0eca3704054eead21aa46550eddb",
+      "manifest.json": "f88682ae1f77817a0c20eb7835be7750aef7fbf76dada0bdd4ac52c91f443386"
+    },
+    "three_file_hashes_verified": true
+  },
+  "10000": {
+    "directory": "step-10000-1c2ad374",
+    "hashes": {
+      "model.zip": "26ea4c6455a9f85ea9aeb1a3c473351115b91b04fa733fd7e731e7c9d13dd3b7",
+      "replay.pkl": "437efe75bce8437a5ec58e440179a5e5c93ca41b4132a5bac8e4476af9ed7304",
+      "manifest.json": "f54d1445fdfec63f7e320892dc9ff730a7cc2f6c7108e102fa897034e13f22ae"
+    },
+    "three_file_hashes_verified": true
+  },
+  "15000": {
+    "directory": "step-15000-0805ffed",
+    "hashes": {
+      "model.zip": "d67a1d80195662f93f531ed3bc7c0b2f3804a18771e97c538bd6f5642dc6c98f",
+      "replay.pkl": "0fd638b60d0212df76521a8c515b79f8ab51e7bac004f9a1e1ecad0e09cbcf60",
+      "manifest.json": "0e423689b0308e5bdb386216741fe2c7ce3185edfac7eaa2a6613b55ec20e5d5"
+    },
+    "three_file_hashes_verified": true
+  },
+  "20000": {
+    "directory": "step-20000-e85c1c7b",
+    "hashes": {
+      "model.zip": "9bca9a37844b29495d0bcf2e7aadc7a3bc3da422b8b6d965c72bd334cb4e270b",
+      "replay.pkl": "1e395375f34678d74c77768dae8ae1e22249760c39960fd6a2e5365ce7f2baed",
+      "manifest.json": "6317d95643f391aab37d6cd548b4c1bb65be1692eff30497e4702e908bc89016"
+    },
+    "three_file_hashes_verified": true
+  },
+  "25000": {
+    "directory": "step-25000-23da941b",
+    "hashes": {
+      "model.zip": "c0b5d5a0e76a7478bc73c15174950972b44a40524dc405a603c83b95962c8a4c",
+      "replay.pkl": "f58fce2005ee9bd96f5fb5a48d485b3f54edd1a6533e36178819b4c40ccce4b7",
+      "manifest.json": "9e7fd188ea41fe719e1df7da6922eccd3efddd201ee4ddb4a17537bef1791ee3"
+    },
+    "three_file_hashes_verified": true
+  },
+  "final": {
+    "directory": "step-26144-6bb895ec",
+    "hashes": {
+      "model.zip": "f1fb3705b18bd656fd0edfd7d169cea3a27c302f21d68ed79502523c3c703f57",
+      "manifest.json": "ceac8beff7ef1a267ea8644d188dbae2871fca44f1d437534c99c43374ef5a5b",
+      "replay.pkl": "db8a1e2a77e860e74aef07e5c64ecafedb35303a81298a9393cd0434e9bb9f33"
+    },
+    "model_and_replay_verified": true
+  }
+}
