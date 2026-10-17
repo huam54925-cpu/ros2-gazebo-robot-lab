@@ -1,0 +1,9 @@
+{
+  "source_revision": "c0ffb4d4ff3d268eaa456a89939f0cbcfc4045d3",
+  "reviewed_branch": "feature/long-train-offline-20261016",
+  "reviewed_head": "272a85a06146570473288455c5d429048c537f7f",
+  "profile": "formal",
+  "chunk_steps": 16,
+  "evaluation_enabled": false,
+  "purpose": "stop and cross-process resume acceptance, not navigation quality or long-run stability"
+}

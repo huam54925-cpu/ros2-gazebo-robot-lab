@@ -1,0 +1,17 @@
+{
+  "context": "wsl-native",
+  "socket": "/run/docker-native.sock",
+  "docker_root": "/var/lib/docker",
+  "data_dir": "/home/user111/AI-Training/diagnostics/stop-resume-20261017",
+  "free_gb": 909.12,
+  "trainer": "sha256:0c5150c9837521b1a1a1bee2dc2af024b8621e4cbd629e91bcaefad777205cea",
+  "sim": "sha256:7fae8a467efcf70a9a8956da5150ddbc624f6e3ecc785f513d717760ecdf5ad1",
+  "cuda_probe": {
+    "torch": "2.8.0+cu126",
+    "gymnasium": "1.2.1",
+    "sb3": "2.7.0",
+    "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "cuda_backward": true
+  },
+  "storage_note": "WSL mount / does not reveal the Windows VHD location; check DistributionName/BasePath in PowerShell. Docker containerd root also needs checking."
+}

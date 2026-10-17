@@ -1,0 +1,96 @@
+{
+  "phase": 2,
+  "manager_exit_code": 0,
+  "state": {
+    "chunks": 2,
+    "last_eval_step": 0,
+    "sessions": 2,
+    "phase": "stopped",
+    "updated_utc": "2026-10-17T06:04:53+00:00",
+    "valid_steps": 32,
+    "active_container": null
+  },
+  "checkpoint": "/home/user111/AI-Training/diagnostics/stop-resume-20261017/run/checkpoints/step-32-94e0850f",
+  "manifest": {
+    "environment": "LocalDriveEnv",
+    "schema": "local-drive-v2",
+    "profile": "formal",
+    "model_config": {
+      "learning_rate": 0.0003,
+      "buffer_size": 200000,
+      "learning_starts": 5000,
+      "batch_size": 256,
+      "train_freq": 1,
+      "gradient_steps": 1,
+      "gamma": 0.99,
+      "tau": 0.005,
+      "ent_coef": "auto",
+      "policy_kwargs": {
+        "net_arch": [
+          128,
+          128
+        ]
+      }
+    },
+    "seed": 7,
+    "config_sha256": "53cfe7566254ac42afe991cb9025f6abfab9999841ff86c8b858c7e0a7bd1554",
+    "versions": {
+      "torch": "2.8.0+cu126",
+      "gymnasium": "1.2.1",
+      "stable-baselines3": "2.7.0"
+    },
+    "python": "3.11.16",
+    "purpose": "formal vehicle configuration",
+    "simulation_image": "sha256:7fae8a467efcf70a9a8956da5150ddbc624f6e3ecc785f513d717760ecdf5ad1",
+    "source_manifest_sha256": "650f07f4c48bb6a7a91b10eb244f86cf4392f0c407ad36f8ec70828fc605095b",
+    "num_timesteps": 32,
+    "files": {
+      "model.zip": "99e5febb64765467293b28e3c572b28a2e9958acbf34d41604699d05f71aff5c",
+      "replay.pkl": "b6759bfddba50b79e0f92094cb28b0e345e9c67418061e05dd053e1b7d838e6f"
+    }
+  },
+  "owned_containers_after_exit": [],
+  "reports": [
+    {
+      "status": "passed",
+      "profile": "formal",
+      "schema": "local-drive-v2",
+      "learning_starts": 5000,
+      "initial_steps": 0,
+      "sampled_steps": 16,
+      "gradient_updates": 0,
+      "actor_max_parameter_change": 0.0,
+      "replay_before_reload": 16,
+      "resumed_steps": 0,
+      "final_replay_size": 16,
+      "checkpoint": "/results/checkpoints/step-16-f0d4dd9c",
+      "periodic_checkpoints": [],
+      "device": "cuda",
+      "simulation_rendering": "Mesa llvmpipe EGL",
+      "renderer": [
+        "06:04:07: GL_RENDERER = llvmpipe (LLVM 21.1.8, 256 bits)"
+      ]
+    },
+    {
+      "status": "passed",
+      "profile": "formal",
+      "schema": "local-drive-v2",
+      "learning_starts": 5000,
+      "initial_steps": 16,
+      "sampled_steps": 16,
+      "gradient_updates": 0,
+      "actor_max_parameter_change": 0.0,
+      "replay_before_reload": 32,
+      "resumed_steps": 0,
+      "final_replay_size": 32,
+      "checkpoint": "/results/checkpoints/step-32-94e0850f",
+      "periodic_checkpoints": [],
+      "device": "cuda",
+      "simulation_rendering": "Mesa llvmpipe EGL",
+      "renderer": [
+        "06:04:39: GL_RENDERER = llvmpipe (LLVM 21.1.8, 256 bits)"
+      ]
+    }
+  ],
+  "elapsed_seconds": 30.742211326000003
+}

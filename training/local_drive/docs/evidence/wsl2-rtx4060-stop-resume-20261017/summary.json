@@ -1,0 +1,35 @@
+{
+  "status": "passed",
+  "device": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "profile": "formal",
+  "first_stopped_steps": 16,
+  "resumed_initial_steps": 16,
+  "second_stopped_steps": 32,
+  "first_replay_size": 16,
+  "second_replay_size": 32,
+  "same_run_identity": true,
+  "checkpoint_hashes_verified": true,
+  "original_checkpoint_unchanged": true,
+  "stop_methods": [
+    "STOP",
+    "SIGTERM"
+  ],
+  "owned_containers_after_each_exit": [
+    0,
+    0
+  ],
+  "gradient_updates": 0,
+  "learning_starts": 5000,
+  "long_training_started": false,
+  "navigation_quality_evaluated": false,
+  "run_directory": "/home/user111/AI-Training/diagnostics/stop-resume-20261017/run",
+  "manager_exit_codes": [
+    0,
+    0
+  ],
+  "trainer_container_exit_codes": [
+    0,
+    143
+  ],
+  "stop_timing": "after each 16-step chunk checkpoint was published; second trainer received SIGTERM during exit"
+}

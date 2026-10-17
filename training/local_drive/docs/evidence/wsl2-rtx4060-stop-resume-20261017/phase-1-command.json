@@ -1,0 +1,19 @@
+{
+  "argv": [
+    "/usr/bin/python3",
+    "-u",
+    "/home/user111/AI-Training/offline-bundle-20261017/source/training/local_drive/scripts/long_train.py",
+    "--run-dir",
+    "/home/user111/AI-Training/diagnostics/stop-resume-20261017/run",
+    "--hours",
+    "0.2",
+    "--chunk-steps",
+    "16",
+    "--eval-every",
+    "0",
+    "--max-failures",
+    "1"
+  ],
+  "stop_method": "STOP",
+  "stop_after_published_steps": 16
+}
