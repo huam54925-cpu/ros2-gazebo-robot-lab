@@ -1,19 +1,27 @@
-# SAC long-run interim evidence — 2026-10-17
+# SAC 三小时长训练：11,000 步阶段性实验记录
 
-> **Interim snapshot, not a completed three-hour run.** This record transcribes observed console outputs supplied during the live WSL experiment. It is not an upload of raw files, trajectories, checkpoints, or a final independent audit. Last quoted manager state: 11,000 valid steps (2026-10-17 07:31:30 UTC), session 2, training phase, chunk 13 active.
+**记录日期：**2026 年 10 月 17 日（JST）  
+**实验性质：**进行中的三小时长训练阶段快照，**不是最终验收**  
+**后续研究：**[15,000—20,000 步策略退化与低速停滞分析](sac-longrun-followup-20000.md)
 
-## Provenance
+> 本文基于本地 WSL 终端实际输出和评估报告的摘录整理。此时三小时训练尚未结束；报告记录的是观察到的数据，而非重新执行实验的结果。原始轨迹 JSONL、模型、经验池和全部训练日志仍在本地，未随本次文档提交上传。
 
-- Repository branch: `feature/long-train-offline-20261016`; local source: `/home/user111/AI-Training/offline-bundle-20261017/source/training/local_drive`.
-- Run path: `/home/user111/AI-Training/runs/sac-longrun-20261017`.
-- Profile: `formal`; device argument `cuda`; seed 7; 1,000 steps per training chunk; `learning_starts=5000`.
-- Evaluation reports identified under `evaluations/step-5000-seed-7-session-2-chunk-6/` and `evaluations/step-10000-seed-7-session-2-chunk-11/`.
-- Evaluation code revision reported: `84361e802f3860237d8636e494dc7dd168c19995`; simulation image `sha256:7fae8a467efcf70a9a8956da5150ddbc624f6e3ecc785f513d717760ecdf5ad1`.
-- Evaluation configuration: indoor_fixed scenario; fixed starting state and forward 3 m goal; deterministic policy; one episode at seed 7; arrival threshold 0.35 m; maximum 600 steps or 120 simulated seconds. This is *not* an unknown-map exploration benchmark.
+## 1. 实验环境和可追溯信息
 
-## Training progression from finished chunk reports
+- 仓库工作分支：`feature/long-train-offline-20261016`。
+- 本地源码：`/home/user111/AI-Training/offline-bundle-20261017/source/training/local_drive`。
+- 运行目录：`/home/user111/AI-Training/runs/sac-longrun-20261017`。
+- SAC 配置：`formal` profile、`cuda` 设备、随机种子 7、每训练块 1,000 步、`learning_starts=5000`。
+- 评估记录所在目录：`evaluations/step-5000-seed-7-session-2-chunk-6/`、`evaluations/step-10000-seed-7-session-2-chunk-11/`。
+- 评估代码基准版本：`84361e802f3860237d8636e494dc7dd168c19995`。
+- 仿真镜像：`sha256:7fae8a467efcf70a9a8956da5150ddbc624f6e3ecc785f513d717760ecdf5ad1`。
+- 固定测试场景：`indoor_fixed`，固定地图和初始姿态，前方 3 米目标；到达阈值 0.35 米；最大 600 步或 120 秒。每个模型仅进行种子 7 的一次确定性测试。
 
-| Chunk | Start step | End step | Gradient updates in chunk | Actor max parameter change | Final replay size |
+**这是一项固定目标局部导航控制实验，不是完整的未知地图自主探索评估。**
+
+## 2. 分块训练和 SAC 真实更新
+
+| 训练块 | 初始累计步数 | 完成后累计步数 | 本块梯度更新 | Actor 最大参数变化 | 结束时经验池大小 |
 | ---: | ---: | ---: | ---: | ---: | ---: |
 | 2 | 0 | 1,000 | 0 | 0 | 1,000 |
 | 3 | 1,000 | 2,000 | 0 | 0 | 2,000 |
@@ -25,40 +33,47 @@
 | 9 | 7,000 | 8,000 | 1,000 | 0.0574289300 | 8,000 |
 | 10 | 8,000 | 9,000 | 1,000 | 0.049741 | 9,000 |
 
-The first five recorded 1,000-step chunks served as replay warmup. Four later chunks reported 4,000 gradient updates in total and nonzero actor parameter changes. These changes prove updates were executed, not convergence or generalization. Checkpoints and replay buffers were found in the bind-mounted run directory; for example `checkpoints/step-1000-1b15b2d7/{manifest.json,model.zip,replay.pkl}`. The completed chunk-3 report showed `initial_steps=1000` and `final_replay_size=2000`; its `resumed_steps=0` field should not be equated with failure without reading code.
+前 5,000 步主要用于填充 Replay Buffer；随后四个已完成训练块累计记录 **4,000 次梯度更新**，Actor 参数变化均大于零。这验证了真实的训练更新被执行，但**并不意味着策略已经收敛**。
 
-## Frozen-policy evaluation comparison (single episode per checkpoint)
+运行目录下存在可持久化的 `model.zip`、`replay.pkl`、`manifest.json`，并通过 Docker 绑定挂载至容器内的 `/results`。例如 `checkpoints/step-1000-1b15b2d7/` 目录。
 
-| Metric | Step 5,000 baseline | Step 10,000 |
+第三块报告显示 `initial_steps=1000`、`final_replay_size=2000`，支持分块间采样进度和经验池的继承。与此同时，`resumed_steps=0` 的具体语义尚需依据源码确认，不能仅凭字段名认定恢复失败。
+
+## 3. 第一次训练前后评估
+
+| 观测指标 | 5,000 步（尚未更新） | 10,000 步 |
 | --- | ---: | ---: |
-| Outcome | timeout | **success** |
-| Episode steps | 600 | **47** |
-| Simulated time | 120.0 s | **9.4 s** |
-| Episode return | -10.388094244970507 | **14.8610136440115** |
-| Truth-pose XY path length | 20.858219769460366 m | **2.694423753257497 m** |
-| Initial goal distance | 3.0000003553435164 m | 3.0000003553435164 m |
-| Minimum goal distance | 2.1868301542606314 m | **0.3334710016401533 m** |
-| Final goal distance | 5.193284865591013 m | **0.3334710016401533 m** |
-| Stalled steps | 0 | 0 |
-| Checkpoint unchanged by evaluation | true | true |
+| 任务结果 | 超时 | **成功** |
+| 环境交互步数 | 600 | **47** |
+| 仿真经过时间 | 120.0 秒 | **9.4 秒** |
+| 未折扣 Episode Return | -10.388094244970507 | **+14.8610136440115** |
+| 基于真实姿态 XY 的路径长度 | 20.858219769460366 米 | **2.694423753257497 米** |
+| 初始目标距离 | 3.0000003553435164 米 | 3.0000003553435164 米 |
+| 最近目标距离 | 2.1868301542606314 米 | **0.3334710016401533 米** |
+| 最终目标距离 | 5.193284865591013 米 | **0.3334710016401533 米** |
+| 报告的停滞步数 | 0 | 0 |
+| 评估前后 Checkpoint 哈希一致 | 是 | 是 |
 
-The 5,000-step policy is the pre-gradient baseline. At 10,000 steps the deterministic policy reached the 0.35 m success radius after 47 transitions. This is clear **within-scenario improvement** but only one run per model, with fixed scene/goal/seed: no reliable success-rate estimate or cross-scenario robustness claim follows. Neither evaluation reports ground-truth contact/collision metrics. The displayed path length sums XY truth-pose motion over returned 0.2-second transitions; reset and cleanup motion are excluded.
+5,000 步模型尚未执行 SAC 梯度更新，可视为预热阶段基线。10,000 步模型在单次确定性评估中，经过 47 个有效转移进入 0.35 米成功半径。这是**同一固定场景内可观察到的性能改善**，但样本量仅为每个模型一次，**不能由此估计总体成功率或跨环境泛化能力**。
 
-Evaluation reports quote `learning_enabled=false`: this refers to learning being disabled **during evaluation**, not to the separate training process. Evaluation checkpoints' recorded SHA256 values were unchanged before versus after evaluation.
+路径长度定义为在每个返回的 0.2 秒转移上，用真实 XY 位姿计算的相邻距离之和，不计 reset 和清理动作。评估报告不包含真实接触/碰撞计数。
 
-## Live-run status and caveats
+报告中的 `learning_enabled=false` 表示**评估时禁用学习**，不是训练流程没有更新网络。评估前后的模型文件 SHA256 相同，说明评估没有改变被测 Checkpoint。
 
-- Last supplied manager state: `{"chunks":13,"last_eval_step":10000,"sessions":2,"phase":"training","valid_steps":11000,"active_container":"ldtrain-44645c569350-13"}`, updated `2026-10-17T07:31:30+00:00`.
-- Last supplied checkpoint pointer: `step-11001-c412b79a`, one greater than manager's `valid_steps=11000`; reason not yet established.
-- Evaluations completed at 5,000 (06:56:49 UTC) and 10,000 (07:25:28 UTC).
-- Simulator uses Mesa llvmpipe EGL CPU software rendering. Trainer container was bounded to 6 GiB RAM; simulation container to 2 GiB RAM. Resource snapshots were below these limits, but these are not proof of unlimited runtime stability.
-- Session 1 started at 06:11 UTC and session 2 at 06:25 UTC; reason for first session's ending and exact three-hour budget accounting remain unverified.
-- The live experiment can progress after this snapshot. Do not treat the data here as final or as all artifacts present on the WSL host.
+## 4. 当时的训练状态与限制
 
-## Reproducibility and pending checks
+- 最后一次提供的管理器状态为：`{"chunks":13,"last_eval_step":10000,"sessions":2,"phase":"training","valid_steps":11000,"active_container":"ldtrain-44645c569350-13"}`；更新时间为 2026-10-17 07:31:30 UTC。
+- 最新指针为 `step-11001-c412b79a`，与管理器的 11,000 步相差 1；原因尚未核实。
+- 两次评估分别于 06:56:49 UTC（5,000 步）和 07:25:28 UTC（10,000 步）完成。
+- 仿真采用 Mesa llvmpipe EGL CPU 软件渲染；Trainer 容器 RAM 上限为 6 GiB，Simulator 为 2 GiB。观察时未触达上限，但这不等于已经完成全程稳定性验收。
+- Session 1 于 06:11 UTC 启动，Session 2 于 06:25 UTC 启动。第一次会话停止的原因、三小时预算是否重置，当时均未明确。
 
-1. Preserve original `reports/`, `events.jsonl`, `evaluations/*/evaluation.json`, and selected `episode-01.jsonl` in a final immutable archive, together with hashes and run identity. **These raw source files were not uploaded by this documentation commit.**
-2. After the scheduled run ends, verify final state, all chunk reports, checkpoint/replay hashes, and the unexplained one-step checkpoint suffix.
-3. Repeat deterministic assessments with multiple independent seeds, initial positions, goals, and maps; include obstacle avoidance and collision/contact ground truth.
-4. Evaluate map coverage and exploration efficiency separately; current 3 m goal task is a basic navigation-control benchmark, not a SLAM/exploration validation.
-5. Check critic losses, entropy coefficient, policy stability, and post-10k evaluation trend; avoid claiming generalization from the current two episodes.
+## 5. 后续验证与归档任务
+
+1. 保留 `events.jsonl`、`reports/`、`evaluations/*/evaluation.json`、原始 `episode-01.jsonl`、运行身份文件及 SHA256。
+2. 三小时实际结束后，检查最终退出状态、全部训练块、Checkpoint/经验池一致性，以及相差 1 步的文件命名现象。
+3. 对不同随机种子、出发位置、目标方向及新地图做冻结模型测试，同时增加碰撞真值和障碍绕行指标。
+4. 将未知地图探索的覆盖率和单位时间新增面积单独设计为下一阶段基准，不能与固定目标到达率混用。
+5. 检查 Critic 损失、熵系数、策略稳定性和后续 Checkpoint 的表现；不要把单次成功写成泛化证明。
+
+**资料边界：**本文仅记录 11,000 步时的阶段性证据；后续训练结果请以[续篇](sac-longrun-followup-20000.md)和最终原始实验档案为准。
